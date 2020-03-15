@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTFulSense", "RESTFulSense\RESTFulSense.csproj", "{80A67EF0-272E-4156-90C6-B29C33397CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTFulSense.Tests", "RESTFulSense.Tests\RESTFulSense.Tests.csproj", "{CC843A4C-A3E2-4D26-BCAE-217C75251DB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTFulSense.Tests", "RESTFulSense.Tests\RESTFulSense.Tests.csproj", "{CC843A4C-A3E2-4D26-BCAE-217C75251DB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F9C31E1-CCFA-496D-8544-087FCDFF27AE}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
