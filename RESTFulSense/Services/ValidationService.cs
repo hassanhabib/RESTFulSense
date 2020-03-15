@@ -1,4 +1,7 @@
-﻿using System.Net;
+﻿// Copyright (c) Hassan Habib.  All rights reserved.
+// Licensed under the MIT License.  See License.txt in the project root for license information.
+
+using System.Net;
 using System.Net.Http;
 using RESTFulSense.Exceptions;
 
