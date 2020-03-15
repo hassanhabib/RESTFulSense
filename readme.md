@@ -1,6 +1,3 @@
-![](https://raw.githubusercontent.com/hassanhabib/RESTFulSense/master/RESTFulSense/Resources/api.png) 
-
-<br />
 
 # RESTFulSense 
 I designed & developed this library as a wrapper around the existing .NET Core ```HttpClient``` implementation to provide the following values:
