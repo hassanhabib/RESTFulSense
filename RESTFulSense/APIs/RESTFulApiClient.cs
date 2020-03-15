@@ -61,6 +61,14 @@ namespace RESTFulSense.APIs
             ValidationService.ValidateHttpResponse(responseMessage);
         }
 
+        private async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
+        {
+            HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
+            ValidationService.ValidateHttpResponse(responseMessage);
+
+            return await DeserializeResponseContent<T>(responseMessage);
+        }
+
         private static async ValueTask<T> DeserializeResponseContent<T>(HttpResponseMessage responseMessage)
         {
             string responseString = await responseMessage.Content.ReadAsStringAsync();
