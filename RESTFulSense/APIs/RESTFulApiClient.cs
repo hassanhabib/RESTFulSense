@@ -9,7 +9,7 @@ using RESTFulSense.Services;
 
 namespace RESTFulSense.APIs
 {
-    public class RESTFulApiClient : HttpClient
+    public class RESTFulApiClient : HttpClient, IRESTFulApiClient
     {
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
@@ -30,7 +30,6 @@ namespace RESTFulSense.APIs
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
-
 
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content)
         {
@@ -54,14 +53,13 @@ namespace RESTFulSense.APIs
             return await DeserializeResponseContent<T>(responseMessage);
         }
 
-
         public async ValueTask DeleteContentAsync(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await DeleteAsync(relativeUrl);
             ValidationService.ValidateHttpResponse(responseMessage);
         }
 
-        private async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
+        public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
             ValidationService.ValidateHttpResponse(responseMessage);
