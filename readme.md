@@ -10,6 +10,13 @@ I designed & developed this library as a wrapper around the existing .NET Core `
 
 <br />
 
+You can get RESTFulSense [Nuget](https://www.nuget.org/packages/RESTFulSense/) package by typing:
+```powershell
+Install-Package RESTFulSense
+```
+
+Here's the details of what this library has to offer:
+
 ### 1. Meaningful Exceptions
 RESTFulSense provide the following exceptions for erroring HTTP Status Codes as follows:
 <br />
