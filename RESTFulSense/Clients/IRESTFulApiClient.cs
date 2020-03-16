@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace RESTFulSense.APIs
+namespace RESTFulSense.Clients
 {
     public interface IRESTFulApiClient
     {

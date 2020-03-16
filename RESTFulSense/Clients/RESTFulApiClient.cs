@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RESTFulSense.Services;
 
-namespace RESTFulSense.APIs
+namespace RESTFulSense.Clients
 {
     public class RESTFulApiClient : HttpClient, IRESTFulApiClient
     {
