@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Hassan Habib</Authors>
     <Company>Hassan Habib</Company>
     <Description>A RESTFul operations client that serializes responses and throws error for &gt;= 400 status codes.</Description>
@@ -10,18 +10,18 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageIcon>api.png</PackageIcon>
     <PackageIconUrl />
-    <Version>0.6</Version>
-    <AssemblyVersion>0.0.0.6</AssemblyVersion>
-    <FileVersion>0.0.0.6</FileVersion>
+    <Version>0.7</Version>
+    <AssemblyVersion>0.0.0.7</AssemblyVersion>
+    <FileVersion>0.0.0.7</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <RepositoryUrl>https://github.com/hassanhabib/RESTFulSense</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>RESTFul API</PackageTags>
-    <PackageReleaseNotes>- Change APIs namespace to Clients
-- Implement RESTFulApiFactoryClient to support ASP.NET Core services.AddHttpClient Factory pattern.</PackageReleaseNotes>
+    <PackageReleaseNotes>.NET Standard 2.1 Upgrade
+</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
