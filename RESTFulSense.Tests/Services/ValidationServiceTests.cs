@@ -25,26 +25,35 @@ namespace RESTFulSense.Tests.Services
             var badRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
 
             // when
-            ValueTask validateExceptionTask =
+            ValueTask validateHttpResponseTask =
                 ValidationService.ValidateHttpResponseAsync(badRequestResponseMessage);
 
             // then
             HttpResponseBadRequestException httpResponseBadRequestException =
                 await Assert.ThrowsAsync<HttpResponseBadRequestException>(() => 
-                    validateExceptionTask.AsTask()); ;
+                    validateHttpResponseTask.AsTask()); ;
 
             httpResponseBadRequestException.Message.Should().BeEquivalentTo(randomContent);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorized()
+        public async Task ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorized()
         {
             // given
-            var unauthorizedResponseMessage = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            string randomContent = GetrRandomContent();
+            string content = randomContent;
+            var unauthorizedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Unauthorized, content);
 
-            // when . then
-            Assert.Throws<HttpResponseUnauthorizedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(unauthorizedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(unauthorizedResponseMessage);
+
+            // then
+            HttpResponseUnauthorizedException httpResponseUnauthorizedException =
+                await Assert.ThrowsAsync<HttpResponseUnauthorizedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseUnauthorizedException.Message.Should().BeEquivalentTo(randomContent);
         }
 
         [Fact]

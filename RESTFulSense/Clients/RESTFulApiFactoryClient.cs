@@ -21,7 +21,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                 await this.httpClient.GetAsync(relativeUrl);
 
-            ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -33,7 +33,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString);
 
-            ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -45,7 +45,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString);
 
-            ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -55,7 +55,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                 await this.httpClient.PutAsync(relativeUrl, content: default);
 
-            ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -65,7 +65,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                 await this.httpClient.DeleteAsync(relativeUrl);
 
-            ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
         public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
@@ -73,7 +73,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage = await
                 this.httpClient.GetAsync(relativeUrl);
 
-            ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
