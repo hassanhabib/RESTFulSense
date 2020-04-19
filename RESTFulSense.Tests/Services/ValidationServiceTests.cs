@@ -17,10 +17,10 @@ namespace RESTFulSense.Tests.Services
     public class ValidationServiceTests
     {
         [Fact]
-        public async Task ShouldThrowHttpResponseBadRequestExceptionIfResponseStatusCodeWasBadRequest()
+        public async Task ShouldThrowHttpResponseBadRequestExceptionIfResponseStatusCodeWasBadRequestAsync()
         {
             // given
-            string randomContent = GetrRandomContent();
+            string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
             var badRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
@@ -31,17 +31,17 @@ namespace RESTFulSense.Tests.Services
 
             // then
             HttpResponseBadRequestException httpResponseBadRequestException =
-                await Assert.ThrowsAsync<HttpResponseBadRequestException>(() => 
-                    validateHttpResponseTask.AsTask()); ;
+                await Assert.ThrowsAsync<HttpResponseBadRequestException>(() =>
+                    validateHttpResponseTask.AsTask());
 
             httpResponseBadRequestException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorized()
+        public async Task ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorizedAsync()
         {
             // given
-            string randomContent = GetrRandomContent();
+            string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
             var unauthorizedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Unauthorized, content);
@@ -59,399 +59,759 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public void ShouldThrowHttpResponsePaymentRequiredExceptionIfResponseStatusCodeWasPaymentRequired()
+        public async Task ShouldThrowHttpResponsePaymentRequiredExceptionIfResponseStatusCodeWasPaymentRequiredAsync()
         {
             // given
-            var paymentRequiredResponseMessage = new HttpResponseMessage(HttpStatusCode.PaymentRequired);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var paymentRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.PaymentRequired, content);
 
-            // when . then
-            Assert.Throws<HttpResponsePaymentRequiredException>(() =>
-                ValidationService.ValidateHttpResponseAsync(paymentRequiredResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(paymentRequiredResponseMessage);
+
+            // then
+            HttpResponsePaymentRequiredException httpResponsePaymentRequiredException =
+                await Assert.ThrowsAsync<HttpResponsePaymentRequiredException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponsePaymentRequiredException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseForbiddenExceptionIfResponseStatusCodeWasForbidden()
+        public async Task ShouldThrowHttpResponseForbiddenExceptionIfResponseStatusCodeWasForbiddenAsync()
         {
             // given
-            var forbiddenResponseMessage = new HttpResponseMessage(HttpStatusCode.Forbidden);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var forbiddenResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Forbidden, content);
 
-            // when . then
-            Assert.Throws<HttpResponseForbiddenException>(() =>
-                ValidationService.ValidateHttpResponseAsync(forbiddenResponseMessage));
+            // when 
+            ValueTask validateHttpResponseTask =
+               ValidationService.ValidateHttpResponseAsync(forbiddenResponseMessage);
+
+            // then
+            HttpResponseForbiddenException httpResponseForbiddenException =
+                await Assert.ThrowsAsync<HttpResponseForbiddenException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseForbiddenException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseNotFoundExceptionIfResponseStatusCodeWasNotFound()
+        public async Task ShouldThrowHttpResponseNotFoundExceptionIfResponseStatusCodeWasNotFoundAsync()
         {
             // given
-            var notFoundResponseMessage = new HttpResponseMessage(HttpStatusCode.NotFound);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var notFoundResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotFound, content);
 
-            // when . then
-            Assert.Throws<HttpResponseNotFoundException>(() =>
-                ValidationService.ValidateHttpResponseAsync(notFoundResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(notFoundResponseMessage);
+
+            // then
+            HttpResponseNotFoundException httpResponseNotFoundException =
+                await Assert.ThrowsAsync<HttpResponseNotFoundException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseNotFoundException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseMethodNotAllowedExceptionIfResponseStatusCodeWasMethodNotAllowed()
+        public async Task ShouldThrowHttpResponseMethodNotAllowedExceptionIfResponseStatusCodeWasMethodNotAllowedAsync()
         {
             // given
-            var methodNotAllowedResponseMessage = new HttpResponseMessage(HttpStatusCode.MethodNotAllowed);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var methodNotAllowedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.MethodNotAllowed, content);
 
-            // when . then
-            Assert.Throws<HttpResponseMethodNotAllowedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(methodNotAllowedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(methodNotAllowedResponseMessage);
+
+            // then
+            HttpResponseMethodNotAllowedException httpResponseMethodNotAllowedException =
+                await Assert.ThrowsAsync<HttpResponseMethodNotAllowedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseMethodNotAllowedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseNotAcceptableExceptionIfResponseStatusCodeWasNotAcceptable()
+        public async Task ShouldThrowHttpResponseNotAcceptableExceptionIfResponseStatusCodeWasNotAcceptableAsync()
         {
             // given
-            var notAcceptableResponseMessage = new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var notAcceptableResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotAcceptable, content);
 
-            // when . then
-            Assert.Throws<HttpResponseNotAcceptableException>(() =>
-                ValidationService.ValidateHttpResponseAsync(notAcceptableResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(notAcceptableResponseMessage);
+
+            // then
+            HttpResponseNotAcceptableException httpResponseNotAcceptableException =
+                await Assert.ThrowsAsync<HttpResponseNotAcceptableException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseNotAcceptableException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseProxyAuthenticationRequiredExceptionIfResponseStatusCodeWasProxyAuthenticationRequired()
+        public async Task ShouldThrowHttpResponseProxyAuthenticationRequiredExceptionIfResponseStatusCodeWasProxyAuthenticationRequiredAsync()
         {
             // given
-            var proxyAuthenticationRequiredResponseMessage = new HttpResponseMessage(HttpStatusCode.ProxyAuthenticationRequired);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var proxyAuthenticationRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.ProxyAuthenticationRequired, content);
 
-            // when . then
-            Assert.Throws<HttpResponseProxyAuthenticationRequiredException>(() =>
-                ValidationService.ValidateHttpResponseAsync(proxyAuthenticationRequiredResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(proxyAuthenticationRequiredResponseMessage);
+
+            // then
+            HttpResponseProxyAuthenticationRequiredException httpResponseProxyAuthenticationRequiredException =
+                await Assert.ThrowsAsync<HttpResponseProxyAuthenticationRequiredException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseProxyAuthenticationRequiredException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseRequestTimeoutExceptionIfResponseStatusCodeWasRequestTimeout()
+        public async Task ShouldThrowHttpResponseRequestTimeoutExceptionIfResponseStatusCodeWasRequestTimeoutAsync()
         {
             // given
-            var requestTimeoutResponseMessage = new HttpResponseMessage(HttpStatusCode.RequestTimeout);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var requestTimeoutResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestTimeout, content);
 
-            // when . then
-            Assert.Throws<HttpResponseRequestTimeoutException>(() =>
-                ValidationService.ValidateHttpResponseAsync(requestTimeoutResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(requestTimeoutResponseMessage);
+
+            // then
+            HttpResponseRequestTimeoutException httpResponseRequestTimeoutException =
+                await Assert.ThrowsAsync<HttpResponseRequestTimeoutException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseRequestTimeoutException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseConflictExceptionIfResponseStatusCodeWasConflict()
+        public async Task ShouldThrowHttpResponseConflictExceptionIfResponseStatusCodeWasConflictAsync()
         {
             // given
-            var conflictResponseMessage = new HttpResponseMessage(HttpStatusCode.Conflict);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var conflictResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Conflict, content);
 
-            // when . then
-            Assert.Throws<HttpResponseConflictException>(() =>
-                ValidationService.ValidateHttpResponseAsync(conflictResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(conflictResponseMessage);
+
+            // then
+            HttpResponseConflictException httpResponseConflictException =
+                await Assert.ThrowsAsync<HttpResponseConflictException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseConflictException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseGoneExceptionIfResponseStatusCodeWasGone()
+        public async Task ShouldThrowHttpResponseGoneExceptionIfResponseStatusCodeWasGoneAsync()
         {
             // given
-            var goneResponseMessage = new HttpResponseMessage(HttpStatusCode.Gone);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var goneResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Gone, content);
 
-            // when . then
-            Assert.Throws<HttpResponseGoneException>(() =>
-                ValidationService.ValidateHttpResponseAsync(goneResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(goneResponseMessage);
+
+            // then
+            HttpResponseGoneException httpResponseGoneException =
+                await Assert.ThrowsAsync<HttpResponseGoneException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseGoneException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseLengthRequiredExceptionIfResponseStatusCodeWasLengthRequired()
+        public async Task ShouldThrowHttpResponseLengthRequiredExceptionIfResponseStatusCodeWasLengthRequiredAsync()
         {
             // given
-            var lengthRequiredResponseMessage = new HttpResponseMessage(HttpStatusCode.LengthRequired);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var lengthRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.LengthRequired, content);
 
-            // when . then
-            Assert.Throws<HttpResponseLengthRequiredException>(() =>
-                ValidationService.ValidateHttpResponseAsync(lengthRequiredResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(lengthRequiredResponseMessage);
+
+            // then
+            HttpResponseLengthRequiredException httpResponseLengthRequiredException =
+                await Assert.ThrowsAsync<HttpResponseLengthRequiredException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseLengthRequiredException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponsePreconditionFailedExceptionIfResponseStatusCodeWasPreconditionFailed()
+        public async Task ShouldThrowHttpResponsePreconditionFailedExceptionIfResponseStatusCodeWasPreconditionFailedAsync()
         {
             // given
-            var preconditionFailedResponseMessage = new HttpResponseMessage(HttpStatusCode.PreconditionFailed);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var preconditionFailedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.PreconditionFailed, content);
 
-            // when . then
-            Assert.Throws<HttpResponsePreconditionFailedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(preconditionFailedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(preconditionFailedResponseMessage);
+
+            // then
+            HttpResponsePreconditionFailedException httpResponsePreconditionFailedException =
+                await Assert.ThrowsAsync<HttpResponsePreconditionFailedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponsePreconditionFailedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseRequestEntityTooLargeExceptionIfResponseStatusCodeWasRequestEntityTooLarge()
+        public async Task ShouldThrowHttpResponseRequestEntityTooLargeExceptionIfResponseStatusCodeWasRequestEntityTooLargeAsync()
         {
             // given
-            var requestEntityTooLargeResponseMessage = new HttpResponseMessage(HttpStatusCode.RequestEntityTooLarge);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var requestEntityTooLargeResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestEntityTooLarge, content);
 
-            // when . then
-            Assert.Throws<HttpResponseRequestEntityTooLargeException>(() =>
-                ValidationService.ValidateHttpResponseAsync(requestEntityTooLargeResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(requestEntityTooLargeResponseMessage);
+
+            // then
+            HttpResponseRequestEntityTooLargeException httpResponseRequestEntityTooLargeException =
+                await Assert.ThrowsAsync<HttpResponseRequestEntityTooLargeException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseRequestEntityTooLargeException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseRequestUriTooLongExceptionIfResponseStatusCodeWasRequestUriTooLong()
+        public async Task ShouldThrowHttpResponseRequestUriTooLongExceptionIfResponseStatusCodeWasRequestUriTooLongAsync()
         {
             // given
-            var requestUriTooLongResponseMessage = new HttpResponseMessage(HttpStatusCode.RequestUriTooLong);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var requestUriTooLongResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestUriTooLong, content);
 
-            // when . then
-            Assert.Throws<HttpResponseRequestUriTooLongException>(() =>
-                ValidationService.ValidateHttpResponseAsync(requestUriTooLongResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(requestUriTooLongResponseMessage);
+
+            // then
+            HttpResponseRequestUriTooLongException httpResponseRequestUriTooLongException =
+                await Assert.ThrowsAsync<HttpResponseRequestUriTooLongException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseRequestUriTooLongException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseUnsupportedMediaTypeExceptionIfResponseStatusCodeWasUnsupportedMediaType()
+        public async Task ShouldThrowHttpResponseUnsupportedMediaTypeExceptionIfResponseStatusCodeWasUnsupportedMediaTypeAsync()
         {
             // given
-            var unsupportedMediaTypeResponseMessage = new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var unsupportedMediaTypeResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UnsupportedMediaType, content);
 
-            // when . then
-            Assert.Throws<HttpResponseUnsupportedMediaTypeException>(() =>
-                ValidationService.ValidateHttpResponseAsync(unsupportedMediaTypeResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(unsupportedMediaTypeResponseMessage);
+
+            // then
+            HttpResponseUnsupportedMediaTypeException httpResponseUnsupportedMediaTypeException =
+                await Assert.ThrowsAsync<HttpResponseUnsupportedMediaTypeException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseUnsupportedMediaTypeException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseRequestedRangeNotSatisfiableExceptionIfResponseStatusCodeWasRequestedRangeNotSatisfiable()
+        public async Task ShouldThrowHttpResponseRequestedRangeNotSatisfiableExceptionIfResponseStatusCodeWasRequestedRangeNotSatisfiableAsync()
         {
             // given
-            var requestedRangeNotSatisfiableResponseMessage = new HttpResponseMessage(HttpStatusCode.RequestedRangeNotSatisfiable);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var requestedRangeNotSatisfiableResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestedRangeNotSatisfiable, content);
 
-            // when . then
-            Assert.Throws<HttpResponseRequestedRangeNotSatisfiableException>(() =>
-                ValidationService.ValidateHttpResponseAsync(requestedRangeNotSatisfiableResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(requestedRangeNotSatisfiableResponseMessage);
+
+            // then
+            HttpResponseRequestedRangeNotSatisfiableException httpResponseRequestedRangeNotSatisfiableException =
+                await Assert.ThrowsAsync<HttpResponseRequestedRangeNotSatisfiableException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseRequestedRangeNotSatisfiableException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseExpectationFailedExceptionIfResponseStatusCodeWasExpectationFailed()
+        public async Task ShouldThrowHttpResponseExpectationFailedExceptionIfResponseStatusCodeWasExpectationFailedAsync()
         {
             // given
-            var expectationFailedResponseMessage = new HttpResponseMessage(HttpStatusCode.ExpectationFailed);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var expectationFailedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.ExpectationFailed, content);
 
-            // when . then
-            Assert.Throws<HttpResponseExpectationFailedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(expectationFailedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(expectationFailedResponseMessage);
+
+            // then
+            HttpResponseExpectationFailedException httpResponseExpectationFailedException =
+                await Assert.ThrowsAsync<HttpResponseExpectationFailedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseExpectationFailedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseMisdirectedRequestExceptionIfResponseStatusCodeWasMisdirectedRequest()
+        public async Task ShouldThrowHttpResponseMisdirectedRequestExceptionIfResponseStatusCodeWasMisdirectedRequestAsync()
         {
             // given
-            var misdirectedRequestResponseMessage = new HttpResponseMessage(HttpStatusCode.MisdirectedRequest);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var misdirectedRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.MisdirectedRequest, content);
 
-            // when . then
-            Assert.Throws<HttpResponseMisdirectedRequestException>(() =>
-                ValidationService.ValidateHttpResponseAsync(misdirectedRequestResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(misdirectedRequestResponseMessage);
+
+            // then
+            HttpResponseMisdirectedRequestException httpResponseMisdirectedRequestException =
+                await Assert.ThrowsAsync<HttpResponseMisdirectedRequestException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseMisdirectedRequestException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseUnprocessableEntityExceptionIfResponseStatusCodeWasUnprocessableEntity()
+        public async Task ShouldThrowHttpResponseUnprocessableEntityExceptionIfResponseStatusCodeWasUnprocessableEntityAsync()
         {
             // given
-            var unprocessableEntityResponseMessage = new HttpResponseMessage(HttpStatusCode.UnprocessableEntity);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var unprocessableEntityResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UnprocessableEntity, content);
 
-            // when . then
-            Assert.Throws<HttpResponseUnprocessableEntityException>(() =>
-                ValidationService.ValidateHttpResponseAsync(unprocessableEntityResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(unprocessableEntityResponseMessage);
+
+            // then
+            HttpResponseUnprocessableEntityException httpResponseUnprocessableEntityException =
+                await Assert.ThrowsAsync<HttpResponseUnprocessableEntityException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseUnprocessableEntityException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseLockedExceptionIfResponseStatusCodeWasLocked()
+        public async Task ShouldThrowHttpResponseLockedExceptionIfResponseStatusCodeWasLockedAsync()
         {
             // given
-            var lockedResponseMessage = new HttpResponseMessage(HttpStatusCode.Locked);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var lockedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Locked, content);
 
-            // when . then
-            Assert.Throws<HttpResponseLockedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(lockedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(lockedResponseMessage);
+
+            // then
+            HttpResponseLockedException httpResponseLockedException =
+                await Assert.ThrowsAsync<HttpResponseLockedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseLockedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseFailedDependencyExceptionIfResponseStatusCodeWasFailedDependency()
+        public async Task ShouldThrowHttpResponseFailedDependencyExceptionIfResponseStatusCodeWasFailedDependencyAsync()
         {
             // given
-            var failedDependencyResponseMessage = new HttpResponseMessage(HttpStatusCode.FailedDependency);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var failedDependencyResponseMessage = CreateHttpResponseMessage(HttpStatusCode.FailedDependency, content);
 
-            // when . then
-            Assert.Throws<HttpResponseFailedDependencyException>(() =>
-                ValidationService.ValidateHttpResponseAsync(failedDependencyResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(failedDependencyResponseMessage);
+
+            // then
+            HttpResponseFailedDependencyException httpResponseFailedDependencyException =
+                await Assert.ThrowsAsync<HttpResponseFailedDependencyException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseFailedDependencyException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseUpgradeRequiredExceptionIfResponseStatusCodeWasUpgradeRequired()
+        public async Task ShouldThrowHttpResponseUpgradeRequiredExceptionIfResponseStatusCodeWasUpgradeRequiredAsync()
         {
             // given
-            var upgradeRequiredResponseMessage = new HttpResponseMessage(HttpStatusCode.UpgradeRequired);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var upgradeRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UpgradeRequired, content);
 
-            // when . then
-            Assert.Throws<HttpResponseUpgradeRequiredException>(() =>
-                ValidationService.ValidateHttpResponseAsync(upgradeRequiredResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(upgradeRequiredResponseMessage);
+
+            // then
+            HttpResponseUpgradeRequiredException httpResponseUpgradeRequiredException =
+                await Assert.ThrowsAsync<HttpResponseUpgradeRequiredException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseUpgradeRequiredException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponsePreconditionRequiredExceptionIfResponseStatusCodeWasPreconditionRequired()
+        public async Task ShouldThrowHttpResponsePreconditionRequiredExceptionIfResponseStatusCodeWasPreconditionRequiredAsync()
         {
             // given
-            var preconditionRequiredResponseMessage = new HttpResponseMessage(HttpStatusCode.PreconditionRequired);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var preconditionRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.PreconditionRequired, content);
 
-            // when . then
-            Assert.Throws<HttpResponsePreconditionRequiredException>(() =>
-                ValidationService.ValidateHttpResponseAsync(preconditionRequiredResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(preconditionRequiredResponseMessage);
+
+            // then
+            HttpResponsePreconditionRequiredException httpResponsePreconditionRequiredException =
+                await Assert.ThrowsAsync<HttpResponsePreconditionRequiredException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponsePreconditionRequiredException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseTooManyRequestsExceptionIfResponseStatusCodeWasTooManyRequests()
+        public async Task ShouldThrowHttpResponseTooManyRequestsExceptionIfResponseStatusCodeWasTooManyRequestsAsync()
         {
             // given
-            var tooManyRequestsResponseMessage = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var tooManyRequestsResponseMessage = CreateHttpResponseMessage(HttpStatusCode.TooManyRequests, content);
 
-            // when . then
-            Assert.Throws<HttpResponseTooManyRequestsException>(() =>
-                ValidationService.ValidateHttpResponseAsync(tooManyRequestsResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(tooManyRequestsResponseMessage);
+
+            // then
+            HttpResponseTooManyRequestsException httpResponseTooManyRequestsException =
+                await Assert.ThrowsAsync<HttpResponseTooManyRequestsException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseTooManyRequestsException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseRequestHeaderFieldsTooLargeExceptionIfResponseStatusCodeWasRequestHeaderFieldsTooLarge()
+        public async Task ShouldThrowHttpResponseRequestHeaderFieldsTooLargeExceptionIfResponseStatusCodeWasRequestHeaderFieldsTooLargeAsync()
         {
             // given
-            var requestHeaderFieldsTooLargeResponseMessage = new HttpResponseMessage(HttpStatusCode.RequestHeaderFieldsTooLarge);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var requestHeaderFieldsTooLargeResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestHeaderFieldsTooLarge, content);
 
-            // when . then
-            Assert.Throws<HttpResponseRequestHeaderFieldsTooLargeException>(() =>
-                ValidationService.ValidateHttpResponseAsync(requestHeaderFieldsTooLargeResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(requestHeaderFieldsTooLargeResponseMessage);
+
+            // then
+            HttpResponseRequestHeaderFieldsTooLargeException httpResponseRequestHeaderFieldsTooLargeException =
+                await Assert.ThrowsAsync<HttpResponseRequestHeaderFieldsTooLargeException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseRequestHeaderFieldsTooLargeException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseUnavailableForLegalReasonsExceptionIfResponseStatusCodeWasUnavailableForLegalReasons()
+        public async Task ShouldThrowHttpResponseUnavailableForLegalReasonsExceptionIfResponseStatusCodeWasUnavailableForLegalReasonsAsync()
         {
             // given
-            var unavailableForLegalReasonsResponseMessage = new HttpResponseMessage(HttpStatusCode.UnavailableForLegalReasons);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var unavailableForLegalReasonsResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UnavailableForLegalReasons, content);
 
-            // when . then
-            Assert.Throws<HttpResponseUnavailableForLegalReasonsException>(() =>
-                ValidationService.ValidateHttpResponseAsync(unavailableForLegalReasonsResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(unavailableForLegalReasonsResponseMessage);
+
+            // then
+            HttpResponseUnavailableForLegalReasonsException httpResponseUnavailableForLegalReasonsException =
+                await Assert.ThrowsAsync<HttpResponseUnavailableForLegalReasonsException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseUnavailableForLegalReasonsException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseInternalServerErrorExceptionIfResponseStatusCodeWasInternalServerError()
+        public async Task ShouldThrowHttpResponseInternalServerErrorExceptionIfResponseStatusCodeWasInternalServerErrorAsync()
         {
             // given
-            var internalServerErrorResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var internalServerErrorResponseMessage = CreateHttpResponseMessage(HttpStatusCode.InternalServerError, content);
 
-            // when . then
-            Assert.Throws<HttpResponseInternalServerErrorException>(() =>
-                ValidationService.ValidateHttpResponseAsync(internalServerErrorResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(internalServerErrorResponseMessage);
+
+            // then
+            HttpResponseInternalServerErrorException httpResponseInternalServerErrorException =
+                await Assert.ThrowsAsync<HttpResponseInternalServerErrorException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseInternalServerErrorException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseNotImplementedExceptionIfResponseStatusCodeWasNotImplemented()
+        public async Task ShouldThrowHttpResponseNotImplementedExceptionIfResponseStatusCodeWasNotImplementedAsync()
         {
             // given
-            var notImplementedResponseMessage = new HttpResponseMessage(HttpStatusCode.NotImplemented);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var notImplementedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotImplemented, content);
 
-            // when . then
-            Assert.Throws<HttpResponseNotImplementedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(notImplementedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(notImplementedResponseMessage);
+
+            // then
+            HttpResponseNotImplementedException httpResponseNotImplementedException =
+                await Assert.ThrowsAsync<HttpResponseNotImplementedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseNotImplementedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseBadGatewayExceptionIfResponseStatusCodeWasBadGateway()
+        public async Task ShouldThrowHttpResponseBadGatewayExceptionIfResponseStatusCodeWasBadGatewayAsync()
         {
             // given
-            var badGatewayResponseMessage = new HttpResponseMessage(HttpStatusCode.BadGateway);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var badGatewayResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadGateway, content);
 
-            // when . then
-            Assert.Throws<HttpResponseBadGatewayException>(() =>
-                ValidationService.ValidateHttpResponseAsync(badGatewayResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(badGatewayResponseMessage);
+
+            // then
+            HttpResponseBadGatewayException httpResponseBadGatewayException =
+                await Assert.ThrowsAsync<HttpResponseBadGatewayException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseBadGatewayException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseServiceUnavailableExceptionIfResponseStatusCodeWasServiceUnavailable()
+        public async Task ShouldThrowHttpResponseServiceUnavailableExceptionIfResponseStatusCodeWasServiceUnavailableAsync()
         {
             // given
-            var serviceUnavailableResponseMessage = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var serviceUnavailableResponseMessage = CreateHttpResponseMessage(HttpStatusCode.ServiceUnavailable, content);
 
-            // when . then
-            Assert.Throws<HttpResponseServiceUnavailableException>(() =>
-                ValidationService.ValidateHttpResponseAsync(serviceUnavailableResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(serviceUnavailableResponseMessage);
+
+            // then
+            HttpResponseServiceUnavailableException httpResponseServiceUnavailableException =
+                await Assert.ThrowsAsync<HttpResponseServiceUnavailableException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseServiceUnavailableException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseGatewayTimeoutExceptionIfResponseStatusCodeWasGatewayTimeout()
+        public async Task ShouldThrowHttpResponseGatewayTimeoutExceptionIfResponseStatusCodeWasGatewayTimeoutAsync()
         {
             // given
-            var gatewayTimeoutResponseMessage = new HttpResponseMessage(HttpStatusCode.GatewayTimeout);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var gatewayTimeoutResponseMessage = CreateHttpResponseMessage(HttpStatusCode.GatewayTimeout, content);
 
-            // when . then
-            Assert.Throws<HttpResponseGatewayTimeoutException>(() =>
-                ValidationService.ValidateHttpResponseAsync(gatewayTimeoutResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(gatewayTimeoutResponseMessage);
+
+            // then
+            HttpResponseGatewayTimeoutException httpResponseGatewayTimeoutException =
+                await Assert.ThrowsAsync<HttpResponseGatewayTimeoutException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseGatewayTimeoutException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseHttpVersionNotSupportedExceptionIfResponseStatusCodeWasHttpVersionNotSupported()
+        public async Task ShouldThrowHttpResponseHttpVersionNotSupportedExceptionIfResponseStatusCodeWasHttpVersionNotSupportedAsync()
         {
             // given
-            var httpVersionNotSupportedResponseMessage = new HttpResponseMessage(HttpStatusCode.HttpVersionNotSupported);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var httpVersionNotSupportedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.HttpVersionNotSupported, content);
 
-            // when . then
-            Assert.Throws<HttpResponseHttpVersionNotSupportedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(httpVersionNotSupportedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(httpVersionNotSupportedResponseMessage);
+
+            // then
+            HttpResponseHttpVersionNotSupportedException httpResponseHttpVersionNotSupportedException =
+                await Assert.ThrowsAsync<HttpResponseHttpVersionNotSupportedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseHttpVersionNotSupportedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseVariantAlsoNegotiatesExceptionIfResponseStatusCodeWasVariantAlsoNegotiates()
+        public async Task ShouldThrowHttpResponseVariantAlsoNegotiatesExceptionIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
         {
             // given
-            var variantAlsoNegotiatesResponseMessage = new HttpResponseMessage(HttpStatusCode.VariantAlsoNegotiates);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var variantAlsoNegotiatesResponseMessage = CreateHttpResponseMessage(HttpStatusCode.VariantAlsoNegotiates, content);
 
-            // when . then
-            Assert.Throws<HttpResponseVariantAlsoNegotiatesException>(() =>
-                ValidationService.ValidateHttpResponseAsync(variantAlsoNegotiatesResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+               ValidationService.ValidateHttpResponseAsync(variantAlsoNegotiatesResponseMessage);
+
+            // then
+            HttpResponseVariantAlsoNegotiatesException httpResponseVariantAlsoNegotiatesException =
+                await Assert.ThrowsAsync<HttpResponseVariantAlsoNegotiatesException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseVariantAlsoNegotiatesException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseInsufficientStorageExceptionIfResponseStatusCodeWasInsufficientStorage()
+        public async Task ShouldThrowHttpResponseInsufficientStorageExceptionIfResponseStatusCodeWasInsufficientStorageAsync()
         {
             // given
-            var insufficientStorageResponseMessage = new HttpResponseMessage(HttpStatusCode.InsufficientStorage);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var insufficientStorageResponseMessage = CreateHttpResponseMessage(HttpStatusCode.InsufficientStorage, content);
 
-            // when . then
-            Assert.Throws<HttpResponseInsufficientStorageException>(() =>
-                ValidationService.ValidateHttpResponseAsync(insufficientStorageResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+               ValidationService.ValidateHttpResponseAsync(insufficientStorageResponseMessage);
+
+            // then
+            HttpResponseInsufficientStorageException httpResponseInsufficientStorageException =
+                await Assert.ThrowsAsync<HttpResponseInsufficientStorageException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseInsufficientStorageException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseLoopDetectedExceptionIfResponseStatusCodeWasLoopDetected()
+        public async Task ShouldThrowHttpResponseLoopDetectedExceptionIfResponseStatusCodeWasLoopDetectedAsync()
         {
             // given
-            var loopDetectedResponseMessage = new HttpResponseMessage(HttpStatusCode.LoopDetected);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var loopDetectedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.LoopDetected, content);
 
-            // when . then
-            Assert.Throws<HttpResponseLoopDetectedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(loopDetectedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(loopDetectedResponseMessage);
+
+            // then
+            HttpResponseLoopDetectedException httpResponseLoopDetectedException =
+                await Assert.ThrowsAsync<HttpResponseLoopDetectedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseLoopDetectedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseNotExtendedExceptionIfResponseStatusCodeWasNotExtended()
+        public async Task ShouldThrowHttpResponseNotExtendedExceptionIfResponseStatusCodeWasNotExtendedAsync()
         {
             // given
-            var notExtendedResponseMessage = new HttpResponseMessage(HttpStatusCode.NotExtended);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var notExtendedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotExtended, content);
 
-            // when . then
-            Assert.Throws<HttpResponseNotExtendedException>(() =>
-                ValidationService.ValidateHttpResponseAsync(notExtendedResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(notExtendedResponseMessage);
+
+            // then
+            HttpResponseNotExtendedException httpResponseNotExtendedException =
+                await Assert.ThrowsAsync<HttpResponseNotExtendedException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseNotExtendedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowHttpResponseNetworkAuthenticationRequiredExceptionIfResponseStatusCodeWasNetworkAuthenticationRequired()
+        public async Task ShouldThrowHttpResponseNetworkAuthenticationRequiredExceptionIfResponseStatusCodeWasNetworkAuthenticationRequiredAsync()
         {
             // given
-            var networkAuthenticationRequiredResponseMessage = new HttpResponseMessage(HttpStatusCode.NetworkAuthenticationRequired);
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+            var networkAuthenticationRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NetworkAuthenticationRequired, content);
 
-            // when . then
-            Assert.Throws<HttpResponseNetworkAuthenticationRequiredException>(() =>
-                ValidationService.ValidateHttpResponseAsync(networkAuthenticationRequiredResponseMessage));
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(networkAuthenticationRequiredResponseMessage);
+
+            // then
+            HttpResponseNetworkAuthenticationRequiredException httpResponseNetworkAuthenticationRequiredException =
+                await Assert.ThrowsAsync<HttpResponseNetworkAuthenticationRequiredException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseNetworkAuthenticationRequiredException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         private HttpResponseMessage CreateHttpResponseMessage(HttpStatusCode statusCode, string content)
@@ -462,7 +822,7 @@ namespace RESTFulSense.Tests.Services
             };
         }
 
-        private string GetrRandomContent() => new MnemonicString().GetValue();
+        private string GetRandomContent() => new MnemonicString().GetValue();
 
         private StreamContent CreateStreamContent(string content)
         {
