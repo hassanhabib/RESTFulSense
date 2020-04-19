@@ -1,10 +1,15 @@
 // Copyright (c) Hassan Habib.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using FluentAssertions;
 using RESTFulSense.Exceptions;
 using RESTFulSense.Services;
+using Tynamix.ObjectFiller;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services
@@ -12,16 +17,21 @@ namespace RESTFulSense.Tests.Services
     public class ValidationServiceTests
     {
         [Fact]
-        public void ShouldThrowHttpResponseBadRequestExceptionIfResponseStatusCodeWasBadRequest()
+        public async Task ShouldThrowHttpResponseBadRequestExceptionIfResponseStatusCodeWasBadRequest()
         {
             // given
-            var badRequestResponseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            string randomContent = GetrRandomContent();
+            string content = randomContent;
+            var badRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
 
             // when . then
-            Assert.Throws<HttpResponseBadRequestException>(() =>
-                ValidationService.ValidateHttpResponse(badRequestResponseMessage));
-        }
+            HttpResponseBadRequestException httpResponseBadRequestException = 
+                Assert.Throws<HttpResponseBadRequestException>(() =>
+                    ValidationService.ValidateHttpResponse(badRequestResponseMessage));
 
+            httpResponseBadRequestException.Message.Should().BeEquivalentTo(randomContent);
+        }
+     
         [Fact]
         public void ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorized()
         {
@@ -427,6 +437,24 @@ namespace RESTFulSense.Tests.Services
             // when . then
             Assert.Throws<HttpResponseNetworkAuthenticationRequiredException>(() =>
                 ValidationService.ValidateHttpResponse(networkAuthenticationRequiredResponseMessage));
+        }
+
+        private HttpResponseMessage CreateHttpResponseMessage(HttpStatusCode statusCode, string content)
+        {
+            return new HttpResponseMessage(statusCode)
+            {
+                Content = CreateStreamContent(content)
+            };
+        }
+
+        private string GetrRandomContent() => new MnemonicString().GetValue();
+
+        private StreamContent CreateStreamContent(string content)
+        {
+            byte[] contentBytes = Encoding.ASCII.GetBytes(content);
+            var stream = new MemoryStream(contentBytes);
+
+            return new StreamContent(stream);
         }
     }
 }
