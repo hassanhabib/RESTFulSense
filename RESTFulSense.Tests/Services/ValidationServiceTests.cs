@@ -22,6 +22,7 @@ namespace RESTFulSense.Tests.Services
             // given
             string randomContent = GetrRandomContent();
             string content = randomContent;
+            string expectedExceptionMessage = content;
             var badRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
 
             // when
@@ -33,7 +34,7 @@ namespace RESTFulSense.Tests.Services
                 await Assert.ThrowsAsync<HttpResponseBadRequestException>(() => 
                     validateHttpResponseTask.AsTask()); ;
 
-            httpResponseBadRequestException.Message.Should().BeEquivalentTo(randomContent);
+            httpResponseBadRequestException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
@@ -42,6 +43,7 @@ namespace RESTFulSense.Tests.Services
             // given
             string randomContent = GetrRandomContent();
             string content = randomContent;
+            string expectedExceptionMessage = content;
             var unauthorizedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Unauthorized, content);
 
             // when
@@ -53,7 +55,7 @@ namespace RESTFulSense.Tests.Services
                 await Assert.ThrowsAsync<HttpResponseUnauthorizedException>(() =>
                     validateHttpResponseTask.AsTask());
 
-            httpResponseUnauthorizedException.Message.Should().BeEquivalentTo(randomContent);
+            httpResponseUnauthorizedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
