@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseLockedException : HttpResponseException
     {
-        public HttpResponseLockedException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseLockedException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

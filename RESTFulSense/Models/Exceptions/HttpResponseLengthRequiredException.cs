@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseLengthRequiredException : HttpResponseException
     {
-        public HttpResponseLengthRequiredException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseLengthRequiredException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

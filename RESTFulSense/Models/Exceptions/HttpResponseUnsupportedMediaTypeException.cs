@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseUnsupportedMediaTypeException : HttpResponseException
     {
-        public HttpResponseUnsupportedMediaTypeException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseUnsupportedMediaTypeException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

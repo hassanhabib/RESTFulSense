@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseGoneException : HttpResponseException
     {
-        public HttpResponseGoneException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseGoneException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

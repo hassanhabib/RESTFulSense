@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseUnavailableForLegalReasonsException : HttpResponseException
     {
-        public HttpResponseUnavailableForLegalReasonsException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseUnavailableForLegalReasonsException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

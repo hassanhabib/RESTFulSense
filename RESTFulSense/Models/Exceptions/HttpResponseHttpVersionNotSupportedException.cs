@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseHttpVersionNotSupportedException : HttpResponseException
     {
-        public HttpResponseHttpVersionNotSupportedException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseHttpVersionNotSupportedException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

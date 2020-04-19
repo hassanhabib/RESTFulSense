@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseGatewayTimeoutException : HttpResponseException
     {
-        public HttpResponseGatewayTimeoutException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseGatewayTimeoutException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

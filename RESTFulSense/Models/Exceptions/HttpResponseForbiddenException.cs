@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseForbiddenException : HttpResponseException
     {
-        public HttpResponseForbiddenException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseForbiddenException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

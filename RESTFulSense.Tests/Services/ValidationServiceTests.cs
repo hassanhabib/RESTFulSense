@@ -24,14 +24,18 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             var badRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
 
-            // when . then
-            HttpResponseBadRequestException httpResponseBadRequestException = 
-                Assert.Throws<HttpResponseBadRequestException>(() =>
-                    ValidationService.ValidateHttpResponse(badRequestResponseMessage));
+            // when
+            ValueTask validateExceptionTask =
+                ValidationService.ValidateHttpResponseAsync(badRequestResponseMessage);
+
+            // then
+            HttpResponseBadRequestException httpResponseBadRequestException =
+                await Assert.ThrowsAsync<HttpResponseBadRequestException>(() => 
+                    validateExceptionTask.AsTask()); ;
 
             httpResponseBadRequestException.Message.Should().BeEquivalentTo(randomContent);
         }
-     
+
         [Fact]
         public void ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorized()
         {
@@ -40,7 +44,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseUnauthorizedException>(() =>
-                ValidationService.ValidateHttpResponse(unauthorizedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(unauthorizedResponseMessage));
         }
 
         [Fact]
@@ -51,7 +55,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponsePaymentRequiredException>(() =>
-                ValidationService.ValidateHttpResponse(paymentRequiredResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(paymentRequiredResponseMessage));
         }
 
         [Fact]
@@ -62,7 +66,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseForbiddenException>(() =>
-                ValidationService.ValidateHttpResponse(forbiddenResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(forbiddenResponseMessage));
         }
 
         [Fact]
@@ -73,7 +77,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseNotFoundException>(() =>
-                ValidationService.ValidateHttpResponse(notFoundResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(notFoundResponseMessage));
         }
 
         [Fact]
@@ -84,7 +88,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseMethodNotAllowedException>(() =>
-                ValidationService.ValidateHttpResponse(methodNotAllowedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(methodNotAllowedResponseMessage));
         }
 
         [Fact]
@@ -95,7 +99,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseNotAcceptableException>(() =>
-                ValidationService.ValidateHttpResponse(notAcceptableResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(notAcceptableResponseMessage));
         }
 
         [Fact]
@@ -106,7 +110,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseProxyAuthenticationRequiredException>(() =>
-                ValidationService.ValidateHttpResponse(proxyAuthenticationRequiredResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(proxyAuthenticationRequiredResponseMessage));
         }
 
         [Fact]
@@ -117,7 +121,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseRequestTimeoutException>(() =>
-                ValidationService.ValidateHttpResponse(requestTimeoutResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(requestTimeoutResponseMessage));
         }
 
         [Fact]
@@ -128,7 +132,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseConflictException>(() =>
-                ValidationService.ValidateHttpResponse(conflictResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(conflictResponseMessage));
         }
 
         [Fact]
@@ -139,7 +143,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseGoneException>(() =>
-                ValidationService.ValidateHttpResponse(goneResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(goneResponseMessage));
         }
 
         [Fact]
@@ -150,7 +154,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseLengthRequiredException>(() =>
-                ValidationService.ValidateHttpResponse(lengthRequiredResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(lengthRequiredResponseMessage));
         }
 
         [Fact]
@@ -161,7 +165,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponsePreconditionFailedException>(() =>
-                ValidationService.ValidateHttpResponse(preconditionFailedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(preconditionFailedResponseMessage));
         }
 
         [Fact]
@@ -172,7 +176,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseRequestEntityTooLargeException>(() =>
-                ValidationService.ValidateHttpResponse(requestEntityTooLargeResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(requestEntityTooLargeResponseMessage));
         }
 
         [Fact]
@@ -183,7 +187,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseRequestUriTooLongException>(() =>
-                ValidationService.ValidateHttpResponse(requestUriTooLongResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(requestUriTooLongResponseMessage));
         }
 
         [Fact]
@@ -194,7 +198,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseUnsupportedMediaTypeException>(() =>
-                ValidationService.ValidateHttpResponse(unsupportedMediaTypeResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(unsupportedMediaTypeResponseMessage));
         }
 
         [Fact]
@@ -205,7 +209,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseRequestedRangeNotSatisfiableException>(() =>
-                ValidationService.ValidateHttpResponse(requestedRangeNotSatisfiableResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(requestedRangeNotSatisfiableResponseMessage));
         }
 
         [Fact]
@@ -216,7 +220,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseExpectationFailedException>(() =>
-                ValidationService.ValidateHttpResponse(expectationFailedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(expectationFailedResponseMessage));
         }
 
         [Fact]
@@ -227,7 +231,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseMisdirectedRequestException>(() =>
-                ValidationService.ValidateHttpResponse(misdirectedRequestResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(misdirectedRequestResponseMessage));
         }
 
         [Fact]
@@ -238,7 +242,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseUnprocessableEntityException>(() =>
-                ValidationService.ValidateHttpResponse(unprocessableEntityResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(unprocessableEntityResponseMessage));
         }
 
         [Fact]
@@ -249,7 +253,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseLockedException>(() =>
-                ValidationService.ValidateHttpResponse(lockedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(lockedResponseMessage));
         }
 
         [Fact]
@@ -260,7 +264,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseFailedDependencyException>(() =>
-                ValidationService.ValidateHttpResponse(failedDependencyResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(failedDependencyResponseMessage));
         }
 
         [Fact]
@@ -271,7 +275,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseUpgradeRequiredException>(() =>
-                ValidationService.ValidateHttpResponse(upgradeRequiredResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(upgradeRequiredResponseMessage));
         }
 
         [Fact]
@@ -282,7 +286,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponsePreconditionRequiredException>(() =>
-                ValidationService.ValidateHttpResponse(preconditionRequiredResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(preconditionRequiredResponseMessage));
         }
 
         [Fact]
@@ -293,7 +297,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseTooManyRequestsException>(() =>
-                ValidationService.ValidateHttpResponse(tooManyRequestsResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(tooManyRequestsResponseMessage));
         }
 
         [Fact]
@@ -304,7 +308,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseRequestHeaderFieldsTooLargeException>(() =>
-                ValidationService.ValidateHttpResponse(requestHeaderFieldsTooLargeResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(requestHeaderFieldsTooLargeResponseMessage));
         }
 
         [Fact]
@@ -315,7 +319,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseUnavailableForLegalReasonsException>(() =>
-                ValidationService.ValidateHttpResponse(unavailableForLegalReasonsResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(unavailableForLegalReasonsResponseMessage));
         }
 
         [Fact]
@@ -326,7 +330,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseInternalServerErrorException>(() =>
-                ValidationService.ValidateHttpResponse(internalServerErrorResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(internalServerErrorResponseMessage));
         }
 
         [Fact]
@@ -337,7 +341,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseNotImplementedException>(() =>
-                ValidationService.ValidateHttpResponse(notImplementedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(notImplementedResponseMessage));
         }
 
         [Fact]
@@ -348,7 +352,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseBadGatewayException>(() =>
-                ValidationService.ValidateHttpResponse(badGatewayResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(badGatewayResponseMessage));
         }
 
         [Fact]
@@ -359,7 +363,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseServiceUnavailableException>(() =>
-                ValidationService.ValidateHttpResponse(serviceUnavailableResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(serviceUnavailableResponseMessage));
         }
 
         [Fact]
@@ -370,7 +374,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseGatewayTimeoutException>(() =>
-                ValidationService.ValidateHttpResponse(gatewayTimeoutResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(gatewayTimeoutResponseMessage));
         }
 
         [Fact]
@@ -381,7 +385,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseHttpVersionNotSupportedException>(() =>
-                ValidationService.ValidateHttpResponse(httpVersionNotSupportedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(httpVersionNotSupportedResponseMessage));
         }
 
         [Fact]
@@ -392,7 +396,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseVariantAlsoNegotiatesException>(() =>
-                ValidationService.ValidateHttpResponse(variantAlsoNegotiatesResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(variantAlsoNegotiatesResponseMessage));
         }
 
         [Fact]
@@ -403,7 +407,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseInsufficientStorageException>(() =>
-                ValidationService.ValidateHttpResponse(insufficientStorageResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(insufficientStorageResponseMessage));
         }
 
         [Fact]
@@ -414,7 +418,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseLoopDetectedException>(() =>
-                ValidationService.ValidateHttpResponse(loopDetectedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(loopDetectedResponseMessage));
         }
 
         [Fact]
@@ -425,7 +429,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseNotExtendedException>(() =>
-                ValidationService.ValidateHttpResponse(notExtendedResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(notExtendedResponseMessage));
         }
 
         [Fact]
@@ -436,7 +440,7 @@ namespace RESTFulSense.Tests.Services
 
             // when . then
             Assert.Throws<HttpResponseNetworkAuthenticationRequiredException>(() =>
-                ValidationService.ValidateHttpResponse(networkAuthenticationRequiredResponseMessage));
+                ValidationService.ValidateHttpResponseAsync(networkAuthenticationRequiredResponseMessage));
         }
 
         private HttpResponseMessage CreateHttpResponseMessage(HttpStatusCode statusCode, string content)

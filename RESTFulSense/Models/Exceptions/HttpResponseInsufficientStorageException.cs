@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseInsufficientStorageException : HttpResponseException
     {
-        public HttpResponseInsufficientStorageException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseInsufficientStorageException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

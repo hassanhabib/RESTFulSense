@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseNotFoundException : HttpResponseException
     {
-        public HttpResponseNotFoundException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseNotFoundException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

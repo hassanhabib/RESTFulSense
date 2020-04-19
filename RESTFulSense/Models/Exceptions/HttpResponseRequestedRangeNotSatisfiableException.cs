@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseRequestedRangeNotSatisfiableException : HttpResponseException
     {
-        public HttpResponseRequestedRangeNotSatisfiableException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseRequestedRangeNotSatisfiableException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseLoopDetectedException : HttpResponseException
     {
-        public HttpResponseLoopDetectedException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseLoopDetectedException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponsePreconditionFailedException : HttpResponseException
     {
-        public HttpResponsePreconditionFailedException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponsePreconditionFailedException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

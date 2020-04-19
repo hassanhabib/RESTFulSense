@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseNetworkAuthenticationRequiredException : HttpResponseException
     {
-        public HttpResponseNetworkAuthenticationRequiredException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseNetworkAuthenticationRequiredException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

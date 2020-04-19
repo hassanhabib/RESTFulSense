@@ -14,7 +14,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
-            ValidationService.ValidateHttpResponse(responseMessage);
+            ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -26,7 +26,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                await PostAsync(relativeUrl, contentString);
 
-            ValidationService.ValidateHttpResponse(responseMessage);
+            ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -38,7 +38,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
 
-            ValidationService.ValidateHttpResponse(responseMessage);
+            ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -48,7 +48,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                 await PutAsync(relativeUrl, content: default);
 
-            ValidationService.ValidateHttpResponse(responseMessage);
+            ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -56,13 +56,13 @@ namespace RESTFulSense.Clients
         public async ValueTask DeleteContentAsync(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await DeleteAsync(relativeUrl);
-            ValidationService.ValidateHttpResponse(responseMessage);
+            ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
         public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
-            ValidationService.ValidateHttpResponse(responseMessage);
+            ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }

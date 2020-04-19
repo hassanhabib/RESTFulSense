@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseMethodNotAllowedException : HttpResponseException
     {
-        public HttpResponseMethodNotAllowedException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseMethodNotAllowedException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

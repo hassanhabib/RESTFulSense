@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseExpectationFailedException : HttpResponseException
     {
-        public HttpResponseExpectationFailedException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseExpectationFailedException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

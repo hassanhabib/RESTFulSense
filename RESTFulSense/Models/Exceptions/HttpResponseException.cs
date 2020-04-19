@@ -8,8 +8,8 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseException : Exception
     {
-        public HttpResponseException(HttpResponseMessage httpResponseMessage) =>
-            this.HttpResponseMessage = httpResponseMessage;
+        public HttpResponseException(HttpResponseMessage httpResponseMessage, string message)
+            : base(message) => this.HttpResponseMessage = httpResponseMessage;
 
         public HttpResponseMessage HttpResponseMessage { get; private set; }
     }

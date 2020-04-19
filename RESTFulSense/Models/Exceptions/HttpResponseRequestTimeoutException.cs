@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseRequestTimeoutException : HttpResponseException
     {
-        public HttpResponseRequestTimeoutException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseRequestTimeoutException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

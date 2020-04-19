@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseBadGatewayException : HttpResponseException
     {
-        public HttpResponseBadGatewayException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseBadGatewayException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

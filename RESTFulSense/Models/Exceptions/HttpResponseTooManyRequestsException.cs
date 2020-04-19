@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseTooManyRequestsException : HttpResponseException
     {
-        public HttpResponseTooManyRequestsException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseTooManyRequestsException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

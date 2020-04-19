@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseRequestEntityTooLargeException : HttpResponseException
     {
-        public HttpResponseRequestEntityTooLargeException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseRequestEntityTooLargeException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

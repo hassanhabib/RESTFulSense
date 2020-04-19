@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseVariantAlsoNegotiatesException : HttpResponseException
     {
-        public HttpResponseVariantAlsoNegotiatesException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseVariantAlsoNegotiatesException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

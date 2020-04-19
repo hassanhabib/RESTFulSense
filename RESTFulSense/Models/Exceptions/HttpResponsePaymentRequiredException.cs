@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponsePaymentRequiredException : HttpResponseException
     {
-        public HttpResponsePaymentRequiredException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponsePaymentRequiredException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

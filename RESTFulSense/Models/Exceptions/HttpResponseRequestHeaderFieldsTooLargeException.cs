@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseRequestHeaderFieldsTooLargeException : HttpResponseException
     {
-        public HttpResponseRequestHeaderFieldsTooLargeException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseRequestHeaderFieldsTooLargeException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

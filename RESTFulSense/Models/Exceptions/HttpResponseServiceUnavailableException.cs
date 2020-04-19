@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseServiceUnavailableException : HttpResponseException
     {
-        public HttpResponseServiceUnavailableException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseServiceUnavailableException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }

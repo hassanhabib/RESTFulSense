@@ -7,7 +7,7 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseUpgradeRequiredException : HttpResponseException
     {
-        public HttpResponseUpgradeRequiredException(HttpResponseMessage responseMessage)
-            : base(responseMessage) { }
+        public HttpResponseUpgradeRequiredException(HttpResponseMessage responseMessage, string message)
+            : base(responseMessage, message) { }
     }
 }
