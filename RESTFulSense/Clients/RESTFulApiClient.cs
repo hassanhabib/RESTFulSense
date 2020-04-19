@@ -1,5 +1,8 @@
-﻿// Copyright (c) Hassan Habib.  All rights reserved.
-// Licensed under the MIT License.  See License.txt in the project root for license information.
+﻿// ---------------------------------------------------------------
+// Copyright (c) Hassan Habib & Alice Luo  All rights reserved.
+// Licensed under the MIT License.
+// See License.txt in the project root for license information.
+// ---------------------------------------------------------------
 
 using System.Net.Http;
 using System.Text;
@@ -14,7 +17,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
-            ValidationService.ValidateHttpResponse(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -26,7 +29,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                await PostAsync(relativeUrl, contentString);
 
-            ValidationService.ValidateHttpResponse(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -38,7 +41,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
 
-            ValidationService.ValidateHttpResponse(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -48,7 +51,7 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                 await PutAsync(relativeUrl, content: default);
 
-            ValidationService.ValidateHttpResponse(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
@@ -56,13 +59,13 @@ namespace RESTFulSense.Clients
         public async ValueTask DeleteContentAsync(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await DeleteAsync(relativeUrl);
-            ValidationService.ValidateHttpResponse(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
         public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
-            ValidationService.ValidateHttpResponse(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
         }
