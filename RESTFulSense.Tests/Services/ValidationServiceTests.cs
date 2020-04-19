@@ -1,5 +1,8 @@
-// Copyright (c) Hassan Habib.  All rights reserved.
-// Licensed under the MIT License.  See License.txt in the project root for license information.
+// ---------------------------------------------------------------
+// Copyright (c) Hassan Habib & Alice Luo  All rights reserved.
+// Licensed under the MIT License.
+// See License.txt in the project root for license information.
+// ---------------------------------------------------------------
 
 using System.IO;
 using System.Net;
@@ -23,7 +26,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var badRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
+            
+            HttpResponseMessage badRequestResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -44,7 +49,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var unauthorizedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Unauthorized, content);
+            
+            HttpResponseMessage unauthorizedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.Unauthorized, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -65,7 +72,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var paymentRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.PaymentRequired, content);
+
+            HttpResponseMessage paymentRequiredResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.PaymentRequired, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -86,7 +95,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var forbiddenResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Forbidden, content);
+            
+            HttpResponseMessage forbiddenResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.Forbidden, content);
 
             // when 
             ValueTask validateHttpResponseTask =
@@ -107,7 +118,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var notFoundResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotFound, content);
+            
+            HttpResponseMessage notFoundResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.NotFound, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -122,13 +135,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseMethodNotAllowedExceptionIfResponseStatusCodeWasMethodNotAllowedAsync()
+        public async Task ShouldThrowMethodNotAllowedExceptionIfResponseStatusCodeWasMethodNotAllowedAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var methodNotAllowedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.MethodNotAllowed, content);
+            
+            HttpResponseMessage methodNotAllowedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.MethodNotAllowed, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -149,7 +164,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var notAcceptableResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotAcceptable, content);
+            
+            HttpResponseMessage notAcceptableResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.NotAcceptable, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -164,13 +181,16 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseProxyAuthenticationRequiredExceptionIfResponseStatusCodeWasProxyAuthenticationRequiredAsync()
+        public async Task 
+            ShouldThrowProxyAuthenticationRequiredExceptionIfResponseStatusCodeWasProxyAuthenticationRequiredAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var proxyAuthenticationRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.ProxyAuthenticationRequired, content);
+
+            HttpResponseMessage proxyAuthenticationRequiredResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.ProxyAuthenticationRequired, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -269,13 +289,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponsePreconditionFailedExceptionIfResponseStatusCodeWasPreconditionFailedAsync()
+        public async Task ShouldThrowPreconditionFailedExceptionIfResponseStatusCodeWasPreconditionFailedAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var preconditionFailedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.PreconditionFailed, content);
+            
+            var preconditionFailedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.PreconditionFailed, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -290,13 +312,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseRequestEntityTooLargeExceptionIfResponseStatusCodeWasRequestEntityTooLargeAsync()
+        public async Task ShouldThrowRequestEntityTooLargeExceptionIfResponseStatusCodeWasRequestEntityTooLargeAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var requestEntityTooLargeResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestEntityTooLarge, content);
+
+            HttpResponseMessage requestEntityTooLargeResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.RequestEntityTooLarge, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -311,13 +335,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseRequestUriTooLongExceptionIfResponseStatusCodeWasRequestUriTooLongAsync()
+        public async Task ShouldThrowRequestUriTooLongExceptionIfResponseStatusCodeWasRequestUriTooLongAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var requestUriTooLongResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestUriTooLong, content);
+
+            HttpResponseMessage requestUriTooLongResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.RequestUriTooLong, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -332,13 +358,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUnsupportedMediaTypeExceptionIfResponseStatusCodeWasUnsupportedMediaTypeAsync()
+        public async Task ShouldThrowUnsupportedMediaTypeExceptionIfResponseStatusCodeWasUnsupportedMediaTypeAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var unsupportedMediaTypeResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UnsupportedMediaType, content);
+
+            HttpResponseMessage unsupportedMediaTypeResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.UnsupportedMediaType, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -353,13 +381,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseRequestedRangeNotSatisfiableExceptionIfResponseStatusCodeWasRequestedRangeNotSatisfiableAsync()
+        public async Task ShouldThrowRequestedRangeNotSatisfiableExceptionIfCodeWasRequestedRangeNotSatisfiableAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var requestedRangeNotSatisfiableResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestedRangeNotSatisfiable, content);
+
+            HttpResponseMessage requestedRangeNotSatisfiableResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.RequestedRangeNotSatisfiable, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -370,17 +400,20 @@ namespace RESTFulSense.Tests.Services
                 await Assert.ThrowsAsync<HttpResponseRequestedRangeNotSatisfiableException>(() =>
                     validateHttpResponseTask.AsTask());
 
-            httpResponseRequestedRangeNotSatisfiableException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
+            httpResponseRequestedRangeNotSatisfiableException.Message
+                .Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseExpectationFailedExceptionIfResponseStatusCodeWasExpectationFailedAsync()
+        public async Task ShouldThrowExpectationFailedExceptionIfResponseStatusCodeWasExpectationFailedAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var expectationFailedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.ExpectationFailed, content);
+
+            HttpResponseMessage expectationFailedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.ExpectationFailed, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -395,13 +428,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseMisdirectedRequestExceptionIfResponseStatusCodeWasMisdirectedRequestAsync()
+        public async Task ShouldThrowMisdirectedRequestExceptionIfResponseStatusCodeWasMisdirectedRequestAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var misdirectedRequestResponseMessage = CreateHttpResponseMessage(HttpStatusCode.MisdirectedRequest, content);
+
+            HttpResponseMessage misdirectedRequestResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.MisdirectedRequest, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -416,13 +451,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUnprocessableEntityExceptionIfResponseStatusCodeWasUnprocessableEntityAsync()
+        public async Task ShouldThrowUnprocessableEntityExceptionIfResponseStatusCodeWasUnprocessableEntityAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var unprocessableEntityResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UnprocessableEntity, content);
+
+            HttpResponseMessage unprocessableEntityResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.UnprocessableEntity, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -443,7 +480,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var lockedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.Locked, content);
+            
+            HttpResponseMessage lockedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.Locked, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -458,13 +497,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseFailedDependencyExceptionIfResponseStatusCodeWasFailedDependencyAsync()
+        public async Task ShouldThrowFailedDependencyExceptionIfResponseStatusCodeWasFailedDependencyAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var failedDependencyResponseMessage = CreateHttpResponseMessage(HttpStatusCode.FailedDependency, content);
+
+            HttpResponseMessage failedDependencyResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.FailedDependency, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -485,7 +526,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var upgradeRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UpgradeRequired, content);
+
+            HttpResponseMessage upgradeRequiredResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.UpgradeRequired, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -500,13 +543,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponsePreconditionRequiredExceptionIfResponseStatusCodeWasPreconditionRequiredAsync()
+        public async Task ShouldThrowPreconditionRequiredExceptionIfResponseStatusCodeWasPreconditionRequiredAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var preconditionRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.PreconditionRequired, content);
+
+            HttpResponseMessage preconditionRequiredResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.PreconditionRequired, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -527,7 +572,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var tooManyRequestsResponseMessage = CreateHttpResponseMessage(HttpStatusCode.TooManyRequests, content);
+            
+            HttpResponseMessage tooManyRequestsResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.TooManyRequests, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -542,13 +589,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseRequestHeaderFieldsTooLargeExceptionIfResponseStatusCodeWasRequestHeaderFieldsTooLargeAsync()
+        public async Task ShouldThrowRequestHeaderFieldsTooLargeExceptionIfCodeWasRequestHeaderFieldsTooLargeAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var requestHeaderFieldsTooLargeResponseMessage = CreateHttpResponseMessage(HttpStatusCode.RequestHeaderFieldsTooLarge, content);
+
+            HttpResponseMessage requestHeaderFieldsTooLargeResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.RequestHeaderFieldsTooLarge, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -563,13 +612,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUnavailableForLegalReasonsExceptionIfResponseStatusCodeWasUnavailableForLegalReasonsAsync()
+        public async Task ShouldThrowUnavailableForLegalReasonsExceptionIfStatusCodeIsUnavailableForLegalReasonsAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var unavailableForLegalReasonsResponseMessage = CreateHttpResponseMessage(HttpStatusCode.UnavailableForLegalReasons, content);
+
+            HttpResponseMessage unavailableForLegalReasonsResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.UnavailableForLegalReasons, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -584,13 +635,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseInternalServerErrorExceptionIfResponseStatusCodeWasInternalServerErrorAsync()
+        public async Task ShouldThrowInternalServerErrorExceptionIfResponseStatusCodeWasInternalServerErrorAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var internalServerErrorResponseMessage = CreateHttpResponseMessage(HttpStatusCode.InternalServerError, content);
+
+            HttpResponseMessage internalServerErrorResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.InternalServerError, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -611,7 +664,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var notImplementedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotImplemented, content);
+            
+            HttpResponseMessage notImplementedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.NotImplemented, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -632,7 +687,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var badGatewayResponseMessage = CreateHttpResponseMessage(HttpStatusCode.BadGateway, content);
+            
+            HttpResponseMessage badGatewayResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.BadGateway, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -647,13 +704,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseServiceUnavailableExceptionIfResponseStatusCodeWasServiceUnavailableAsync()
+        public async Task ShouldThrowServiceUnavailableExceptionIfResponseStatusCodeWasServiceUnavailableAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var serviceUnavailableResponseMessage = CreateHttpResponseMessage(HttpStatusCode.ServiceUnavailable, content);
+
+            HttpResponseMessage serviceUnavailableResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.ServiceUnavailable, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -674,7 +733,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var gatewayTimeoutResponseMessage = CreateHttpResponseMessage(HttpStatusCode.GatewayTimeout, content);
+            
+            HttpResponseMessage gatewayTimeoutResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.GatewayTimeout, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -689,13 +750,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseHttpVersionNotSupportedExceptionIfResponseStatusCodeWasHttpVersionNotSupportedAsync()
+        public async Task ShouldThrowHttpVersionNotSupportedExceptionIfStatusCodeWasHttpVersionNotSupportedAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var httpVersionNotSupportedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.HttpVersionNotSupported, content);
+
+            HttpResponseMessage httpVersionNotSupportedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.HttpVersionNotSupported, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -710,13 +773,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseVariantAlsoNegotiatesExceptionIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
+        public async Task ShouldThrowVariantAlsoNegotiatesExceptionIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var variantAlsoNegotiatesResponseMessage = CreateHttpResponseMessage(HttpStatusCode.VariantAlsoNegotiates, content);
+
+            HttpResponseMessage variantAlsoNegotiatesResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.VariantAlsoNegotiates, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -731,13 +796,15 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseInsufficientStorageExceptionIfResponseStatusCodeWasInsufficientStorageAsync()
+        public async Task ShouldThrowInsufficientStorageExceptionIfResponseStatusCodeWasInsufficientStorageAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var insufficientStorageResponseMessage = CreateHttpResponseMessage(HttpStatusCode.InsufficientStorage, content);
+
+            HttpResponseMessage insufficientStorageResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.InsufficientStorage, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -758,7 +825,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var loopDetectedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.LoopDetected, content);
+            
+            HttpResponseMessage loopDetectedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.LoopDetected, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -779,7 +848,9 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var notExtendedResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NotExtended, content);
+            
+            HttpResponseMessage notExtendedResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.NotExtended, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -794,13 +865,16 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNetworkAuthenticationRequiredExceptionIfResponseStatusCodeWasNetworkAuthenticationRequiredAsync()
+        public async Task 
+            ShouldThrowNetworkAuthenticationRequiredExceptionIfStatusCodeWasNetworkAuthenticationRequiredAsync()
         {
             // given
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            var networkAuthenticationRequiredResponseMessage = CreateHttpResponseMessage(HttpStatusCode.NetworkAuthenticationRequired, content);
+
+            HttpResponseMessage networkAuthenticationRequiredResponseMessage = 
+                CreateHttpResponseMessage(HttpStatusCode.NetworkAuthenticationRequired, content);
 
             // when
             ValueTask validateHttpResponseTask =
@@ -811,7 +885,8 @@ namespace RESTFulSense.Tests.Services
                 await Assert.ThrowsAsync<HttpResponseNetworkAuthenticationRequiredException>(() =>
                     validateHttpResponseTask.AsTask());
 
-            httpResponseNetworkAuthenticationRequiredException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
+            httpResponseNetworkAuthenticationRequiredException.Message
+                .Should().BeEquivalentTo(expectedExceptionMessage);
         }
 
         private HttpResponseMessage CreateHttpResponseMessage(HttpStatusCode statusCode, string content)
