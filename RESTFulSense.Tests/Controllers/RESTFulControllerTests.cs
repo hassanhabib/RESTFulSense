@@ -23,7 +23,7 @@ namespace RESTFulSense.Tests.Controllers
         public void ShouldReturnLockedObject()
         {
             // given 
-            string randomMessage = new MnemonicString().GetValue();
+            string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
             var expectedResult = new LockedObjectResult(randomMessage);
 
@@ -34,5 +34,23 @@ namespace RESTFulSense.Tests.Controllers
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
+
+        [Fact]
+        public void ShouldReturnBadGatewayObject()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new BadGatewayObjectResult(randomMessage);
+
+            // when
+            BadGatewayObjectResult actualResult =
+                this.restfulController.BadGateway(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

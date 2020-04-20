@@ -11,6 +11,11 @@ namespace RESTFulSense.Controllers
 {
     public class RESTFulController : ControllerBase, IRESTFulController
     {
+        public BadGatewayObjectResult BadGateway(object value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
     }
