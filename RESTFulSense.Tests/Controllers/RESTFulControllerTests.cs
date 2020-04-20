@@ -20,7 +20,7 @@ namespace RESTFulSense.Tests.Controllers
             this.restfulController = new RESTFulController();
 
         [Fact]
-        public void ShouldReturnLockedObject()
+        public void ShouldReturnLockedObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -36,7 +36,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnBadGatewayObject()
+        public void ShouldReturnBadGatewayObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -46,6 +46,22 @@ namespace RESTFulSense.Tests.Controllers
             // when
             BadGatewayObjectResult actualResult =
                 this.restfulController.BadGateway(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
+        public void ShouldReturnExpectationFailedObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new ExpectationFailedObjectResult(randomMessage);
+
+            // when
+            ExpectationFailedObjectResult actualResult =
+                this.restfulController.ExpectationFailed(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);

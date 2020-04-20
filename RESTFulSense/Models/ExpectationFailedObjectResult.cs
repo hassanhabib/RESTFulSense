@@ -4,14 +4,14 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using RESTFulSense.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace RESTFulSense.Controllers
+namespace RESTFulSense.Models
 {
-    public interface IRESTFulController
+    public class ExpectationFailedObjectResult : ObjectResult
     {
-        LockedObjectResult Locked(object value);
-        BadGatewayObjectResult BadGateway(object value);
-        ExpectationFailedObjectResult ExpectationFailed(object value);
+        public ExpectationFailedObjectResult(object value) : base(value) =>
+            StatusCode = StatusCodes.Status417ExpectationFailed;
     }
 }
