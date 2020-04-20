@@ -14,10 +14,8 @@ namespace RESTFulSense.Controllers
         public BadGatewayObjectResult BadGateway(object value) =>
             new BadGatewayObjectResult(value);
 
-        public ExpectationFailedObjectResult ExpectationFailed(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public ExpectationFailedObjectResult ExpectationFailed(object value) =>
+            new ExpectationFailedObjectResult(value);
 
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
