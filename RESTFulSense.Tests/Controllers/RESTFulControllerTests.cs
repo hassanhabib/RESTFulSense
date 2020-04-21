@@ -83,6 +83,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnGatewayTimeoutObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new GatewayTimeoutObjectResult(randomMessage);
+
+            // when
+            GatewayTimeoutObjectResult actualResult =
+                this.restfulController.GatewayTimeout(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

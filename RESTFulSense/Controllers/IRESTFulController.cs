@@ -14,5 +14,6 @@ namespace RESTFulSense.Controllers
         BadGatewayObjectResult BadGateway(object value);
         ExpectationFailedObjectResult ExpectationFailed(object value);
         FailedDependencyObjectResult FailedDependency(object value);
+        GatewayTimeoutObjectResult GatewayTimeout(object value);
     }
 }

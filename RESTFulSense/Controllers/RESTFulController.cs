@@ -20,6 +20,11 @@ namespace RESTFulSense.Controllers
         public FailedDependencyObjectResult FailedDependency(object value) =>
             new FailedDependencyObjectResult(value);
 
+        public GatewayTimeoutObjectResult GatewayTimeout(object value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
     }
