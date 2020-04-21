@@ -67,6 +67,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnFailedDependencyObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new FailedDependencyObjectResult(randomMessage);
+
+            // when
+            FailedDependencyObjectResult actualResult =
+                this.restfulController.FailedDependency(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

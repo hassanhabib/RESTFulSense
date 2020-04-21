@@ -17,6 +17,11 @@ namespace RESTFulSense.Controllers
         public ExpectationFailedObjectResult ExpectationFailed(object value) =>
             new ExpectationFailedObjectResult(value);
 
+        public FailedDependencyObjectResult FailedDependency(object value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
     }

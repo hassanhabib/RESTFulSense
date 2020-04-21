@@ -13,5 +13,6 @@ namespace RESTFulSense.Controllers
         LockedObjectResult Locked(object value);
         BadGatewayObjectResult BadGateway(object value);
         ExpectationFailedObjectResult ExpectationFailed(object value);
+        FailedDependencyObjectResult FailedDependency(object value);
     }
 }
