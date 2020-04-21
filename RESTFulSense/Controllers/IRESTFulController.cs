@@ -17,5 +17,6 @@ namespace RESTFulSense.Controllers
         GatewayTimeoutObjectResult GatewayTimeout(object value);
         GoneObjectResult Gone(object value);
         HttpVersionNotSupportedObjectResult HttpVersionNotSupported(object value);
+        InsufficientStorageObjectResult InsufficientStorage(string inputMessage);
     }
 }
