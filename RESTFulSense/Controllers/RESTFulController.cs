@@ -23,6 +23,11 @@ namespace RESTFulSense.Controllers
         public GatewayTimeoutObjectResult GatewayTimeout(object value) =>
             new GatewayTimeoutObjectResult(value);
 
+        public GoneObjectResult Gone(object value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
     }

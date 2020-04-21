@@ -99,6 +99,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnGoneObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new GoneObjectResult(randomMessage);
+
+            // when
+            GoneObjectResult actualResult =
+                this.restfulController.Gone(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
