@@ -29,10 +29,8 @@ namespace RESTFulSense.Controllers
         public HttpVersionNotSupportedObjectResult HttpVersionNotSupported(object value) =>
             new HttpVersionNotSupportedObjectResult(value);
 
-        public InsufficientStorageObjectResult InsufficientStorage(string inputMessage)
-        {
-            throw new System.NotImplementedException();
-        }
+        public InsufficientStorageObjectResult InsufficientStorage(object value) =>
+            new InsufficientStorageObjectResult(value);
 
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
