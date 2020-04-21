@@ -16,5 +16,6 @@ namespace RESTFulSense.Controllers
         FailedDependencyObjectResult FailedDependency(object value);
         GatewayTimeoutObjectResult GatewayTimeout(object value);
         GoneObjectResult Gone(object value);
+        HttpVersionNotSupportedObjectResult HttpVersionNotSupported(object value);
     }
 }

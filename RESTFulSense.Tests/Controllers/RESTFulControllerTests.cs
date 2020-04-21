@@ -25,7 +25,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            var expectedResult = new LockedObjectResult(randomMessage);
+            var expectedResult = new LockedObjectResult(inputMessage);
 
             // when
             LockedObjectResult actualResult = 
@@ -41,7 +41,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            var expectedResult = new BadGatewayObjectResult(randomMessage);
+            var expectedResult = new BadGatewayObjectResult(inputMessage);
 
             // when
             BadGatewayObjectResult actualResult =
@@ -57,7 +57,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            var expectedResult = new ExpectationFailedObjectResult(randomMessage);
+            var expectedResult = new ExpectationFailedObjectResult(inputMessage);
 
             // when
             ExpectationFailedObjectResult actualResult =
@@ -73,7 +73,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            var expectedResult = new FailedDependencyObjectResult(randomMessage);
+            var expectedResult = new FailedDependencyObjectResult(inputMessage);
 
             // when
             FailedDependencyObjectResult actualResult =
@@ -89,7 +89,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            var expectedResult = new GatewayTimeoutObjectResult(randomMessage);
+            var expectedResult = new GatewayTimeoutObjectResult(inputMessage);
 
             // when
             GatewayTimeoutObjectResult actualResult =
@@ -105,11 +105,29 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            var expectedResult = new GoneObjectResult(randomMessage);
+            var expectedResult = new GoneObjectResult(inputMessage);
 
             // when
             GoneObjectResult actualResult =
                 this.restfulController.Gone(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
+        public void ShouldReturnHttpVersionNotSupportedObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            
+            var expectedResult = 
+                new HttpVersionNotSupportedObjectResult(inputMessage);
+
+            // when
+            HttpVersionNotSupportedObjectResult actualResult =
+                this.restfulController.HttpVersionNotSupported(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);

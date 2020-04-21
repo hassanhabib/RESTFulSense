@@ -26,6 +26,11 @@ namespace RESTFulSense.Controllers
         public GoneObjectResult Gone(object value) => 
             new GoneObjectResult(value);
 
+        public HttpVersionNotSupportedObjectResult HttpVersionNotSupported(object value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
     }
