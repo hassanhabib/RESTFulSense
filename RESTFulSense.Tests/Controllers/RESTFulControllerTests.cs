@@ -151,6 +151,24 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnInternalServerErrorObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+
+            var expectedResult =
+                new InternalServerErrorObjectResult(inputMessage);
+
+            // when
+            InternalServerErrorObjectResult actualResult =
+                this.restfulController.InternalServerError(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

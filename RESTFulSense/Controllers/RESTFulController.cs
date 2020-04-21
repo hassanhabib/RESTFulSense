@@ -32,6 +32,11 @@ namespace RESTFulSense.Controllers
         public InsufficientStorageObjectResult InsufficientStorage(object value) =>
             new InsufficientStorageObjectResult(value);
 
+        public InternalServerErrorObjectResult InternalServerError(object value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
     }

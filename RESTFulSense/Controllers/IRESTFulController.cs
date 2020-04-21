@@ -18,5 +18,6 @@ namespace RESTFulSense.Controllers
         GoneObjectResult Gone(object value);
         HttpVersionNotSupportedObjectResult HttpVersionNotSupported(object value);
         InsufficientStorageObjectResult InsufficientStorage(object value);
+        InternalServerErrorObjectResult InternalServerError(object value);
     }
 }
