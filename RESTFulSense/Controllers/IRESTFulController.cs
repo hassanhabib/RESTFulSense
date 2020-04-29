@@ -32,5 +32,6 @@ namespace RESTFulSense.Controllers
         PreconditionRequiredObjectResult PreconditionRequired(object value);
         ProxyAuthenticationRequiredObjectResult ProxyAuthenticationRequired(object value);
         RequestedRangeNotSatisfiableObjectResult RequestedRangeNotSatisfiable(object value);
+        RequestEntityTooLargeObjectResult RequestEntityTooLarge(object value);
     }
 }

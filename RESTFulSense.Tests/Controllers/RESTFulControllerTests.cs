@@ -400,6 +400,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnRequestEntityTooLargeObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new RequestEntityTooLargeObjectResult(inputMessage);
+
+            // when
+            RequestEntityTooLargeObjectResult actualResult =
+                this.restfulController.RequestEntityTooLarge(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
