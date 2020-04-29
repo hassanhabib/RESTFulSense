@@ -77,9 +77,7 @@ namespace RESTFulSense.Controllers
         public RequestedRangeNotSatisfiableObjectResult RequestedRangeNotSatisfiable(object value) =>
             new RequestedRangeNotSatisfiableObjectResult(value);
 
-        public RequestEntityTooLargeObjectResult RequestEntityTooLarge(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public RequestEntityTooLargeObjectResult RequestEntityTooLarge(object value) =>
+            new RequestEntityTooLargeObjectResult(value);
     }
 }
