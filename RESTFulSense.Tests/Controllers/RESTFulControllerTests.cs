@@ -383,7 +383,23 @@ namespace RESTFulSense.Tests.Controllers
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
-        
+
+        [Fact]
+        public void ShouldReturnRequestedRangeNotSatisfiableObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new RequestedRangeNotSatisfiableObjectResult(inputMessage);
+
+            // when
+            RequestedRangeNotSatisfiableObjectResult actualResult =
+                this.restfulController.RequestedRangeNotSatisfiable(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

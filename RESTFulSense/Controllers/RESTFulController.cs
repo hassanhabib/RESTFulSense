@@ -73,5 +73,10 @@ namespace RESTFulSense.Controllers
 
         public ProxyAuthenticationRequiredObjectResult ProxyAuthenticationRequired(object value) =>
             new ProxyAuthenticationRequiredObjectResult(value);
+
+        public RequestedRangeNotSatisfiableObjectResult RequestedRangeNotSatisfiable(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
