@@ -58,5 +58,10 @@ namespace RESTFulSense.Controllers
 
         public NotExtendedObjectResult NotExtended(object value) =>
             new NotExtendedObjectResult(value);
+
+        public NotImplementedObjectResult NotImplemented(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -26,5 +26,6 @@ namespace RESTFulSense.Controllers
         NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(object value);
         NotAcceptableObjectResult NotAcceptable(object value);
         NotExtendedObjectResult NotExtended(object value);
+        NotImplementedObjectResult NotImplemented(object value);
     }
 }
