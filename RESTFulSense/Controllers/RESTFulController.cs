@@ -44,9 +44,7 @@ namespace RESTFulSense.Controllers
         public LoopDetectedObjectResult LoopDetected(object value) =>
             new LoopDetectedObjectResult(value);
 
-        public MethodNotAllowedObjectResult MethodNotAllowed(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public MethodNotAllowedObjectResult MethodNotAllowed(object value) =>
+            new MethodNotAllowedObjectResult(value);
     }
 }
