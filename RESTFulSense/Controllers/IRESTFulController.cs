@@ -23,5 +23,6 @@ namespace RESTFulSense.Controllers
         LoopDetectedObjectResult LoopDetected(object value);
         MethodNotAllowedObjectResult MethodNotAllowed(object value);
         MisdirectedRequestObjectResult MisdirectedRequest(object value);
+        NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(object value);
     }
 }

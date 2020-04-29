@@ -242,6 +242,23 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnNetworkAuthenticationRequiredObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult =
+                new NetworkAuthenticationRequiredObjectResult(inputMessage);
+
+            // when
+            NetworkAuthenticationRequiredObjectResult actualResult =
+                this.restfulController.NetworkAuthenticationRequired(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
