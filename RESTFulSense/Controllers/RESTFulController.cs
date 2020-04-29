@@ -61,5 +61,8 @@ namespace RESTFulSense.Controllers
 
         public NotImplementedObjectResult NotImplemented(object value) =>
             new NotImplementedObjectResult(value);
+
+        public PaymentRequiredObjectResult PaymentRequired(object value) =>
+            new PaymentRequiredObjectResult(value);
     }
 }
