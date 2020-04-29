@@ -27,5 +27,6 @@ namespace RESTFulSense.Controllers
         NotAcceptableObjectResult NotAcceptable(object value);
         NotExtendedObjectResult NotExtended(object value);
         NotImplementedObjectResult NotImplemented(object value);
+        PaymentRequiredObjectResult PaymentRequired(object value);
     }
 }
