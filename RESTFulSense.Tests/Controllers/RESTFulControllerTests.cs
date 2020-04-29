@@ -169,6 +169,25 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+
+        [Fact]
+        public void ShouldReturnLengthRequiredObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+
+            var expectedResult =
+                new LengthRequiredObjectResult(inputMessage);
+
+            // when
+            LengthRequiredObjectResult actualResult =
+                this.restfulController.LengthRequired(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
