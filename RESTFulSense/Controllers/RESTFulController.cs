@@ -40,5 +40,10 @@ namespace RESTFulSense.Controllers
 
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
+
+        public LoopDetectedObjectResult LoopDetected(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

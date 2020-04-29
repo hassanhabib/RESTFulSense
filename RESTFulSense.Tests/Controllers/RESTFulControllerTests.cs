@@ -188,6 +188,24 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnLoopDetectedObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+
+            var expectedResult =
+                new LoopDetectedObjectResult(inputMessage);
+
+            // when
+            LoopDetectedObjectResult actualResult =
+                this.restfulController.LoopDetected(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

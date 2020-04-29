@@ -20,5 +20,6 @@ namespace RESTFulSense.Controllers
         InsufficientStorageObjectResult InsufficientStorage(object value);
         InternalServerErrorObjectResult InternalServerError(object value);
         LengthRequiredObjectResult LengthRequired(object value);
+        LoopDetectedObjectResult LoopDetected(object value);
     }
 }
