@@ -29,5 +29,6 @@ namespace RESTFulSense.Controllers
         NotImplementedObjectResult NotImplemented(object value);
         PaymentRequiredObjectResult PaymentRequired(object value);
         PreconditionFailedObjectResult PreconditionFailed(object value);
+        PreconditionRequiredObjectResult PreconditionRequired(object value);
     }
 }
