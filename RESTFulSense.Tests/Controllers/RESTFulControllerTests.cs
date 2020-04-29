@@ -368,6 +368,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnProxyAuthenticationRequiredObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new ProxyAuthenticationRequiredObjectResult(inputMessage);
+
+            // when
+            ProxyAuthenticationRequiredObjectResult actualResult =
+                this.restfulController.ProxyAuthenticationRequired(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+        
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

@@ -30,5 +30,6 @@ namespace RESTFulSense.Controllers
         PaymentRequiredObjectResult PaymentRequired(object value);
         PreconditionFailedObjectResult PreconditionFailed(object value);
         PreconditionRequiredObjectResult PreconditionRequired(object value);
+        ProxyAuthenticationRequiredObjectResult ProxyAuthenticationRequired(object value);
     }
 }
