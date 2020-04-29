@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Controllers
     {
         private readonly IRESTFulController restfulController;
 
-        public RESTFulControllerTests() => 
+        public RESTFulControllerTests() =>
             this.restfulController = new RESTFulController();
 
         [Fact]
@@ -28,7 +28,7 @@ namespace RESTFulSense.Tests.Controllers
             var expectedResult = new LockedObjectResult(inputMessage);
 
             // when
-            LockedObjectResult actualResult = 
+            LockedObjectResult actualResult =
                 this.restfulController.Locked(inputMessage);
 
             // then
@@ -121,8 +121,8 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            
-            var expectedResult = 
+
+            var expectedResult =
                 new HttpVersionNotSupportedObjectResult(inputMessage);
 
             // when
@@ -273,6 +273,24 @@ namespace RESTFulSense.Tests.Controllers
             // when
             NotAcceptableObjectResult actualResult =
                 this.restfulController.NotAcceptable(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
+        public void ShouldReturnNotExtendedObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+
+            var expectedResult =
+                new NotExtendedObjectResult(inputMessage);
+
+            // when
+            NotExtendedObjectResult actualResult =
+                this.restfulController.NotExtended(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);

@@ -55,5 +55,10 @@ namespace RESTFulSense.Controllers
 
         public NotAcceptableObjectResult NotAcceptable(object value) =>
             new NotAcceptableObjectResult(value);
+
+        public NotExtendedObjectResult NotExtended(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
