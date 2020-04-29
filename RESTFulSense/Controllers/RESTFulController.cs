@@ -64,5 +64,10 @@ namespace RESTFulSense.Controllers
 
         public PaymentRequiredObjectResult PaymentRequired(object value) =>
             new PaymentRequiredObjectResult(value);
+
+        public PreconditionFailedObjectResult PreconditionFailed(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
