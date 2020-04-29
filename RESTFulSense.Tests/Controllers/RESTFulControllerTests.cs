@@ -224,6 +224,24 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnMisdirectedRequestObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+
+            var expectedResult =
+                new MisdirectedRequestObjectResult(inputMessage);
+
+            // when
+            MisdirectedRequestObjectResult actualResult =
+                this.restfulController.MisdirectedRequest(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

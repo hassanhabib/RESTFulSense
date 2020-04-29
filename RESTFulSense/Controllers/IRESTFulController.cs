@@ -22,5 +22,6 @@ namespace RESTFulSense.Controllers
         LengthRequiredObjectResult LengthRequired(object value);
         LoopDetectedObjectResult LoopDetected(object value);
         MethodNotAllowedObjectResult MethodNotAllowed(object value);
+        MisdirectedRequestObjectResult MisdirectedRequest(object value);
     }
 }
