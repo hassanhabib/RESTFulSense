@@ -50,9 +50,7 @@ namespace RESTFulSense.Controllers
         public MisdirectedRequestObjectResult MisdirectedRequest(object value) =>
             new MisdirectedRequestObjectResult(value);
 
-        public NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(object value) =>
+            new NetworkAuthenticationRequiredObjectResult(value);
     }
 }
