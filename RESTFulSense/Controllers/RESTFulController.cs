@@ -35,10 +35,8 @@ namespace RESTFulSense.Controllers
         public InternalServerErrorObjectResult InternalServerError(object value) =>
             new InternalServerErrorObjectResult(value);
 
-        public LengthRequiredObjectResult LengthRequired(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public LengthRequiredObjectResult LengthRequired(object value) =>
+            new LengthRequiredObjectResult(value);
 
         public LockedObjectResult Locked(object value) =>
             new LockedObjectResult(value);
