@@ -52,5 +52,10 @@ namespace RESTFulSense.Controllers
 
         public NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(object value) =>
             new NetworkAuthenticationRequiredObjectResult(value);
+
+        public NotAcceptableObjectResult NotAcceptable(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -248,12 +248,31 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
+
             var expectedResult =
                 new NetworkAuthenticationRequiredObjectResult(inputMessage);
 
             // when
             NetworkAuthenticationRequiredObjectResult actualResult =
                 this.restfulController.NetworkAuthenticationRequired(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
+        public void ShouldReturnNotAcceptableObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+
+            var expectedResult =
+                new NotAcceptableObjectResult(inputMessage);
+
+            // when
+            NotAcceptableObjectResult actualResult =
+                this.restfulController.NotAcceptable(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);

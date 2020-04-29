@@ -24,5 +24,6 @@ namespace RESTFulSense.Controllers
         MethodNotAllowedObjectResult MethodNotAllowed(object value);
         MisdirectedRequestObjectResult MisdirectedRequest(object value);
         NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(object value);
+        NotAcceptableObjectResult NotAcceptable(object value);
     }
 }
