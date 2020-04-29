@@ -21,5 +21,6 @@ namespace RESTFulSense.Controllers
         InternalServerErrorObjectResult InternalServerError(object value);
         LengthRequiredObjectResult LengthRequired(object value);
         LoopDetectedObjectResult LoopDetected(object value);
+        MethodNotAllowedObjectResult MethodNotAllowed(object value);
     }
 }
