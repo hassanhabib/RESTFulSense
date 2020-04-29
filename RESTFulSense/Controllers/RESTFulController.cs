@@ -68,9 +68,7 @@ namespace RESTFulSense.Controllers
         public PreconditionFailedObjectResult PreconditionFailed(object value) =>
             new PreconditionFailedObjectResult(value);
 
-        public PreconditionRequiredObjectResult PreconditionRequired(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public PreconditionRequiredObjectResult PreconditionRequired(object value) =>
+            new PreconditionRequiredObjectResult(value);
     }
 }
