@@ -23,7 +23,7 @@ namespace RESTFulSense.Controllers
         public GatewayTimeoutObjectResult GatewayTimeout(object value) =>
             new GatewayTimeoutObjectResult(value);
 
-        public GoneObjectResult Gone(object value) => 
+        public GoneObjectResult Gone(object value) =>
             new GoneObjectResult(value);
 
         public HttpVersionNotSupportedObjectResult HttpVersionNotSupported(object value) =>
@@ -53,9 +53,7 @@ namespace RESTFulSense.Controllers
         public NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(object value) =>
             new NetworkAuthenticationRequiredObjectResult(value);
 
-        public NotAcceptableObjectResult NotAcceptable(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public NotAcceptableObjectResult NotAcceptable(object value) =>
+            new NotAcceptableObjectResult(value);
     }
 }
