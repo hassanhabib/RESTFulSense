@@ -71,9 +71,7 @@ namespace RESTFulSense.Controllers
         public PreconditionRequiredObjectResult PreconditionRequired(object value) =>
             new PreconditionRequiredObjectResult(value);
 
-        public ProxyAuthenticationRequiredObjectResult ProxyAuthenticationRequired(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public ProxyAuthenticationRequiredObjectResult ProxyAuthenticationRequired(object value) =>
+            new ProxyAuthenticationRequiredObjectResult(value);
     }
 }
