@@ -47,9 +47,7 @@ namespace RESTFulSense.Controllers
         public MethodNotAllowedObjectResult MethodNotAllowed(object value) =>
             new MethodNotAllowedObjectResult(value);
 
-        public MisdirectedRequestObjectResult MisdirectedRequest(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public MisdirectedRequestObjectResult MisdirectedRequest(object value) =>
+            new MisdirectedRequestObjectResult(value);
     }
 }
