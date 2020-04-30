@@ -85,5 +85,10 @@ namespace RESTFulSense.Controllers
 
         public RequestTimeoutObjectResult RequestTimeout(object value) =>
             new RequestTimeoutObjectResult(value);
+
+        public RequestUriTooLongObjectResult RequestUriTooLong(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

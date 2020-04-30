@@ -448,6 +448,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnRequestUriTooLongObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new RequestUriTooLongObjectResult(inputMessage);
+
+            // when
+            RequestUriTooLongObjectResult actualResult =
+                this.restfulController.RequestUriTooLong(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
