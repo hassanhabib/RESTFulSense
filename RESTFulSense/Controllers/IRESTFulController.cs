@@ -41,5 +41,6 @@ namespace RESTFulSense.Controllers
         UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(object value);
         UpgradeRequiredObjectResult UpgradeRequired(object value);
         VariantAlsoNegotiatesObjectResult VariantAlsoNegotiates(object value);
+        UnsupportedMediaTypeObjectResult UnsupportedMediaTypeObjectResult(object value);
     }
 }

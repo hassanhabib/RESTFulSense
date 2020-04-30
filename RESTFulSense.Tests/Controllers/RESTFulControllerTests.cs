@@ -544,6 +544,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnUnsupportedMediaTypeObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new UnsupportedMediaTypeObjectResult(inputMessage);
+
+            // when
+            UnsupportedMediaTypeObjectResult actualResult =
+                this.restfulController.UnsupportedMediaTypeObjectResult(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
