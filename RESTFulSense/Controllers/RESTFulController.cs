@@ -98,9 +98,7 @@ namespace RESTFulSense.Controllers
         public UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(object value) =>
             new UnavailableForLegalReasonsObjectResult(value);
 
-        public UpgradeRequiredObjectResult UpgradeRequired(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public UpgradeRequiredObjectResult UpgradeRequired(object value) =>
+            new UpgradeRequiredObjectResult(value);
     }
 }
