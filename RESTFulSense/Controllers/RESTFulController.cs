@@ -92,9 +92,7 @@ namespace RESTFulSense.Controllers
         public ServiceUnavailableObjectResult ServiceUnavailable(object value) =>
             new ServiceUnavailableObjectResult(value);
 
-        public TooManyRequestsObjectResult TooManyRequests(object value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public TooManyRequestsObjectResult TooManyRequests(object value) =>
+            new TooManyRequestsObjectResult(value);
     }
 }
