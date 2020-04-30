@@ -79,5 +79,10 @@ namespace RESTFulSense.Controllers
 
         public RequestEntityTooLargeObjectResult RequestEntityTooLarge(object value) =>
             new RequestEntityTooLargeObjectResult(value);
+
+        public RequestHeaderFieldsTooLargeObjectResult RequestHeaderFieldsTooLarge(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

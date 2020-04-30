@@ -416,6 +416,23 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnRequestHeaderFieldsTooLargeObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult =
+            new RequestHeaderFieldsTooLargeObjectResult(inputMessage);
+
+            // when
+            RequestHeaderFieldsTooLargeObjectResult actualResult =
+                this.restfulController.RequestHeaderFieldsTooLarge(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
