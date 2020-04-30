@@ -121,9 +121,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new HttpVersionNotSupportedObjectResult(inputMessage);
+            var expectedResult = new HttpVersionNotSupportedObjectResult(inputMessage);
 
             // when
             HttpVersionNotSupportedObjectResult actualResult =
@@ -139,9 +137,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new InsufficientStorageObjectResult(inputMessage);
+            var expectedResult = new InsufficientStorageObjectResult(inputMessage);
 
             // when
             InsufficientStorageObjectResult actualResult =
@@ -157,9 +153,7 @@ namespace RESTFulSense.Tests.Controllers
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new InternalServerErrorObjectResult(inputMessage);
+            var expectedResult = new InternalServerErrorObjectResult(inputMessage);
 
             // when
             InternalServerErrorObjectResult actualResult =
@@ -169,16 +163,13 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
-
         [Fact]
         public void ShouldReturnLengthRequiredObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new LengthRequiredObjectResult(inputMessage);
+            var expectedResult = new LengthRequiredObjectResult(inputMessage);
 
             // when
             LengthRequiredObjectResult actualResult =
@@ -194,9 +185,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new LoopDetectedObjectResult(inputMessage);
+            var expectedResult = new LoopDetectedObjectResult(inputMessage);
 
             // when
             LoopDetectedObjectResult actualResult =
@@ -212,9 +201,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new MethodNotAllowedObjectResult(inputMessage);
+            var expectedResult = new MethodNotAllowedObjectResult(inputMessage);
 
             // when
             MethodNotAllowedObjectResult actualResult =
@@ -230,9 +217,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new MisdirectedRequestObjectResult(inputMessage);
+            var expectedResult = new MisdirectedRequestObjectResult(inputMessage);
 
             // when
             MisdirectedRequestObjectResult actualResult =
@@ -248,9 +233,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new NetworkAuthenticationRequiredObjectResult(inputMessage);
+            var expectedResult = new NetworkAuthenticationRequiredObjectResult(inputMessage);
 
             // when
             NetworkAuthenticationRequiredObjectResult actualResult =
@@ -266,9 +249,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new NotAcceptableObjectResult(inputMessage);
+            var expectedResult = new NotAcceptableObjectResult(inputMessage);
 
             // when
             NotAcceptableObjectResult actualResult =
@@ -284,9 +265,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new NotExtendedObjectResult(inputMessage);
+            var expectedResult = new NotExtendedObjectResult(inputMessage);
 
             // when
             NotExtendedObjectResult actualResult =
@@ -302,9 +281,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new NotImplementedObjectResult(inputMessage);
+            var expectedResult = new NotImplementedObjectResult(inputMessage);
 
             // when
             NotImplementedObjectResult actualResult =
@@ -320,9 +297,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new PaymentRequiredObjectResult(inputMessage);
+            var expectedResult = new PaymentRequiredObjectResult(inputMessage);
 
             // when
             PaymentRequiredObjectResult actualResult =
@@ -338,9 +313,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new PreconditionFailedObjectResult(inputMessage);
+            var expectedResult = new PreconditionFailedObjectResult(inputMessage);
 
             // when
             PreconditionFailedObjectResult actualResult =
@@ -356,9 +329,7 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-
-            var expectedResult =
-                new PreconditionRequiredObjectResult(inputMessage);
+            var expectedResult = new PreconditionRequiredObjectResult(inputMessage);
 
             // when
             PreconditionRequiredObjectResult actualResult =
