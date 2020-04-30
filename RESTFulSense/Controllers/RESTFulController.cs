@@ -94,5 +94,10 @@ namespace RESTFulSense.Controllers
 
         public TooManyRequestsObjectResult TooManyRequests(object value) =>
             new TooManyRequestsObjectResult(value);
+
+        public UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

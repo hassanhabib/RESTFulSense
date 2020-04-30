@@ -496,6 +496,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnUnavailableForLegalReasonsObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new UnavailableForLegalReasonsObjectResult(inputMessage);
+
+            // when
+            UnavailableForLegalReasonsObjectResult actualResult =
+                this.restfulController.UnavailableForLegalReasons(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }
