@@ -39,5 +39,6 @@ namespace RESTFulSense.Controllers
         ServiceUnavailableObjectResult ServiceUnavailable(object value);
         TooManyRequestsObjectResult TooManyRequests(object value);
         UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(object value);
+        UnprocessableEntityObjectResult UnprocessableEntity(object value);
     }
 }
