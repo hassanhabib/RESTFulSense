@@ -69,16 +69,94 @@ RESTFulSense provide the following exceptions for erroring HTTP Status Codes as 
 <br />
 
 ### 2. Simplified API communications
+API controllers in ASP.NET Core today don't offer the full range of HTTP Codes that can be used to communicate certain events and errors to end users, in this library we managed to implement all the missing methods to communicate the full range of error codes as follows:
+<br />
+
+#### 2.1 On Controller Level 
+
+|Controller Method|Code|
+|--- |--- |
+|PaymentRequired(object value)|402|
+|MethodNotAllowed(object value)|405|
+|NotAcceptable(object value)|406|
+|ProxyAuthenticationRequired(object value)|407|
+|RequestTimeout(object value)|408|
+|Gone(object value)|410|
+|LengthRequired(object value)|411|
+|PreconditionFailed(object value)|412|
+|RequestEntityTooLarge(object value)|413|
+|RequestUriTooLong(object value)|414|
+|UnsupportedMediaType(object value)|415|
+|RequestedRangeNotSatisfiable(object value)|416|
+|ExpectationFailed(object value)|417|
+|MisdirectedRequest(object value)|421|
+|UnprocessableEntity(object value)|422|
+|Locked(object value)|423|
+|FailedDependency(object value)|424|
+|UpgradeRequired(object value)|426|
+|PreconditionRequired(object value)|428|
+|TooManyRequests(object value)|429|
+|RequestHeaderFieldsTooLarge(object value)|431|
+|UnavailableForLegalReasons(object value)|451|
+|InternalServerError(object value)|500|
+|NotImplemented(object value)|501|
+|BadGateway(object value)|502|
+|ServiceUnavailable(object value)|503|
+|GatewayTimeout(object value)|504|
+|HttpVersionNotSupported(object value)|505|
+|VariantAlsoNegotiates(object value)|506|
+|InsufficientStorage(object value)|507|
+|LoopDetected(object value)|508|
+|NotExtended(object value)|510|
+|NetworkAuthenticationRequired(object value)|511|
+
+
+This can be achieved by simply replacing the inheritance ```ControllerBase``` in your ASP.NET Core Controller class with RESTFulController as follows:
+
+```csharp
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ContactsController : RESTFulController
+    {
+        ...
+    }
+```
+
+Once that's done, you will have full access to use any of the methods above to communicate more meaningful errors to your API consumers and clients.
+
+#### 2.2 On Consumer Level
 Passing or retrieving objects from an API should be as simple as one method call, for RESTFulSense, you don't have to worry about how to serialize your input or deserialize the API output, here's how simple it works:
 
-#### 2.1 Deserialization
+
+##### 2.2.1 Initialization
+The initialization of the RESTFulSense Client can be done in two different ways:
+
+###### 2.2.1.1 HttpClientFactory Approach
+In your ASP.NET Core application, you can initialize the ```IRESTFulApiFactoryClient``` in your startup.cs as follows:
+
+
+```csharp
+services.AddHttpClient<IRESTFulApiFactoryClient, RESTFulApiFactoryClient>(client => client.BaseAddress = new Uri(YOUR_API_URL));
+```
+<br />
+
+###### 2.2.1.2 Basic Initialization
+You can also use the RESTFulClient simple initialize in a console app for instance as follows:
+
+```csharp
+var apiClient = new RESTFulApiClient();
+```
+
+<br />
+
+##### 2.2.1 Deserialization
 ```csharp
 List<Student> students = 
     await restfulApiClient.GetContentAsync<List<Student>>(relativeUrl: "api/students");
 
 ```
 
-#### 2.2 Serialization
+##### 2.2.2 Serialization
 ```csharp
 Student student = 
     await restfulApiClient.PostContentAsync<Student>(relativeUrl: "api/students", content: inputStudent); 
@@ -114,5 +192,5 @@ Twitter: @hassanrezkhabib
 <br />
 LinkedIn: hassanrezkhabib
 <br />
-E-Mail: hassanhabib@live.com
+E-Mail: hassanhabib@live.com & alice@piorsoft.com
 <br />
