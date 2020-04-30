@@ -40,5 +40,6 @@ namespace RESTFulSense.Controllers
         TooManyRequestsObjectResult TooManyRequests(object value);
         UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(object value);
         UpgradeRequiredObjectResult UpgradeRequired(object value);
+        VariantAlsoNegotiatesObjectResult VariantAlsoNegotiates(object value);
     }
 }

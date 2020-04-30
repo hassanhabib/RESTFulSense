@@ -528,6 +528,22 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
+        [Fact]
+        public void ShouldReturnVariantAlsoNegotiatesObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new VariantAlsoNegotiatesObjectResult(inputMessage);
+
+            // when
+            VariantAlsoNegotiatesObjectResult actualResult =
+                this.restfulController.VariantAlsoNegotiates(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

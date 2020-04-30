@@ -100,5 +100,10 @@ namespace RESTFulSense.Controllers
 
         public UpgradeRequiredObjectResult UpgradeRequired(object value) =>
             new UpgradeRequiredObjectResult(value);
+
+        public VariantAlsoNegotiatesObjectResult VariantAlsoNegotiates(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
