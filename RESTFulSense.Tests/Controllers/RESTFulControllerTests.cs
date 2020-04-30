@@ -512,22 +512,6 @@ namespace RESTFulSense.Tests.Controllers
             actualResult.Should().BeEquivalentTo(expectedResult);
         }
 
-        [Fact]
-        public void ShouldReturnUnprocessableEntityObjectResult()
-        {
-            // given
-            string randomMessage = GetRandomMessage();
-            string inputMessage = randomMessage;
-            var expectedResult = new UnprocessableEntityObjectResult(inputMessage);
-
-            // when
-            UnprocessableEntityObjectResult actualResult =
-                this.restfulController.UnprocessableEntity(inputMessage);
-
-            // then
-            actualResult.Should().BeEquivalentTo(expectedResult);
-        }
-
         private string GetRandomMessage() => new MnemonicString().GetValue();
     }
 }

@@ -97,10 +97,5 @@ namespace RESTFulSense.Controllers
 
         public UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(object value) =>
             new UnavailableForLegalReasonsObjectResult(value);
-
-        Models.UnprocessableEntityObjectResult IRESTFulController.UnprocessableEntity(object value)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
