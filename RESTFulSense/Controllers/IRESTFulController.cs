@@ -34,5 +34,6 @@ namespace RESTFulSense.Controllers
         RequestedRangeNotSatisfiableObjectResult RequestedRangeNotSatisfiable(object value);
         RequestEntityTooLargeObjectResult RequestEntityTooLarge(object value);
         RequestHeaderFieldsTooLargeObjectResult RequestHeaderFieldsTooLarge(object value);
+        RequestTimeoutObjectResult RequestTimeout(object value);
     }
 }

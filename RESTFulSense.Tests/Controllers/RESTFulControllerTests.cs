@@ -422,12 +422,27 @@ namespace RESTFulSense.Tests.Controllers
             // given
             string randomMessage = GetRandomMessage();
             string inputMessage = randomMessage;
-            var expectedResult =
-            new RequestHeaderFieldsTooLargeObjectResult(inputMessage);
+            var expectedResult = new RequestHeaderFieldsTooLargeObjectResult(inputMessage);
 
             // when
             RequestHeaderFieldsTooLargeObjectResult actualResult =
                 this.restfulController.RequestHeaderFieldsTooLarge(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
+        public void ShouldReturnRequestTimeoutObjectResult()
+        {
+            // given
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new RequestTimeoutObjectResult(inputMessage);
+
+            // when
+            RequestTimeoutObjectResult actualResult =
+                this.restfulController.RequestTimeout(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
