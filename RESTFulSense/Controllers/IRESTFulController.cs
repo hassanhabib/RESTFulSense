@@ -37,5 +37,6 @@ namespace RESTFulSense.Controllers
         RequestTimeoutObjectResult RequestTimeout(object value);
         RequestUriTooLongObjectResult RequestUriTooLong(object value);
         ServiceUnavailableObjectResult ServiceUnavailable(object value);
+        TooManyRequestsObjectResult TooManyRequests(object value);
     }
 }
