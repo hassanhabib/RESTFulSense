@@ -88,5 +88,10 @@ namespace RESTFulSense.Controllers
 
         public RequestUriTooLongObjectResult RequestUriTooLong(object value) =>
             new RequestUriTooLongObjectResult(value);
+
+        public ServiceUnavailableObjectResult ServiceUnavailable(object value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
