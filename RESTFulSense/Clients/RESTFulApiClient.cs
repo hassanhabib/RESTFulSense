@@ -64,7 +64,7 @@ namespace RESTFulSense.Clients
 
         public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
         {
-            HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
+            HttpResponseMessage responseMessage = await DeleteAsync(relativeUrl);
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(responseMessage);
