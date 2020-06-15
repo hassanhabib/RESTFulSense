@@ -29,7 +29,7 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<T>(responseMessage);
         }
 
-        public async ValueTask<string> GetStringAsync(string relativeUrl) =>
+        public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
             await this.httpClient.GetStringAsync(relativeUrl);
 
         public async ValueTask<T> PostContentAsync<T>(string relativeUrl, T content)
