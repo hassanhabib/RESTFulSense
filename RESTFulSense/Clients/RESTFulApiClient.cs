@@ -22,6 +22,9 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<T>(responseMessage);
         }
 
+        public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
+            await GetStringAsync(relativeUrl);
+
         public async ValueTask<T> PostContentAsync<T>(string relativeUrl, T content)
         {
             StringContent contentString = StringifyJsonifyContent(content);

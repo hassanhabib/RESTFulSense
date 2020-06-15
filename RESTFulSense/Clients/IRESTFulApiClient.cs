@@ -11,6 +11,7 @@ namespace RESTFulSense.Clients
     public interface IRESTFulApiClient
     {
         ValueTask<T> GetContentAsync<T>(string relativeUrl);
+        ValueTask<string> GetContentStringAsync(string relativeUrl);
         ValueTask<T> PostContentAsync<T>(string relativeUrl, T content);
         ValueTask<T> PutContentAsync<T>(string relativeUrl, T content);
         ValueTask<T> PutContentAsync<T>(string relativeUrl);

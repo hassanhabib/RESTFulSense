@@ -11,6 +11,7 @@ namespace RESTFulSense.Clients
     public interface IRESTFulApiFactoryClient
     {
         ValueTask<T> GetContentAsync<T>(string relativeUrl);
+        ValueTask<string> GetStringAsync(string relativeUrl);
         ValueTask<T> PostContentAsync<T>(string relativeUrl, T content);
         ValueTask<T> PutContentAsync<T>(string relativeUrl, T content);
         ValueTask<T> PutContentAsync<T>(string relativeUrl);
