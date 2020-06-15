@@ -16,7 +16,7 @@ namespace RESTFulSense.Clients
     {
         private readonly HttpClient httpClient;
 
-        public RESTFulApiFactoryClient(HttpClient httpClient) => 
+        public RESTFulApiFactoryClient(HttpClient httpClient) =>
             this.httpClient = httpClient;
 
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)

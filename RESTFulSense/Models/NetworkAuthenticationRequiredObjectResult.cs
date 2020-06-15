@@ -11,7 +11,7 @@ namespace RESTFulSense.Models
 {
     public class NetworkAuthenticationRequiredObjectResult : ObjectResult
     {
-        public NetworkAuthenticationRequiredObjectResult(object value) : base(value) => 
+        public NetworkAuthenticationRequiredObjectResult(object value) : base(value) =>
             StatusCode = StatusCodes.Status511NetworkAuthenticationRequired;
     }
 }

@@ -26,8 +26,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage badRequestResponseMessage = 
+
+            HttpResponseMessage badRequestResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.BadRequest, content);
 
             // when
@@ -49,8 +49,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage unauthorizedResponseMessage = 
+
+            HttpResponseMessage unauthorizedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.Unauthorized, content);
 
             // when
@@ -73,7 +73,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage paymentRequiredResponseMessage = 
+            HttpResponseMessage paymentRequiredResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.PaymentRequired, content);
 
             // when
@@ -95,8 +95,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage forbiddenResponseMessage = 
+
+            HttpResponseMessage forbiddenResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.Forbidden, content);
 
             // when 
@@ -118,8 +118,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage notFoundResponseMessage = 
+
+            HttpResponseMessage notFoundResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.NotFound, content);
 
             // when
@@ -141,8 +141,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage methodNotAllowedResponseMessage = 
+
+            HttpResponseMessage methodNotAllowedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.MethodNotAllowed, content);
 
             // when
@@ -164,8 +164,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage notAcceptableResponseMessage = 
+
+            HttpResponseMessage notAcceptableResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.NotAcceptable, content);
 
             // when
@@ -181,7 +181,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task 
+        public async Task
             ShouldThrowProxyAuthenticationRequiredExceptionIfResponseStatusCodeWasProxyAuthenticationRequiredAsync()
         {
             // given
@@ -189,7 +189,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage proxyAuthenticationRequiredResponseMessage = 
+            HttpResponseMessage proxyAuthenticationRequiredResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.ProxyAuthenticationRequired, content);
 
             // when
@@ -295,8 +295,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            var preconditionFailedResponseMessage = 
+
+            var preconditionFailedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.PreconditionFailed, content);
 
             // when
@@ -319,7 +319,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage requestEntityTooLargeResponseMessage = 
+            HttpResponseMessage requestEntityTooLargeResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.RequestEntityTooLarge, content);
 
             // when
@@ -342,7 +342,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage requestUriTooLongResponseMessage = 
+            HttpResponseMessage requestUriTooLongResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.RequestUriTooLong, content);
 
             // when
@@ -365,7 +365,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage unsupportedMediaTypeResponseMessage = 
+            HttpResponseMessage unsupportedMediaTypeResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.UnsupportedMediaType, content);
 
             // when
@@ -388,7 +388,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage requestedRangeNotSatisfiableResponseMessage = 
+            HttpResponseMessage requestedRangeNotSatisfiableResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.RequestedRangeNotSatisfiable, content);
 
             // when
@@ -412,7 +412,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage expectationFailedResponseMessage = 
+            HttpResponseMessage expectationFailedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.ExpectationFailed, content);
 
             // when
@@ -435,7 +435,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage misdirectedRequestResponseMessage = 
+            HttpResponseMessage misdirectedRequestResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.MisdirectedRequest, content);
 
             // when
@@ -458,7 +458,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage unprocessableEntityResponseMessage = 
+            HttpResponseMessage unprocessableEntityResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.UnprocessableEntity, content);
 
             // when
@@ -480,8 +480,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage lockedResponseMessage = 
+
+            HttpResponseMessage lockedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.Locked, content);
 
             // when
@@ -504,7 +504,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage failedDependencyResponseMessage = 
+            HttpResponseMessage failedDependencyResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.FailedDependency, content);
 
             // when
@@ -527,7 +527,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage upgradeRequiredResponseMessage = 
+            HttpResponseMessage upgradeRequiredResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.UpgradeRequired, content);
 
             // when
@@ -550,7 +550,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage preconditionRequiredResponseMessage = 
+            HttpResponseMessage preconditionRequiredResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.PreconditionRequired, content);
 
             // when
@@ -572,8 +572,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage tooManyRequestsResponseMessage = 
+
+            HttpResponseMessage tooManyRequestsResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.TooManyRequests, content);
 
             // when
@@ -596,7 +596,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage requestHeaderFieldsTooLargeResponseMessage = 
+            HttpResponseMessage requestHeaderFieldsTooLargeResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.RequestHeaderFieldsTooLarge, content);
 
             // when
@@ -619,7 +619,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage unavailableForLegalReasonsResponseMessage = 
+            HttpResponseMessage unavailableForLegalReasonsResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.UnavailableForLegalReasons, content);
 
             // when
@@ -642,7 +642,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage internalServerErrorResponseMessage = 
+            HttpResponseMessage internalServerErrorResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.InternalServerError, content);
 
             // when
@@ -664,8 +664,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage notImplementedResponseMessage = 
+
+            HttpResponseMessage notImplementedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.NotImplemented, content);
 
             // when
@@ -687,8 +687,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage badGatewayResponseMessage = 
+
+            HttpResponseMessage badGatewayResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.BadGateway, content);
 
             // when
@@ -711,7 +711,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage serviceUnavailableResponseMessage = 
+            HttpResponseMessage serviceUnavailableResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.ServiceUnavailable, content);
 
             // when
@@ -733,8 +733,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage gatewayTimeoutResponseMessage = 
+
+            HttpResponseMessage gatewayTimeoutResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.GatewayTimeout, content);
 
             // when
@@ -757,7 +757,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage httpVersionNotSupportedResponseMessage = 
+            HttpResponseMessage httpVersionNotSupportedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.HttpVersionNotSupported, content);
 
             // when
@@ -780,7 +780,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage variantAlsoNegotiatesResponseMessage = 
+            HttpResponseMessage variantAlsoNegotiatesResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.VariantAlsoNegotiates, content);
 
             // when
@@ -803,7 +803,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage insufficientStorageResponseMessage = 
+            HttpResponseMessage insufficientStorageResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.InsufficientStorage, content);
 
             // when
@@ -825,8 +825,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage loopDetectedResponseMessage = 
+
+            HttpResponseMessage loopDetectedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.LoopDetected, content);
 
             // when
@@ -848,8 +848,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = GetRandomContent();
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            HttpResponseMessage notExtendedResponseMessage = 
+
+            HttpResponseMessage notExtendedResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.NotExtended, content);
 
             // when
@@ -865,7 +865,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task 
+        public async Task
             ShouldThrowNetworkAuthenticationRequiredExceptionIfStatusCodeWasNetworkAuthenticationRequiredAsync()
         {
             // given
@@ -873,7 +873,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            HttpResponseMessage networkAuthenticationRequiredResponseMessage = 
+            HttpResponseMessage networkAuthenticationRequiredResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.NetworkAuthenticationRequired, content);
 
             // when
