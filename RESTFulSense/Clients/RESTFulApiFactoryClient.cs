@@ -32,7 +32,10 @@ namespace RESTFulSense.Clients
         public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
             await this.httpClient.GetStringAsync(relativeUrl);
 
-        public async ValueTask<T> PostContentAsync<T>(string relativeUrl, T content)
+        public ValueTask<T> PostContentAsync<T>(string relativeUrl, T content) =>
+            PostContentAsync<T, T>(relativeUrl, content);
+
+        public async ValueTask<TResult> PostContentAsync<TContent, TResult>(string relativeUrl, TContent content)
         {
             StringContent contentString = StringifyJsonifyContent(content);
 
@@ -41,7 +44,7 @@ namespace RESTFulSense.Clients
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage);
+            return await DeserializeResponseContent<TResult>(responseMessage);
         }
 
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content)
