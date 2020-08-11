@@ -4,6 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -30,6 +31,9 @@ namespace RESTFulSense.Services
 
                 case { } when httpResponseMessage.StatusCode == HttpStatusCode.Forbidden:
                     throw new HttpResponseForbiddenException(httpResponseMessage, message);
+
+                case { } when NotFoundWithNoContent(httpResponseMessage):
+                    throw new HttpResponseUrlNotFoundException(httpResponseMessage, message);
 
                 case { } when httpResponseMessage.StatusCode == HttpStatusCode.NotFound:
                     throw new HttpResponseNotFoundException(httpResponseMessage, message);
@@ -134,5 +138,9 @@ namespace RESTFulSense.Services
                     throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, message);
             }
         }
+
+        private static bool NotFoundWithNoContent(HttpResponseMessage httpResponseMessage) =>
+            httpResponseMessage.Content.Headers.Contains("Content-Type") == false
+            && httpResponseMessage.StatusCode == HttpStatusCode.NotFound;
     }
 }
