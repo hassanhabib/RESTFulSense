@@ -122,6 +122,8 @@ namespace RESTFulSense.Tests.Services
             HttpResponseMessage notFoundResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.NotFound, content);
 
+            notFoundResponseMessage.Content.Headers.Add("Content-Type", "text/json");
+
             // when
             ValueTask validateHttpResponseTask =
                 ValidationService.ValidateHttpResponseAsync(notFoundResponseMessage);
@@ -129,6 +131,29 @@ namespace RESTFulSense.Tests.Services
             // then
             HttpResponseNotFoundException httpResponseNotFoundException =
                 await Assert.ThrowsAsync<HttpResponseNotFoundException>(() =>
+                    validateHttpResponseTask.AsTask());
+
+            httpResponseNotFoundException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
+        }
+
+        [Fact]
+        public async Task ShouldThrowHttpResponseUrlNotFoundExceptionIfResponseStatusCodeWasNotFoundAsync()
+        {
+            // given
+            string randomContent = GetRandomContent();
+            string content = randomContent;
+            string expectedExceptionMessage = content;
+
+            HttpResponseMessage notFoundResponseMessage =
+                CreateHttpResponseMessage(HttpStatusCode.NotFound, content);
+
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(notFoundResponseMessage);
+
+            // then
+            HttpResponseUrlNotFoundException httpResponseNotFoundException =
+                await Assert.ThrowsAsync<HttpResponseUrlNotFoundException>(() =>
                     validateHttpResponseTask.AsTask());
 
             httpResponseNotFoundException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
