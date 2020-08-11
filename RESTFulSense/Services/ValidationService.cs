@@ -31,8 +31,8 @@ namespace RESTFulSense.Services
                 case { } when httpResponseMessage.StatusCode == HttpStatusCode.Forbidden:
                     throw new HttpResponseForbiddenException(httpResponseMessage, message);
 
-                //case { } when (httpResponseMessage.StatusCode == HttpStatusCode.NotFound && WithNoContentTypeHeader(httpResponseMessage)):
-                //    throw new HttpResponseUrlNotFoundException(httpResponseMessage, message);
+                case { } when NotFoundWithNoContent(httpResponseMessage):
+                    throw new HttpResponseUrlNotFoundException(httpResponseMessage, message);
 
                 case { } when httpResponseMessage.StatusCode == HttpStatusCode.NotFound:
                     throw new HttpResponseNotFoundException(httpResponseMessage, message);
@@ -138,7 +138,8 @@ namespace RESTFulSense.Services
             }
         }
 
-        private static bool WithNoContentTypeHeader(HttpResponseMessage responseMessage) =>
-            responseMessage.Content.Headers.Contains("Content-Type") == false;
+        private static bool NotFoundWithNoContent(HttpResponseMessage httpResponseMessage) =>
+            httpResponseMessage.Content.Headers.Contains("Content-Type") == false
+            && httpResponseMessage.StatusCode == HttpStatusCode.NotFound;
     }
 }
