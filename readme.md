@@ -31,6 +31,7 @@ RESTFulSense provide the following exceptions for erroring HTTP Status Codes as 
 |PaymentRequired|402|HttpResponsePaymentRequiredException|
 |Forbidden|403|HttpResponseForbiddenException|
 |NotFound|404|HttpResponseNotFoundException|
+|NotFound|404|HttpResponseUrlNotFoundException|
 |MethodNotAllowed|405|HttpResponseMethodNotAllowedException|
 |NotAcceptable|406|HttpResponseNotAcceptableException|
 |ProxyAuthenticationRequired|407|HttpResponseProxyAuthenticationRequiredException|
