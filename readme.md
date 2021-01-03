@@ -193,5 +193,5 @@ Twitter: @hassanrezkhabib
 <br />
 LinkedIn: hassanrezkhabib
 <br />
-E-Mail: hassanhabib@live.com & alice@piorsoft.com
+E-Mail: hassanhabib@live.com
 <br />
