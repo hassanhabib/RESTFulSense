@@ -64,7 +64,7 @@ namespace RESTFulSense.Clients
             StringContent contentString = StringifyJsonifyContent(content);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PostAsync(relativeUrl, contentString);
+               await this.httpClient.PutAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
