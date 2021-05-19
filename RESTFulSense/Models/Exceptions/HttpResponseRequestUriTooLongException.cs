@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------
-// Copyright (c) Hassan Habib & Alice Luo  All rights reserved.
+// Copyright (c) Hassan Habib
 // Licensed under the MIT License.
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
