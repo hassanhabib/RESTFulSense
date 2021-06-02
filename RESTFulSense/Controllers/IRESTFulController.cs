@@ -10,6 +10,7 @@ namespace RESTFulSense.Controllers
 {
     public interface IRESTFulController
     {
+        CreatedObjectResult Created(object value);
         LockedObjectResult Locked(object value);
         BadGatewayObjectResult BadGateway(object value);
         ExpectationFailedObjectResult ExpectationFailed(object value);

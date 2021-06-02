@@ -20,6 +20,22 @@ namespace RESTFulSense.Tests.Controllers
             this.restfulController = new RESTFulController();
 
         [Fact]
+        public void ShouldReturnCreatedObjectResult()
+        {
+            // given 
+            string randomMessage = GetRandomMessage();
+            string inputMessage = randomMessage;
+            var expectedResult = new CreatedObjectResult(inputMessage);
+
+            // when
+            CreatedObjectResult actualResult =
+                this.restfulController.Created(inputMessage);
+
+            // then
+            actualResult.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
         public void ShouldReturnLockedObjectResult()
         {
             // given 

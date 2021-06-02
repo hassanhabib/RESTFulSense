@@ -12,6 +12,12 @@ namespace RESTFulSense.Controllers
     public class RESTFulController : ControllerBase, IRESTFulController
     {
         [NonAction]
+        public CreatedObjectResult Created(object value)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        [NonAction]
         public BadGatewayObjectResult BadGateway(object value) =>
             new BadGatewayObjectResult(value);
 
