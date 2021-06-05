@@ -69,7 +69,7 @@ RESTFulSense provide the following exceptions for erroring HTTP Status Codes as 
 
 <br />
 
-### 2. Simplified API communications
+### 2. Simplified API Communications
 API controllers in ASP.NET Core today don't offer the full range of HTTP Codes that can be used to communicate certain events and errors to end users, in this library we managed to implement all the missing methods to communicate the full range of error codes as follows:
 <br />
 
@@ -164,7 +164,7 @@ Student student =
 ```
 <br />
 
-In addition to the wrappers around API calls and serialziation/deserialization, this library alos provides a simplified way to execute communications without any workarounds.
+In addition to the wrappers around API calls and serialization/deserialization, this library also provides a simplified way to execute communications without any workarounds.
 <br />
 For instance, to execute a ```PUT``` API call without a body, to update a status for instance, you don't have to fake a ```PUT``` body to execute a successful call, you can just do the follows:
 ```csharp
