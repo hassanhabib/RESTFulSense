@@ -4,8 +4,10 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RESTFulSense.Services;
@@ -23,6 +25,19 @@ namespace RESTFulSense.Clients
         {
             HttpResponseMessage responseMessage =
                 await this.httpClient.GetAsync(relativeUrl);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(responseMessage);
+        }
+
+        public async ValueTask<T> GetContentAsync<T>(string relativeUrl, TimeSpan timeout)
+        {
+            using var cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(timeout);
+
+            HttpResponseMessage responseMessage =
+                await this.httpClient.GetAsync(relativeUrl, cancellationTokenSource.Token);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
