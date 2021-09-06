@@ -139,12 +139,12 @@ namespace RESTFulSense.Services
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.NotExtended:
                     throw new HttpResponseNotExtendedException(httpResponseMessage, content);
 
-                case false when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
-                    throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, content);
-
                 case true when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
                     ValidationProblemDetails problemDetails = MapToProblemDetails(content);
                     throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, problemDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
+                    throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, content);
             }
         }
 

@@ -869,28 +869,29 @@ namespace RESTFulSense.Tests.Services
         //            httpResponseLoopDetectedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         //        }
 
-        //        [Fact]
-        //        public async Task ShouldThrowHttpResponseNotExtendedExceptionIfResponseStatusCodeWasNotExtendedAsync()
-        //        {
-        //            // given
-        //            string randomContent = GetRandomContent();
-        //            string content = randomContent;
-        //            string expectedExceptionMessage = content;
+        [Fact]
+        public async Task ShouldThrowHttpResponseNotExtendedDetailsIfResponseStatusCodeWasNotExtendedAsync()
+        {
+            // given
+            ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
+            string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
+            string content = randomContent;
+            string expectedExceptionMessage = content;
 
-        //            HttpResponseMessage notExtendedResponseMessage =
-        //                CreateHttpResponseMessage(HttpStatusCode.NotExtended, content);
+            HttpResponseMessage notExtendedResponseMessage =
+                CreateHttpResponseMessage(HttpStatusCode.NotExtended, content);
 
-        //            // when
-        //            ValueTask validateHttpResponseTask =
-        //                ValidationService.ValidateHttpResponseAsync(notExtendedResponseMessage);
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(notExtendedResponseMessage);
 
-        //            // then
-        //            HttpResponseNotExtendedException httpResponseNotExtendedException =
-        //                await Assert.ThrowsAsync<HttpResponseNotExtendedException>(() =>
-        //                    validateHttpResponseTask.AsTask());
+            // then
+            HttpResponseNotExtendedException httpResponseNotExtendedException =
+                await Assert.ThrowsAsync<HttpResponseNotExtendedException>(() =>
+                    validateHttpResponseTask.AsTask());
 
-        //            httpResponseNotExtendedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
-        //        }
+            httpResponseNotExtendedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
+        }
 
         [Fact]
         public async Task
