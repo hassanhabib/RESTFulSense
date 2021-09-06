@@ -793,6 +793,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedLockedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnFailedDependency()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status424FailedDependency,
+                Type = "https://tools.ietf.org/html/rfc4918#section-11.4",
+                Title = inputException.Message,
+            };
+
+            var expectedFailedDependencyObjectResult =
+                new FailedDependencyObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            FailedDependencyObjectResult failedDependencyObjectResult =
+                this.restfulController.FailedDependency(inputException);
+
+            // then
+            failedDependencyObjectResult.Should()
+                .BeEquivalentTo(expectedFailedDependencyObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
