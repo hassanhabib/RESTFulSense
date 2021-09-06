@@ -312,6 +312,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedProxyAuthenticationRequiredObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnRequestTimeout()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status408RequestTimeout,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.7",
+                Title = inputException.Message,
+            };
+
+            var expectedRequestTimeoutObjectResult =
+                new RequestTimeoutObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            RequestTimeoutObjectResult requestTimeoutObjectResult =
+                this.restfulController.RequestTimeout(inputException);
+
+            // then
+            requestTimeoutObjectResult.Should()
+                .BeEquivalentTo(expectedRequestTimeoutObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
