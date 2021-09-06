@@ -344,6 +344,20 @@ namespace RESTFulSense.Controllers
             return new RequestEntityTooLargeObjectResult(problemDetail);
         }
 
+        public RequestUriTooLongObjectResult RequestUriTooLong(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status414RequestUriTooLong,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.12",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new RequestUriTooLongObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
