@@ -682,6 +682,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedExpectationFailedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnMisdirectedRequest()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status421MisdirectedRequest,
+                Type = "https://tools.ietf.org/html/rfc7540#section-9.1.2",
+                Title = inputException.Message,
+            };
+
+            var expectedMisdirectedRequestObjectResult =
+                new MisdirectedRequestObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            MisdirectedRequestObjectResult misdirectedRequestObjectResult =
+                this.restfulController.MisdirectedRequest(inputException);
+
+            // then
+            misdirectedRequestObjectResult.Should()
+                .BeEquivalentTo(expectedMisdirectedRequestObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
