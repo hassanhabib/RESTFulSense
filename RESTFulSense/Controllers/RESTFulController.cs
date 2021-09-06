@@ -666,6 +666,20 @@ namespace RESTFulSense.Controllers
             return new NotExtendedObjectResult(problemDetail);
         }
 
+        public NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status511NetworkAuthenticationRequired,
+                Type = "https://tools.ietf.org/html/rfc6585#section-6",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new NetworkAuthenticationRequiredObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
