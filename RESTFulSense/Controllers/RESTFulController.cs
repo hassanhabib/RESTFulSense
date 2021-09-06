@@ -372,6 +372,20 @@ namespace RESTFulSense.Controllers
             return new UnsupportedMediaTypeObjectResult(problemDetail);
         }
 
+        public RequestedRangeNotSatisfiableObjectResult RequestedRangeNotSatisfiable(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status416RequestedRangeNotSatisfiable,
+                Type = "https://tools.ietf.org/html/rfc7233#section-4.4",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new RequestedRangeNotSatisfiableObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
