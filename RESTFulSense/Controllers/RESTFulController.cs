@@ -428,6 +428,20 @@ namespace RESTFulSense.Controllers
             return new UnprocessableEntityObjectResult(problemDetail);
         }
 
+        public LockedObjectResult Locked(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status423Locked,
+                Type = "https://tools.ietf.org/html/rfc4918#section-11.3",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new LockedObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
