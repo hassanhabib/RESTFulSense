@@ -260,6 +260,20 @@ namespace RESTFulSense.Controllers
             return new ProxyAuthenticationRequiredObjectResult(problemDetail);
         }
 
+        public RequestTimeoutObjectResult RequestTimeout(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status408RequestTimeout,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.7",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new RequestTimeoutObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
