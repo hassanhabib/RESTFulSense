@@ -442,6 +442,20 @@ namespace RESTFulSense.Controllers
             return new LockedObjectResult(problemDetail);
         }
 
+        public FailedDependencyObjectResult FailedDependency(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status424FailedDependency,
+                Type = "https://tools.ietf.org/html/rfc4918#section-11.4",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new FailedDependencyObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
