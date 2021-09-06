@@ -414,6 +414,20 @@ namespace RESTFulSense.Controllers
             return new MisdirectedRequestObjectResult(problemDetail);
         }
 
+        public UnprocessableEntityObjectResult UnprocessableEntity(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status422UnprocessableEntity,
+                Type = "https://tools.ietf.org/html/rfc4918#section-11.2",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new UnprocessableEntityObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
