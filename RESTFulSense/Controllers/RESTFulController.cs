@@ -360,7 +360,16 @@ namespace RESTFulSense.Controllers
 
         public UnsupportedMediaTypeObjectResult UnsupportedMediaType(Exception exception)
         {
-            throw new NotImplementedException();
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status415UnsupportedMediaType,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.13",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new UnsupportedMediaTypeObjectResult(problemDetail);
         }
 
         private static void MapExceptionDataToProblemDetail(

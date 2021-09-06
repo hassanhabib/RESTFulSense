@@ -600,11 +600,11 @@ namespace RESTFulSense.Tests.Controllers
             }
 
             // when
-            UnsupportedMediaTypeObjectResult requestUriTooLongObjectResult =
+            UnsupportedMediaTypeObjectResult unsupportedMediaTypeObjectResult =
                 this.restfulController.UnsupportedMediaType(inputException);
 
             // then
-            requestUriTooLongObjectResult.Should()
+            unsupportedMediaTypeObjectResult.Should()
                 .BeEquivalentTo(expectedUnsupportedMediaTypeObjectResult);
         }
 
