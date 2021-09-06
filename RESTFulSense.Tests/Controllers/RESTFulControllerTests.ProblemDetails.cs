@@ -904,6 +904,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedPreconditionRequiredObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnTooManyRequests()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status429TooManyRequests,
+                Type = "https://tools.ietf.org/html/rfc6585#section-4",
+                Title = inputException.Message,
+            };
+
+            var expectedTooManyRequestsObjectResult =
+                new TooManyRequestsObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            TooManyRequestsObjectResult tooManyRequestsObjectResult =
+                this.restfulController.TooManyRequests(inputException);
+
+            // then
+            tooManyRequestsObjectResult.Should()
+                .BeEquivalentTo(expectedTooManyRequestsObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
