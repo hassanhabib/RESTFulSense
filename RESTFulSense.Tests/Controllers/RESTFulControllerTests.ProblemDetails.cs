@@ -608,6 +608,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedUnsupportedMediaTypeObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnRequestedRangeNotSatisfiable()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status416RequestedRangeNotSatisfiable,
+                Type = "https://tools.ietf.org/html/rfc7233#section-4.4",
+                Title = inputException.Message,
+            };
+
+            var expectedRequestedRangeNotSatisfiableObjectResult =
+                new RequestedRangeNotSatisfiableObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            RequestedRangeNotSatisfiableObjectResult requestedRangeNotSatisfiableObjectResult =
+                this.restfulController.RequestedRangeNotSatisfiable(inputException);
+
+            // then
+            requestedRangeNotSatisfiableObjectResult.Should()
+                .BeEquivalentTo(expectedRequestedRangeNotSatisfiableObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
