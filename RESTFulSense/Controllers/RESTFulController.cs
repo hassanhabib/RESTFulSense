@@ -302,6 +302,20 @@ namespace RESTFulSense.Controllers
             return new GoneObjectResult(problemDetail);
         }
 
+        public LengthRequiredObjectResult LengthRequired(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status411LengthRequired,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.10",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new LengthRequiredObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
