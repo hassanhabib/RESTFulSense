@@ -25,10 +25,4 @@
     <ProjectReference Include="..\RESTFulSense\RESTFulSense.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Xeption">
-      <HintPath>C:\Users\hassan\source\repos\Xeption\Xeption\bin\Release\netstandard2.1\Xeption.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
