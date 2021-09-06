@@ -49,7 +49,6 @@ namespace RESTFulSense.Tests.Controllers
                 this.restfulController.BadRequest(inputException);
 
             // then
-
             badRequestObjectResult.Should()
                 .BeEquivalentTo(expectedBadRequestObjectResult);
         }
@@ -87,7 +86,6 @@ namespace RESTFulSense.Tests.Controllers
                 this.restfulController.Unauthorized(inputException);
 
             // then
-
             unauthorizedObjectResult.Should()
                 .BeEquivalentTo(expectedUnauthorizedObjectResult);
         }
@@ -125,9 +123,45 @@ namespace RESTFulSense.Tests.Controllers
                 this.restfulController.PaymentRequired(inputException);
 
             // then
-
             paymentRequiredObjectResult.Should()
                 .BeEquivalentTo(expectedPaymentRequiredObjectResult);
+        }
+
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnForbidden()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+                Title = inputException.Message,
+            };
+
+            var expectedForbiddenObjectResult =
+                new ForbiddenObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            ForbiddenObjectResult forbiddenObjectResult =
+                this.restfulController.Forbidden(inputException);
+
+            // then
+            forbiddenObjectResult.Should()
+                .BeEquivalentTo(expectedForbiddenObjectResult);
         }
 
         public static Dictionary<string, List<string>> CreateRandomDictionary()

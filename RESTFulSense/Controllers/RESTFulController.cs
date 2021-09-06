@@ -190,6 +190,11 @@ namespace RESTFulSense.Controllers
             return new PaymentRequiredObjectResult(problemDetail);
         }
 
+        public ForbiddenObjectResult Forbidden(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
