@@ -645,6 +645,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedRequestedRangeNotSatisfiableObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnExpectationFailed()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status417ExpectationFailed,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.14",
+                Title = inputException.Message,
+            };
+
+            var expectedExpectationFailedObjectResult =
+                new ExpectationFailedObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            ExpectationFailedObjectResult expectationFailedObjectResult =
+                this.restfulController.ExpectationFailed(inputException);
+
+            // then
+            expectationFailedObjectResult.Should()
+                .BeEquivalentTo(expectedExpectationFailedObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
