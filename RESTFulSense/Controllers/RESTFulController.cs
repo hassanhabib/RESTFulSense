@@ -652,6 +652,20 @@ namespace RESTFulSense.Controllers
             return new LoopDetectedObjectResult(problemDetail);
         }
 
+        public NotExtendedObjectResult NotExtended(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status510NotExtended,
+                Type = "https://tools.ietf.org/html/rfc2774#section-7",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new NotExtendedObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
