@@ -358,6 +358,11 @@ namespace RESTFulSense.Controllers
             return new RequestUriTooLongObjectResult(problemDetail);
         }
 
+        public UnsupportedMediaTypeObjectResult UnsupportedMediaType(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)

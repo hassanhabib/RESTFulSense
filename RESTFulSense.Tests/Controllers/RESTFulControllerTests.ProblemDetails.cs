@@ -571,6 +571,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedRequestUriTooLongObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnUnsupportedMediaType()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status415UnsupportedMediaType,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.13",
+                Title = inputException.Message,
+            };
+
+            var expectedUnsupportedMediaTypeObjectResult =
+                new UnsupportedMediaTypeObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            UnsupportedMediaTypeObjectResult requestUriTooLongObjectResult =
+                this.restfulController.UnsupportedMediaType(inputException);
+
+            // then
+            requestUriTooLongObjectResult.Should()
+                .BeEquivalentTo(expectedUnsupportedMediaTypeObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
