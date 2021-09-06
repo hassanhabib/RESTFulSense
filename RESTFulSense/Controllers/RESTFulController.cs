@@ -246,6 +246,20 @@ namespace RESTFulSense.Controllers
             return new NotAcceptableObjectResult(problemDetail);
         }
 
+        public ProxyAuthenticationRequiredObjectResult ProxyAuthenticationRequired(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status407ProxyAuthenticationRequired,
+                Type = "https://tools.ietf.org/html/rfc7235#section-3.2",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new ProxyAuthenticationRequiredObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
