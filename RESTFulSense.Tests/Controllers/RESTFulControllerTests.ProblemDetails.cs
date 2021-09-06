@@ -719,6 +719,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedMisdirectedRequestObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnUnprocessableEntity()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status422UnprocessableEntity,
+                Type = "https://tools.ietf.org/html/rfc4918#section-11.2",
+                Title = inputException.Message,
+            };
+
+            var expectedUnprocessableEntityObjectResult =
+                new UnprocessableEntityObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            UnprocessableEntityObjectResult unprocessableEntityObjectResult =
+                this.restfulController.UnprocessableEntity(inputException);
+
+            // then
+            unprocessableEntityObjectResult.Should()
+                .BeEquivalentTo(expectedUnprocessableEntityObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
