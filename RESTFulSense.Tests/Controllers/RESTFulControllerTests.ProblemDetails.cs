@@ -423,6 +423,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedGoneObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnLengthRequired()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status411LengthRequired,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.10",
+                Title = inputException.Message,
+            };
+
+            var expectedLengthRequiredObjectResult =
+                new LengthRequiredObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            LengthRequiredObjectResult lengthRequiredObjectResult =
+                this.restfulController.LengthRequired(inputException);
+
+            // then
+            lengthRequiredObjectResult.Should()
+                .BeEquivalentTo(expectedLengthRequiredObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
