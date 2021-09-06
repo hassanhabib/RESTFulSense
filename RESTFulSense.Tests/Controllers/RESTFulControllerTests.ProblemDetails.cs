@@ -349,6 +349,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedRequestTimeoutObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnConflict()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status409Conflict,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                Title = inputException.Message,
+            };
+
+            var expectedConflictObjectResult =
+                new ConflictObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            ConflictObjectResult conflictObjectResult =
+                this.restfulController.Conflict(inputException);
+
+            // then
+            conflictObjectResult.Should()
+                .BeEquivalentTo(expectedConflictObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
