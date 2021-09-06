@@ -1163,6 +1163,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedServiceUnavailableObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnGatewayTimeout()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status504GatewayTimeout,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.5",
+                Title = inputException.Message,
+            };
+
+            var expectedGatewayTimeoutObjectResult =
+                new GatewayTimeoutObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            GatewayTimeoutObjectResult gatewayTimeoutObjectResult =
+                this.restfulController.GatewayTimeout(inputException);
+
+            // then
+            gatewayTimeoutObjectResult.Should()
+                .BeEquivalentTo(expectedGatewayTimeoutObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
