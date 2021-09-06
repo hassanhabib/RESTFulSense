@@ -941,6 +941,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedTooManyRequestsObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnRequestHeaderFieldsTooLarge()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status431RequestHeaderFieldsTooLarge,
+                Type = "https://tools.ietf.org/html/rfc6585#section-5",
+                Title = inputException.Message,
+            };
+
+            var expectedRequestHeaderFieldsTooLargeObjectResult =
+                new RequestHeaderFieldsTooLargeObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            RequestHeaderFieldsTooLargeObjectResult requestHeaderFieldsTooLargeObjectResult =
+                this.restfulController.RequestHeaderFieldsTooLarge(inputException);
+
+            // then
+            requestHeaderFieldsTooLargeObjectResult.Should()
+                .BeEquivalentTo(expectedRequestHeaderFieldsTooLargeObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
