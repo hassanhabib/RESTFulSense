@@ -1089,6 +1089,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedNotImplementedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnBadGateway()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status502BadGateway,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.3",
+                Title = inputException.Message,
+            };
+
+            var expectedBadGatewayObjectResult =
+                new BadGatewayObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            BadGatewayObjectResult badGatewayObjectResult =
+                this.restfulController.BadGateway(inputException);
+
+            // then
+            badGatewayObjectResult.Should()
+                .BeEquivalentTo(expectedBadGatewayObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
