@@ -484,6 +484,20 @@ namespace RESTFulSense.Controllers
             return new PreconditionRequiredObjectResult(problemDetail);
         }
 
+        public TooManyRequestsObjectResult TooManyRequests(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status429TooManyRequests,
+                Type = "https://tools.ietf.org/html/rfc6585#section-4",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new TooManyRequestsObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
