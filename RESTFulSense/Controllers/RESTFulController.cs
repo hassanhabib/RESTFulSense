@@ -526,6 +526,20 @@ namespace RESTFulSense.Controllers
             return new UnavailableForLegalReasonsObjectResult(problemDetail);
         }
 
+        public InternalServerErrorObjectResult InternalServerError(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status500InternalServerError,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new InternalServerErrorObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
