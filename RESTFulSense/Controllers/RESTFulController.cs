@@ -624,6 +624,20 @@ namespace RESTFulSense.Controllers
             return new VariantAlsoNegotiatesObjectResult(problemDetail);
         }
 
+        public InsufficientStorageObjectResult InsufficientStorage(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status507InsufficientStorage,
+                Type = "https://tools.ietf.org/html/rfc4918#section-11.5",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new InsufficientStorageObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
