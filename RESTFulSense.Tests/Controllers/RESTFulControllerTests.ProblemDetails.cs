@@ -1248,7 +1248,7 @@ namespace RESTFulSense.Tests.Controllers
 
             var expectedProblemDetail = new ValidationProblemDetails
             {
-                Status = StatusCodes.Status505HttpVersionNotsupported,
+                Status = StatusCodes.Status506VariantAlsoNegotiates,
                 Type = "https://tools.ietf.org/html/rfc2295#section-8.1",
                 Title = inputException.Message,
             };
@@ -1272,6 +1272,43 @@ namespace RESTFulSense.Tests.Controllers
             // then
             variantAlsoNegotiatesObjectResult.Should()
                 .BeEquivalentTo(expectedVariantAlsoNegotiatesObjectResult);
+        }
+
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnInsufficientStorage()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status507InsufficientStorage,
+                Type = "https://tools.ietf.org/html/rfc4918#section-11.5",
+                Title = inputException.Message,
+            };
+
+            var expectedInsufficientStorageObjectResult =
+                new InsufficientStorageObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            InsufficientStorageObjectResult insufficientStorageObjectResult =
+                this.restfulController.InsufficientStorage(inputException);
+
+            // then
+            insufficientStorageObjectResult.Should()
+                .BeEquivalentTo(expectedInsufficientStorageObjectResult);
         }
 
         public static Dictionary<string, List<string>> CreateRandomDictionary()

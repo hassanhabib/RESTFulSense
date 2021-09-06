@@ -614,7 +614,7 @@ namespace RESTFulSense.Controllers
         {
             var problemDetail = new ValidationProblemDetails
             {
-                Status = StatusCodes.Status505HttpVersionNotsupported,
+                Status = StatusCodes.Status506VariantAlsoNegotiates,
                 Type = "https://tools.ietf.org/html/rfc2295#section-8.1",
                 Title = exception.Message
             };
