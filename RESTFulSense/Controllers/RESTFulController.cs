@@ -596,6 +596,20 @@ namespace RESTFulSense.Controllers
             return new GatewayTimeoutObjectResult(problemDetail);
         }
 
+        public HttpVersionNotSupportedObjectResult HttpVersionNotSupported(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status505HttpVersionNotsupported,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.6",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new HttpVersionNotSupportedObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
