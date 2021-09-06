@@ -568,6 +568,20 @@ namespace RESTFulSense.Controllers
             return new BadGatewayObjectResult(problemDetail);
         }
 
+        public ServiceUnavailableObjectResult ServiceUnavailable(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status503ServiceUnavailable,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.4",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new ServiceUnavailableObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
