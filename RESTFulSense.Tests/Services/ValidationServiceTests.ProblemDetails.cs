@@ -846,28 +846,36 @@ namespace RESTFulSense.Tests.Services
         //            httpResponseInsufficientStorageException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         //        }
 
-        //        [Fact]
-        //        public async Task ShouldThrowHttpResponseLoopDetectedExceptionIfResponseStatusCodeWasLoopDetectedAsync()
-        //        {
-        //            // given
-        //            string randomContent = GetRandomContent();
-        //            string content = randomContent;
-        //            string expectedExceptionMessage = content;
+        [Fact]
+        public async Task ShouldThrowHttpResponseLoopDetectedDetailIfResponseStatusCodeWasLoopDetectedAsync()
+        {
+            // given
+            ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
+            string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
+            string content = randomContent;
+            string expectedExceptionMessage = content;
 
-        //            HttpResponseMessage loopDetectedResponseMessage =
-        //                CreateHttpResponseMessage(HttpStatusCode.LoopDetected, content);
+            HttpResponseMessage loopDetectedResponseMessage =
+                CreateHttpResponseMessage(HttpStatusCode.LoopDetected, content);
 
-        //            // when
-        //            ValueTask validateHttpResponseTask =
-        //                ValidationService.ValidateHttpResponseAsync(loopDetectedResponseMessage);
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(loopDetectedResponseMessage);
 
-        //            // then
-        //            HttpResponseLoopDetectedException httpResponseLoopDetectedException =
-        //                await Assert.ThrowsAsync<HttpResponseLoopDetectedException>(() =>
-        //                    validateHttpResponseTask.AsTask());
+            // then
+            HttpResponseLoopDetectedException httpResponseLoopDetectedException =
+                await Assert.ThrowsAsync<HttpResponseLoopDetectedException>(() =>
+                    validateHttpResponseTask.AsTask());
 
-        //            httpResponseLoopDetectedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
-        //        }
+            httpResponseLoopDetectedException.Message
+              .Should().BeEquivalentTo(randomProblemDetails.Title);
+
+            foreach (DictionaryEntry entry in httpResponseLoopDetectedException.Data)
+            {
+                httpResponseLoopDetectedException.Data[entry.Key].Should().BeEquivalentTo(
+                    randomProblemDetails.Errors[entry.Key.ToString()]);
+            }
+        }
 
         [Fact]
         public async Task ShouldThrowHttpResponseNotExtendedDetailsIfResponseStatusCodeWasNotExtendedAsync()
