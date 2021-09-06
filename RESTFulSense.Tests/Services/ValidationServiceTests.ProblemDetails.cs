@@ -890,7 +890,14 @@ namespace RESTFulSense.Tests.Services
                 await Assert.ThrowsAsync<HttpResponseNotExtendedException>(() =>
                     validateHttpResponseTask.AsTask());
 
-            httpResponseNotExtendedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
+            httpResponseNotExtendedException.Message
+               .Should().BeEquivalentTo(randomProblemDetails.Title);
+
+            foreach (DictionaryEntry entry in httpResponseNotExtendedException.Data)
+            {
+                httpResponseNotExtendedException.Data[entry.Key].Should().BeEquivalentTo(
+                    randomProblemDetails.Errors[entry.Key.ToString()]);
+            }
         }
 
         [Fact]

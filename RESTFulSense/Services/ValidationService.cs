@@ -136,12 +136,16 @@ namespace RESTFulSense.Services
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.LoopDetected:
                     throw new HttpResponseLoopDetectedException(httpResponseMessage, content);
 
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.NotExtended:
+                    ValidationProblemDetails notExtendedDetails = MapToProblemDetails(content);
+                    throw new HttpResponseNotExtendedException(httpResponseMessage, notExtendedDetails);
+
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.NotExtended:
                     throw new HttpResponseNotExtendedException(httpResponseMessage, content);
 
                 case true when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
-                    ValidationProblemDetails problemDetails = MapToProblemDetails(content);
-                    throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, problemDetails);
+                    ValidationProblemDetails networkAuthDetails = MapToProblemDetails(content);
+                    throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, networkAuthDetails);
 
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
                     throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, content);
