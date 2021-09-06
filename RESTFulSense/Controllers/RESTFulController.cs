@@ -192,7 +192,16 @@ namespace RESTFulSense.Controllers
 
         public ForbiddenObjectResult Forbidden(Exception exception)
         {
-            throw new NotImplementedException();
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new ForbiddenObjectResult(problemDetail);
         }
 
         private static void MapExceptionDataToProblemDetail(
