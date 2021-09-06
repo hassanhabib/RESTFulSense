@@ -386,6 +386,20 @@ namespace RESTFulSense.Controllers
             return new RequestedRangeNotSatisfiableObjectResult(problemDetail);
         }
 
+        public ExpectationFailedObjectResult ExpectationFailed(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status417ExpectationFailed,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.14",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new ExpectationFailedObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
