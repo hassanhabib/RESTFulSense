@@ -1348,6 +1348,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedLoopDetectedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnNotExtended()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status510NotExtended,
+                Type = "https://tools.ietf.org/html/rfc2774#section-7",
+                Title = inputException.Message,
+            };
+
+            var expectedNotExtendedObjectResult =
+                new NotExtendedObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            NotExtendedObjectResult notExtendedObjectResult =
+                this.restfulController.NotExtended(inputException);
+
+            // then
+            notExtendedObjectResult.Should()
+                .BeEquivalentTo(expectedNotExtendedObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
