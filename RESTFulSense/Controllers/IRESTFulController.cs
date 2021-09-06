@@ -4,6 +4,8 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
+using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Models;
 
 namespace RESTFulSense.Controllers
@@ -11,6 +13,7 @@ namespace RESTFulSense.Controllers
     public interface IRESTFulController
     {
         CreatedObjectResult Created(object value);
+        BadRequestObjectResult BadRequest(Exception exception);
         LockedObjectResult Locked(object value);
         BadGatewayObjectResult BadGateway(object value);
         ExpectationFailedObjectResult ExpectationFailed(object value);

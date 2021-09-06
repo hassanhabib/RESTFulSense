@@ -4,6 +4,11 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Models;
 
@@ -142,5 +147,31 @@ namespace RESTFulSense.Controllers
         [NonAction]
         public VariantAlsoNegotiatesObjectResult VariantAlsoNegotiates(object value) =>
             new VariantAlsoNegotiatesObjectResult(value);
+
+        public BadRequestObjectResult BadRequest(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new BadRequestObjectResult(problemDetail);
+        }
+
+        private static void MapExceptionDataToProblemDetail(
+            Exception exception,
+            ValidationProblemDetails problemDetail)
+        {
+            foreach (DictionaryEntry error in exception.Data)
+            {
+                problemDetail.Errors.Add(
+                    key: error.Key.ToString(),
+                    value: ((List<string>)error.Value)?.ToArray());
+            }
+        }
     }
 }
