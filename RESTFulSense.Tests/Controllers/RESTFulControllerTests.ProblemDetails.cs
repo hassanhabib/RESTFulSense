@@ -978,6 +978,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedRequestHeaderFieldsTooLargeObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnUnavailableForLegalReasons()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status451UnavailableForLegalReasons,
+                Type = "https://tools.ietf.org/html/rfc7725#section-3",
+                Title = inputException.Message,
+            };
+
+            var expectedUnavailableForLegalReasonsObjectResult =
+                new UnavailableForLegalReasonsObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            UnavailableForLegalReasonsObjectResult unavailableForLegalReasonsObjectResult =
+                this.restfulController.UnavailableForLegalReasons(inputException);
+
+            // then
+            unavailableForLegalReasonsObjectResult.Should()
+                .BeEquivalentTo(expectedUnavailableForLegalReasonsObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
