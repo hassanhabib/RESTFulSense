@@ -1237,6 +1237,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedHttpVersionNotSupportedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnVariantAlsoNegotiates()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status505HttpVersionNotsupported,
+                Type = "https://tools.ietf.org/html/rfc2295#section-8.1",
+                Title = inputException.Message,
+            };
+
+            var expectedVariantAlsoNegotiatesObjectResult =
+                new VariantAlsoNegotiatesObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            VariantAlsoNegotiatesObjectResult variantAlsoNegotiatesObjectResult =
+                this.restfulController.VariantAlsoNegotiates(inputException);
+
+            // then
+            variantAlsoNegotiatesObjectResult.Should()
+                .BeEquivalentTo(expectedVariantAlsoNegotiatesObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
