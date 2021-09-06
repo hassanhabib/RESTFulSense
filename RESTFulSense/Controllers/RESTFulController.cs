@@ -540,6 +540,20 @@ namespace RESTFulSense.Controllers
             return new InternalServerErrorObjectResult(problemDetail);
         }
 
+        public NotImplementedObjectResult NotImplemented(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status501NotImplemented,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.2",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new NotImplementedObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
