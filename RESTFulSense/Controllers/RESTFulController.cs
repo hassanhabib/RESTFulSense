@@ -218,6 +218,20 @@ namespace RESTFulSense.Controllers
             return new NotFoundObjectResult(problemDetail);
         }
 
+        public MethodNotAllowedObjectResult MethodNotAllowed(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status405MethodNotAllowed,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.5",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new MethodNotAllowedObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
