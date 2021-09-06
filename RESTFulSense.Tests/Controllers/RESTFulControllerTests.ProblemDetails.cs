@@ -386,6 +386,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedConflictObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnGone()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status410Gone,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.9",
+                Title = inputException.Message,
+            };
+
+            var expectedGoneObjectResult =
+                new GoneObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            GoneObjectResult goneObjectResult =
+                this.restfulController.Gone(inputException);
+
+            // then
+            goneObjectResult.Should()
+                .BeEquivalentTo(expectedGoneObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
