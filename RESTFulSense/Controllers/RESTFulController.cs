@@ -330,6 +330,20 @@ namespace RESTFulSense.Controllers
             return new PreconditionFailedObjectResult(problemDetail);
         }
 
+        public RequestEntityTooLargeObjectResult RequestEntityTooLarge(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status413RequestEntityTooLarge,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.11",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new RequestEntityTooLargeObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
