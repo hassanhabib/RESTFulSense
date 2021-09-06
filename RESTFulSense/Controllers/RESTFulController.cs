@@ -610,6 +610,20 @@ namespace RESTFulSense.Controllers
             return new HttpVersionNotSupportedObjectResult(problemDetail);
         }
 
+        public VariantAlsoNegotiatesObjectResult VariantAlsoNegotiates(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status505HttpVersionNotsupported,
+                Type = "https://tools.ietf.org/html/rfc2295#section-8.1",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new VariantAlsoNegotiatesObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
