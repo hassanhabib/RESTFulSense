@@ -1385,6 +1385,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedNotExtendedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnNetworkAuthenticationRequired()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status511NetworkAuthenticationRequired,
+                Type = "https://tools.ietf.org/html/rfc6585#section-6",
+                Title = inputException.Message,
+            };
+
+            var expectedNetworkAuthenticationRequiredObjectResult =
+                new NetworkAuthenticationRequiredObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            NetworkAuthenticationRequiredObjectResult networkAuthenticationRequiredObjectResult =
+                this.restfulController.NetworkAuthenticationRequired(inputException);
+
+            // then
+            networkAuthenticationRequiredObjectResult.Should()
+                .BeEquivalentTo(expectedNetworkAuthenticationRequiredObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
