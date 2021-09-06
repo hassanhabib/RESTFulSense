@@ -456,6 +456,20 @@ namespace RESTFulSense.Controllers
             return new FailedDependencyObjectResult(problemDetail);
         }
 
+        public UpgradeRequiredObjectResult UpgradeRequired(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status426UpgradeRequired,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.15",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new UpgradeRequiredObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
