@@ -1311,6 +1311,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedInsufficientStorageObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnLoopDetected()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status508LoopDetected,
+                Type = "https://tools.ietf.org/html/rfc5842#section-7.2",
+                Title = inputException.Message,
+            };
+
+            var expectedLoopDetectedObjectResult =
+                new LoopDetectedObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            LoopDetectedObjectResult loopDetectedObjectResult =
+                this.restfulController.LoopDetected(inputException);
+
+            // then
+            loopDetectedObjectResult.Should()
+                .BeEquivalentTo(expectedLoopDetectedObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
