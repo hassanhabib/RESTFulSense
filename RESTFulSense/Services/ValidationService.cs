@@ -133,6 +133,10 @@ namespace RESTFulSense.Services
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.InsufficientStorage:
                     throw new HttpResponseInsufficientStorageException(httpResponseMessage, content);
 
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.LoopDetected:
+                    ValidationProblemDetails loopDetails = MapToProblemDetails(content);
+                    throw new HttpResponseLoopDetectedException(httpResponseMessage, loopDetails);
+
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.LoopDetected:
                     throw new HttpResponseLoopDetectedException(httpResponseMessage, content);
 
