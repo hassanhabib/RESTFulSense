@@ -1052,6 +1052,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedInternalServerErrorObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnNotImplemented()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status501NotImplemented,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.2",
+                Title = inputException.Message,
+            };
+
+            var expectedNotImplementedObjectResult =
+                new NotImplementedObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            NotImplementedObjectResult notImplementedObjectResult =
+                this.restfulController.NotImplemented(inputException);
+
+            // then
+            notImplementedObjectResult.Should()
+                .BeEquivalentTo(expectedNotImplementedObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
