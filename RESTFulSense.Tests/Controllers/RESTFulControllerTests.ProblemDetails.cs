@@ -460,6 +460,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedLengthRequiredObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnPreconditionFailed()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status412PreconditionFailed,
+                Type = "https://tools.ietf.org/html/rfc7232#section-4.2",
+                Title = inputException.Message,
+            };
+
+            var expectedPreconditionFailedObjectResult =
+                new PreconditionFailedObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            PreconditionFailedObjectResult preconditionFailedObjectResult =
+                this.restfulController.PreconditionFailed(inputException);
+
+            // then
+            preconditionFailedObjectResult.Should()
+                .BeEquivalentTo(expectedPreconditionFailedObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
