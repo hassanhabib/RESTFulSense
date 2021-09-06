@@ -830,6 +830,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedFailedDependencyObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnUpgradeRequired()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status426UpgradeRequired,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.15",
+                Title = inputException.Message,
+            };
+
+            var expectedUpgradeRequiredObjectResult =
+                new UpgradeRequiredObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            UpgradeRequiredObjectResult upgradeRequiredObjectResult =
+                this.restfulController.UpgradeRequired(inputException);
+
+            // then
+            upgradeRequiredObjectResult.Should()
+                .BeEquivalentTo(expectedUpgradeRequiredObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
