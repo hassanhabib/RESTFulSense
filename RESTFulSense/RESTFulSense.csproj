@@ -26,6 +26,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.14" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,12 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Xeption">
+      <HintPath>C:\Users\hassan\source\repos\Xeption\Xeption\bin\Release\netstandard2.1\Xeption.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

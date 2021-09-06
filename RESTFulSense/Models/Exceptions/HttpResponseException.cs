@@ -6,10 +6,11 @@
 
 using System;
 using System.Net.Http;
+using Xeptions;
 
 namespace RESTFulSense.Exceptions
 {
-    public class HttpResponseException : Exception
+    public class HttpResponseException : Xeption
     {
         public HttpResponseException(HttpResponseMessage httpResponseMessage, string message)
             : base(message) => this.HttpResponseMessage = httpResponseMessage;
