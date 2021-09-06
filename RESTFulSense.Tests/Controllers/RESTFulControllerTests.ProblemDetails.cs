@@ -497,6 +497,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedPreconditionFailedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnRequestEntityTooLarge()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status413RequestEntityTooLarge,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.11",
+                Title = inputException.Message,
+            };
+
+            var expectedRequestEntityTooLargeObjectResult =
+                new RequestEntityTooLargeObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            RequestEntityTooLargeObjectResult requestEntityTooLargeObjectResult =
+                this.restfulController.RequestEntityTooLarge(inputException);
+
+            // then
+            requestEntityTooLargeObjectResult.Should()
+                .BeEquivalentTo(expectedRequestEntityTooLargeObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
