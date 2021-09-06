@@ -92,6 +92,44 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedUnauthorizedObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnPaymentRequired()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status402PaymentRequired,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.2",
+                Title = inputException.Message,
+            };
+
+            var expectedPaymentRequiredObjectResult =
+                new PaymentRequiredObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            PaymentRequiredObjectResult paymentRequiredObjectResult =
+                this.restfulController.PaymentRequired(inputException);
+
+            // then
+
+            paymentRequiredObjectResult.Should()
+                .BeEquivalentTo(expectedPaymentRequiredObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
