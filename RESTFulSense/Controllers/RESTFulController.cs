@@ -582,6 +582,20 @@ namespace RESTFulSense.Controllers
             return new ServiceUnavailableObjectResult(problemDetail);
         }
 
+        public GatewayTimeoutObjectResult GatewayTimeout(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status504GatewayTimeout,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.5",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new GatewayTimeoutObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
