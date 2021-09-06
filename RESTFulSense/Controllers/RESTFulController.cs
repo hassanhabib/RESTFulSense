@@ -288,6 +288,20 @@ namespace RESTFulSense.Controllers
             return new ConflictObjectResult(problemDetail);
         }
 
+        public GoneObjectResult Gone(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status410Gone,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.9",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new GoneObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
