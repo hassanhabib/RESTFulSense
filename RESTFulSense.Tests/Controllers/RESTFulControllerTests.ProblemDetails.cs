@@ -1200,6 +1200,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedGatewayTimeoutObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnHttpVersionNotSupported()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status505HttpVersionNotsupported,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.6",
+                Title = inputException.Message,
+            };
+
+            var expectedHttpVersionNotSupportedObjectResult =
+                new HttpVersionNotSupportedObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            HttpVersionNotSupportedObjectResult httpVersionNotSupportedObjectResult =
+                this.restfulController.HttpVersionNotSupported(inputException);
+
+            // then
+            httpVersionNotSupportedObjectResult.Should()
+                .BeEquivalentTo(expectedHttpVersionNotSupportedObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
