@@ -275,6 +275,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedNotAcceptableObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnProxyAuthenticationRequired()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status407ProxyAuthenticationRequired,
+                Type = "https://tools.ietf.org/html/rfc7235#section-3.2",
+                Title = inputException.Message,
+            };
+
+            var expectedProxyAuthenticationRequiredObjectResult =
+                new ProxyAuthenticationRequiredObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            ProxyAuthenticationRequiredObjectResult proxyAuthenticationRequiredObjectResult =
+                this.restfulController.ProxyAuthenticationRequired(inputException);
+
+            // then
+            proxyAuthenticationRequiredObjectResult.Should()
+                .BeEquivalentTo(expectedProxyAuthenticationRequiredObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
