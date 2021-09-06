@@ -232,6 +232,20 @@ namespace RESTFulSense.Controllers
             return new MethodNotAllowedObjectResult(problemDetail);
         }
 
+        public NotAcceptableObjectResult NotAcceptable(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status406NotAcceptable,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.6",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new NotAcceptableObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
