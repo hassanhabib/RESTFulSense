@@ -470,6 +470,20 @@ namespace RESTFulSense.Controllers
             return new UpgradeRequiredObjectResult(problemDetail);
         }
 
+        public PreconditionRequiredObjectResult PreconditionRequired(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status428PreconditionRequired,
+                Type = "https://tools.ietf.org/html/rfc6585#section-3",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new PreconditionRequiredObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
