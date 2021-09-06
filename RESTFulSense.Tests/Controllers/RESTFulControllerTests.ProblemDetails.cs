@@ -867,6 +867,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedUpgradeRequiredObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnPreconditionRequired()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status428PreconditionRequired,
+                Type = "https://tools.ietf.org/html/rfc6585#section-3",
+                Title = inputException.Message,
+            };
+
+            var expectedPreconditionRequiredObjectResult =
+                new PreconditionRequiredObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            PreconditionRequiredObjectResult preconditionRequiredObjectResult =
+                this.restfulController.PreconditionRequired(inputException);
+
+            // then
+            preconditionRequiredObjectResult.Should()
+                .BeEquivalentTo(expectedPreconditionRequiredObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
