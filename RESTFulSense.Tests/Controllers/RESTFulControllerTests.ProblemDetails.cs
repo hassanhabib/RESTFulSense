@@ -1015,6 +1015,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedUnavailableForLegalReasonsObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnInternalServerError()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status500InternalServerError,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+                Title = inputException.Message,
+            };
+
+            var expectedInternalServerErrorObjectResult =
+                new InternalServerErrorObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            InternalServerErrorObjectResult internalServerErrorObjectResult =
+                this.restfulController.InternalServerError(inputException);
+
+            // then
+            internalServerErrorObjectResult.Should()
+                .BeEquivalentTo(expectedInternalServerErrorObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
