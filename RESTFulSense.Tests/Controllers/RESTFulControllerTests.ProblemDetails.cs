@@ -164,6 +164,43 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedForbiddenObjectResult);
         }
 
+        [Fact]
+        public void ShouldReturnValidationProblemDetailOnNotFound()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status404NotFound,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                Title = inputException.Message,
+            };
+
+            var expectedNotFoundObjectResult =
+                new NotFoundObjectResult(expectedProblemDetail);
+
+            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
+            {
+                inputException.Data.Add(item.Key, item.Value);
+
+                expectedProblemDetail.Errors.Add(
+                    key: item.Key,
+                    value: item.Value.ToArray());
+            }
+
+            // when
+            NotFoundObjectResult notFoundObjectResult =
+                this.restfulController.NotFound(inputException);
+
+            // then
+            notFoundObjectResult.Should()
+                .BeEquivalentTo(expectedNotFoundObjectResult);
+        }
+
         public static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
