@@ -400,6 +400,20 @@ namespace RESTFulSense.Controllers
             return new ExpectationFailedObjectResult(problemDetail);
         }
 
+        public MisdirectedRequestObjectResult MisdirectedRequest(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status421MisdirectedRequest,
+                Type = "https://tools.ietf.org/html/rfc7540#section-9.1.2",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new MisdirectedRequestObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
