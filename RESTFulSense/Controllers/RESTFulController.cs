@@ -554,6 +554,20 @@ namespace RESTFulSense.Controllers
             return new NotImplementedObjectResult(problemDetail);
         }
 
+        public BadGatewayObjectResult BadGateway(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status502BadGateway,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.6.3",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new BadGatewayObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
