@@ -498,6 +498,20 @@ namespace RESTFulSense.Controllers
             return new TooManyRequestsObjectResult(problemDetail);
         }
 
+        public RequestHeaderFieldsTooLargeObjectResult RequestHeaderFieldsTooLarge(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status431RequestHeaderFieldsTooLarge,
+                Type = "https://tools.ietf.org/html/rfc6585#section-5",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new RequestHeaderFieldsTooLargeObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
