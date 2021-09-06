@@ -316,6 +316,20 @@ namespace RESTFulSense.Controllers
             return new LengthRequiredObjectResult(problemDetail);
         }
 
+        public PreconditionFailedObjectResult PreconditionFailed(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status412PreconditionFailed,
+                Type = "https://tools.ietf.org/html/rfc7232#section-4.2",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new PreconditionFailedObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
