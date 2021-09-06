@@ -512,6 +512,20 @@ namespace RESTFulSense.Controllers
             return new RequestHeaderFieldsTooLargeObjectResult(problemDetail);
         }
 
+        public UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(Exception exception)
+        {
+            var problemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status451UnavailableForLegalReasons,
+                Type = "https://tools.ietf.org/html/rfc7725#section-3",
+                Title = exception.Message
+            };
+
+            MapExceptionDataToProblemDetail(exception, problemDetail);
+
+            return new UnavailableForLegalReasonsObjectResult(problemDetail);
+        }
+
         private static void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
