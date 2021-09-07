@@ -127,6 +127,10 @@ namespace RESTFulSense.Services
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.HttpVersionNotSupported:
                     throw new HttpResponseHttpVersionNotSupportedException(httpResponseMessage, content);
 
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.VariantAlsoNegotiates:
+                    ValidationProblemDetails variantAlsoNegotiates = MapToProblemDetails(content);
+                    throw new HttpResponseVariantAlsoNegotiatesException(httpResponseMessage, variantAlsoNegotiates);
+
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.VariantAlsoNegotiates:
                     throw new HttpResponseVariantAlsoNegotiatesException(httpResponseMessage, content);
 
