@@ -124,6 +124,10 @@ namespace RESTFulSense.Services
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.GatewayTimeout:
                     throw new HttpResponseGatewayTimeoutException(httpResponseMessage, content);
 
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.HttpVersionNotSupported:
+                    ValidationProblemDetails httpVersionDetails = MapToProblemDetails(content);
+                    throw new HttpResponseHttpVersionNotSupportedException(httpResponseMessage, httpVersionDetails);
+
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.HttpVersionNotSupported:
                     throw new HttpResponseHttpVersionNotSupportedException(httpResponseMessage, content);
 
