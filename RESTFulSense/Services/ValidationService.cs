@@ -5,9 +5,13 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RESTFulSense.Exceptions;
 
 namespace RESTFulSense.Services
@@ -16,131 +20,290 @@ namespace RESTFulSense.Services
     {
         public async static ValueTask ValidateHttpResponseAsync(HttpResponseMessage httpResponseMessage)
         {
-            string message = await httpResponseMessage.Content.ReadAsStringAsync();
+            string content = await httpResponseMessage.Content.ReadAsStringAsync();
+            bool isProblemDetailContent = IsProblemDetail(content);
 
-            switch (httpResponseMessage, message)
+            switch (isProblemDetailContent)
             {
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.BadRequest:
-                    throw new HttpResponseBadRequestException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.BadRequest:
+                    ValidationProblemDetails badRequestDetails = MapToProblemDetails(content);
+                    throw new HttpResponseBadRequestException(httpResponseMessage, badRequestDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized:
-                    throw new HttpResponseUnauthorizedException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.BadRequest:
+                    throw new HttpResponseBadRequestException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.PaymentRequired:
-                    throw new HttpResponsePaymentRequiredException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized:
+                    ValidationProblemDetails UnauthorizedDetails = MapToProblemDetails(content);
+                    throw new HttpResponseUnauthorizedException(httpResponseMessage, UnauthorizedDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.Forbidden:
-                    throw new HttpResponseForbiddenException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.Unauthorized:
+                    throw new HttpResponseUnauthorizedException(httpResponseMessage, content);
 
-                case { } when NotFoundWithNoContent(httpResponseMessage):
-                    throw new HttpResponseUrlNotFoundException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.PaymentRequired:
+                    ValidationProblemDetails PaymentRequiredDetails = MapToProblemDetails(content);
+                    throw new HttpResponsePaymentRequiredException(httpResponseMessage, PaymentRequiredDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.NotFound:
-                    throw new HttpResponseNotFoundException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.PaymentRequired:
+                    throw new HttpResponsePaymentRequiredException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.MethodNotAllowed:
-                    throw new HttpResponseMethodNotAllowedException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.Forbidden:
+                    ValidationProblemDetails ForbiddenDetails = MapToProblemDetails(content);
+                    throw new HttpResponseForbiddenException(httpResponseMessage, ForbiddenDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.NotAcceptable:
-                    throw new HttpResponseNotAcceptableException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.Forbidden:
+                    throw new HttpResponseForbiddenException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.ProxyAuthenticationRequired:
-                    throw new HttpResponseProxyAuthenticationRequiredException(httpResponseMessage, message);
+                case false when NotFoundWithNoContent(httpResponseMessage):
+                    throw new HttpResponseUrlNotFoundException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.RequestTimeout:
-                    throw new HttpResponseRequestTimeoutException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.NotFound:
+                    ValidationProblemDetails NotFoundDetails = MapToProblemDetails(content);
+                    throw new HttpResponseNotFoundException(httpResponseMessage, NotFoundDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.Conflict:
-                    throw new HttpResponseConflictException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.NotFound:
+                    throw new HttpResponseNotFoundException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.Gone:
-                    throw new HttpResponseGoneException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.MethodNotAllowed:
+                    ValidationProblemDetails MethodNotAllowedDetails = MapToProblemDetails(content);
+                    throw new HttpResponseMethodNotAllowedException(httpResponseMessage, MethodNotAllowedDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.LengthRequired:
-                    throw new HttpResponseLengthRequiredException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.MethodNotAllowed:
+                    throw new HttpResponseMethodNotAllowedException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.PreconditionFailed:
-                    throw new HttpResponsePreconditionFailedException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.NotAcceptable:
+                    ValidationProblemDetails NotAcceptableDetails = MapToProblemDetails(content);
+                    throw new HttpResponseNotAcceptableException(httpResponseMessage, NotAcceptableDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.RequestEntityTooLarge:
-                    throw new HttpResponseRequestEntityTooLargeException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.NotAcceptable:
+                    throw new HttpResponseNotAcceptableException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.RequestUriTooLong:
-                    throw new HttpResponseRequestUriTooLongException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.ProxyAuthenticationRequired:
+                    ValidationProblemDetails ProxyAuthDetails = MapToProblemDetails(content);
+                    throw new HttpResponseProxyAuthenticationRequiredException(httpResponseMessage, ProxyAuthDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.UnsupportedMediaType:
-                    throw new HttpResponseUnsupportedMediaTypeException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.ProxyAuthenticationRequired:
+                    throw new HttpResponseProxyAuthenticationRequiredException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.RequestedRangeNotSatisfiable:
-                    throw new HttpResponseRequestedRangeNotSatisfiableException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.RequestTimeout:
+                    ValidationProblemDetails RequestTimeoutDetails = MapToProblemDetails(content);
+                    throw new HttpResponseRequestTimeoutException(httpResponseMessage, RequestTimeoutDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.ExpectationFailed:
-                    throw new HttpResponseExpectationFailedException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.RequestTimeout:
+                    throw new HttpResponseRequestTimeoutException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.MisdirectedRequest:
-                    throw new HttpResponseMisdirectedRequestException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.Conflict:
+                    ValidationProblemDetails ConflictDetails = MapToProblemDetails(content);
+                    throw new HttpResponseConflictException(httpResponseMessage, ConflictDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.UnprocessableEntity:
-                    throw new HttpResponseUnprocessableEntityException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.Conflict:
+                    throw new HttpResponseConflictException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.Locked:
-                    throw new HttpResponseLockedException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.Gone:
+                    ValidationProblemDetails GoneDetails = MapToProblemDetails(content);
+                    throw new HttpResponseGoneException(httpResponseMessage, GoneDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.FailedDependency:
-                    throw new HttpResponseFailedDependencyException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.Gone:
+                    throw new HttpResponseGoneException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.UpgradeRequired:
-                    throw new HttpResponseUpgradeRequiredException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.LengthRequired:
+                    ValidationProblemDetails LengthRequiredDetails = MapToProblemDetails(content);
+                    throw new HttpResponseLengthRequiredException(httpResponseMessage, LengthRequiredDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.PreconditionRequired:
-                    throw new HttpResponsePreconditionRequiredException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.LengthRequired:
+                    throw new HttpResponseLengthRequiredException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests:
-                    throw new HttpResponseTooManyRequestsException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.PreconditionFailed:
+                    ValidationProblemDetails PreconditionFailedDetails = MapToProblemDetails(content);
+                    throw new HttpResponsePreconditionFailedException(httpResponseMessage, PreconditionFailedDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.RequestHeaderFieldsTooLarge:
-                    throw new HttpResponseRequestHeaderFieldsTooLargeException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.PreconditionFailed:
+                    throw new HttpResponsePreconditionFailedException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.UnavailableForLegalReasons:
-                    throw new HttpResponseUnavailableForLegalReasonsException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.RequestEntityTooLarge:
+                    ValidationProblemDetails RequestEntityTooLargeDetails = MapToProblemDetails(content);
+                    throw new HttpResponseRequestEntityTooLargeException(httpResponseMessage, RequestEntityTooLargeDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.InternalServerError:
-                    throw new HttpResponseInternalServerErrorException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.RequestEntityTooLarge:
+                    throw new HttpResponseRequestEntityTooLargeException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.NotImplemented:
-                    throw new HttpResponseNotImplementedException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.RequestUriTooLong:
+                    ValidationProblemDetails RequestUriTooLongDetails = MapToProblemDetails(content);
+                    throw new HttpResponseRequestUriTooLongException(httpResponseMessage, RequestUriTooLongDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.BadGateway:
-                    throw new HttpResponseBadGatewayException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.RequestUriTooLong:
+                    throw new HttpResponseRequestUriTooLongException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable:
-                    throw new HttpResponseServiceUnavailableException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.UnsupportedMediaType:
+                    ValidationProblemDetails UnsupportedMediaTypeDetails = MapToProblemDetails(content);
+                    throw new HttpResponseUnsupportedMediaTypeException(httpResponseMessage, UnsupportedMediaTypeDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.GatewayTimeout:
-                    throw new HttpResponseGatewayTimeoutException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.UnsupportedMediaType:
+                    throw new HttpResponseUnsupportedMediaTypeException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.HttpVersionNotSupported:
-                    throw new HttpResponseHttpVersionNotSupportedException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.RequestedRangeNotSatisfiable:
+                    ValidationProblemDetails RequestedRangeDetails = MapToProblemDetails(content);
+                    throw new HttpResponseRequestedRangeNotSatisfiableException(httpResponseMessage, RequestedRangeDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.VariantAlsoNegotiates:
-                    throw new HttpResponseVariantAlsoNegotiatesException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.RequestedRangeNotSatisfiable:
+                    throw new HttpResponseRequestedRangeNotSatisfiableException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.InsufficientStorage:
-                    throw new HttpResponseInsufficientStorageException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.ExpectationFailed:
+                    ValidationProblemDetails ExpectationFailedDetails = MapToProblemDetails(content);
+                    throw new HttpResponseExpectationFailedException(httpResponseMessage, ExpectationFailedDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.LoopDetected:
-                    throw new HttpResponseLoopDetectedException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.ExpectationFailed:
+                    throw new HttpResponseExpectationFailedException(httpResponseMessage, content);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.NotExtended:
-                    throw new HttpResponseNotExtendedException(httpResponseMessage, message);
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.MisdirectedRequest:
+                    ValidationProblemDetails MisdirectedRequestDetails = MapToProblemDetails(content);
+                    throw new HttpResponseMisdirectedRequestException(httpResponseMessage, MisdirectedRequestDetails);
 
-                case { } when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
-                    throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, message);
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.MisdirectedRequest:
+                    throw new HttpResponseMisdirectedRequestException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.UnprocessableEntity:
+                    ValidationProblemDetails UnprocessableEntityDetails = MapToProblemDetails(content);
+                    throw new HttpResponseUnprocessableEntityException(httpResponseMessage, UnprocessableEntityDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.UnprocessableEntity:
+                    throw new HttpResponseUnprocessableEntityException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.Locked:
+                    ValidationProblemDetails LockedDetails = MapToProblemDetails(content);
+                    throw new HttpResponseLockedException(httpResponseMessage, LockedDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.Locked:
+                    throw new HttpResponseLockedException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.FailedDependency:
+                    ValidationProblemDetails FailedDependencyDetails = MapToProblemDetails(content);
+                    throw new HttpResponseFailedDependencyException(httpResponseMessage, FailedDependencyDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.FailedDependency:
+                    throw new HttpResponseFailedDependencyException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.UpgradeRequired:
+                    ValidationProblemDetails UpgradeRequiredDetails = MapToProblemDetails(content);
+                    throw new HttpResponseUpgradeRequiredException(httpResponseMessage, UpgradeRequiredDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.UpgradeRequired:
+                    throw new HttpResponseUpgradeRequiredException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.PreconditionRequired:
+                    ValidationProblemDetails PreconditionRequiredDetails = MapToProblemDetails(content);
+                    throw new HttpResponsePreconditionRequiredException(httpResponseMessage, PreconditionRequiredDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.PreconditionRequired:
+                    throw new HttpResponsePreconditionRequiredException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests:
+                    ValidationProblemDetails TooManyRequestsDetails = MapToProblemDetails(content);
+                    throw new HttpResponseTooManyRequestsException(httpResponseMessage, TooManyRequestsDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.TooManyRequests:
+                    throw new HttpResponseTooManyRequestsException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.RequestHeaderFieldsTooLarge:
+                    ValidationProblemDetails RequestHeaderFieldsTooLargeDetails = MapToProblemDetails(content);
+                    throw new HttpResponseRequestHeaderFieldsTooLargeException(httpResponseMessage, RequestHeaderFieldsTooLargeDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.RequestHeaderFieldsTooLarge:
+                    throw new HttpResponseRequestHeaderFieldsTooLargeException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.UnavailableForLegalReasons:
+                    ValidationProblemDetails UnavailableForLegalReasonsDetails = MapToProblemDetails(content);
+                    throw new HttpResponseUnavailableForLegalReasonsException(httpResponseMessage, UnavailableForLegalReasonsDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.UnavailableForLegalReasons:
+                    throw new HttpResponseUnavailableForLegalReasonsException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.InternalServerError:
+                    ValidationProblemDetails InternalServerErrorDetails = MapToProblemDetails(content);
+                    throw new HttpResponseInternalServerErrorException(httpResponseMessage, InternalServerErrorDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.InternalServerError:
+                    throw new HttpResponseInternalServerErrorException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.NotImplemented:
+                    ValidationProblemDetails NotImplementedDetails = MapToProblemDetails(content);
+                    throw new HttpResponseNotImplementedException(httpResponseMessage, NotImplementedDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.NotImplemented:
+                    throw new HttpResponseNotImplementedException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.BadGateway:
+                    ValidationProblemDetails BadGatewayDetails = MapToProblemDetails(content);
+                    throw new HttpResponseBadGatewayException(httpResponseMessage, BadGatewayDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.BadGateway:
+                    throw new HttpResponseBadGatewayException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable:
+                    ValidationProblemDetails ServiceUnavailableDetails = MapToProblemDetails(content);
+                    throw new HttpResponseServiceUnavailableException(httpResponseMessage, ServiceUnavailableDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable:
+                    throw new HttpResponseServiceUnavailableException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.GatewayTimeout:
+                    ValidationProblemDetails gatewayDetails = MapToProblemDetails(content);
+                    throw new HttpResponseGatewayTimeoutException(httpResponseMessage, gatewayDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.GatewayTimeout:
+                    throw new HttpResponseGatewayTimeoutException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.HttpVersionNotSupported:
+                    ValidationProblemDetails httpVersionDetails = MapToProblemDetails(content);
+                    throw new HttpResponseHttpVersionNotSupportedException(httpResponseMessage, httpVersionDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.HttpVersionNotSupported:
+                    throw new HttpResponseHttpVersionNotSupportedException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.VariantAlsoNegotiates:
+                    ValidationProblemDetails variantAlsoNegotiates = MapToProblemDetails(content);
+                    throw new HttpResponseVariantAlsoNegotiatesException(httpResponseMessage, variantAlsoNegotiates);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.VariantAlsoNegotiates:
+                    throw new HttpResponseVariantAlsoNegotiatesException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.InsufficientStorage:
+                    ValidationProblemDetails insufficientStorageDetails = MapToProblemDetails(content);
+                    throw new HttpResponseInsufficientStorageException(httpResponseMessage, insufficientStorageDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.InsufficientStorage:
+                    throw new HttpResponseInsufficientStorageException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.LoopDetected:
+                    ValidationProblemDetails loopDetails = MapToProblemDetails(content);
+                    throw new HttpResponseLoopDetectedException(httpResponseMessage, loopDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.LoopDetected:
+                    throw new HttpResponseLoopDetectedException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.NotExtended:
+                    ValidationProblemDetails notExtendedDetails = MapToProblemDetails(content);
+                    throw new HttpResponseNotExtendedException(httpResponseMessage, notExtendedDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.NotExtended:
+                    throw new HttpResponseNotExtendedException(httpResponseMessage, content);
+
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
+                    ValidationProblemDetails networkAuthDetails = MapToProblemDetails(content);
+                    throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, networkAuthDetails);
+
+                case false when httpResponseMessage.StatusCode == HttpStatusCode.NetworkAuthenticationRequired:
+                    throw new HttpResponseNetworkAuthenticationRequiredException(httpResponseMessage, content);
             }
         }
 
         private static bool NotFoundWithNoContent(HttpResponseMessage httpResponseMessage) =>
             httpResponseMessage.Content.Headers.Contains("Content-Type") == false
             && httpResponseMessage.StatusCode == HttpStatusCode.NotFound;
+
+        private static ValidationProblemDetails MapToProblemDetails(string content) =>
+            JsonConvert.DeserializeObject<ValidationProblemDetails>(content);
+
+        private static bool IsProblemDetail(string content) =>
+            content.ToLower().Contains("\"title\":") && content.ToLower().Contains("\"type\":");
     }
 }
