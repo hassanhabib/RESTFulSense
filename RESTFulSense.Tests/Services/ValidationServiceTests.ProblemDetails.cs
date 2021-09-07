@@ -754,28 +754,36 @@ namespace RESTFulSense.Tests.Services
         //            httpResponseServiceUnavailableException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         //        }
 
-        //        [Fact]
-        //        public async Task ShouldThrowHttpResponseGatewayTimeoutExceptionIfResponseStatusCodeWasGatewayTimeoutAsync()
-        //        {
-        //            // given
-        //            string randomContent = GetRandomContent();
-        //            string content = randomContent;
-        //            string expectedExceptionMessage = content;
+        [Fact]
+        public async Task ShouldThrowHttpResponseGatewayTimeoutDetailsIfResponseStatusCodeWasGatewayTimeoutAsync()
+        {
+            // given
+            ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
+            string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
+            string content = randomContent;
+            string expectedExceptionMessage = content;
 
-        //            HttpResponseMessage gatewayTimeoutResponseMessage =
-        //                CreateHttpResponseMessage(HttpStatusCode.GatewayTimeout, content);
+            HttpResponseMessage gatewayTimeoutResponseMessage =
+                CreateHttpResponseMessage(HttpStatusCode.GatewayTimeout, content);
 
-        //            // when
-        //            ValueTask validateHttpResponseTask =
-        //                ValidationService.ValidateHttpResponseAsync(gatewayTimeoutResponseMessage);
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(gatewayTimeoutResponseMessage);
 
-        //            // then
-        //            HttpResponseGatewayTimeoutException httpResponseGatewayTimeoutException =
-        //                await Assert.ThrowsAsync<HttpResponseGatewayTimeoutException>(() =>
-        //                    validateHttpResponseTask.AsTask());
+            // then
+            HttpResponseGatewayTimeoutException httpResponseGatewayTimeoutException =
+                await Assert.ThrowsAsync<HttpResponseGatewayTimeoutException>(() =>
+                    validateHttpResponseTask.AsTask());
 
-        //            httpResponseGatewayTimeoutException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
-        //        }
+            httpResponseGatewayTimeoutException.Message
+                .Should().BeEquivalentTo(randomProblemDetails.Title);
+
+            foreach (DictionaryEntry entry in httpResponseGatewayTimeoutException.Data)
+            {
+                httpResponseGatewayTimeoutException.Data[entry.Key].Should().BeEquivalentTo(
+                    randomProblemDetails.Errors[entry.Key.ToString()]);
+            }
+        }
 
         [Fact]
         public async Task ShouldThrowHttpVersionNotSupportedDetailsIfStatusCodeWasHttpVersionNotSupportedAsync()
