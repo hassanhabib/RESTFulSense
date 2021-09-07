@@ -800,28 +800,37 @@ namespace RESTFulSense.Tests.Services
         //            httpResponseHttpVersionNotSupportedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         //        }
 
-        //        [Fact]
-        //        public async Task ShouldThrowVariantAlsoNegotiatesExceptionIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
-        //        {
-        //            // given
-        //            string randomContent = GetRandomContent();
-        //            string content = randomContent;
-        //            string expectedExceptionMessage = content;
+        [Fact]
+        public async Task ShouldThrowVariantAlsoNegotiatesDetailsIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
+        {
+            // given
+            ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
+            string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
+            string content = randomContent;
+            string expectedExceptionMessage = content;
 
-        //            HttpResponseMessage variantAlsoNegotiatesResponseMessage =
-        //                CreateHttpResponseMessage(HttpStatusCode.VariantAlsoNegotiates, content);
+            HttpResponseMessage variantAlsoNegotiatesResponseMessage =
+                CreateHttpResponseMessage(HttpStatusCode.VariantAlsoNegotiates, content);
 
-        //            // when
-        //            ValueTask validateHttpResponseTask =
-        //               ValidationService.ValidateHttpResponseAsync(variantAlsoNegotiatesResponseMessage);
+            // when
+            ValueTask validateHttpResponseTask =
+               ValidationService.ValidateHttpResponseAsync(variantAlsoNegotiatesResponseMessage);
 
-        //            // then
-        //            HttpResponseVariantAlsoNegotiatesException httpResponseVariantAlsoNegotiatesException =
-        //                await Assert.ThrowsAsync<HttpResponseVariantAlsoNegotiatesException>(() =>
-        //                    validateHttpResponseTask.AsTask());
+            // then
+            HttpResponseVariantAlsoNegotiatesException httpResponseVariantAlsoNegotiatesException =
+                await Assert.ThrowsAsync<HttpResponseVariantAlsoNegotiatesException>(() =>
+                    validateHttpResponseTask.AsTask());
 
-        //            httpResponseVariantAlsoNegotiatesException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
-        //        }
+
+            httpResponseVariantAlsoNegotiatesException.Message
+                .Should().BeEquivalentTo(randomProblemDetails.Title);
+
+            foreach (DictionaryEntry entry in httpResponseVariantAlsoNegotiatesException.Data)
+            {
+                httpResponseVariantAlsoNegotiatesException.Data[entry.Key].Should().BeEquivalentTo(
+                    randomProblemDetails.Errors[entry.Key.ToString()]);
+            }
+        }
 
         [Fact]
         public async Task ShouldThrowInsufficientStorageDetailsIfResponseStatusCodeWasInsufficientStorageAsync()
