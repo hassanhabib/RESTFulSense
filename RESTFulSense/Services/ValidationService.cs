@@ -130,6 +130,10 @@ namespace RESTFulSense.Services
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.VariantAlsoNegotiates:
                     throw new HttpResponseVariantAlsoNegotiatesException(httpResponseMessage, content);
 
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.InsufficientStorage:
+                    ValidationProblemDetails insufficientStorageDetails = MapToProblemDetails(content);
+                    throw new HttpResponseInsufficientStorageException(httpResponseMessage, insufficientStorageDetails);
+
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.InsufficientStorage:
                     throw new HttpResponseInsufficientStorageException(httpResponseMessage, content);
 
