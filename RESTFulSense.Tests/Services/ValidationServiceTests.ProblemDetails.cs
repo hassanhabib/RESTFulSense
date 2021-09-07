@@ -777,28 +777,36 @@ namespace RESTFulSense.Tests.Services
         //            httpResponseGatewayTimeoutException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         //        }
 
-        //        [Fact]
-        //        public async Task ShouldThrowHttpVersionNotSupportedExceptionIfStatusCodeWasHttpVersionNotSupportedAsync()
-        //        {
-        //            // given
-        //            string randomContent = GetRandomContent();
-        //            string content = randomContent;
-        //            string expectedExceptionMessage = content;
+        [Fact]
+        public async Task ShouldThrowHttpVersionNotSupportedDetailsIfStatusCodeWasHttpVersionNotSupportedAsync()
+        {
+            // given
+            ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
+            string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
+            string content = randomContent;
+            string expectedExceptionMessage = content;
 
-        //            HttpResponseMessage httpVersionNotSupportedResponseMessage =
-        //                CreateHttpResponseMessage(HttpStatusCode.HttpVersionNotSupported, content);
+            HttpResponseMessage httpVersionNotSupportedResponseMessage =
+                CreateHttpResponseMessage(HttpStatusCode.HttpVersionNotSupported, content);
 
-        //            // when
-        //            ValueTask validateHttpResponseTask =
-        //                ValidationService.ValidateHttpResponseAsync(httpVersionNotSupportedResponseMessage);
+            // when
+            ValueTask validateHttpResponseTask =
+                ValidationService.ValidateHttpResponseAsync(httpVersionNotSupportedResponseMessage);
 
-        //            // then
-        //            HttpResponseHttpVersionNotSupportedException httpResponseHttpVersionNotSupportedException =
-        //                await Assert.ThrowsAsync<HttpResponseHttpVersionNotSupportedException>(() =>
-        //                    validateHttpResponseTask.AsTask());
+            // then
+            HttpResponseHttpVersionNotSupportedException httpResponseHttpVersionNotSupportedException =
+                await Assert.ThrowsAsync<HttpResponseHttpVersionNotSupportedException>(() =>
+                    validateHttpResponseTask.AsTask());
 
-        //            httpResponseHttpVersionNotSupportedException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
-        //        }
+            httpResponseHttpVersionNotSupportedException.Message
+                .Should().BeEquivalentTo(randomProblemDetails.Title);
+
+            foreach (DictionaryEntry entry in httpResponseHttpVersionNotSupportedException.Data)
+            {
+                httpResponseHttpVersionNotSupportedException.Data[entry.Key].Should().BeEquivalentTo(
+                    randomProblemDetails.Errors[entry.Key.ToString()]);
+            }
+        }
 
         [Fact]
         public async Task ShouldThrowVariantAlsoNegotiatesDetailsIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
@@ -820,7 +828,6 @@ namespace RESTFulSense.Tests.Services
             HttpResponseVariantAlsoNegotiatesException httpResponseVariantAlsoNegotiatesException =
                 await Assert.ThrowsAsync<HttpResponseVariantAlsoNegotiatesException>(() =>
                     validateHttpResponseTask.AsTask());
-
 
             httpResponseVariantAlsoNegotiatesException.Message
                 .Should().BeEquivalentTo(randomProblemDetails.Title);
