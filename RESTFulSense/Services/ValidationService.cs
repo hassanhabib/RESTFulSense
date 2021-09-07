@@ -121,6 +121,10 @@ namespace RESTFulSense.Services
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable:
                     throw new HttpResponseServiceUnavailableException(httpResponseMessage, content);
 
+                case true when httpResponseMessage.StatusCode == HttpStatusCode.GatewayTimeout:
+                    ValidationProblemDetails gatewayDetails = MapToProblemDetails(content);
+                    throw new HttpResponseGatewayTimeoutException(httpResponseMessage, gatewayDetails);
+
                 case false when httpResponseMessage.StatusCode == HttpStatusCode.GatewayTimeout:
                     throw new HttpResponseGatewayTimeoutException(httpResponseMessage, content);
 
