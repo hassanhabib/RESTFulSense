@@ -823,28 +823,36 @@ namespace RESTFulSense.Tests.Services
         //            httpResponseVariantAlsoNegotiatesException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
         //        }
 
-        //        [Fact]
-        //        public async Task ShouldThrowInsufficientStorageExceptionIfResponseStatusCodeWasInsufficientStorageAsync()
-        //        {
-        //            // given
-        //            string randomContent = GetRandomContent();
-        //            string content = randomContent;
-        //            string expectedExceptionMessage = content;
+        [Fact]
+        public async Task ShouldThrowInsufficientStorageDetailsIfResponseStatusCodeWasInsufficientStorageAsync()
+        {
+            // given
+            ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
+            string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
+            string content = randomContent;
+            string expectedExceptionMessage = content;
 
-        //            HttpResponseMessage insufficientStorageResponseMessage =
-        //                CreateHttpResponseMessage(HttpStatusCode.InsufficientStorage, content);
+            HttpResponseMessage insufficientStorageResponseMessage =
+                CreateHttpResponseMessage(HttpStatusCode.InsufficientStorage, content);
 
-        //            // when
-        //            ValueTask validateHttpResponseTask =
-        //               ValidationService.ValidateHttpResponseAsync(insufficientStorageResponseMessage);
+            // when
+            ValueTask validateHttpResponseTask =
+               ValidationService.ValidateHttpResponseAsync(insufficientStorageResponseMessage);
 
-        //            // then
-        //            HttpResponseInsufficientStorageException httpResponseInsufficientStorageException =
-        //                await Assert.ThrowsAsync<HttpResponseInsufficientStorageException>(() =>
-        //                    validateHttpResponseTask.AsTask());
+            // then
+            HttpResponseInsufficientStorageException httpResponseInsufficientStorageException =
+                await Assert.ThrowsAsync<HttpResponseInsufficientStorageException>(() =>
+                    validateHttpResponseTask.AsTask());
 
-        //            httpResponseInsufficientStorageException.Message.Should().BeEquivalentTo(expectedExceptionMessage);
-        //        }
+            httpResponseInsufficientStorageException.Message
+                .Should().BeEquivalentTo(randomProblemDetails.Title);
+
+            foreach (DictionaryEntry entry in httpResponseInsufficientStorageException.Data)
+            {
+                httpResponseInsufficientStorageException.Data[entry.Key].Should().BeEquivalentTo(
+                    randomProblemDetails.Errors[entry.Key.ToString()]);
+            }
+        }
 
         [Fact]
         public async Task ShouldThrowHttpResponseLoopDetectedDetailIfResponseStatusCodeWasLoopDetectedAsync()
