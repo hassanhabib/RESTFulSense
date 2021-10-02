@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<Authors>Hassan Habib</Authors>
 		<Company>Hassan Habib</Company>
-		<Description>Swagger Friendly Addition</Description>
+		<Description>RESTFul Integration w/ Love &lt;3 </Description>
 		<Copyright>Copyright (c) Hassan Habib</Copyright>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageIcon>api.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>2.0</Version>
-		<AssemblyVersion>2.0.0.0</AssemblyVersion>
-		<FileVersion>2.0.0.0</FileVersion>
+		<Version>2.1</Version>
+		<AssemblyVersion>2.1.0.0</AssemblyVersion>
+		<FileVersion>2.1.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
@@ -21,7 +21,7 @@
 		<RepositoryUrl>https://github.com/hassanhabib/RESTFulSense</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>RESTFul API</PackageTags>
-		<PackageReleaseNotes>Add Problem Details Handling and Serializing</PackageReleaseNotes>
+		<PackageReleaseNotes>Support media types for POST &amp; PUT</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
