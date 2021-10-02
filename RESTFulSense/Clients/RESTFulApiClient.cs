@@ -25,12 +25,20 @@ namespace RESTFulSense.Clients
         public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
             await GetStringAsync(relativeUrl);
 
-        public ValueTask<T> PostContentAsync<T>(string relativeUrl, T content) =>
-            PostContentAsync<T, T>(relativeUrl, content);
-
-        public async ValueTask<TResult> PostContentAsync<TContent, TResult>(string relativeUrl, TContent content)
+        public ValueTask<T> PostContentAsync<T>(
+            string relativeUrl, 
+            T content, 
+            string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content);
+            return PostContentAsync<T, T>(relativeUrl, content, mediaType);
+        }
+
+        public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
+            string relativeUrl, 
+            TContent content,
+            string mediaType = "text/json")
+        {
+            StringContent contentString = StringifyJsonifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PostAsync(relativeUrl, contentString);
@@ -40,9 +48,12 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<TResult>(responseMessage);
         }
 
-        public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content)
+        public async ValueTask<T> PutContentAsync<T>(
+            string relativeUrl, 
+            T content,
+            string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content);
+            StringContent contentString = StringifyJsonifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
@@ -52,9 +63,12 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<T>(responseMessage);
         }
 
-        public async ValueTask<TResult> PutContentAsync<TContent, TResult>(string relativeUrl, TContent content)
+        public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
+            string relativeUrl, 
+            TContent content,
+            string mediaType)
         {
-            StringContent contentString = StringifyJsonifyContent(content);
+            StringContent contentString = StringifyJsonifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
@@ -95,12 +109,15 @@ namespace RESTFulSense.Clients
             return JsonConvert.DeserializeObject<T>(responseString);
         }
 
-        private static StringContent StringifyJsonifyContent<T>(T content)
+        private static StringContent StringifyJsonifyContent<T>(T content, string mediaType)
         {
             string serializedRestrictionRequest = JsonConvert.SerializeObject(content);
 
             var contentString =
-                new StringContent(serializedRestrictionRequest, Encoding.UTF8, "text/json");
+                new StringContent(
+                    content: serializedRestrictionRequest,
+                    encoding: Encoding.UTF8,
+                    mediaType);
 
             return contentString;
         }
