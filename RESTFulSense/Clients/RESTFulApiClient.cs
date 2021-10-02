@@ -66,7 +66,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
             string relativeUrl, 
             TContent content,
-            string mediaType)
+            string mediaType = "text/json")
         {
             StringContent contentString = StringifyJsonifyContent(content, mediaType);
 

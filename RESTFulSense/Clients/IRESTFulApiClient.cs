@@ -12,19 +12,19 @@ namespace RESTFulSense.Clients
     {
         ValueTask<T> GetContentAsync<T>(string relativeUrl);
         ValueTask<string> GetContentStringAsync(string relativeUrl);
-        ValueTask<T> PostContentAsync<T>(string relativeUrl, T content, string mediaType);
+        ValueTask<T> PostContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json");
         
         ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl, 
             TContent content,
-            string mediaType);
+            string mediaType = "text/json");
         
-        ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType);
+        ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json");
         
         ValueTask<TResult> PutContentAsync<TContent, TResult>(
             string relativeUrl, 
             TContent content,
-            string mediaType);
+            string mediaType = "text/json");
         
         ValueTask<T> PutContentAsync<T>(string relativeUrl);
         ValueTask DeleteContentAsync(string relativeUrl);
