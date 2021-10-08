@@ -3,6 +3,7 @@
 </p>
 
 [![.NET](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml)
+![Nuget](https://img.shields.io/nuget/v/RESTFulSense)
 
 # RESTFulSense 
 I designed & developed this library as a wrapper around the existing .NET Core ```HttpClient``` implementation to provide the following values:
