@@ -4,6 +4,7 @@
 
 [![.NET](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml)
 [![Nuget](https://img.shields.io/nuget/v/RESTFulSense)](https://www.nuget.org/packages/RESTFulSense/)
+[![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f)](https://github.com/hassanhabib/The-Standard)
 
 # RESTFulSense 
 I designed & developed this library as a wrapper around the existing .NET Core ```HttpClient``` implementation to provide the following values:
