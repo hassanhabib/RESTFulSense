@@ -26,15 +26,15 @@ namespace RESTFulSense.Clients
             await GetStringAsync(relativeUrl);
 
         public ValueTask<T> PostContentAsync<T>(
-            string relativeUrl, 
-            T content, 
+            string relativeUrl,
+            T content,
             string mediaType = "text/json")
         {
             return PostContentAsync<T, T>(relativeUrl, content, mediaType);
         }
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
-            string relativeUrl, 
+            string relativeUrl,
             TContent content,
             string mediaType = "text/json")
         {
@@ -49,7 +49,7 @@ namespace RESTFulSense.Clients
         }
 
         public async ValueTask<T> PutContentAsync<T>(
-            string relativeUrl, 
+            string relativeUrl,
             T content,
             string mediaType = "text/json")
         {
@@ -64,7 +64,7 @@ namespace RESTFulSense.Clients
         }
 
         public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
-            string relativeUrl, 
+            string relativeUrl,
             TContent content,
             string mediaType = "text/json")
         {

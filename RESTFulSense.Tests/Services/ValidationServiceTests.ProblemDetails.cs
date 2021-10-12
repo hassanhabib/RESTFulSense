@@ -6,10 +6,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -282,8 +280,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            var requestTimeoutResponseMessage = 
+
+            var requestTimeoutResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.RequestTimeout, content);
 
             // when
@@ -313,8 +311,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            var conflictResponseMessage = 
+
+            var conflictResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.Conflict, content);
 
             // when
@@ -344,8 +342,8 @@ namespace RESTFulSense.Tests.Services
             string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
             string content = randomContent;
             string expectedExceptionMessage = content;
-            
-            var goneResponseMessage = 
+
+            var goneResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.Gone, content);
 
             // when
@@ -376,7 +374,7 @@ namespace RESTFulSense.Tests.Services
             string content = randomContent;
             string expectedExceptionMessage = content;
 
-            var lengthRequiredResponseMessage = 
+            var lengthRequiredResponseMessage =
                 CreateHttpResponseMessage(HttpStatusCode.LengthRequired, content);
 
             // when

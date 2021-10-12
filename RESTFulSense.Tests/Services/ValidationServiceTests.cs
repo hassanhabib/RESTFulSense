@@ -8,12 +8,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
-using RESTFulSense.Exceptions;
-using RESTFulSense.Services;
 using Tynamix.ObjectFiller;
-using Xunit;
 
 namespace RESTFulSense.Tests.Services
 {

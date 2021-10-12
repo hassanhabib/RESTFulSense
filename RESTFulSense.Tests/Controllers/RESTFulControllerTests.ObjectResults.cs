@@ -5,9 +5,7 @@
 // ---------------------------------------------------------------
 
 using FluentAssertions;
-using RESTFulSense.Controllers;
 using RESTFulSense.Models;
-using Tynamix.ObjectFiller;
 using Xunit;
 
 namespace RESTFulSense.Tests.Controllers

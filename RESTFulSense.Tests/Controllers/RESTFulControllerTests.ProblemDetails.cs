@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RESTFulSense.Controllers;
 using RESTFulSense.Models;
 using Tynamix.ObjectFiller;
 using Xunit;
@@ -40,9 +39,9 @@ namespace RESTFulSense.Tests.Controllers
             foreach (KeyValuePair<string, List<string>> item in randomDictionary)
             {
                 inputException.Data.Add(item.Key, item.Value);
-                
+
                 expectedProblemDetail.Errors.Add(
-                    key: item.Key, 
+                    key: item.Key,
                     value: item.Value.ToArray());
             }
 

@@ -4,18 +4,12 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using System.Collections;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using RESTFulSense.Exceptions;
 using RESTFulSense.Services;
-using Tynamix.ObjectFiller;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services
