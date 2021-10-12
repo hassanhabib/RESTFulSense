@@ -4,11 +4,8 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using FluentAssertions;
 using RESTFulSense.Controllers;
-using RESTFulSense.Models;
 using Tynamix.ObjectFiller;
-using Xunit;
 
 namespace RESTFulSense.Tests.Controllers
 {
@@ -19,7 +16,7 @@ namespace RESTFulSense.Tests.Controllers
         public RESTFulControllerTests() =>
             this.restfulController = new RESTFulController();
 
-        private static string GetRandomMessage() => 
+        private static string GetRandomMessage() =>
             new MnemonicString().GetValue();
     }
 }

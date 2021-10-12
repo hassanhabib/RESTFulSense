@@ -17,7 +17,7 @@ namespace RESTFulSense.Exceptions
 
         public HttpResponseLoopDetectedException(
             HttpResponseMessage responseMessage,
-            ValidationProblemDetails problemDetails): base (responseMessage, problemDetails.Title)
+            ValidationProblemDetails problemDetails) : base(responseMessage, problemDetails.Title)
         {
             this.AddData((IDictionary)problemDetails.Errors);
         }
