@@ -1,24 +1,23 @@
-name: .NET
-
+name: .Net
 on:
   push:
-    branches: [ master ]
+    branches:
+    - master
   pull_request:
-    branches: [ master ]
-
+    branches:
+    - master
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Check Out
+      uses: actions/checkout@v2
+    - name: Setup .Net
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.100-rc.1.21463.6
         include-prerelease: true
-    - name: Restore dependencies
+    - name: Restore
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
