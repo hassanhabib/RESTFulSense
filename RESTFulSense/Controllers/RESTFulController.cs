@@ -147,6 +147,7 @@ namespace RESTFulSense.Controllers
         public VariantAlsoNegotiatesObjectResult VariantAlsoNegotiates(object value) =>
             new VariantAlsoNegotiatesObjectResult(value);
 
+        [NonAction]
         public BadRequestObjectResult BadRequest(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -161,6 +162,7 @@ namespace RESTFulSense.Controllers
             return new BadRequestObjectResult(problemDetail);
         }
 
+        [NonAction]
         public UnauthorizedObjectResult Unauthorized(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -175,6 +177,7 @@ namespace RESTFulSense.Controllers
             return new UnauthorizedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public PaymentRequiredObjectResult PaymentRequired(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -189,6 +192,7 @@ namespace RESTFulSense.Controllers
             return new PaymentRequiredObjectResult(problemDetail);
         }
 
+        [NonAction]
         public ForbiddenObjectResult Forbidden(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -203,6 +207,7 @@ namespace RESTFulSense.Controllers
             return new ForbiddenObjectResult(problemDetail);
         }
 
+        [NonAction]
         public NotFoundObjectResult NotFound(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -217,6 +222,7 @@ namespace RESTFulSense.Controllers
             return new NotFoundObjectResult(problemDetail);
         }
 
+        [NonAction]
         public MethodNotAllowedObjectResult MethodNotAllowed(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -231,6 +237,7 @@ namespace RESTFulSense.Controllers
             return new MethodNotAllowedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public NotAcceptableObjectResult NotAcceptable(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -245,6 +252,7 @@ namespace RESTFulSense.Controllers
             return new NotAcceptableObjectResult(problemDetail);
         }
 
+        [NonAction]
         public ProxyAuthenticationRequiredObjectResult ProxyAuthenticationRequired(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -259,6 +267,7 @@ namespace RESTFulSense.Controllers
             return new ProxyAuthenticationRequiredObjectResult(problemDetail);
         }
 
+        [NonAction]
         public RequestTimeoutObjectResult RequestTimeout(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -273,6 +282,7 @@ namespace RESTFulSense.Controllers
             return new RequestTimeoutObjectResult(problemDetail);
         }
 
+        [NonAction]
         public ConflictObjectResult Conflict(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -287,6 +297,7 @@ namespace RESTFulSense.Controllers
             return new ConflictObjectResult(problemDetail);
         }
 
+        [NonAction]
         public GoneObjectResult Gone(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -301,6 +312,7 @@ namespace RESTFulSense.Controllers
             return new GoneObjectResult(problemDetail);
         }
 
+        [NonAction]
         public LengthRequiredObjectResult LengthRequired(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -315,6 +327,7 @@ namespace RESTFulSense.Controllers
             return new LengthRequiredObjectResult(problemDetail);
         }
 
+        [NonAction]
         public PreconditionFailedObjectResult PreconditionFailed(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -329,6 +342,7 @@ namespace RESTFulSense.Controllers
             return new PreconditionFailedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public RequestEntityTooLargeObjectResult RequestEntityTooLarge(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -343,6 +357,7 @@ namespace RESTFulSense.Controllers
             return new RequestEntityTooLargeObjectResult(problemDetail);
         }
 
+        [NonAction]
         public RequestUriTooLongObjectResult RequestUriTooLong(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -357,6 +372,7 @@ namespace RESTFulSense.Controllers
             return new RequestUriTooLongObjectResult(problemDetail);
         }
 
+        [NonAction]
         public UnsupportedMediaTypeObjectResult UnsupportedMediaType(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -371,6 +387,7 @@ namespace RESTFulSense.Controllers
             return new UnsupportedMediaTypeObjectResult(problemDetail);
         }
 
+        [NonAction]
         public RequestedRangeNotSatisfiableObjectResult RequestedRangeNotSatisfiable(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -385,6 +402,7 @@ namespace RESTFulSense.Controllers
             return new RequestedRangeNotSatisfiableObjectResult(problemDetail);
         }
 
+        [NonAction]
         public ExpectationFailedObjectResult ExpectationFailed(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -399,6 +417,7 @@ namespace RESTFulSense.Controllers
             return new ExpectationFailedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public MisdirectedRequestObjectResult MisdirectedRequest(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -413,6 +432,7 @@ namespace RESTFulSense.Controllers
             return new MisdirectedRequestObjectResult(problemDetail);
         }
 
+        [NonAction]
         public UnprocessableEntityObjectResult UnprocessableEntity(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -427,6 +447,7 @@ namespace RESTFulSense.Controllers
             return new UnprocessableEntityObjectResult(problemDetail);
         }
 
+        [NonAction]
         public LockedObjectResult Locked(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -441,6 +462,7 @@ namespace RESTFulSense.Controllers
             return new LockedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public FailedDependencyObjectResult FailedDependency(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -455,6 +477,7 @@ namespace RESTFulSense.Controllers
             return new FailedDependencyObjectResult(problemDetail);
         }
 
+        [NonAction]
         public UpgradeRequiredObjectResult UpgradeRequired(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -469,6 +492,7 @@ namespace RESTFulSense.Controllers
             return new UpgradeRequiredObjectResult(problemDetail);
         }
 
+        [NonAction]
         public PreconditionRequiredObjectResult PreconditionRequired(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -483,6 +507,7 @@ namespace RESTFulSense.Controllers
             return new PreconditionRequiredObjectResult(problemDetail);
         }
 
+        [NonAction]
         public TooManyRequestsObjectResult TooManyRequests(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -497,6 +522,7 @@ namespace RESTFulSense.Controllers
             return new TooManyRequestsObjectResult(problemDetail);
         }
 
+        [NonAction]
         public RequestHeaderFieldsTooLargeObjectResult RequestHeaderFieldsTooLarge(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -511,6 +537,7 @@ namespace RESTFulSense.Controllers
             return new RequestHeaderFieldsTooLargeObjectResult(problemDetail);
         }
 
+        [NonAction]
         public UnavailableForLegalReasonsObjectResult UnavailableForLegalReasons(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -525,6 +552,7 @@ namespace RESTFulSense.Controllers
             return new UnavailableForLegalReasonsObjectResult(problemDetail);
         }
 
+        [NonAction]
         public InternalServerErrorObjectResult InternalServerError(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -539,6 +567,7 @@ namespace RESTFulSense.Controllers
             return new InternalServerErrorObjectResult(problemDetail);
         }
 
+        [NonAction]
         public NotImplementedObjectResult NotImplemented(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -553,6 +582,7 @@ namespace RESTFulSense.Controllers
             return new NotImplementedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public BadGatewayObjectResult BadGateway(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -567,6 +597,7 @@ namespace RESTFulSense.Controllers
             return new BadGatewayObjectResult(problemDetail);
         }
 
+        [NonAction]
         public ServiceUnavailableObjectResult ServiceUnavailable(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -581,6 +612,7 @@ namespace RESTFulSense.Controllers
             return new ServiceUnavailableObjectResult(problemDetail);
         }
 
+        [NonAction]
         public GatewayTimeoutObjectResult GatewayTimeout(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -595,6 +627,7 @@ namespace RESTFulSense.Controllers
             return new GatewayTimeoutObjectResult(problemDetail);
         }
 
+        [NonAction]
         public HttpVersionNotSupportedObjectResult HttpVersionNotSupported(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -609,6 +642,7 @@ namespace RESTFulSense.Controllers
             return new HttpVersionNotSupportedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public VariantAlsoNegotiatesObjectResult VariantAlsoNegotiates(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -623,6 +657,7 @@ namespace RESTFulSense.Controllers
             return new VariantAlsoNegotiatesObjectResult(problemDetail);
         }
 
+        [NonAction]
         public InsufficientStorageObjectResult InsufficientStorage(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -637,6 +672,7 @@ namespace RESTFulSense.Controllers
             return new InsufficientStorageObjectResult(problemDetail);
         }
 
+        [NonAction]
         public LoopDetectedObjectResult LoopDetected(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -651,6 +687,7 @@ namespace RESTFulSense.Controllers
             return new LoopDetectedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public NotExtendedObjectResult NotExtended(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
@@ -665,6 +702,7 @@ namespace RESTFulSense.Controllers
             return new NotExtendedObjectResult(problemDetail);
         }
 
+        [NonAction]
         public NetworkAuthenticationRequiredObjectResult NetworkAuthenticationRequired(Exception exception)
         {
             var problemDetail = new ValidationProblemDetails
