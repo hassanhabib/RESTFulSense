@@ -4,6 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
@@ -12,7 +13,7 @@ using RESTFulSense.WebAssembly.Exceptions;
 
 namespace RESTFulSense.WebAssembly.Services
 {
-    public class ValidationService
+    public static class ValidationService
     {
         public static async ValueTask ValidateHttpResponseAsync(HttpResponseMessage httpResponseMessage)
         {
@@ -293,13 +294,14 @@ namespace RESTFulSense.WebAssembly.Services
         }
 
         private static bool NotFoundWithNoContent(HttpResponseMessage httpResponseMessage) =>
-            httpResponseMessage.Content.Headers.Contains("Content-Type") == false
+            httpResponseMessage.Content.Headers.Contains(name: "Content-Type") == false
             && httpResponseMessage.StatusCode == HttpStatusCode.NotFound;
 
         private static ValidationProblemDetails MapToProblemDetails(string content) =>
             JsonSerializer.Deserialize<ValidationProblemDetails>(content);
 
         private static bool IsProblemDetail(string content) =>
-            content.ToLower().Contains("\"title\":") && content.ToLower().Contains("\"type\":");
+            content.Contains(value: "\"title\":", StringComparison.OrdinalIgnoreCase) &&
+            content.Contains(value: "\"type\":", StringComparison.OrdinalIgnoreCase);
     }
 }
