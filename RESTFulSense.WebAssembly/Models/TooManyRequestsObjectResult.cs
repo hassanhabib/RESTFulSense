@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class TooManyRequestsObjectResult : ObjectResult
     {
-        public TooManyRequestsObjectResult(object value) : base(value) =>
+        public TooManyRequestsObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status429TooManyRequests;
+        }
     }
 }

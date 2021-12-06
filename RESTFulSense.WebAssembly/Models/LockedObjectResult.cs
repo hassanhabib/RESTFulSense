@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class LockedObjectResult : ObjectResult
     {
-        public LockedObjectResult(object value) : base(value) =>
+        public LockedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status423Locked;
+        }
     }
 }

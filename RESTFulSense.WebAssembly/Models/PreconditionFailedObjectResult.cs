@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class PreconditionFailedObjectResult : ObjectResult
     {
-        public PreconditionFailedObjectResult(object value) : base(value) =>
+        public PreconditionFailedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status412PreconditionFailed;
+        }
     }
 }

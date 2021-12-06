@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class RequestTimeoutObjectResult : ObjectResult
     {
-        public RequestTimeoutObjectResult(object value) : base(value) =>
+        public RequestTimeoutObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status408RequestTimeout;
+        }
     }
 }

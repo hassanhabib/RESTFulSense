@@ -12,7 +12,10 @@ namespace RESTFulSense.WebAssembly.Exceptions
     public class HttpResponseException : Xeption
     {
         public HttpResponseException(HttpResponseMessage httpResponseMessage, string message)
-            : base(message) => this.HttpResponseMessage = httpResponseMessage;
+            : base(message)
+        {
+            this.HttpResponseMessage = httpResponseMessage;
+        }
 
         public HttpResponseMessage HttpResponseMessage { get; private set; }
     }

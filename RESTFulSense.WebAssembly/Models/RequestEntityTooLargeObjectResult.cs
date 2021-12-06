@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class RequestEntityTooLargeObjectResult : ObjectResult
     {
-        public RequestEntityTooLargeObjectResult(object value) : base(value) =>
+        public RequestEntityTooLargeObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status413RequestEntityTooLarge;
+        }
     }
 }

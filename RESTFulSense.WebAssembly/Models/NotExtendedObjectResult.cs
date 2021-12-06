@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class NotExtendedObjectResult : ObjectResult
     {
-        public NotExtendedObjectResult(object value) : base(value) =>
+        public NotExtendedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status510NotExtended;
+        }
     }
 }

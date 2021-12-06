@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class LoopDetectedObjectResult : ObjectResult
     {
-        public LoopDetectedObjectResult(object value) : base(value) =>
+        public LoopDetectedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status508LoopDetected;
+        }
     }
 }

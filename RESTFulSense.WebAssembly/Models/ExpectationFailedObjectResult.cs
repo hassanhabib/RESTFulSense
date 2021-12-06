@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class ExpectationFailedObjectResult : ObjectResult
     {
-        public ExpectationFailedObjectResult(object value) : base(value) =>
+        public ExpectationFailedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status417ExpectationFailed;
+        }
     }
 }

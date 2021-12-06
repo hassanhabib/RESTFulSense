@@ -11,8 +11,10 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class ValidationProblemDetails
     {
-        public ValidationProblemDetails() =>
+        public ValidationProblemDetails()
+        {
             Data = new Dictionary<string, string[]>(StringComparer.Ordinal);
+        }
 
         public string Title { get; set; }
         public IDictionary<string, string[]> Errors => Data;

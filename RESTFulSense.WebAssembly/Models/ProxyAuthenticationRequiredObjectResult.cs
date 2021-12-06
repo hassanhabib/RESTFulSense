@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class ProxyAuthenticationRequiredObjectResult : ObjectResult
     {
-        public ProxyAuthenticationRequiredObjectResult(object value) : base(value) =>
+        public ProxyAuthenticationRequiredObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status407ProxyAuthenticationRequired;
+        }
     }
 }

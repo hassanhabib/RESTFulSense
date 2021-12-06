@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class BadGatewayObjectResult : ObjectResult
     {
-        public BadGatewayObjectResult(object value) : base(value) =>
+        public BadGatewayObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status502BadGateway;
+        }
     }
 }

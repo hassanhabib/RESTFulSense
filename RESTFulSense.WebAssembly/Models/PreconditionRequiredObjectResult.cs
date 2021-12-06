@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class PreconditionRequiredObjectResult : ObjectResult
     {
-        public PreconditionRequiredObjectResult(object value) : base(value) =>
+        public PreconditionRequiredObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status428PreconditionRequired;
+        }
     }
 }

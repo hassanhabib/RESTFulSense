@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class NotAcceptableObjectResult : ObjectResult
     {
-        public NotAcceptableObjectResult(object value) : base(value) =>
+        public NotAcceptableObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status406NotAcceptable;
+        }
     }
 }

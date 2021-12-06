@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class UnavailableForLegalReasonsObjectResult : ObjectResult
     {
-        public UnavailableForLegalReasonsObjectResult(object value) : base(value) =>
+        public UnavailableForLegalReasonsObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status451UnavailableForLegalReasons;
+        }
     }
 }

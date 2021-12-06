@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class GoneObjectResult : ObjectResult
     {
-        public GoneObjectResult(object value) : base(value) =>
+        public GoneObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status410Gone;
+        }
     }
 }

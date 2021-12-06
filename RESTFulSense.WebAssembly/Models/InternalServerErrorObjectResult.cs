@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class InternalServerErrorObjectResult : ObjectResult
     {
-        public InternalServerErrorObjectResult(object value) : base(value) =>
+        public InternalServerErrorObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status500InternalServerError;
+        }
     }
 }

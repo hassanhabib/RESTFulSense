@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class FailedDependencyObjectResult : ObjectResult
     {
-        public FailedDependencyObjectResult(object value) : base(value) =>
+        public FailedDependencyObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status424FailedDependency;
+        }
     }
 }

@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class NotImplementedObjectResult : ObjectResult
     {
-        public NotImplementedObjectResult(object value) : base(value) =>
+        public NotImplementedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status501NotImplemented;
+        }
     }
 }

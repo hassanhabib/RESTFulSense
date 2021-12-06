@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class PaymentRequiredObjectResult : ObjectResult
     {
-        public PaymentRequiredObjectResult(object value) : base(value) =>
+        public PaymentRequiredObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status402PaymentRequired;
+        }
     }
 }

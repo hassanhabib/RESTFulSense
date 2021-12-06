@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class RequestHeaderFieldsTooLargeObjectResult : ObjectResult
     {
-        public RequestHeaderFieldsTooLargeObjectResult(object value) : base(value) =>
+        public RequestHeaderFieldsTooLargeObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status431RequestHeaderFieldsTooLarge;
+        }
     }
 }

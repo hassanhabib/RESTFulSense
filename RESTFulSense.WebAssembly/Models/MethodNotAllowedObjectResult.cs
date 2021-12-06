@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class MethodNotAllowedObjectResult : ObjectResult
     {
-        public MethodNotAllowedObjectResult(object value) : base(value) =>
+        public MethodNotAllowedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status405MethodNotAllowed;
+        }
     }
 }

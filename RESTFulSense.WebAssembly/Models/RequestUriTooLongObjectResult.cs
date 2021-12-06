@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class RequestUriTooLongObjectResult : ObjectResult
     {
-        public RequestUriTooLongObjectResult(object value) : base(value) =>
+        public RequestUriTooLongObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status414RequestUriTooLong;
+        }
     }
 }

@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class UnsupportedMediaTypeObjectResult : ObjectResult
     {
-        public UnsupportedMediaTypeObjectResult(object value) : base(value) =>
+        public UnsupportedMediaTypeObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status415UnsupportedMediaType;
+        }
     }
 }

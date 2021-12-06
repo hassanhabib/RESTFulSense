@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class HttpVersionNotSupportedObjectResult : ObjectResult
     {
-        public HttpVersionNotSupportedObjectResult(object value) : base(value) =>
+        public HttpVersionNotSupportedObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status505HttpVersionNotsupported;
+        }
     }
 }

@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class VariantAlsoNegotiatesObjectResult : ObjectResult
     {
-        public VariantAlsoNegotiatesObjectResult(object value) : base(value) =>
+        public VariantAlsoNegotiatesObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status506VariantAlsoNegotiates;
+        }
     }
 }

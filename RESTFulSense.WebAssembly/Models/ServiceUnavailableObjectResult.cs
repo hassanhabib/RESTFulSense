@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class ServiceUnavailableObjectResult : ObjectResult
     {
-        public ServiceUnavailableObjectResult(object value) : base(value) =>
+        public ServiceUnavailableObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status503ServiceUnavailable;
+        }
     }
 }

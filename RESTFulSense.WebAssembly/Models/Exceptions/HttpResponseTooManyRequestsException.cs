@@ -15,6 +15,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 
         public HttpResponseTooManyRequestsException(
             HttpResponseMessage responseMessage,
-            ValidationProblemDetails problemDetails) : base(responseMessage, problemDetails.Title) => this.AddData((IDictionary)problemDetails.Errors);
+            ValidationProblemDetails problemDetails) : base(responseMessage, problemDetails.Title)
+        {
+            this.AddData((IDictionary)problemDetails.Errors);
+        }
     }
 }

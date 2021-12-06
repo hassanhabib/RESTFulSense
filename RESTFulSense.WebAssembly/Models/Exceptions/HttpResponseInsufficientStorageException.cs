@@ -16,6 +16,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 
         public HttpResponseInsufficientStorageException(
             HttpResponseMessage responseMessage,
-            ValidationProblemDetails problemDetails) : base(responseMessage, problemDetails.Title) => this.AddData((IDictionary)problemDetails.Errors);
+            ValidationProblemDetails problemDetails) : base(responseMessage, problemDetails.Title)
+        {
+            this.AddData((IDictionary)problemDetails.Errors);
+        }
     }
 }

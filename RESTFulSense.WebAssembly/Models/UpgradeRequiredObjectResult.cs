@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class UpgradeRequiredObjectResult : ObjectResult
     {
-        public UpgradeRequiredObjectResult(object value) : base(value) =>
+        public UpgradeRequiredObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status426UpgradeRequired;
+        }
     }
 }

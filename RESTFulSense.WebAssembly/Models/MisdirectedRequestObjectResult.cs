@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class MisdirectedRequestObjectResult : ObjectResult
     {
-        public MisdirectedRequestObjectResult(object value) : base(value) =>
+        public MisdirectedRequestObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status421MisdirectedRequest;
+        }
     }
 }

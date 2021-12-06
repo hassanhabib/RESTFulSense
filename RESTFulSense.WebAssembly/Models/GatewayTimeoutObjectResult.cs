@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class GatewayTimeoutObjectResult : ObjectResult
     {
-        public GatewayTimeoutObjectResult(object value) : base(value) =>
+        public GatewayTimeoutObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status504GatewayTimeout;
+        }
     }
 }

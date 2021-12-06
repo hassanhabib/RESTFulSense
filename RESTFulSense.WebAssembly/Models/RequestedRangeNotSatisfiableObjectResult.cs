@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class RequestedRangeNotSatisfiableObjectResult : ObjectResult
     {
-        public RequestedRangeNotSatisfiableObjectResult(object value) : base(value) =>
+        public RequestedRangeNotSatisfiableObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status416RequestedRangeNotSatisfiable;
+        }
     }
 }

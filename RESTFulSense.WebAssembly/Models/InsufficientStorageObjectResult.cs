@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class InsufficientStorageObjectResult : ObjectResult
     {
-        public InsufficientStorageObjectResult(object value) : base(value) =>
+        public InsufficientStorageObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status507InsufficientStorage;
+        }
     }
 }

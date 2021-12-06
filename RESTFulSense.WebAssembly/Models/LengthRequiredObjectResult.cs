@@ -10,7 +10,9 @@ namespace RESTFulSense.WebAssembly.Models
 {
     public class LengthRequiredObjectResult : ObjectResult
     {
-        public LengthRequiredObjectResult(object value) : base(value) =>
+        public LengthRequiredObjectResult(object value) : base(value)
+        {
             StatusCode = StatusCodes.Status411LengthRequired;
+        }
     }
 }
