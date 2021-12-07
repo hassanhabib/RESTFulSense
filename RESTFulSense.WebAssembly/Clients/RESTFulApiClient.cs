@@ -7,6 +7,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using RESTFulSense.WebAssembly.Services;
@@ -193,8 +194,17 @@ namespace RESTFulSense.WebAssembly.Clients
         private static async ValueTask<T> DeserializeResponseContent<T>(HttpResponseMessage responseMessage)
         {
             string responseString = await responseMessage.Content.ReadAsStringAsync();
+            JsonSerializerOptions options = ConfigureJsonDeserializeCaseInSensitive();
 
-            return JsonSerializer.Deserialize<T>(responseString);
+            return JsonSerializer.Deserialize<T>(responseString, options);
+        }
+
+        private static JsonSerializerOptions ConfigureJsonDeserializeCaseInSensitive()
+        {
+            var options = new JsonSerializerOptions();
+            options.PropertyNameCaseInsensitive = true;
+            options.Converters.Add(item: new JsonStringEnumConverter());
+            return options;
         }
 
         private static StringContent StringifyJsonifyContent<T>(T content, string mediaType)
