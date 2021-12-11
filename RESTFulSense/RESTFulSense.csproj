@@ -27,7 +27,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Xeption" Version="1.6.0" />
+		<PackageReference Include="Xeption" Version="1.7.0" />
 	</ItemGroup>
 
 	<ItemGroup>
