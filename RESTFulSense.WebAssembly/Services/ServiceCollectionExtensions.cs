@@ -8,9 +8,8 @@ using System;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using RESTFulSense.WebAssembly.Services;
 
-namespace RESTFulSense.WebAssembly.Models.Configurations
+namespace RESTFulSense.WebAssembly.Services
 {
     public static class ServiceCollectionExtensions
     {
