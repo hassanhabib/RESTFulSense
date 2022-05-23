@@ -199,3 +199,5 @@ LinkedIn: hassanrezkhabib
 <br />
 E-Mail: hassanhabib@live.com
 <br />
+
+Huge thanks to Mr. Brian Parker @BrianLParker for his RESTfulSense Web Assembly effort. 
