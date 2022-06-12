@@ -43,6 +43,33 @@ namespace RESTFulSense.Clients
         public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
             await this.httpClient.GetStringAsync(relativeUrl);
 
+        public async ValueTask PostContentWithNoResponseAsync<T>(
+            string relativeUrl,
+            T content,
+            string mediaType = "text/json")
+        {
+            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PostAsync(relativeUrl, contentString);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+        }
+
+        public async ValueTask PostContentWithNoResponseAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json")
+        {
+            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+        }
+
         public ValueTask<T> PostContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json") =>
             PostContentAsync<T, T>(relativeUrl, content, mediaType);
 
