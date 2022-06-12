@@ -14,6 +14,18 @@ namespace RESTFulSense.WebAssembly.Clients
         ValueTask<T> GetContentAsync<T>(string relativeUrl);
         ValueTask<T> GetContentAsync<T>(string relativeUrl, CancellationToken cancellationToken);
         ValueTask<string> GetContentStringAsync(string relativeUrl);
+
+        public ValueTask PostContentWithNoResponseAsync<T>(
+            string relativeUrl,
+            T content,
+            string mediaType = "text/json");
+
+        public ValueTask PostContentWithNoResponseAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json");
+
         ValueTask<T> PostContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json");
 
         ValueTask<T> PostContentAsync<T>(
