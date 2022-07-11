@@ -39,7 +39,7 @@ namespace RESTFulSense.Clients
             T content,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                 await PostAsync(relativeUrl, contentString);
@@ -53,7 +53,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                 await PostAsync(relativeUrl, contentString, cancellationToken);
@@ -83,7 +83,7 @@ namespace RESTFulSense.Clients
             TContent content,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PostAsync(relativeUrl, contentString);
@@ -99,7 +99,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PostAsync(relativeUrl, contentString, cancellationToken);
@@ -114,7 +114,7 @@ namespace RESTFulSense.Clients
             T content,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
@@ -130,7 +130,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString, cancellationToken);
@@ -145,7 +145,7 @@ namespace RESTFulSense.Clients
             TContent content,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
@@ -161,7 +161,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyJsonifyContent(content, mediaType);
+            StringContent contentString = StringifyContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString, cancellationToken);
@@ -241,6 +241,20 @@ namespace RESTFulSense.Clients
                     mediaType);
 
             return contentString;
+        }
+
+        private static StringContent StringifyContent<T>(T content, string mediaType)
+        {
+            switch (mediaType)
+            {
+                case "text/plain":
+                    return new StringContent(
+                        content: content.ToString(),
+                        encoding: Encoding.UTF8,
+                        mediaType);
+                default:
+                    return StringifyJsonifyContent(content, mediaType);
+            }
         }
     }
 }
