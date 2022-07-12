@@ -245,16 +245,15 @@ namespace RESTFulSense.Clients
 
         private static StringContent StringifyContent<T>(T content, string mediaType)
         {
-            switch (mediaType)
+            return mediaType switch
             {
-                case "text/plain":
-                    return new StringContent(
+                "text/plain" => new StringContent(
                         content: content.ToString(),
                         encoding: Encoding.UTF8,
-                        mediaType);
-                default:
-                    return StringifyJsonifyContent(content, mediaType);
-            }
+                        mediaType),
+
+                _ => StringifyJsonifyContent(content, mediaType)
+            };
         }
     }
 }
