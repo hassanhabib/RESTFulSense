@@ -13,7 +13,7 @@ using RESTFulSense.Services;
 
 namespace RESTFulSense.Clients
 {
-    public class RESTFulApiFactoryClient : IRESTFulApiFactoryClient
+    public partial class RESTFulApiFactoryClient : IRESTFulApiFactoryClient
     {
         private readonly HttpClient httpClient;
 
@@ -48,7 +48,7 @@ namespace RESTFulSense.Clients
             T content,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                 await this.httpClient.PostAsync(relativeUrl, contentString);
@@ -62,7 +62,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                 await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
@@ -85,7 +85,7 @@ namespace RESTFulSense.Clients
             TContent content,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString);
@@ -101,7 +101,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
@@ -113,7 +113,7 @@ namespace RESTFulSense.Clients
 
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString);
@@ -129,7 +129,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
@@ -144,7 +144,7 @@ namespace RESTFulSense.Clients
             TContent content,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString);
@@ -160,7 +160,7 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json")
         {
-            StringContent contentString = StringifyContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
@@ -231,32 +231,6 @@ namespace RESTFulSense.Clients
             string responseString = await responseMessage.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(responseString);
-        }
-
-        private static StringContent StringifyJsonifyContent<T>(T content, string mediaType)
-        {
-            string serializedRestrictionRequest = JsonConvert.SerializeObject(content);
-
-            var contentString =
-                new StringContent(
-                    content: serializedRestrictionRequest,
-                    encoding: Encoding.UTF8,
-                    mediaType);
-
-            return contentString;
-        }
-
-        private static StringContent StringifyContent<T>(T content, string mediaType)
-        {
-            return mediaType switch
-            {
-                "text/plain" => new StringContent(
-                        content: content.ToString(),
-                        encoding: Encoding.UTF8,
-                        mediaType),
-                        
-                _ => StringifyJsonifyContent(content, mediaType)
-            };
         }
     }
 }
