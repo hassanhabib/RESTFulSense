@@ -26,12 +26,13 @@ namespace RESTFulSense.Clients
         }
 
         private static StringContent ConvertToStringContent<T>(
-            T content, string mediaType) =>
-                new StringContent(
-                    content: content.ToString(),
-                    encoding: Encoding.UTF8,
-                    mediaType);
-
+            T content, string mediaType)
+        {
+                return new StringContent(
+                        content: content.ToString(),
+                        encoding: Encoding.UTF8,
+                        mediaType);
+        } 
 
         private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType)
         {
@@ -52,6 +53,7 @@ namespace RESTFulSense.Clients
         {
             var contentStream = new StreamContent(content);
             contentStream.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
+
             return contentStream;
         }
     }
