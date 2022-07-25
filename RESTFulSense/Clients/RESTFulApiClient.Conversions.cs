@@ -25,14 +25,13 @@ namespace RESTFulSense.Clients
             };
         }
 
-        private static StringContent ConvertToStringContent<T>(
-            T content, string mediaType)
+        private static StringContent ConvertToStringContent<T>(T content, string mediaType)
         {
-                return new StringContent(
-                        content: content.ToString(),
-                        encoding: Encoding.UTF8,
-                        mediaType);
-        } 
+            return new StringContent(
+                content: content.ToString(),
+                encoding: Encoding.UTF8,
+                mediaType);
+        }
 
         private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType)
         {
@@ -47,9 +46,8 @@ namespace RESTFulSense.Clients
             return contentString;
         }
 
-        private static StreamContent ConvertToStreamContent<T>(
-            T content, string mediaType)
-                where T : Stream
+        private static StreamContent ConvertToStreamContent<T>(T content, string mediaType)
+            where T : Stream
         {
             var contentStream = new StreamContent(content);
             contentStream.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
