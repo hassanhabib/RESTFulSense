@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseFailedDependencyException : HttpResponseException
     {
+        public HttpResponseFailedDependencyException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseFailedDependencyException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

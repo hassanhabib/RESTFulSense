@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseBadRequestException : HttpResponseException
     {
+        public HttpResponseBadRequestException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseBadRequestException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

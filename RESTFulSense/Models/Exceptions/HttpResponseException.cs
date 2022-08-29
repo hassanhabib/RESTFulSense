@@ -11,6 +11,8 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseException : Xeption
     {
+        public HttpResponseException() { }
+
         public HttpResponseException(HttpResponseMessage httpResponseMessage, string message)
             : base(message) => this.HttpResponseMessage = httpResponseMessage;
 

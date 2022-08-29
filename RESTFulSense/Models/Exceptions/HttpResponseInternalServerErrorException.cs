@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseInternalServerErrorException : HttpResponseException
     {
+        public HttpResponseInternalServerErrorException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseInternalServerErrorException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 
