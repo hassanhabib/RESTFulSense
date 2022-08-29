@@ -11,9 +11,9 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageIcon>api.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>2.7</Version>
-		<AssemblyVersion>2.7.0.0</AssemblyVersion>
-		<FileVersion>2.7.0.0</FileVersion>
+		<Version>2.8</Version>
+		<AssemblyVersion>2.8.0.0</AssemblyVersion>
+		<FileVersion>2.8.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
@@ -21,7 +21,7 @@
 		<RepositoryUrl>https://github.com/hassanhabib/RESTFulSense</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>RESTFul API</PackageTags>
-		<PackageReleaseNotes>Support media types for POST &amp; PUT</PackageReleaseNotes>
+		<PackageReleaseNotes>Introduce simpler exception models for testing</PackageReleaseNotes>
 		<Title>RESTFulSense</Title>
 	</PropertyGroup>
 
