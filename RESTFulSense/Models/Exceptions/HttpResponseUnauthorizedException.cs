@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseUnauthorizedException : HttpResponseException
     {
+        public HttpResponseUnauthorizedException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseUnauthorizedException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

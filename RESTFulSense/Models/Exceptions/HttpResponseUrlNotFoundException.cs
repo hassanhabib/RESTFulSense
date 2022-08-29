@@ -10,6 +10,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseUrlNotFoundException : HttpResponseException
     {
+        public HttpResponseUrlNotFoundException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseUrlNotFoundException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
     }

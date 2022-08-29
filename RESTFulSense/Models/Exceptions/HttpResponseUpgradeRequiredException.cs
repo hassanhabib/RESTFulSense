@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseUpgradeRequiredException : HttpResponseException
     {
+        public HttpResponseUpgradeRequiredException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseUpgradeRequiredException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

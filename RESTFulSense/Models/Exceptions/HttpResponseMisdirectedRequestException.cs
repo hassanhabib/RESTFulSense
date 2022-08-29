@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseMisdirectedRequestException : HttpResponseException
     {
+        public HttpResponseMisdirectedRequestException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseMisdirectedRequestException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

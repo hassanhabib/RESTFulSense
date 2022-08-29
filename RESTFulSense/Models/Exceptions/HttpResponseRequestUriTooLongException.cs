@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseRequestUriTooLongException : HttpResponseException
     {
+        public HttpResponseRequestUriTooLongException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseRequestUriTooLongException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseNotExtendedException : HttpResponseException
     {
+        public HttpResponseNotExtendedException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseNotExtendedException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

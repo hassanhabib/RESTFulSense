@@ -12,6 +12,9 @@ namespace RESTFulSense.Exceptions
 {
     public class HttpResponseUnprocessableEntityException : HttpResponseException
     {
+        public HttpResponseUnprocessableEntityException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseUnprocessableEntityException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 
