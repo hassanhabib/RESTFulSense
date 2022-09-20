@@ -11,6 +11,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Controllers;
 using Tynamix.ObjectFiller;
+using Xunit;
 
 namespace RESTFulSense.Tests.Controllers
 {
@@ -21,23 +22,17 @@ namespace RESTFulSense.Tests.Controllers
         public RESTFulControllerTests() =>
             this.restfulController = new RESTFulController(new JsonSerializerOptions());
 
-        public static IEnumerable<object[]> SerializationCases()
+        public static TheoryData<JsonSerializerOptions> SerializationCases => new()
         {
-            JsonSerializerOptions jsonSerializerSettingsPascal = new JsonSerializerOptions();
-
-            JsonSerializerOptions jsonSerializerSettingsCamel = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
-
-            return new List<object[]>
-            {
-                new object[] { jsonSerializerSettingsPascal },
-                new object[] { jsonSerializerSettingsCamel }
-            };
-        }
+            { new JsonSerializerOptions() },
+            { new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                }
+            }
+        };
 
         private void SetupInputAndExpectedCriteria(
             Dictionary<string, List<string>> randomDictionary,
