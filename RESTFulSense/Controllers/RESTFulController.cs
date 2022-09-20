@@ -23,6 +23,11 @@ namespace RESTFulSense.Controllers
         public RESTFulController(JsonSerializerOptions jsonSerializerOptions = null)
         {
             this.jsonSerializerOptions = jsonSerializerOptions ?? new JsonSerializerOptions();
+
+            if (this.jsonSerializerOptions.DictionaryKeyPolicy == null)
+            {
+                this.jsonSerializerOptions.DictionaryKeyPolicy = this.jsonSerializerOptions.PropertyNamingPolicy;
+            }
         }
 
         [NonAction]
