@@ -7,6 +7,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Models;
@@ -15,6 +18,18 @@ namespace RESTFulSense.Controllers
 {
     public class RESTFulController : ControllerBase, IRESTFulController
     {
+        private readonly JsonSerializerOptions jsonSerializerOptions;
+
+        public RESTFulController(JsonSerializerOptions jsonSerializerOptions = null)
+        {
+            this.jsonSerializerOptions = jsonSerializerOptions ?? new JsonSerializerOptions();
+
+            if (this.jsonSerializerOptions.DictionaryKeyPolicy == null)
+            {
+                this.jsonSerializerOptions.DictionaryKeyPolicy = this.jsonSerializerOptions.PropertyNamingPolicy;
+            }
+        }
+
         [NonAction]
         public CreatedObjectResult Created(object value) =>
             new CreatedObjectResult(value);
@@ -717,16 +732,34 @@ namespace RESTFulSense.Controllers
             return new NetworkAuthenticationRequiredObjectResult(problemDetail);
         }
 
-        private static void MapExceptionDataToProblemDetail(
+        private void MapExceptionDataToProblemDetail(
             Exception exception,
             ValidationProblemDetails problemDetail)
         {
             foreach (DictionaryEntry error in exception.Data)
             {
+                string errorKey = ApplySerialization(error, jsonSerializerOptions);
+
                 problemDetail.Errors.Add(
-                    key: error.Key.ToString(),
+                    key: errorKey,
                     value: ((List<string>)error.Value)?.ToArray());
             }
+        }
+
+        private static string ApplySerialization(DictionaryEntry error, JsonSerializerOptions jsonSerializerOptions)
+        {
+            IDictionary<string, Object> interimObject = new ExpandoObject();
+            interimObject.Add(error.Key.ToString(), error.Value);
+
+            string serialisedInterimObject =
+                JsonSerializer.Serialize(interimObject, jsonSerializerOptions);
+
+            var deserializedError =
+                JsonSerializer.Deserialize<IDictionary<string, Object>>(
+                    serialisedInterimObject,
+                    jsonSerializerOptions);
+
+            return deserializedError.Keys.First();
         }
     }
 }

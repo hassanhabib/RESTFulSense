@@ -6,9 +6,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RESTFulSense.Controllers;
 using RESTFulSense.Models;
 using Tynamix.ObjectFiller;
 using Xunit;
@@ -18,7 +20,7 @@ namespace RESTFulSense.Tests.Controllers
     public partial class RESTFulControllerTests
     {
         [Fact]
-        public void ShouldReturnValidationProblemDetailOnBadRequest()
+        public void ShouldReturnValidationProblemDetailMatchingPascalCaseSerialization()
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -36,18 +38,16 @@ namespace RESTFulSense.Tests.Controllers
             var expectedBadRequestObjectResult =
                 new BadRequestObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController();
 
             // when
             BadRequestObjectResult badRequestObjectResult =
-                this.restfulController.BadRequest(inputException);
+                restfulController.BadRequest(inputException);
 
             // then
             badRequestObjectResult.Should()
@@ -55,7 +55,91 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnValidationProblemDetailOnUnathorized()
+        public void ShouldReturnValidationProblemDetailMatchingCamelCaseSerialization()
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Title = inputException.Message,
+            };
+
+            var expectedBadRequestObjectResult =
+                new BadRequestObjectResult(expectedProblemDetail);
+
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
+
+            var restfulController = new RESTFulController(jsonSerializerOptions);
+
+            // when
+            BadRequestObjectResult badRequestObjectResult =
+                restfulController.BadRequest(inputException);
+
+            // then
+            badRequestObjectResult.Should()
+                .BeEquivalentTo(expectedBadRequestObjectResult);
+        }
+
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnBadRequest(
+            JsonSerializerOptions jsonSerializerOptions)
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                Title = inputException.Message,
+            };
+
+            var expectedBadRequestObjectResult =
+                new BadRequestObjectResult(expectedProblemDetail);
+
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
+
+            var restfulController = new RESTFulController(jsonSerializerOptions);
+
+            // when
+            BadRequestObjectResult badRequestObjectResult =
+                restfulController.BadRequest(inputException);
+
+            // then
+            badRequestObjectResult.Should()
+                .BeEquivalentTo(expectedBadRequestObjectResult);
+        }
+
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnUnathorized(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -73,26 +157,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedUnauthorizedObjectResult =
                 new UnauthorizedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             UnauthorizedObjectResult unauthorizedObjectResult =
-                this.restfulController.Unauthorized(inputException);
+                restfulController.Unauthorized(inputException);
 
             // then
             unauthorizedObjectResult.Should()
                 .BeEquivalentTo(expectedUnauthorizedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnPaymentRequired()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnPaymentRequired(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -110,26 +195,28 @@ namespace RESTFulSense.Tests.Controllers
             var expectedPaymentRequiredObjectResult =
                 new PaymentRequiredObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
+
 
             // when
             PaymentRequiredObjectResult paymentRequiredObjectResult =
-                this.restfulController.PaymentRequired(inputException);
+                restfulController.PaymentRequired(inputException);
 
             // then
             paymentRequiredObjectResult.Should()
                 .BeEquivalentTo(expectedPaymentRequiredObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnForbidden()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnForbidden(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -147,26 +234,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedForbiddenObjectResult =
                 new ForbiddenObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             ForbiddenObjectResult forbiddenObjectResult =
-                this.restfulController.Forbidden(inputException);
+                restfulController.Forbidden(inputException);
 
             // then
             forbiddenObjectResult.Should()
                 .BeEquivalentTo(expectedForbiddenObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnNotFound()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnNotFound(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -184,26 +272,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedNotFoundObjectResult =
                 new NotFoundObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             NotFoundObjectResult notFoundObjectResult =
-                this.restfulController.NotFound(inputException);
+                restfulController.NotFound(inputException);
 
             // then
             notFoundObjectResult.Should()
                 .BeEquivalentTo(expectedNotFoundObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnMethodNotAllowed()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnMethodNotAllowed(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -221,26 +310,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedMethodNotAllowedObjectResult =
                 new MethodNotAllowedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             MethodNotAllowedObjectResult methodNotAllowedObjectResult =
-                this.restfulController.MethodNotAllowed(inputException);
+                restfulController.MethodNotAllowed(inputException);
 
             // then
             methodNotAllowedObjectResult.Should()
                 .BeEquivalentTo(expectedMethodNotAllowedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnNotAcceptable()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnNotAcceptable(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -258,26 +348,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedNotAcceptableObjectResult =
                 new NotAcceptableObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             NotAcceptableObjectResult notAcceptableObjectResult =
-                this.restfulController.NotAcceptable(inputException);
+                restfulController.NotAcceptable(inputException);
 
             // then
             notAcceptableObjectResult.Should()
                 .BeEquivalentTo(expectedNotAcceptableObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnProxyAuthenticationRequired()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnProxyAuthenticationRequired(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -295,26 +386,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedProxyAuthenticationRequiredObjectResult =
                 new ProxyAuthenticationRequiredObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             ProxyAuthenticationRequiredObjectResult proxyAuthenticationRequiredObjectResult =
-                this.restfulController.ProxyAuthenticationRequired(inputException);
+                restfulController.ProxyAuthenticationRequired(inputException);
 
             // then
             proxyAuthenticationRequiredObjectResult.Should()
                 .BeEquivalentTo(expectedProxyAuthenticationRequiredObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnRequestTimeout()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnRequestTimeout(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -332,26 +424,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedRequestTimeoutObjectResult =
                 new RequestTimeoutObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             RequestTimeoutObjectResult requestTimeoutObjectResult =
-                this.restfulController.RequestTimeout(inputException);
+                restfulController.RequestTimeout(inputException);
 
             // then
             requestTimeoutObjectResult.Should()
                 .BeEquivalentTo(expectedRequestTimeoutObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnConflict()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnConflict(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -369,26 +462,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedConflictObjectResult =
                 new ConflictObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             ConflictObjectResult conflictObjectResult =
-                this.restfulController.Conflict(inputException);
+                restfulController.Conflict(inputException);
 
             // then
             conflictObjectResult.Should()
                 .BeEquivalentTo(expectedConflictObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnGone()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnGone(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -406,26 +500,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedGoneObjectResult =
                 new GoneObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             GoneObjectResult goneObjectResult =
-                this.restfulController.Gone(inputException);
+                restfulController.Gone(inputException);
 
             // then
             goneObjectResult.Should()
                 .BeEquivalentTo(expectedGoneObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnLengthRequired()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnLengthRequired(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -443,26 +538,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedLengthRequiredObjectResult =
                 new LengthRequiredObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             LengthRequiredObjectResult lengthRequiredObjectResult =
-                this.restfulController.LengthRequired(inputException);
+                restfulController.LengthRequired(inputException);
 
             // then
             lengthRequiredObjectResult.Should()
                 .BeEquivalentTo(expectedLengthRequiredObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnPreconditionFailed()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnPreconditionFailed(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -480,26 +576,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedPreconditionFailedObjectResult =
                 new PreconditionFailedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             PreconditionFailedObjectResult preconditionFailedObjectResult =
-                this.restfulController.PreconditionFailed(inputException);
+                restfulController.PreconditionFailed(inputException);
 
             // then
             preconditionFailedObjectResult.Should()
                 .BeEquivalentTo(expectedPreconditionFailedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnRequestEntityTooLarge()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnRequestEntityTooLarge(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -517,26 +614,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedRequestEntityTooLargeObjectResult =
                 new RequestEntityTooLargeObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             RequestEntityTooLargeObjectResult requestEntityTooLargeObjectResult =
-                this.restfulController.RequestEntityTooLarge(inputException);
+                restfulController.RequestEntityTooLarge(inputException);
 
             // then
             requestEntityTooLargeObjectResult.Should()
                 .BeEquivalentTo(expectedRequestEntityTooLargeObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnRequestUriTooLong()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnRequestUriTooLong(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -554,26 +652,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedRequestUriTooLongObjectResult =
                 new RequestUriTooLongObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             RequestUriTooLongObjectResult requestUriTooLongObjectResult =
-                this.restfulController.RequestUriTooLong(inputException);
+                restfulController.RequestUriTooLong(inputException);
 
             // then
             requestUriTooLongObjectResult.Should()
                 .BeEquivalentTo(expectedRequestUriTooLongObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnUnsupportedMediaType()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnUnsupportedMediaType(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -591,26 +690,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedUnsupportedMediaTypeObjectResult =
                 new UnsupportedMediaTypeObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             UnsupportedMediaTypeObjectResult unsupportedMediaTypeObjectResult =
-                this.restfulController.UnsupportedMediaType(inputException);
+                restfulController.UnsupportedMediaType(inputException);
 
             // then
             unsupportedMediaTypeObjectResult.Should()
                 .BeEquivalentTo(expectedUnsupportedMediaTypeObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnRequestedRangeNotSatisfiable()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnRequestedRangeNotSatisfiable(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -628,26 +728,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedRequestedRangeNotSatisfiableObjectResult =
                 new RequestedRangeNotSatisfiableObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             RequestedRangeNotSatisfiableObjectResult requestedRangeNotSatisfiableObjectResult =
-                this.restfulController.RequestedRangeNotSatisfiable(inputException);
+                restfulController.RequestedRangeNotSatisfiable(inputException);
 
             // then
             requestedRangeNotSatisfiableObjectResult.Should()
                 .BeEquivalentTo(expectedRequestedRangeNotSatisfiableObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnExpectationFailed()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnExpectationFailed(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -665,26 +766,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedExpectationFailedObjectResult =
                 new ExpectationFailedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             ExpectationFailedObjectResult expectationFailedObjectResult =
-                this.restfulController.ExpectationFailed(inputException);
+                restfulController.ExpectationFailed(inputException);
 
             // then
             expectationFailedObjectResult.Should()
                 .BeEquivalentTo(expectedExpectationFailedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnMisdirectedRequest()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnMisdirectedRequest(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -702,26 +804,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedMisdirectedRequestObjectResult =
                 new MisdirectedRequestObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             MisdirectedRequestObjectResult misdirectedRequestObjectResult =
-                this.restfulController.MisdirectedRequest(inputException);
+                restfulController.MisdirectedRequest(inputException);
 
             // then
             misdirectedRequestObjectResult.Should()
                 .BeEquivalentTo(expectedMisdirectedRequestObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnUnprocessableEntity()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnUnprocessableEntity(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -739,26 +842,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedUnprocessableEntityObjectResult =
                 new UnprocessableEntityObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             UnprocessableEntityObjectResult unprocessableEntityObjectResult =
-                this.restfulController.UnprocessableEntity(inputException);
+                restfulController.UnprocessableEntity(inputException);
 
             // then
             unprocessableEntityObjectResult.Should()
                 .BeEquivalentTo(expectedUnprocessableEntityObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnLocked()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnLocked(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -776,26 +880,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedLockedObjectResult =
                 new LockedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             LockedObjectResult lockedObjectResult =
-                this.restfulController.Locked(inputException);
+                restfulController.Locked(inputException);
 
             // then
             lockedObjectResult.Should()
                 .BeEquivalentTo(expectedLockedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnFailedDependency()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnFailedDependency(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -813,26 +918,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedFailedDependencyObjectResult =
                 new FailedDependencyObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             FailedDependencyObjectResult failedDependencyObjectResult =
-                this.restfulController.FailedDependency(inputException);
+                restfulController.FailedDependency(inputException);
 
             // then
             failedDependencyObjectResult.Should()
                 .BeEquivalentTo(expectedFailedDependencyObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnUpgradeRequired()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnUpgradeRequired(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -850,26 +956,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedUpgradeRequiredObjectResult =
                 new UpgradeRequiredObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             UpgradeRequiredObjectResult upgradeRequiredObjectResult =
-                this.restfulController.UpgradeRequired(inputException);
+                restfulController.UpgradeRequired(inputException);
 
             // then
             upgradeRequiredObjectResult.Should()
                 .BeEquivalentTo(expectedUpgradeRequiredObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnPreconditionRequired()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnPreconditionRequired(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -887,26 +994,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedPreconditionRequiredObjectResult =
                 new PreconditionRequiredObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             PreconditionRequiredObjectResult preconditionRequiredObjectResult =
-                this.restfulController.PreconditionRequired(inputException);
+                restfulController.PreconditionRequired(inputException);
 
             // then
             preconditionRequiredObjectResult.Should()
                 .BeEquivalentTo(expectedPreconditionRequiredObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnTooManyRequests()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnTooManyRequests(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -924,26 +1032,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedTooManyRequestsObjectResult =
                 new TooManyRequestsObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             TooManyRequestsObjectResult tooManyRequestsObjectResult =
-                this.restfulController.TooManyRequests(inputException);
+                restfulController.TooManyRequests(inputException);
 
             // then
             tooManyRequestsObjectResult.Should()
                 .BeEquivalentTo(expectedTooManyRequestsObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnRequestHeaderFieldsTooLarge()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnRequestHeaderFieldsTooLarge(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -961,26 +1070,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedRequestHeaderFieldsTooLargeObjectResult =
                 new RequestHeaderFieldsTooLargeObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             RequestHeaderFieldsTooLargeObjectResult requestHeaderFieldsTooLargeObjectResult =
-                this.restfulController.RequestHeaderFieldsTooLarge(inputException);
+                restfulController.RequestHeaderFieldsTooLarge(inputException);
 
             // then
             requestHeaderFieldsTooLargeObjectResult.Should()
                 .BeEquivalentTo(expectedRequestHeaderFieldsTooLargeObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnUnavailableForLegalReasons()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnUnavailableForLegalReasons(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -998,26 +1108,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedUnavailableForLegalReasonsObjectResult =
                 new UnavailableForLegalReasonsObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             UnavailableForLegalReasonsObjectResult unavailableForLegalReasonsObjectResult =
-                this.restfulController.UnavailableForLegalReasons(inputException);
+                restfulController.UnavailableForLegalReasons(inputException);
 
             // then
             unavailableForLegalReasonsObjectResult.Should()
                 .BeEquivalentTo(expectedUnavailableForLegalReasonsObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnInternalServerError()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnInternalServerError(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1035,26 +1146,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedInternalServerErrorObjectResult =
                 new InternalServerErrorObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             InternalServerErrorObjectResult internalServerErrorObjectResult =
-                this.restfulController.InternalServerError(inputException);
+                restfulController.InternalServerError(inputException);
 
             // then
             internalServerErrorObjectResult.Should()
                 .BeEquivalentTo(expectedInternalServerErrorObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnNotImplemented()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnNotImplemented(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1072,26 +1184,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedNotImplementedObjectResult =
                 new NotImplementedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             NotImplementedObjectResult notImplementedObjectResult =
-                this.restfulController.NotImplemented(inputException);
+                restfulController.NotImplemented(inputException);
 
             // then
             notImplementedObjectResult.Should()
                 .BeEquivalentTo(expectedNotImplementedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnBadGateway()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnBadGateway(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1109,26 +1222,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedBadGatewayObjectResult =
                 new BadGatewayObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             BadGatewayObjectResult badGatewayObjectResult =
-                this.restfulController.BadGateway(inputException);
+                restfulController.BadGateway(inputException);
 
             // then
             badGatewayObjectResult.Should()
                 .BeEquivalentTo(expectedBadGatewayObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnServiceUnavailable()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnServiceUnavailable(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1146,26 +1260,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedServiceUnavailableObjectResult =
                 new ServiceUnavailableObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             ServiceUnavailableObjectResult serviceUnavailableObjectResult =
-                this.restfulController.ServiceUnavailable(inputException);
+                restfulController.ServiceUnavailable(inputException);
 
             // then
             serviceUnavailableObjectResult.Should()
                 .BeEquivalentTo(expectedServiceUnavailableObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnGatewayTimeout()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnGatewayTimeout(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1183,26 +1298,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedGatewayTimeoutObjectResult =
                 new GatewayTimeoutObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             GatewayTimeoutObjectResult gatewayTimeoutObjectResult =
-                this.restfulController.GatewayTimeout(inputException);
+                restfulController.GatewayTimeout(inputException);
 
             // then
             gatewayTimeoutObjectResult.Should()
                 .BeEquivalentTo(expectedGatewayTimeoutObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnHttpVersionNotSupported()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnHttpVersionNotSupported(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1220,26 +1336,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedHttpVersionNotSupportedObjectResult =
                 new HttpVersionNotSupportedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             HttpVersionNotSupportedObjectResult httpVersionNotSupportedObjectResult =
-                this.restfulController.HttpVersionNotSupported(inputException);
+                restfulController.HttpVersionNotSupported(inputException);
 
             // then
             httpVersionNotSupportedObjectResult.Should()
                 .BeEquivalentTo(expectedHttpVersionNotSupportedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnVariantAlsoNegotiates()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnVariantAlsoNegotiates(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1257,26 +1374,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedVariantAlsoNegotiatesObjectResult =
                 new VariantAlsoNegotiatesObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             VariantAlsoNegotiatesObjectResult variantAlsoNegotiatesObjectResult =
-                this.restfulController.VariantAlsoNegotiates(inputException);
+                restfulController.VariantAlsoNegotiates(inputException);
 
             // then
             variantAlsoNegotiatesObjectResult.Should()
                 .BeEquivalentTo(expectedVariantAlsoNegotiatesObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnInsufficientStorage()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnInsufficientStorage(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1294,26 +1412,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedInsufficientStorageObjectResult =
                 new InsufficientStorageObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             InsufficientStorageObjectResult insufficientStorageObjectResult =
-                this.restfulController.InsufficientStorage(inputException);
+                restfulController.InsufficientStorage(inputException);
 
             // then
             insufficientStorageObjectResult.Should()
                 .BeEquivalentTo(expectedInsufficientStorageObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnLoopDetected()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnLoopDetected(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1331,26 +1450,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedLoopDetectedObjectResult =
                 new LoopDetectedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             LoopDetectedObjectResult loopDetectedObjectResult =
-                this.restfulController.LoopDetected(inputException);
+                restfulController.LoopDetected(inputException);
 
             // then
             loopDetectedObjectResult.Should()
                 .BeEquivalentTo(expectedLoopDetectedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnNotExtended()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnNotExtended(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1368,26 +1488,27 @@ namespace RESTFulSense.Tests.Controllers
             var expectedNotExtendedObjectResult =
                 new NotExtendedObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             NotExtendedObjectResult notExtendedObjectResult =
-                this.restfulController.NotExtended(inputException);
+                restfulController.NotExtended(inputException);
 
             // then
             notExtendedObjectResult.Should()
                 .BeEquivalentTo(expectedNotExtendedObjectResult);
         }
 
-        [Fact]
-        public void ShouldReturnValidationProblemDetailOnNetworkAuthenticationRequired()
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
+        public void ShouldReturnValidationProblemDetailOnNetworkAuthenticationRequired(
+            JsonSerializerOptions jsonSerializerOptions)
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -1405,18 +1526,17 @@ namespace RESTFulSense.Tests.Controllers
             var expectedNetworkAuthenticationRequiredObjectResult =
                 new NetworkAuthenticationRequiredObjectResult(expectedProblemDetail);
 
-            foreach (KeyValuePair<string, List<string>> item in randomDictionary)
-            {
-                inputException.Data.Add(item.Key, item.Value);
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
 
-                expectedProblemDetail.Errors.Add(
-                    key: item.Key,
-                    value: item.Value.ToArray());
-            }
+            var restfulController = new RESTFulController(jsonSerializerOptions);
 
             // when
             NetworkAuthenticationRequiredObjectResult networkAuthenticationRequiredObjectResult =
-                this.restfulController.NetworkAuthenticationRequired(inputException);
+                restfulController.NetworkAuthenticationRequired(inputException);
 
             // then
             networkAuthenticationRequiredObjectResult.Should()
