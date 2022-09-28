@@ -1,6 +1,6 @@
 ﻿RESTFulSense - .NET Core Library
 
-Copyright (c) 2020 Hassan Habib & Alice Luo All rights reserved.
+Copyright (c) 2022 Hassan Habib All rights reserved.
 
 Material in this repository is made available under the following terms:
   1. Code is licensed under the MIT license, reproduced below.
