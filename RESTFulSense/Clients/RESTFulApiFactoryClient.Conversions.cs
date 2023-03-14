@@ -19,6 +19,7 @@ namespace RESTFulSense.Clients
             return mediaType switch
             {
                 "text/json" => ConvertToJsonStringContent(content, mediaType),
+                "application/json" => ConvertToJsonStringContent(content, mediaType),
                 "text/plain" => ConvertToStringContent(content, mediaType),
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
