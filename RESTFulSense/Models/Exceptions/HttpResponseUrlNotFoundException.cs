@@ -6,7 +6,7 @@
 
 using System.Net.Http;
 
-namespace RESTFulSense.Exceptions
+namespace RESTFulSense.Models.Exceptions
 {
     public class HttpResponseUrlNotFoundException : HttpResponseException
     {

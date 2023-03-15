@@ -9,7 +9,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using RESTFulSense.WebAssembly.Exceptions;
+
+using RESTFulSense.WebAssembly.Models;
+using RESTFulSense.WebAssembly.Models.Exceptions;
 
 namespace RESTFulSense.WebAssembly.Services
 {

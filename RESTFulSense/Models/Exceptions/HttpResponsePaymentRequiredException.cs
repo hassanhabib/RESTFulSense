@@ -6,9 +6,10 @@
 
 using System.Collections;
 using System.Net.Http;
+
 using Microsoft.AspNetCore.Mvc;
 
-namespace RESTFulSense.Exceptions
+namespace RESTFulSense.Models.Exceptions
 {
     public class HttpResponsePaymentRequiredException : HttpResponseException
     {
@@ -22,7 +23,7 @@ namespace RESTFulSense.Exceptions
             HttpResponseMessage responseMessage,
             ValidationProblemDetails problemDetails) : base(responseMessage, problemDetails.Title)
         {
-            this.AddData((IDictionary)problemDetails.Errors);
+            AddData((IDictionary)problemDetails.Errors);
         }
     }
 }

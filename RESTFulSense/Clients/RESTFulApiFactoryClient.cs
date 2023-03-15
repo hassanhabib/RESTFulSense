@@ -23,7 +23,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.GetAsync(relativeUrl);
+                await httpClient.GetAsync(relativeUrl);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -33,7 +33,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl, CancellationToken cancellationToken)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.GetAsync(relativeUrl, cancellationToken);
+                await httpClient.GetAsync(relativeUrl, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -41,7 +41,7 @@ namespace RESTFulSense.Clients
         }
 
         public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
-            await this.httpClient.GetStringAsync(relativeUrl);
+            await httpClient.GetStringAsync(relativeUrl);
 
         public async ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
@@ -51,7 +51,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-                await this.httpClient.PostAsync(relativeUrl, contentString);
+                await httpClient.PostAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
@@ -65,7 +65,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+                await httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
@@ -88,7 +88,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PostAsync(relativeUrl, contentString);
+               await httpClient.PostAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -104,7 +104,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+               await httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -116,7 +116,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PutAsync(relativeUrl, contentString);
+               await httpClient.PutAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -132,7 +132,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
+               await httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -147,7 +147,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PutAsync(relativeUrl, contentString);
+               await httpClient.PutAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -163,7 +163,7 @@ namespace RESTFulSense.Clients
             HttpContent contentString = ConvertToHttpContent(content, mediaType);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
+               await httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -173,7 +173,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.PutAsync(relativeUrl, content: default);
+                await httpClient.PutAsync(relativeUrl, content: default);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -183,7 +183,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl, CancellationToken cancellationToken)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.PutAsync(relativeUrl, content: default, cancellationToken);
+                await httpClient.PutAsync(relativeUrl, content: default, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -193,7 +193,7 @@ namespace RESTFulSense.Clients
         public async ValueTask DeleteContentAsync(string relativeUrl)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.DeleteAsync(relativeUrl);
+                await httpClient.DeleteAsync(relativeUrl);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
@@ -201,7 +201,7 @@ namespace RESTFulSense.Clients
         public async ValueTask DeleteContentAsync(string relativeUrl, CancellationToken cancellationToken)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.DeleteAsync(relativeUrl, cancellationToken);
+                await httpClient.DeleteAsync(relativeUrl, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
@@ -209,7 +209,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await
-                this.httpClient.DeleteAsync(relativeUrl);
+                httpClient.DeleteAsync(relativeUrl);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -219,7 +219,7 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl, CancellationToken cancellationToken)
         {
             HttpResponseMessage responseMessage = await
-                this.httpClient.DeleteAsync(relativeUrl, cancellationToken);
+                httpClient.DeleteAsync(relativeUrl, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 

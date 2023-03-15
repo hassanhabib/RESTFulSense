@@ -3,10 +3,11 @@
 // Licensed under the MIT License.
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
+
 using System.Collections;
 using System.Net.Http;
 
-namespace RESTFulSense.WebAssembly.Exceptions
+namespace RESTFulSense.WebAssembly.Models.Exceptions
 {
     public class HttpResponseTooManyRequestsException : HttpResponseException
     {
@@ -17,7 +18,7 @@ namespace RESTFulSense.WebAssembly.Exceptions
             HttpResponseMessage responseMessage,
             ValidationProblemDetails problemDetails) : base(responseMessage, problemDetails.Title)
         {
-            this.AddData((IDictionary)problemDetails.Errors);
+            AddData((IDictionary)problemDetails.Errors);
         }
     }
 }

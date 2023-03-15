@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RESTFulSense.WebAssembly.Exceptions
+namespace RESTFulSense.WebAssembly.Models
 {
     public class ValidationProblemDetails
     {

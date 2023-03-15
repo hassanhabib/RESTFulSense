@@ -11,7 +11,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
-using RESTFulSense.WebAssembly.Exceptions;
+
+using RESTFulSense.WebAssembly.Models;
+using RESTFulSense.WebAssembly.Models.Exceptions;
 using RESTFulSense.WebAssembly.Services;
 using Tynamix.ObjectFiller;
 using Xunit;

@@ -5,16 +5,17 @@
 // ---------------------------------------------------------------
 
 using System.Net.Http;
+
 using Xeptions;
 
-namespace RESTFulSense.Exceptions
+namespace RESTFulSense.Models.Exceptions
 {
     public class HttpResponseException : Xeption
     {
         public HttpResponseException() { }
 
         public HttpResponseException(HttpResponseMessage httpResponseMessage, string message)
-            : base(message) => this.HttpResponseMessage = httpResponseMessage;
+            : base(message) => HttpResponseMessage = httpResponseMessage;
 
         public HttpResponseMessage HttpResponseMessage { get; private set; }
     }

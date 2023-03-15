@@ -22,7 +22,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             CreatedObjectResult actualResult =
-                this.restfulController.Created(inputMessage);
+                restfulController.Created(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -38,7 +38,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             LockedObjectResult actualResult =
-                this.restfulController.Locked(inputMessage);
+                restfulController.Locked(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -54,7 +54,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             BadGatewayObjectResult actualResult =
-                this.restfulController.BadGateway(inputMessage);
+                restfulController.BadGateway(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -70,7 +70,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             ExpectationFailedObjectResult actualResult =
-                this.restfulController.ExpectationFailed(inputMessage);
+                restfulController.ExpectationFailed(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -86,7 +86,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             FailedDependencyObjectResult actualResult =
-                this.restfulController.FailedDependency(inputMessage);
+                restfulController.FailedDependency(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -102,7 +102,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             GatewayTimeoutObjectResult actualResult =
-                this.restfulController.GatewayTimeout(inputMessage);
+                restfulController.GatewayTimeout(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -118,7 +118,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             GoneObjectResult actualResult =
-                this.restfulController.Gone(inputMessage);
+                restfulController.Gone(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -134,7 +134,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             HttpVersionNotSupportedObjectResult actualResult =
-                this.restfulController.HttpVersionNotSupported(inputMessage);
+                restfulController.HttpVersionNotSupported(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -150,7 +150,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             InsufficientStorageObjectResult actualResult =
-                this.restfulController.InsufficientStorage(inputMessage);
+                restfulController.InsufficientStorage(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -166,7 +166,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             InternalServerErrorObjectResult actualResult =
-                this.restfulController.InternalServerError(inputMessage);
+                restfulController.InternalServerError(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -182,7 +182,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             LengthRequiredObjectResult actualResult =
-                this.restfulController.LengthRequired(inputMessage);
+                restfulController.LengthRequired(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -198,7 +198,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             LoopDetectedObjectResult actualResult =
-                this.restfulController.LoopDetected(inputMessage);
+                restfulController.LoopDetected(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -214,7 +214,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             MethodNotAllowedObjectResult actualResult =
-                this.restfulController.MethodNotAllowed(inputMessage);
+                restfulController.MethodNotAllowed(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -230,7 +230,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             MisdirectedRequestObjectResult actualResult =
-                this.restfulController.MisdirectedRequest(inputMessage);
+                restfulController.MisdirectedRequest(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -246,7 +246,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             NetworkAuthenticationRequiredObjectResult actualResult =
-                this.restfulController.NetworkAuthenticationRequired(inputMessage);
+                restfulController.NetworkAuthenticationRequired(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -262,7 +262,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             NotAcceptableObjectResult actualResult =
-                this.restfulController.NotAcceptable(inputMessage);
+                restfulController.NotAcceptable(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -278,7 +278,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             NotExtendedObjectResult actualResult =
-                this.restfulController.NotExtended(inputMessage);
+                restfulController.NotExtended(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -294,7 +294,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             NotImplementedObjectResult actualResult =
-                this.restfulController.NotImplemented(inputMessage);
+                restfulController.NotImplemented(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -310,7 +310,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             PaymentRequiredObjectResult actualResult =
-                this.restfulController.PaymentRequired(inputMessage);
+                restfulController.PaymentRequired(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -326,7 +326,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             PreconditionFailedObjectResult actualResult =
-                this.restfulController.PreconditionFailed(inputMessage);
+                restfulController.PreconditionFailed(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -342,7 +342,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             PreconditionRequiredObjectResult actualResult =
-                this.restfulController.PreconditionRequired(inputMessage);
+                restfulController.PreconditionRequired(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -358,7 +358,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             ProxyAuthenticationRequiredObjectResult actualResult =
-                this.restfulController.ProxyAuthenticationRequired(inputMessage);
+                restfulController.ProxyAuthenticationRequired(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -374,7 +374,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             RequestedRangeNotSatisfiableObjectResult actualResult =
-                this.restfulController.RequestedRangeNotSatisfiable(inputMessage);
+                restfulController.RequestedRangeNotSatisfiable(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -390,7 +390,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             RequestEntityTooLargeObjectResult actualResult =
-                this.restfulController.RequestEntityTooLarge(inputMessage);
+                restfulController.RequestEntityTooLarge(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -406,7 +406,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             RequestHeaderFieldsTooLargeObjectResult actualResult =
-                this.restfulController.RequestHeaderFieldsTooLarge(inputMessage);
+                restfulController.RequestHeaderFieldsTooLarge(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -422,7 +422,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             RequestTimeoutObjectResult actualResult =
-                this.restfulController.RequestTimeout(inputMessage);
+                restfulController.RequestTimeout(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -438,7 +438,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             RequestUriTooLongObjectResult actualResult =
-                this.restfulController.RequestUriTooLong(inputMessage);
+                restfulController.RequestUriTooLong(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -454,7 +454,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             ServiceUnavailableObjectResult actualResult =
-                this.restfulController.ServiceUnavailable(inputMessage);
+                restfulController.ServiceUnavailable(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -470,7 +470,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             TooManyRequestsObjectResult actualResult =
-                this.restfulController.TooManyRequests(inputMessage);
+                restfulController.TooManyRequests(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -486,7 +486,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             UnavailableForLegalReasonsObjectResult actualResult =
-                this.restfulController.UnavailableForLegalReasons(inputMessage);
+                restfulController.UnavailableForLegalReasons(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -502,7 +502,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             UpgradeRequiredObjectResult actualResult =
-                this.restfulController.UpgradeRequired(inputMessage);
+                restfulController.UpgradeRequired(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -518,7 +518,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             VariantAlsoNegotiatesObjectResult actualResult =
-                this.restfulController.VariantAlsoNegotiates(inputMessage);
+                restfulController.VariantAlsoNegotiates(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);
@@ -534,7 +534,7 @@ namespace RESTFulSense.Tests.Controllers
 
             // when
             UnsupportedMediaTypeObjectResult actualResult =
-                this.restfulController.UnsupportedMediaTypeObjectResult(inputMessage);
+                restfulController.UnsupportedMediaTypeObjectResult(inputMessage);
 
             // then
             actualResult.Should().BeEquivalentTo(expectedResult);

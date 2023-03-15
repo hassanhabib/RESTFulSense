@@ -4,7 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-namespace RESTFulSense.WebAssembly.Exceptions
+namespace RESTFulSense.WebAssembly.Models
 {
     public class HttpValidationProblemDetails
     {

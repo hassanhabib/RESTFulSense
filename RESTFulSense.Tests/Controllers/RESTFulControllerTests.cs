@@ -20,17 +20,16 @@ namespace RESTFulSense.Tests.Controllers
         private readonly RESTFulController restfulController;
 
         public RESTFulControllerTests() =>
-            this.restfulController = new RESTFulController(new JsonSerializerOptions());
+            restfulController = new RESTFulController(new JsonSerializerOptions());
 
         public static TheoryData<JsonSerializerOptions> SerializationCases => new()
         {
-            { new JsonSerializerOptions() },
-            { new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-                    WriteIndented = true
-                }
+            new JsonSerializerOptions(),
+            new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
             }
         };
 
@@ -39,7 +38,7 @@ namespace RESTFulSense.Tests.Controllers
             Exception inputException,
             ValidationProblemDetails expectedProblemDetail)
         {
-            this.SetupInputAndExpectedCriteria(
+            SetupInputAndExpectedCriteria(
                 randomDictionary,
                 inputException,
                 expectedProblemDetail,
@@ -69,8 +68,8 @@ namespace RESTFulSense.Tests.Controllers
         private static string ApplySerialization(DictionaryEntry error, JsonSerializerOptions jsonSerializerOptions)
         {
             return jsonSerializerOptions.PropertyNamingPolicy == JsonNamingPolicy.CamelCase
-                ? error.Key.ToString().Substring(0, 1).ToLower() + error.Key.ToString().Substring(1)
-                : error.Key.ToString().Substring(0, 1).ToUpper() + error.Key.ToString().Substring(1);
+                ? error.Key.ToString()?.Substring(0, 1).ToLower() + error.Key.ToString()?.Substring(1)
+                : error.Key.ToString()?.Substring(0, 1).ToUpper() + error.Key.ToString()?.Substring(1);
         }
 
         private static string GetRandomMessage() =>

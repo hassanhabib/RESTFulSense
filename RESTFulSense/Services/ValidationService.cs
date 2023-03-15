@@ -9,13 +9,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using RESTFulSense.Exceptions;
+
+using RESTFulSense.Models.Exceptions;
 
 namespace RESTFulSense.Services
 {
     public class ValidationService
     {
-        public async static ValueTask ValidateHttpResponseAsync(HttpResponseMessage httpResponseMessage)
+        public static async ValueTask ValidateHttpResponseAsync(HttpResponseMessage httpResponseMessage)
         {
             string content = await httpResponseMessage.Content.ReadAsStringAsync();
             bool isProblemDetailContent = IsProblemDetail(content);
