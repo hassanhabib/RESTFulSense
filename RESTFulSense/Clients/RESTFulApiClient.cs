@@ -63,19 +63,13 @@ namespace RESTFulSense.Clients
         public ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
             T content,
-            string mediaType = "text/json")
-        {
-            return PostContentAsync<T, T>(relativeUrl, content, mediaType);
-        }
+            string mediaType = "text/json") => PostContentAsync<T, T>(relativeUrl, content, mediaType);
 
         public ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json")
-        {
-            return PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType);
-        }
+            string mediaType = "text/json") => PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType);
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,
