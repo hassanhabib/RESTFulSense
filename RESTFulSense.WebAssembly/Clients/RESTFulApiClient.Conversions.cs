@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
+// Copyright (c) Brian Parker & Hassan Habib
 // Licensed under the MIT License.
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace RESTFulSense.Clients
+namespace RESTFulSense.WebAssembly.Clients
 {
     public partial class RESTFulApiClient
     {
@@ -55,5 +55,6 @@ namespace RESTFulSense.Clients
 
             return contentStream;
         }
+
     }
 }

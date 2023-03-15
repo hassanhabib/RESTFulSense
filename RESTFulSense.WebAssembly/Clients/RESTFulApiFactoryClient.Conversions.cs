@@ -1,18 +1,18 @@
 ﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
+// Copyright (c) Brian Parker & Hassan Habib
 // Licensed under the MIT License.
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using Newtonsoft.Json;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Text;
 
-namespace RESTFulSense.Clients
+namespace RESTFulSense.WebAssembly.Clients
 {
-    public partial class RESTFulApiClient
+    public partial class RESTFulApiFactoryClient
     {
         private static HttpContent ConvertToHttpContent<T>(T content, string mediaType)
         {
