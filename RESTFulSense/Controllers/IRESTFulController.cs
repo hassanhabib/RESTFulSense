@@ -4,9 +4,9 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using System;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Models;
+using System;
 
 namespace RESTFulSense.Controllers
 {

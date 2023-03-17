@@ -4,15 +4,15 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using RESTFulSense.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using RESTFulSense.Models;
 
 namespace RESTFulSense.Controllers
 {

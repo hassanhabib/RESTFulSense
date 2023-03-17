@@ -4,12 +4,11 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RESTFulSense.Services;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RESTFulSense.Clients
 {

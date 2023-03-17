@@ -4,12 +4,12 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using Microsoft.AspNetCore.Mvc;
+using RESTFulSense.Controllers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using RESTFulSense.Controllers;
 using Tynamix.ObjectFiller;
 using Xunit;
 

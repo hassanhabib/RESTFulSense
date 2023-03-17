@@ -4,15 +4,15 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using FluentAssertions;
+using Newtonsoft.Json;
+using RESTFulSense.WebAssembly.Exceptions;
+using RESTFulSense.WebAssembly.Services;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FluentAssertions;
-using Newtonsoft.Json;
-using RESTFulSense.WebAssembly.Exceptions;
-using RESTFulSense.WebAssembly.Services;
 using Tynamix.ObjectFiller;
 using Xunit;
 

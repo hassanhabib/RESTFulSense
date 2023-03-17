@@ -4,8 +4,8 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using System.Net.Http;
 using RESTFulSense.WebAssembly.Clients;
+using System.Net.Http;
 
 namespace RESTFulSense.WebAssembly.Services
 {

@@ -4,12 +4,12 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using RESTFulSense.WebAssembly.Exceptions;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using RESTFulSense.WebAssembly.Exceptions;
 
 namespace RESTFulSense.WebAssembly.Services
 {
