@@ -45,9 +45,10 @@ namespace RESTFulSense.Clients
         public async ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
-            string mediaType = "text/json")
+            string mediaType = "text/json",
+            bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                 await this.httpClient.PostAsync(relativeUrl, contentString);
@@ -59,9 +60,10 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json")
+            string mediaType = "text/json",
+            bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                 await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
@@ -69,22 +71,28 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
-        public ValueTask<T> PostContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json") =>
-            PostContentAsync<T, T>(relativeUrl, content, mediaType);
+        public ValueTask<T> PostContentAsync<T>(
+            string relativeUrl,
+            T content,
+            string mediaType = "text/json",
+            bool ignoreNulls = false) =>
+            PostContentAsync<T, T>(relativeUrl, content, mediaType, ignoreNulls);
 
         public ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json") =>
-            PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType);
+            string mediaType = "text/json",
+            bool ignoreNulls = false) =>
+            PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType, ignoreNulls);
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
-            string mediaType = "text/json")
+            string mediaType = "text/json",
+            bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString);
@@ -98,9 +106,10 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             TContent content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json")
+            string mediaType = "text/json",
+            bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
@@ -110,9 +119,9 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<TResult>(responseMessage);
         }
 
-        public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json")
+        public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json", bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString);
@@ -126,9 +135,10 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json")
+            string mediaType = "text/json",
+            bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
@@ -141,9 +151,10 @@ namespace RESTFulSense.Clients
         public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
-            string mediaType = "text/json")
+            string mediaType = "text/json",
+            bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString);
@@ -157,9 +168,10 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             TContent content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json")
+            string mediaType = "text/json",
+            bool ignoreNulls = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);

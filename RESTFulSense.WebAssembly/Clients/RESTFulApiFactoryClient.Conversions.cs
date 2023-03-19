@@ -1,25 +1,25 @@
 ﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
+// Copyright (c) Brian Parker & Hassan Habib
 // Licensed under the MIT License.
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using Newtonsoft.Json;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Text;
 
-namespace RESTFulSense.Clients
+namespace RESTFulSense.WebAssembly.Clients
 {
-    public partial class RESTFulApiClient
+    public partial class RESTFulApiFactoryClient
     {
-        private static HttpContent ConvertToHttpContent<T>(T content, string mediaType, bool ignoreNulls)
+        private static HttpContent ConvertToHttpContent<T>(T content, string mediaType)
         {
             return mediaType switch
             {
-                "text/json" => ConvertToJsonStringContent(content, mediaType, ignoreNulls),
-                "application/json" => ConvertToJsonStringContent(content, mediaType, ignoreNulls),
+                "text/json" => ConvertToJsonStringContent(content, mediaType),
+                "application/json" => ConvertToJsonStringContent(content, mediaType),
                 "text/plain" => ConvertToStringContent(content, mediaType),
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
@@ -34,14 +34,9 @@ namespace RESTFulSense.Clients
                 mediaType);
         }
 
-        private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType, bool ignoreNulls)
+        private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType)
         {
-            JsonSerializerSettings jsonSerializerSettings = CreateJsonSerializerSettings(ignoreNulls);
-
-            string serializedRestrictionRequest = JsonConvert.SerializeObject(
-                content,
-                formatting: Formatting.None,
-                settings: jsonSerializerSettings);
+            string serializedRestrictionRequest = JsonConvert.SerializeObject(content);
 
             var contentString =
                 new StringContent(
@@ -59,13 +54,6 @@ namespace RESTFulSense.Clients
             contentStream.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
 
             return contentStream;
-        }
-
-        private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreNullValues)
-        {
-            var defaultValueHandling = ignoreNullValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
-            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore };
-            return jsonSerializerSettings;
         }
     }
 }
