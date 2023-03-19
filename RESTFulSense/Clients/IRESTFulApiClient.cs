@@ -18,48 +18,60 @@ namespace RESTFulSense.Clients
         public ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         public ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
-        ValueTask<T> PostContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json");
+        ValueTask<T> PostContentAsync<T>(
+            string relativeUrl,
+            T content,
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         ValueTask<T> PutContentAsync<T>(
             string relativeUrl,
             T content,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         ValueTask<TResult> PutContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         ValueTask<TResult> PutContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
             CancellationToken cancellationToken,
-            string mediaType = "text/json");
+            string mediaType = "text/json",
+            bool ignoreNulls = false);
 
         ValueTask<T> PutContentAsync<T>(string relativeUrl);
         ValueTask<T> PutContentAsync<T>(string relativeUrl, CancellationToken cancellationToken);
