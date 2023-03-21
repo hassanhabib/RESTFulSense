@@ -65,6 +65,7 @@ namespace RESTFulSense.WebAssembly.Clients
         {
             DefaultValueHandling defaultValueHandling = ignoreDefaultValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
             var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = defaultValueHandling };
+
             return jsonSerializerSettings;
         }
     }

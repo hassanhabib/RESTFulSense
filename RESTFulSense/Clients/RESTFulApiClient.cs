@@ -84,8 +84,7 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
-            HttpResponseMessage responseMessage =
-               await PostAsync(relativeUrl, contentString);
+            HttpResponseMessage responseMessage = await PostAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
