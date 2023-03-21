@@ -14,12 +14,12 @@ namespace RESTFulSense.WebAssembly.Clients
 {
     public partial class RESTFulApiClient
     {
-        private static HttpContent ConvertToHttpContent<T>(T content, string mediaType)
+        private static HttpContent ConvertToHttpContent<T>(T content, string mediaType, bool ignoreDefaultValues)
         {
             return mediaType switch
             {
-                "text/json" => ConvertToJsonStringContent(content, mediaType),
-                "application/json" => ConvertToJsonStringContent(content, mediaType),
+                "text/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues),
+                "application/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues),
                 "text/plain" => ConvertToStringContent(content, mediaType),
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
@@ -34,9 +34,14 @@ namespace RESTFulSense.WebAssembly.Clients
                 mediaType);
         }
 
-        private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType)
+        private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType, bool ignoreDefaultValues)
         {
-            string serializedRestrictionRequest = JsonConvert.SerializeObject(content);
+            JsonSerializerSettings jsonSerializerSettings = CreateJsonSerializerSettings(ignoreDefaultValues);
+
+            string serializedRestrictionRequest = JsonConvert.SerializeObject(
+                content,
+                formatting: Formatting.None,
+                settings: jsonSerializerSettings);
 
             var contentString =
                 new StringContent(
@@ -56,5 +61,11 @@ namespace RESTFulSense.WebAssembly.Clients
             return contentStream;
         }
 
+        private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreDefaultValues)
+        {
+            DefaultValueHandling defaultValueHandling = ignoreDefaultValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
+            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = defaultValueHandling };
+            return jsonSerializerSettings;
+        }
     }
 }

@@ -4,7 +4,6 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
-using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,12 +14,12 @@ namespace RESTFulSense.Clients
 {
     public partial class RESTFulApiFactoryClient
     {
-        private static HttpContent ConvertToHttpContent<T>(T content, string mediaType, bool ignoreNulls)
+        private static HttpContent ConvertToHttpContent<T>(T content, string mediaType, bool ignoreDefaultValues)
         {
             return mediaType switch
             {
-                "text/json" => ConvertToJsonStringContent(content, mediaType, ignoreNulls),
-                "application/json" => ConvertToJsonStringContent(content, mediaType, ignoreNulls),
+                "text/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues),
+                "application/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues),
                 "text/plain" => ConvertToStringContent(content, mediaType),
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
@@ -35,9 +34,9 @@ namespace RESTFulSense.Clients
                 mediaType);
         }
 
-        private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType, bool ignoreNulls)
+        private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType, bool ignoreDefaultValues)
         {
-            JsonSerializerSettings jsonSerializerSettings = CreateJsonSerializerSettings(ignoreNulls);
+            JsonSerializerSettings jsonSerializerSettings = CreateJsonSerializerSettings(ignoreDefaultValues);
 
             string serializedRestrictionRequest = JsonConvert.SerializeObject(
                 content,
@@ -62,10 +61,10 @@ namespace RESTFulSense.Clients
             return contentStream;
         }
 
-        private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreNullValues)
+        private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreDefaultValues)
         {
-            var defaultValueHandling = ignoreNullValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
-            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore };
+            var defaultValueHandling = ignoreDefaultValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
+            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = defaultValueHandling };
             return jsonSerializerSettings;
         }
     }
