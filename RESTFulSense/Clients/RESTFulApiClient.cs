@@ -37,9 +37,9 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             T content,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                 await PostAsync(relativeUrl, contentString);
@@ -52,9 +52,9 @@ namespace RESTFulSense.Clients
             T content,
             CancellationToken cancellationToken,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                 await PostAsync(relativeUrl, contentString, cancellationToken);
@@ -66,26 +66,25 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             T content,
             string mediaType = "text/json",
-            bool ignoreNulls = false) => PostContentAsync<T, T>(relativeUrl, content, mediaType, ignoreNulls);
+            bool ignoreDefaultValues = false) => PostContentAsync<T, T>(relativeUrl, content, mediaType, ignoreDefaultValues);
 
         public ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
             string mediaType = "text/json",
-            bool ignoreNulls = false) =>
-            PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType, ignoreNulls);
+            bool ignoreDefaultValues = false) =>
+            PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType, ignoreDefaultValues);
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
-            HttpResponseMessage responseMessage =
-               await PostAsync(relativeUrl, contentString);
+            HttpResponseMessage responseMessage = await PostAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -97,9 +96,9 @@ namespace RESTFulSense.Clients
             TContent content,
             CancellationToken cancellationToken,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                await PostAsync(relativeUrl, contentString, cancellationToken);
@@ -113,9 +112,9 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             T content,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
@@ -130,9 +129,9 @@ namespace RESTFulSense.Clients
             T content,
             CancellationToken cancellationToken,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString, cancellationToken);
@@ -146,9 +145,9 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             TContent content,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString);
@@ -163,9 +162,9 @@ namespace RESTFulSense.Clients
             TContent content,
             CancellationToken cancellationToken,
             string mediaType = "text/json",
-            bool ignoreNulls = false)
+            bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreNulls);
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                await PutAsync(relativeUrl, contentString, cancellationToken);
