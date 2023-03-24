@@ -3,17 +3,17 @@
 	<PropertyGroup>
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Authors>Hassan Habib</Authors>
-		<Company>Hassan Habib</Company>
+		<Authors>Hassan Habib | Brian Parker | Christo du Toit</Authors>
+		<Company>Hassan Habib | Brian Parker | Christo du Toit</Company>
 		<Description>RESTFul Integration w/ Love &lt;3 </Description>
 		<Copyright>Copyright (c) Hassan Habib</Copyright>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageIcon>api.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>2.11</Version>
-		<AssemblyVersion>2.11.0.0</AssemblyVersion>
-		<FileVersion>2.11.0.0</FileVersion>
+		<Version>2.12</Version>
+		<AssemblyVersion>2.12.0.0</AssemblyVersion>
+		<FileVersion>2.12.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
@@ -21,7 +21,7 @@
 		<RepositoryUrl>https://github.com/hassanhabib/RESTFulSense</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>RESTFul API</PackageTags>
-		<PackageReleaseNotes>Introduce simpler exception models for testing</PackageReleaseNotes>
+		<PackageReleaseNotes>This release will change the way we handle default values.</PackageReleaseNotes>
 		<Title>RESTFulSense</Title>
 	</PropertyGroup>
 
