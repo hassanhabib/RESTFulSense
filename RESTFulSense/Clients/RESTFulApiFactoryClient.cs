@@ -87,6 +87,22 @@ namespace RESTFulSense.Clients
             bool ignoreDefaultValues = false) =>
             PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType, ignoreDefaultValues);
 
+        public async ValueTask<Stream> PostContentWithStreamResponseAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false)
+        {
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+
+            HttpResponseMessage responseMessage = await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await responseMessage.Content.ReadAsStreamAsync();
+        }
+
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
@@ -101,22 +117,6 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<TResult>(responseMessage);
-        }
-
-        public async ValueTask<Stream> PostContentWithStreamResponseAsync<TContent>(
-            string relativeUrl,
-            TContent content,
-            CancellationToken cancellationToken,
-            string mediaType = "text/json",
-            bool ignoreDefaultValues = false)
-        {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
-
-            HttpResponseMessage responseMessage = await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
-
-            await ValidationService.ValidateHttpResponseAsync(responseMessage);
-
-            return await responseMessage.Content.ReadAsStreamAsync();
         }
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
