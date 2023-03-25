@@ -4,6 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -100,6 +101,22 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<Stream> PostContentWithStreamResponseAsync<TContent>(
+            string relativeUrl,
+            TContent content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false)
+        {
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+
+            HttpResponseMessage responseMessage = await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await responseMessage.Content.ReadAsStreamAsync();
         }
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(

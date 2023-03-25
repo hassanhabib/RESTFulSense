@@ -4,6 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,6 +45,13 @@ namespace RESTFulSense.Clients
         ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false);
+
+        ValueTask<Stream> PostContentWithStreamResponseAsync<TContent>(
+            string relativeUrl, 
+            TContent content,
+            CancellationToken cancellationToken,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
 
