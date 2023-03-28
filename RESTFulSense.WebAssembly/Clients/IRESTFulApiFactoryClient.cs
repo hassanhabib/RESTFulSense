@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------
 
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,6 +29,16 @@ namespace RESTFulSense.WebAssembly.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
+
+        ValueTask<HttpResponseMessage> PostContentAsync(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default);
+
+        ValueTask<TResult> PostContentAsync<TResult>(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default);
 
         ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
@@ -54,6 +65,16 @@ namespace RESTFulSense.WebAssembly.Clients
             TContent content,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
+
+        ValueTask<HttpResponseMessage> PutContentAsync(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default);
+
+        ValueTask<TResult> PutContentAsync<TResult>(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default);
 
         ValueTask<T> PutContentAsync<T>(
             string relativeUrl,

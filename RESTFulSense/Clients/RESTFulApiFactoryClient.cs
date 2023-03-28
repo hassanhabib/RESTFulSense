@@ -72,6 +72,32 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
+        public async ValueTask<HttpResponseMessage> PostContentAsync(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PostAsync(relativeUrl, content, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return responseMessage;
+        }
+
+        public async ValueTask<TResult> PostContentAsync<TResult>(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PostAsync(relativeUrl, content, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
         public ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
             T content,
@@ -130,6 +156,32 @@ namespace RESTFulSense.Clients
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<HttpResponseMessage> PutContentAsync(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PutAsync(relativeUrl, content, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return responseMessage;
+        }
+
+        public async ValueTask<TResult> PutContentAsync<TResult>(
+            string relativeUrl,
+            HttpContent content,
+            CancellationToken cancellationToken = default)
+        {
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PutAsync(relativeUrl, content, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
