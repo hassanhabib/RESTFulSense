@@ -4,6 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -88,6 +89,22 @@ namespace RESTFulSense.WebAssembly.Clients
             string mediaType = "text/json",
             bool ignoreDefaultValues = false) =>
             PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType);
+
+        public async ValueTask<Stream> PostContentWithStreamResponseAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false)
+        {
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+
+            HttpResponseMessage responseMessage = await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await responseMessage.Content.ReadAsStreamAsync();
+        }
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
             string relativeUrl,

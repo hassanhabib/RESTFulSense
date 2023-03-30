@@ -4,6 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,6 +36,13 @@ namespace RESTFulSense.WebAssembly.Clients
             bool ignoreDefaultValues = false);
 
         ValueTask<T> PostContentAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false);
+
+        ValueTask<Stream> PostContentWithStreamResponseAsync<T>(
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
