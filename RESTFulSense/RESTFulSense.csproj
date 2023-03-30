@@ -11,9 +11,9 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageIcon>api.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>2.12</Version>
-		<AssemblyVersion>2.12.0.0</AssemblyVersion>
-		<FileVersion>2.12.0.0</FileVersion>
+		<Version>2.13</Version>
+		<AssemblyVersion>2.13.0.0</AssemblyVersion>
+		<FileVersion>2.13.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
@@ -21,7 +21,7 @@
 		<RepositoryUrl>https://github.com/hassanhabib/RESTFulSense</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>RESTFul API</PackageTags>
-		<PackageReleaseNotes>This release will change the way we handle default values.</PackageReleaseNotes>
+		<PackageReleaseNotes>This release will add support for POST content with a Stream response.</PackageReleaseNotes>
 		<Title>RESTFulSense</Title>
 	</PropertyGroup>
 
