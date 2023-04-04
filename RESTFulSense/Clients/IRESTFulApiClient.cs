@@ -43,7 +43,7 @@ namespace RESTFulSense.Clients
             bool ignoreDefaultValues = false);
 
         ValueTask<Stream> PostContentWithStreamResponseAsync<T>(
-            string relativeUrl, 
+            string relativeUrl,
             T content,
             CancellationToken cancellationToken,
             string mediaType = "text/json",
