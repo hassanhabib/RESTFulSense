@@ -126,10 +126,36 @@ namespace RESTFulSense.Clients
             string mediaType = "text/json",
             bool ignoreDefaultValues = false)
         {
-            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+            HttpContent contentString =
+                ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content)
+        {
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PostAsync(relativeUrl, content);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content,
+            CancellationToken cancellationToken)
+        {
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PostAsync(relativeUrl, content, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 

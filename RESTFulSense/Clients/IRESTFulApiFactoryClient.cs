@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------
 
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,6 +55,15 @@ namespace RESTFulSense.Clients
             TContent content,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
+
+        ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content);
+
+        ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content,
+            CancellationToken cancellationToken);
 
         ValueTask<T> PutContentAsync<T>(
             string relativeUrl,

@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------
 
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace RESTFulSense.Clients
             bool ignoreDefaultValues = false);
 
         ValueTask<Stream> PostContentWithStreamResponseAsync<T>(
-            string relativeUrl, 
+            string relativeUrl,
             T content,
             CancellationToken cancellationToken,
             string mediaType = "text/json",
@@ -61,6 +62,15 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
+
+        ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content);
+
+        ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content,
+            CancellationToken cancellationToken);
 
         ValueTask<T> PutContentAsync<T>(
             string relativeUrl,

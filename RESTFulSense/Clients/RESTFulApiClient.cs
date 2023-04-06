@@ -125,6 +125,31 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<TResult>(responseMessage);
         }
 
+        public async ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content)
+        {
+            HttpResponseMessage responseMessage =
+                await PostAsync(relativeUrl, content);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content,
+            CancellationToken cancellationToken)
+        {
+            HttpResponseMessage responseMessage =
+                await PostAsync(relativeUrl, content, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
         public async ValueTask<T> PutContentAsync<T>(
             string relativeUrl,
             T content,
