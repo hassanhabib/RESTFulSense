@@ -136,6 +136,17 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<TResult>(responseMessage);
         }
 
+        public async ValueTask<TResult> PostMultipartFormDataContentAsync<TResult>(
+            string relativeUrl,
+            MultipartFormDataContent content)
+        {
+            HttpResponseMessage responseMessage = await this.httpClient.PostAsync(relativeUrl, content);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json", bool ignoreDefaultValues = false)
         {
             HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);

@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------
 
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -87,5 +88,6 @@ namespace RESTFulSense.Clients
         ValueTask DeleteContentAsync(string relativeUrl, CancellationToken cancellationToken);
         ValueTask<T> DeleteContentAsync<T>(string relativeUrl);
         ValueTask<T> DeleteContentAsync<T>(string relativeUrl, CancellationToken cancellationToken);
+        ValueTask<TResult> PostMultipartFormDataContentAsync<TResult>(string relativeUrl, MultipartFormDataContent content);
     }
 }
