@@ -16,13 +16,13 @@ namespace RESTFulSense.Clients
         ValueTask<T> GetContentAsync<T>(string relativeUrl, CancellationToken cancellationToken);
         ValueTask<string> GetContentStringAsync(string relativeUrl);
 
-        public ValueTask PostContentWithNoResponseAsync<T>(
+        ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
 
-        public ValueTask PostContentWithNoResponseAsync<T>(
+        ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
             CancellationToken cancellationToken,
