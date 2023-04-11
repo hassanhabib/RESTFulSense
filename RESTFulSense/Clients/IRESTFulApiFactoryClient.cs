@@ -55,6 +55,15 @@ namespace RESTFulSense.Clients
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
 
+        ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            params object[] contentParameters);
+
+        ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            CancellationToken cancellationToken,
+            params object[] contentParameters);
+
         ValueTask<T> PutContentAsync<T>(
             string relativeUrl,
             T content,

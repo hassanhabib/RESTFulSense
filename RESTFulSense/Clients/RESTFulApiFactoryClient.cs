@@ -4,6 +4,7 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -136,6 +137,32 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<TResult>(responseMessage);
         }
 
+        public async ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            params object[] contentParameters) =>
+            await PostFormAsync<TResult>(relativeUrl, CancellationToken.None, contentParameters);
+
+        public async ValueTask<TResult> PostFormAsync<TResult>(
+            string relativeUrl,
+            CancellationToken cancellationToken,
+            params object[] contentParameters)
+        {
+            ValidateContentParameters(contentParameters);
+
+            MultipartFormDataContent multipartFormDataContent =
+                ProcessContentParameters(contentParameters);
+
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PostAsync(
+                    requestUri: relativeUrl,
+                    content: multipartFormDataContent,
+                    cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json", bool ignoreDefaultValues = false)
         {
             HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
@@ -259,6 +286,52 @@ namespace RESTFulSense.Clients
             string responseString = await responseMessage.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(responseString);
+        }
+
+        private static MultipartFormDataContent ProcessContentParameters(object[] contentParameters)
+        {
+            var multipartFormDataContent =
+                 new MultipartFormDataContent();
+
+            foreach (var contentParameter in contentParameters)
+            {
+                switch (contentParameter)
+                {
+                    case (string name, Stream stream, string fileName):
+                        multipartFormDataContent.Add(
+                            content: new StreamContent(stream),
+                            name,
+                            fileName);
+                        break;
+
+                    case (string name, string value):
+                        multipartFormDataContent.Add(
+                            content: new StringContent(value),
+                            name);
+                        break;
+
+                    default:
+                        throw new ArgumentException(
+                            message: "Content parameter must be of supported type.");
+                }
+            }
+
+            return multipartFormDataContent;
+        }
+
+        private static void ValidateContentParameters(object[] contentParams)
+        {
+            ValidateContentParamsNotNull(contentParams);
+        }
+
+        private static void ValidateContentParamsNotNull(object[] contentParams)
+        {
+            if (contentParams is null)
+            {
+                throw new ArgumentNullException(
+                    paramName: nameof(contentParams),
+                    message: "Content parameters cannot be null.");
+            }
         }
     }
 }

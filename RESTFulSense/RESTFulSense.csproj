@@ -23,6 +23,7 @@
 		<PackageTags>RESTFul API</PackageTags>
 		<PackageReleaseNotes>This release will add support for POST content with a Stream response.</PackageReleaseNotes>
 		<Title>RESTFulSense</Title>
+		<GenerateDocumentationFile>False</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
