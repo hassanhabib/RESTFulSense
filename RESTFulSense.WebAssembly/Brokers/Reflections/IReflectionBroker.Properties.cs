@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace RESTFulSense.WebAssembly.Brokers.Reflections
 {
-    public partial interface IReflectionBroker
+    internal partial interface IReflectionBroker
     {
         IEnumerable<PropertyInfo> GetProperties(object @object);
     }
