@@ -13,7 +13,7 @@ namespace RESTFulSense.WebAssembly.Brokers.Reflections
             where TAttribute : Attribute =>
             property.GetCustomAttribute<TAttribute>();
 
-        private T GetPropertyValue<T>(object @object, PropertyInfo property) =>
-            (T)property.GetValue(@object);
+        private TValue GetPropertyValue<TValue>(object @object, PropertyInfo property) =>
+            (TValue)property.GetValue(@object);
     }
 }
