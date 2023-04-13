@@ -9,8 +9,11 @@ namespace RESTFulSense.Brokers.Reflections
 {
     internal partial class ReflectionBroker : IReflectionBroker
     {
-        public TAttribute GetCustomAttribute<TAttribute>(PropertyInfo property)
+        private TAttribute GetCustomAttribute<TAttribute>(PropertyInfo property)
             where TAttribute : Attribute =>
             property.GetCustomAttribute<TAttribute>();
+
+        private TValue GetPropertyValue<TValue>(object @object, PropertyInfo property) =>
+            (TValue)property.GetValue(@object);
     }
 }
