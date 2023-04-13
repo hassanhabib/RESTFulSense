@@ -3,14 +3,13 @@
 // ----------------------------------------------------------------------------------
 
 using System.Reflection;
-using System;
+using RESTFulSense.WebAssembly.Models.Attributes;
 
 namespace RESTFulSense.WebAssembly.Brokers.Reflections
 {
     internal partial class ReflectionBroker : IReflectionBroker
     {
-        public TAttribute GetCustomAttribute<TAttribute>(PropertyInfo property)
-            where TAttribute : Attribute =>
-            property.GetCustomAttribute<TAttribute>();
+        public RESTFulStringContentAttribute GetStringContentAttribute(PropertyInfo propertyInfo) =>
+            GetCustomAttribute<RESTFulStringContentAttribute>(propertyInfo);
     }
 }
