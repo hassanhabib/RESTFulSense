@@ -1,8 +1,6 @@
-﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
-// Licensed under the MIT License.
-// See License.txt in the project root for license information.
-// ---------------------------------------------------------------
+﻿// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
 
 namespace RESTFulSense.Brokers.Reflections
 {
