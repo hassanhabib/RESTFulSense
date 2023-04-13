@@ -3,9 +3,9 @@
 // ----------------------------------------------------------------------------------
 
 using System.Reflection;
-using RESTFulSense.Models.Attributes;
+using RESTFulSense.WebAssembly.Models.Attributes;
 
-namespace RESTFulSense.Brokers.Reflections
+namespace RESTFulSense.WebAssembly.Brokers.Reflections
 {
     internal partial interface IReflectionBroker
     {
