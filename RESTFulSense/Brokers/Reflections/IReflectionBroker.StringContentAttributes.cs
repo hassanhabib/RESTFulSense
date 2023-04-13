@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace RESTFulSense.Brokers.Reflections
 {
-    public partial interface IReflectionBroker
+    internal partial interface IReflectionBroker
     {
         RESTFulStringContentAttribute GetStringContentAttribute(PropertyInfo propertyInfo);
     }
