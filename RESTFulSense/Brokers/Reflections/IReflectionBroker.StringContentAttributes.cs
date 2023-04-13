@@ -2,15 +2,13 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using RESTFulSense.Models.Attributes;
 using System.Reflection;
-using System;
 
 namespace RESTFulSense.Brokers.Reflections
 {
-    internal partial class ReflectionBroker : IReflectionBroker
+    public partial interface IReflectionBroker
     {
-        public TAttribute GetCustomAttribute<TAttribute>(PropertyInfo property)
-            where TAttribute : Attribute =>
-            property.GetCustomAttribute<TAttribute>();
+        RESTFulStringContentAttribute GetStringContentAttribute(PropertyInfo propertyInfo);
     }
 }
