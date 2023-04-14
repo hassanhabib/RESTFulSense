@@ -2,14 +2,9 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using Xeptions;
-
-namespace RESTFulSense.Models.Foundations.Properties.Exceptions
+namespace RESTFulSense.Services.Foundations.StringContents
 {
-    public class NullObjectException : Xeption
+    internal partial class StringContentService : IStringContentService
     {
-        public NullObjectException()
-            : base(message: "Object is null.")
-        { }
     }
 }

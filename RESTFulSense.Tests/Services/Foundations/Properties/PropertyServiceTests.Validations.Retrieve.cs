@@ -13,7 +13,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
     public partial class PropertyServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnRetrievePropertiesIfObjectIsNullAsync()
+        public void ShouldThrowValidationExceptionOnRetrievePropertiesIfObjectIsNull()
         {
             // given
             object inputObject = null;
@@ -57,7 +57,6 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
                     .Throws(serviceException);
 
             // when
-
             PropertyServiceException actualPropertyServiceException =
                   Assert.Throws<PropertyServiceException>(() => this.propertyService.RetrieveProperties(someObject));
 

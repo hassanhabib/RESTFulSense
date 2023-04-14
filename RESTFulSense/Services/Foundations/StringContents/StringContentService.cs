@@ -8,7 +8,7 @@ using RESTFulSense.Models.Attributes;
 
 namespace RESTFulSense.Services.Foundations.StringContents
 {
-    internal class StringContentService : IStringContentService
+    internal partial class StringContentService : IStringContentService
     {
         private readonly IReflectionBroker reflectionBroker;
 
