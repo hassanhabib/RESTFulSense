@@ -16,6 +16,6 @@ namespace RESTFulSense.Services.Foundations.StringContents
             this.reflectionBroker = reflectionBroker;
 
         public RESTFulStringContentAttribute RetrieveStringContent(PropertyInfo propertyInfo) =>
-            throw new System.NotImplementedException();
+            this.reflectionBroker.GetStringContentAttribute(propertyInfo);
     }
 }
