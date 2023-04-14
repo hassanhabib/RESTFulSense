@@ -6,11 +6,10 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Foundations.StreamContents.Exceptions
 {
-    public class StreamContentValidationException : Xeption
+    public class NullPropertyInfoException : Xeption
     {
-        public StreamContentValidationException(Xeption innerException)
-            : base(message: "StreamContent validation error occurred, fix errors and try again.",
-                  innerException)
+        public NullPropertyInfoException()
+            : base(message: "PropertyInfo is null.")
         { }
     }
 }

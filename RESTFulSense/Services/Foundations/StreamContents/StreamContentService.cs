@@ -8,7 +8,7 @@ using RESTFulSense.Models.Attributes;
 
 namespace RESTFulSense.Services.Foundations.StreamContents
 {
-    internal class StreamContentService : IStreamContentService
+    internal partial class StreamContentService : IStreamContentService
     {
         private readonly IReflectionBroker reflectionBroker;
 
@@ -16,6 +16,11 @@ namespace RESTFulSense.Services.Foundations.StreamContents
             this.reflectionBroker = reflectionBroker;
 
         public RESTFulFileContentStreamAttribute RetrieveStreamContent(PropertyInfo propertyInfo) =>
-            this.reflectionBroker.GetFileContentStreamAttribute(propertyInfo);
+        TryCatch(() =>
+        {
+            ValidateObjectNotNull(propertyInfo);
+
+            return this.reflectionBroker.GetFileContentStreamAttribute(propertyInfo);
+        });
     }
 }

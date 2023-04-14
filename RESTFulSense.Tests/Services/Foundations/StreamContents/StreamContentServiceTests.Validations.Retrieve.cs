@@ -4,7 +4,7 @@
 
 using FluentAssertions;
 using Moq;
-using RESTFulSense.Models.Foundations.StringContents.Exceptions;
+using RESTFulSense.Models.Foundations.StreamContents.Exceptions;
 using System.Reflection;
 using Xunit;
 
