@@ -2,13 +2,14 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Reflection;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;
 
 namespace RESTFulSense.Services.Foundations.StringContents
 {
-    internal class StringContentService : IStringContentService
+    internal partial class StringContentService : IStringContentService
     {
         private readonly IReflectionBroker reflectionBroker;
 
@@ -16,6 +17,11 @@ namespace RESTFulSense.Services.Foundations.StringContents
             this.reflectionBroker = reflectionBroker;
 
         public RESTFulStringContentAttribute RetrieveStringContent(PropertyInfo propertyInfo) =>
-            throw new System.NotImplementedException();
+        TryCatch(() =>
+        {
+            ValidatePropertyInfo(propertyInfo);
+
+            return this.reflectionBroker.GetStringContentAttribute(propertyInfo);
+        });
     }
 }

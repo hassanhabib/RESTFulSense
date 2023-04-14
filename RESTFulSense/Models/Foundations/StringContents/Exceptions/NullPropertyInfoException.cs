@@ -4,12 +4,12 @@
 
 using Xeptions;
 
-namespace RESTFulSense.Models.Foundations.Properties.Exceptions
+namespace RESTFulSense.Models.Foundations.StringContents.Exceptions
 {
-    public class NullObjectException : Xeption
+    public class NullPropertyInfoException : Xeption
     {
-        public NullObjectException()
-            : base(message: "Object is null.")
+        public NullPropertyInfoException()
+            : base(message: "PropertyInfo is null.")
         { }
     }
 }
