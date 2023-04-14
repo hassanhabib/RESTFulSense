@@ -18,7 +18,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
             // given
             PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
 
-            RESTFulStringContentAttribute randomStringContent = CreateRandomeStringContent();
+            RESTFulStringContentAttribute randomStringContent = CreateRandomStringContent();
             RESTFulStringContentAttribute expectedStringContent = randomStringContent;
 
             this.reflectionBrokerMock.Setup(reflectionBroker =>

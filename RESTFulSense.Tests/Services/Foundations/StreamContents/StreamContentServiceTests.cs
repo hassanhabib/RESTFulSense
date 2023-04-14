@@ -5,24 +5,24 @@
 using Moq;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;
-using RESTFulSense.Services.Foundations.StringContents;
+using RESTFulSense.Services.Foundations.StreamContents;
 using Tynamix.ObjectFiller;
 
-namespace RESTFulSense.Tests.Services.Foundations.StringContents
+namespace RESTFulSense.Tests.Services.Foundations.StreamContents
 {
-    public partial class StringContentServiceTests
+    public partial class StreamContentServiceTests
     {
         private readonly Mock<IReflectionBroker> reflectionBrokerMock;
-        private readonly IStringContentService stringContentService;
+        private readonly IStreamContentService streamContentService;
 
-        public StringContentServiceTests()
+        public StreamContentServiceTests()
         {
             reflectionBrokerMock = new Mock<IReflectionBroker>();
-            stringContentService = new StringContentService(reflectionBrokerMock.Object);
+            streamContentService = new StreamContentService(reflectionBrokerMock.Object);
         }
 
-        private RESTFulStringContentAttribute CreateRandomStringContent() =>
-            new RESTFulStringContentAttribute(name: CreateRandomString());
+        private RESTFulFileContentStreamAttribute CreateRandomStreamContent() =>
+            new RESTFulFileContentStreamAttribute(name: CreateRandomString());
 
         private static string CreateRandomString() =>
             new MnemonicString().GetValue();
