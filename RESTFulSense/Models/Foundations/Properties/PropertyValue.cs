@@ -2,13 +2,13 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Reflection;
 
-namespace RESTFulSense.Brokers.Reflections
+namespace RESTFulSense.Models.Foundations.Properties
 {
-    internal partial interface IReflectionBroker
+    internal class PropertyValue
     {
-        IEnumerable<PropertyInfo> GetProperties(object @object);
+        public PropertyInfo PropertyInfo { get; set; }
+        public object Value { get; set; }
     }
 }

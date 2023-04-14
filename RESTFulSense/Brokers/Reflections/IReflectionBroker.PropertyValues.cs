@@ -4,12 +4,13 @@
 
 using System.Collections.Generic;
 using System.Reflection;
+using RESTFulSense.Models.Foundations.Properties;
 
 namespace RESTFulSense.Brokers.Reflections
 {
-    internal partial class ReflectionBroker : IReflectionBroker
+    internal partial interface IReflectionBroker
     {
-        public IEnumerable<PropertyInfo> GetProperties(object @object) =>
-            @object.GetType().GetProperties();
+        IEnumerable<PropertyValue> GetPropertyValues<T>(T @object)
+            where T : class;
     }
 }

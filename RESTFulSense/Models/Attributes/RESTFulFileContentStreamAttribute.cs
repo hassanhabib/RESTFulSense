@@ -9,10 +9,6 @@ namespace RESTFulSense.Models.Attributes
     [AttributeUsage(validOn: AttributeTargets.Property, AllowMultiple = false)]
     public class RESTFulFileContentStreamAttribute : Attribute
     {
-        public RESTFulFileContentStreamAttribute()
-            : this(name: null)
-        { }
-
         public RESTFulFileContentStreamAttribute(string name) =>
             Name = name;
 
