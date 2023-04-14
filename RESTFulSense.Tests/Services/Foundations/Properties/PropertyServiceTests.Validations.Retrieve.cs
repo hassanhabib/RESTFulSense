@@ -17,7 +17,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
     public partial class PropertyServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnSendIfObjectIsNullAsync()
+        public void ShouldThrowValidationExceptionOnRetrievePropertiesIfObjectIsNullAsync()
         {
             // given
             object inputObject = null;
