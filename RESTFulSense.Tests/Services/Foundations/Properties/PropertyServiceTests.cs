@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -38,6 +37,5 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
-
     }
 }

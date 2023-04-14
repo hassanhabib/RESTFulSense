@@ -16,9 +16,6 @@ namespace RESTFulSense.Services.Foundations.Properties
             this.reflectionBroker = reflectionBroker;
 
         public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
-            throw new System.NotImplementedException();
-
-        //public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
-        //    this.reflectionBroker.GetPropertyValues<T>(@object);
+            this.reflectionBroker.GetPropertyValues(@object);
     }
 }
