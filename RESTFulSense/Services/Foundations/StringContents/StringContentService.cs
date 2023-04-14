@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Reflection;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;
@@ -16,6 +17,11 @@ namespace RESTFulSense.Services.Foundations.StringContents
             this.reflectionBroker = reflectionBroker;
 
         public RESTFulStringContentAttribute RetrieveStringContent(PropertyInfo propertyInfo) =>
-            this.reflectionBroker.GetStringContentAttribute(propertyInfo);
+        TryCatch(() =>
+        {
+            ValidatePropertyInfo(propertyInfo);
+
+            return this.reflectionBroker.GetStringContentAttribute(propertyInfo);
+        });
     }
 }
