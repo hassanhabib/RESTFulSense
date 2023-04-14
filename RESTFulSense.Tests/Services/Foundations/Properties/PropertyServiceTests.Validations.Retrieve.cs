@@ -3,12 +3,8 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using Xunit;
 
@@ -46,7 +42,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
         {
             // given
             object someObject = new object();
-            
+
             var serviceException = new Exception();
 
             var failedPropertyServiceException =
