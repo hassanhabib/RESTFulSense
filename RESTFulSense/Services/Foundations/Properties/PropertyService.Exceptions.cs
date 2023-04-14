@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
@@ -21,6 +22,13 @@ namespace RESTFulSense.Services.Foundations.Properties
             catch (NullObjectException nullObjectException)
             {
                 throw new PropertyValidationException(nullObjectException);
+            }
+            catch (Exception exception)
+            {
+                var failedFailedPropertyServiceException =
+                   new FailedPropertyServiceException(exception);
+
+                throw new PropertyServiceException(failedFailedPropertyServiceException);
             }
         }
     }
