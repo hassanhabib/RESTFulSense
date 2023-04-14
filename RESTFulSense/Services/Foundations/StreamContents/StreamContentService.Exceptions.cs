@@ -30,7 +30,6 @@ namespace RESTFulSense.Services.Foundations.StreamContents
 
                 throw new StreamContentServiceException(failedStringContentServiceException);
             }
-
         }
     }
 }
