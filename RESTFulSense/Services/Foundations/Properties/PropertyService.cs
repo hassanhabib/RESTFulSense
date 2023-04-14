@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 using RESTFulSense.Brokers.Reflections;
-using RESTFulSense.Models.Foundations.PropertyValues;
+using RESTFulSense.Models.Foundations.Properties;
 
 namespace RESTFulSense.Services.Foundations.Properties
 {

@@ -4,7 +4,7 @@
 
 using System.Reflection;
 
-namespace RESTFulSense.Models.Foundations.PropertyValues
+namespace RESTFulSense.Models.Foundations.Properties
 {
     internal class PropertyValue
     {

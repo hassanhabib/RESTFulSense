@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using Moq;
 using RESTFulSense.Brokers.Reflections;
-using RESTFulSense.Models.Foundations.PropertyValues;
+using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Services.Foundations.Properties;
 using Tynamix.ObjectFiller;
 

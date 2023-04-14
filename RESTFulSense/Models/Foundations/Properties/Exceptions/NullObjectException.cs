@@ -2,13 +2,14 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using RESTFulSense.Models.Foundations.Properties;
+using Xeptions;
 
-namespace RESTFulSense.Services.Foundations.Properties
+namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
-    internal interface IPropertyService
+    internal class NullObjectException : Xeption
     {
-        IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class;
+        public NullObjectException()
+            : base(message: "Object is null.")
+        { }
     }
 }

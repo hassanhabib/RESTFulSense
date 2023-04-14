@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
-using RESTFulSense.Models.Foundations.PropertyValues;
+using RESTFulSense.Models.Foundations.Properties;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Foundations.Properties
