@@ -3,12 +3,12 @@
 // ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Reflection;
+using RESTFulSense.Models.Foundations.PropertyValues;
 
-namespace RESTFulSense.Brokers.Reflections
+namespace RESTFulSense.Services.Foundations.Properties
 {
-    internal partial interface IReflectionBroker
+    internal interface IPropertyService
     {
-        IEnumerable<PropertyInfo> GetProperties(object @object);
+        IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class;
     }
 }
