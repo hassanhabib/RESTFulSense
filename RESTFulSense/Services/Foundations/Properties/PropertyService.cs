@@ -8,7 +8,7 @@ using RESTFulSense.Models.Foundations.Properties;
 
 namespace RESTFulSense.Services.Foundations.Properties
 {
-    internal class PropertyService : IPropertyService
+    internal partial class PropertyService : IPropertyService
     {
         private readonly IReflectionBroker reflectionBroker;
 
@@ -16,6 +16,10 @@ namespace RESTFulSense.Services.Foundations.Properties
             this.reflectionBroker = reflectionBroker;
 
         public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
-            this.reflectionBroker.GetPropertyValues(@object);
+        TryCatch(() =>
+        {
+            ValidateObject(@object);
+            return this.reflectionBroker.GetPropertyValues(@object);
+        });
     }
 }
