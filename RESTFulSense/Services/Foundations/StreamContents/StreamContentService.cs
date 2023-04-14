@@ -16,6 +16,6 @@ namespace RESTFulSense.Services.Foundations.StreamContents
             this.reflectionBroker = reflectionBroker;
 
         public RESTFulFileContentStreamAttribute RetrieveStreamContent(PropertyInfo propertyInfo) =>
-            throw new System.NotImplementedException();
+            this.reflectionBroker.GetFileContentStreamAttribute(propertyInfo);
     }
 }
