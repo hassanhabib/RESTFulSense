@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Foundations.StringContents.Exceptions;
 
@@ -11,7 +12,7 @@ namespace RESTFulSense.Services.Foundations.StringContents
     {
         private delegate RESTFulStringContentAttribute ReturningRESTFulStringContentAttributeFunction();
 
-        private static RESTFulStringContentAttribute 
+        private static RESTFulStringContentAttribute
             TryCatch(ReturningRESTFulStringContentAttributeFunction returningRESTFulStringContentAttributeFunction)
         {
             try
@@ -21,6 +22,13 @@ namespace RESTFulSense.Services.Foundations.StringContents
             catch (NullPropertyInfoException nullPropertyInfoException)
             {
                 throw new StringContentValidationException(nullPropertyInfoException);
+            }
+            catch (Exception exception)
+            {
+                var failedStringContentServiceException =
+                   new FailedStringContentServiceException(exception);
+
+                throw new StringContentServiceException(failedStringContentServiceException);
             }
         }
     }
