@@ -8,14 +8,19 @@ using RESTFulSense.Models.Attributes;
 
 namespace RESTFulSense.Services.Foundations.FileNames
 {
-    internal class FileNameService : IFileNameService
+    internal partial class FileNameService : IFileNameService
     {
         private readonly IReflectionBroker reflectionBroker;
 
         public FileNameService(IReflectionBroker reflectionBroker) =>
             this.reflectionBroker = reflectionBroker;
 
-        public RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo somePropertyInfo) =>
-            this.reflectionBroker.GetFileContentNameAttribute(somePropertyInfo);
+        public RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo propertyInfo) =>
+        TryCatch(() =>
+        {
+            ValidatePropertyInfo(propertyInfo);
+
+            return this.reflectionBroker.GetFileContentNameAttribute(propertyInfo);
+        });
     }
 }

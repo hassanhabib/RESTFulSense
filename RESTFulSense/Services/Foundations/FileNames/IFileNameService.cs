@@ -9,6 +9,6 @@ namespace RESTFulSense.Services.Foundations.FileNames
 {
     internal interface IFileNameService
     {
-        RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo somePropertyInfo);
+        RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo propertyInfo);
     }
 }
