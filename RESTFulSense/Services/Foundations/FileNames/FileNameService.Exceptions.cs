@@ -5,6 +5,7 @@
 using System;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Foundations.FileNames.Exceptions;
+using RESTFulSense.Models.Foundations.FileNames.Exceptions;
 
 namespace RESTFulSense.Services.Foundations.FileNames
 {
@@ -23,6 +24,14 @@ namespace RESTFulSense.Services.Foundations.FileNames
             {
                 throw new FileNameValidationException(nullPropertyInfoException);
             }
+            catch (Exception exception)
+            {
+                var failedFileNameServiceException =
+                   new FailedFileNameServiceException(exception);
+
+                throw new FileNameServiceException(failedFileNameServiceException);
+            }
+
         }
     }
 }
