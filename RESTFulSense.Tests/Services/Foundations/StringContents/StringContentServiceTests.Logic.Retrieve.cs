@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
         public void ShouldRetrieveStringContent()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
 
             RESTFulStringContentAttribute randomStringContent = CreateRandomStringContent();
             RESTFulStringContentAttribute expectedStringContent = randomStringContent;

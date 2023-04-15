@@ -15,7 +15,7 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         [Fact]
         public void ShouldThrowValidationExceptionOnRetrieveFileNameIfPropertyInfoIsNull()
         {
-            PropertyInfo someProperty = null;
+            PropertyInfo someProperty = CreateNullPropertyInfo();
 
             var nullPropertyInfoException = new NullPropertyInfoException();
 
@@ -35,6 +35,5 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
 
             this.reflectionBrokerMock.VerifyNoOtherCalls();
         }
-
     }
 }

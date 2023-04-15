@@ -24,18 +24,20 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
             propertyService = new PropertyService(reflectionBrokerMock.Object);
         }
 
-        private List<PropertyValue> GetRandomProperties() =>
+        private static object CreateSomeObject() => new object();
+
+        private object CreateNullObject() => null;
+
+        private static List<PropertyValue> GetRandomProperties() =>
             Enumerable.Range(start: 0, count: GetRandomNumber())
                 .Select(i => CreateRandomPropertyValue())
                 .ToList();
 
-        private PropertyValue CreateRandomPropertyValue() =>
+        private static PropertyValue CreateRandomPropertyValue() =>
             new PropertyValue { PropertyInfo = It.IsAny<PropertyInfo>(), Value = CreateRandomString() };
 
-        private static string CreateRandomString() =>
-            new MnemonicString().GetValue();
+        private static string CreateRandomString() => new MnemonicString().GetValue();
 
-        private static int GetRandomNumber() =>
-            new IntRange(min: 2, max: 10).GetValue();
+        private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
     }
 }

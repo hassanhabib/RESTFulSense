@@ -17,7 +17,7 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         public void ShouldThrowServiceExceptionOnRetrieveFileNameIfServiceErrorOccurs()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
 
             var serviceException = new Exception();
 
@@ -48,6 +48,5 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
 
             this.reflectionBrokerMock.VerifyNoOtherCalls();
         }
-
     }
 }

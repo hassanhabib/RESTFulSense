@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Reflection;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;

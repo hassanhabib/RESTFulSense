@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
         public void ShouldRetrieveStreamContent()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
 
             RESTFulFileContentStreamAttribute randomStreamContent = CreateRandomStreamContent();
             RESTFulFileContentStreamAttribute expectedStreamContent = randomStreamContent;

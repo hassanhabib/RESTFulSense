@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System.Reflection;
 using Moq;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;
@@ -21,7 +22,11 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
             stringContentService = new StringContentService(reflectionBrokerMock.Object);
         }
 
-        private RESTFulStringContentAttribute CreateRandomStringContent() =>
+        private static PropertyInfo CreateMockPropertyInfo() => new Mock<PropertyInfo>().Object;
+
+        private static PropertyInfo CreateNullPropertyInfo() => null;
+
+        private static RESTFulStringContentAttribute CreateRandomStringContent() =>
             new RESTFulStringContentAttribute(name: CreateRandomString());
 
         private static string CreateRandomString() =>

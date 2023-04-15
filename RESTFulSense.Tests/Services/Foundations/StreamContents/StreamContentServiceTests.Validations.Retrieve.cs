@@ -15,7 +15,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
         [Fact]
         public void ShouldThrowValidationExceptionOnRetrieveStreamContentIfPropertyInfoIsNull()
         {
-            PropertyInfo someProperty = null;
+            PropertyInfo someProperty = CreateNullPropertyInfo();
 
             var nullPropertyInfoException = new NullPropertyInfoException();
 

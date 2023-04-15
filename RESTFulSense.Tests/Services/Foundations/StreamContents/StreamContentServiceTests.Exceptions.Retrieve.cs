@@ -17,7 +17,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
         public void ShouldThrowServiceExceptionOnRetrieveStreamContentIfServiceErrorOccurs()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
 
             var serviceException = new Exception();
 

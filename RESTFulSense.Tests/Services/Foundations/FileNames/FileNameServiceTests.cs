@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System.Reflection;
 using Moq;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;
@@ -21,11 +22,15 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
             fileNameService = new FileNameService(reflectionBrokerMock.Object);
         }
 
-        private RESTFulFileContentNameAttribute CreateRandomFileNameContent() =>
+        private static PropertyInfo CreateMockPropertyInfo() =>
+                    new Mock<PropertyInfo>().Object;
+
+        private static PropertyInfo CreateNullPropertyInfo() => null;
+
+        private static RESTFulFileContentNameAttribute CreateRandomFileNameContent() =>
             new RESTFulFileContentNameAttribute(name: CreateRandomString());
 
         private static string CreateRandomString() =>
             new MnemonicString().GetValue();
-
     }
 }

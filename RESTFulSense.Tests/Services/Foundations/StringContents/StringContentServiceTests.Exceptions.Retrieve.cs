@@ -6,7 +6,6 @@ using System;
 using System.Reflection;
 using FluentAssertions;
 using Moq;
-using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using RESTFulSense.Models.Foundations.StringContents.Exceptions;
 using Xunit;
 
@@ -18,7 +17,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
         public void ShouldThrowServiceExceptionOnRetrieveStringContentIfServiceErrorOccurs()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
 
             var serviceException = new Exception();
 

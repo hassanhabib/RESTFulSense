@@ -16,21 +16,22 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
         public void ShouldRetrieveProperties()
         {
             // given
-            object randomObject = new object();
+            object someObject = CreateSomeObject();
+
             List<PropertyValue> randomPropertyValues = GetRandomProperties();
             List<PropertyValue> expectedPropertyValues = randomPropertyValues;
 
             this.reflectionBrokerMock.Setup(reflectionBroker =>
-                reflectionBroker.GetPropertyValues(randomObject))
+                reflectionBroker.GetPropertyValues(someObject))
                     .Returns(expectedPropertyValues);
 
             // when
             var actualPropertyValues =
-                this.propertyService.RetrieveProperties(randomObject);
+                this.propertyService.RetrieveProperties(someObject);
 
             // then
             this.reflectionBrokerMock.Verify(reflectionBroker =>
-                reflectionBroker.GetPropertyValues(randomObject), Times.Once);
+                reflectionBroker.GetPropertyValues(someObject), Times.Once);
 
             actualPropertyValues.Should().BeSameAs(expectedPropertyValues);
 

@@ -15,7 +15,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
         [Fact]
         public void ShouldThrowValidationExceptionOnRetrieveStringContentIfPropertyInfoIsNull()
         {
-            PropertyInfo someProperty = null;
+            PropertyInfo someProperty = CreateNullPropertyInfo();
 
             var nullPropertyInfoException = new NullPropertyInfoException();
 
@@ -24,7 +24,8 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
 
             // when
             StringContentValidationException actualStringContentValidationException =
-                Assert.Throws<StringContentValidationException>(() => this.stringContentService.RetrieveStringContent(someProperty));
+                Assert.Throws<StringContentValidationException>(
+                    () => this.stringContentService.RetrieveStringContent(someProperty));
 
             // then
             actualStringContentValidationException.Should()

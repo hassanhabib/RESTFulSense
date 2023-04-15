@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         public void ShouldRetrieveFileName()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
 
             RESTFulFileContentNameAttribute randomFileNameContent = CreateRandomFileNameContent();
             RESTFulFileContentNameAttribute expectedFileNameContent = randomFileNameContent;
