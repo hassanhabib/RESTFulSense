@@ -1,9 +1,8 @@
-<p align="center">
-  <img width="25%" height="25%" src="https://raw.githubusercontent.com/hassanhabib/RESTFulSense/master/RESTFulSense/Resources/api.png">
-</p>
+![RESTFulSense](RESTFulSense/images/rs_git_logo.png)
 
 [![.NET](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml)
 [![Nuget](https://img.shields.io/nuget/v/RESTFulSense?logo=nuget)](https://www.nuget.org/packages/RESTFulSense)
+![Nuget](https://img.shields.io/nuget/dt/RESTFulSense?color=blue&label=Downloads)
 [![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f)](https://github.com/hassanhabib/The-Standard)
 [![The Standard Community](https://img.shields.io/discord/934130100008538142?color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
 
