@@ -6,21 +6,21 @@ using System.Reflection;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;
 
-namespace RESTFulSense.Services.Foundations.StreamContents
+namespace RESTFulSense.Services.Foundations.FileNames
 {
-    internal partial class StreamContentService : IStreamContentService
+    internal partial class FileNameService : IFileNameService
     {
         private readonly IReflectionBroker reflectionBroker;
 
-        public StreamContentService(IReflectionBroker reflectionBroker) =>
+        public FileNameService(IReflectionBroker reflectionBroker) =>
             this.reflectionBroker = reflectionBroker;
 
-        public RESTFulFileContentStreamAttribute RetrieveStreamContent(PropertyInfo propertyInfo) =>
+        public RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo propertyInfo) =>
         TryCatch(() =>
         {
             ValidatePropertyInfo(propertyInfo);
 
-            return this.reflectionBroker.GetFileContentStreamAttribute(propertyInfo);
+            return this.reflectionBroker.GetFileContentNameAttribute(propertyInfo);
         });
     }
 }
