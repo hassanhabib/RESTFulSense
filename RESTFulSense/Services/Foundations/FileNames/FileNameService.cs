@@ -15,6 +15,7 @@ namespace RESTFulSense.Services.Foundations.FileNames
         public FileNameService(IReflectionBroker reflectionBroker) =>
             this.reflectionBroker = reflectionBroker;
 
-        public RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo somePropertyInfo) => throw new System.NotImplementedException();
+        public RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo somePropertyInfo) =>
+            this.reflectionBroker.GetFileContentNameAttribute(somePropertyInfo);
     }
 }
