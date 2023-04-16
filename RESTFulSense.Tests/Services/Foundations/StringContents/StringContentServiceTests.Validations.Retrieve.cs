@@ -25,7 +25,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
 
             // when
             Func<RESTFulStringContentAttribute> retrieveStringContentFunction = () =>
-                this.stringContentService.RetrieveStringContent(someProperty)
+                this.stringContentService.RetrieveStringContent(someProperty);
 
             StringContentValidationException actualStringContentValidationException =
                 Assert.Throws<StringContentValidationException>(retrieveStringContentFunction);

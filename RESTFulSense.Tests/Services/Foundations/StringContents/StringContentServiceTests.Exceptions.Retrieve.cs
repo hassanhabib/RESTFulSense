@@ -34,7 +34,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
 
             // when
             Func<RESTFulStringContentAttribute> retrieveStringContentFunction = () =>
-                this.stringContentService.RetrieveStringContent(somePropertyInfo)
+                this.stringContentService.RetrieveStringContent(somePropertyInfo);
 
             StringContentServiceException actualStringContentServiceException =
                 Assert.Throws<StringContentServiceException>(retrieveStringContentFunction);
