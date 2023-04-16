@@ -17,7 +17,6 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
         {
             // given
             object someObject = CreateSomeObject();
-
             List<PropertyValue> randomPropertyValues = GetRandomProperties();
             List<PropertyValue> expectedPropertyValues = randomPropertyValues;
 
@@ -26,12 +25,13 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
                     .Returns(expectedPropertyValues);
 
             // when
-            var actualPropertyValues =
+            IEnumerable<PropertyValue> actualPropertyValues =
                 this.propertyService.RetrieveProperties(someObject);
 
             // then
             this.reflectionBrokerMock.Verify(reflectionBroker =>
-                reflectionBroker.GetPropertyValues(someObject), Times.Once);
+                reflectionBroker.GetPropertyValues(someObject),
+                    Times.Once);
 
             actualPropertyValues.Should().BeSameAs(expectedPropertyValues);
 

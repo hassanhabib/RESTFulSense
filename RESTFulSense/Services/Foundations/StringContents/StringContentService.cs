@@ -18,7 +18,7 @@ namespace RESTFulSense.Services.Foundations.StringContents
         public RESTFulStringContentAttribute RetrieveStringContent(PropertyInfo propertyInfo) =>
         TryCatch(() =>
         {
-            ValidatePropertyInfo(propertyInfo);
+            ValidateObjectNotNull(propertyInfo);
 
             return this.reflectionBroker.GetStringContentAttribute(propertyInfo);
         });

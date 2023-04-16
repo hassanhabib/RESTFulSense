@@ -12,8 +12,8 @@ namespace RESTFulSense.Services.Foundations.StreamContents
     {
         private delegate RESTFulFileContentStreamAttribute ReturningRESTFulFileContentStreamAttributeFunction();
 
-        private static RESTFulFileContentStreamAttribute
-            TryCatch(ReturningRESTFulFileContentStreamAttributeFunction returningRESTFulFileContentStreamAttributeFunction)
+        private static RESTFulFileContentStreamAttribute TryCatch(
+            ReturningRESTFulFileContentStreamAttributeFunction returningRESTFulFileContentStreamAttributeFunction)
         {
             try
             {

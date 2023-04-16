@@ -8,11 +8,6 @@ namespace RESTFulSense.Services.Foundations.Properties
 {
     internal partial class PropertyService
     {
-        private static void ValidateObject(object @object)
-        {
-            ValidateObjectNotNull(@object);
-        }
-
         private static void ValidateObjectNotNull(object @object)
         {
             if (@object is null)

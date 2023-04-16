@@ -17,7 +17,6 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
         {
             // given
             PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
-
             RESTFulStringContentAttribute randomStringContent = CreateRandomStringContent();
             RESTFulStringContentAttribute expectedStringContent = randomStringContent;
 
@@ -26,12 +25,13 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
                     .Returns(expectedStringContent);
 
             // when
-            var actualStringContent =
+            RESTFulStringContentAttribute actualStringContent =
                 this.stringContentService.RetrieveStringContent(somePropertyInfo);
 
             // then
             this.reflectionBrokerMock.Verify(reflectionBroker =>
-                reflectionBroker.GetStringContentAttribute(It.IsAny<PropertyInfo>()), Times.Once);
+                reflectionBroker.GetStringContentAttribute(It.IsAny<PropertyInfo>()),
+                    Times.Once);
 
             actualStringContent.Should().BeSameAs(expectedStringContent);
 

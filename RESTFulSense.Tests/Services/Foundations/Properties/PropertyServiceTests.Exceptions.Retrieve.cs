@@ -3,8 +3,10 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using Xunit;
 
@@ -17,7 +19,6 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
         {
             // given
             object someObject = CreateSomeObject();
-
             var serviceException = new Exception();
 
             var failedPropertyServiceException =
@@ -32,8 +33,11 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
                     .Throws(serviceException);
 
             // when
+            Func<IEnumerable<PropertyValue>> retrievePropertiesFunction = () =>
+                this.propertyService.RetrieveProperties(someObject);
+
             PropertyServiceException actualPropertyServiceException =
-                  Assert.Throws<PropertyServiceException>(() => this.propertyService.RetrieveProperties(someObject));
+                  Assert.Throws<PropertyServiceException>(retrievePropertiesFunction);
 
             // then
             actualPropertyServiceException.Should().BeEquivalentTo(

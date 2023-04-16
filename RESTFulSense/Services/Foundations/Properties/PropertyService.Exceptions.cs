@@ -13,7 +13,8 @@ namespace RESTFulSense.Services.Foundations.Properties
     {
         private delegate IEnumerable<PropertyValue> ReturningPropertyValuesFunction();
 
-        private static IEnumerable<PropertyValue> TryCatch(ReturningPropertyValuesFunction returningPropertyValuesFunction)
+        private static IEnumerable<PropertyValue> TryCatch(
+            ReturningPropertyValuesFunction returningPropertyValuesFunction)
         {
             try
             {

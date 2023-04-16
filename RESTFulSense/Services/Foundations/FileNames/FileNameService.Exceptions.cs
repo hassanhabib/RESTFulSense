@@ -13,8 +13,8 @@ namespace RESTFulSense.Services.Foundations.FileNames
         private delegate RESTFulFileContentNameAttribute
             ReturningRESTFulFileContentNameAttributeFunction();
 
-        private static RESTFulFileContentNameAttribute
-        TryCatch(ReturningRESTFulFileContentNameAttributeFunction returningRESTFulFileContentNameAttributeFunction)
+        private static RESTFulFileContentNameAttribute TryCatch(
+            ReturningRESTFulFileContentNameAttributeFunction returningRESTFulFileContentNameAttributeFunction)
         {
             try
             {

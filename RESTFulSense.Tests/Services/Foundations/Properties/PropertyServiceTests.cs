@@ -31,7 +31,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Properties
         private static List<PropertyValue> GetRandomProperties() =>
             Enumerable.Range(start: 0, count: GetRandomNumber())
                 .Select(i => CreateRandomPropertyValue())
-                .ToList();
+                    .ToList();
 
         private static PropertyValue CreateRandomPropertyValue() =>
             new PropertyValue { PropertyInfo = It.IsAny<PropertyInfo>(), Value = CreateRandomString() };

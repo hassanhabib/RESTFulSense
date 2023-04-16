@@ -17,7 +17,6 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         {
             // given
             PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
-
             RESTFulFileContentNameAttribute randomFileNameContent = CreateRandomFileNameContent();
             RESTFulFileContentNameAttribute expectedFileNameContent = randomFileNameContent;
 
@@ -26,12 +25,14 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
                     .Returns(expectedFileNameContent);
 
             // when
-            var actualFileNameContent =
+            RESTFulFileContentNameAttribute actualFileNameContent =
                 this.fileNameService.RetrieveFileName(somePropertyInfo);
 
             // then
             this.reflectionBrokerMock.Verify(reflectionBroker =>
-                reflectionBroker.GetFileContentNameAttribute(It.IsAny<PropertyInfo>()), Times.Once);
+                reflectionBroker.GetFileContentNameAttribute(
+                    It.IsAny<PropertyInfo>()),
+                        Times.Once);
 
             actualFileNameContent.Should().BeSameAs(expectedFileNameContent);
 

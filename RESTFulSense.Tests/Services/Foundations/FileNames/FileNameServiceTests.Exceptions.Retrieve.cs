@@ -6,6 +6,7 @@ using System;
 using System.Reflection;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Foundations.FileNames.Exceptions;
 using Xunit;
 
@@ -18,7 +19,6 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         {
             // given
             PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
-
             var serviceException = new Exception();
 
             var failedFileNameServiceException =
@@ -28,14 +28,16 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
                 new FileNameServiceException(
                     failedFileNameServiceException);
 
-            this.reflectionBrokerMock.Setup(broker => broker.GetFileContentNameAttribute(
-                somePropertyInfo))
+            this.reflectionBrokerMock.Setup(
+                broker => broker.GetFileContentNameAttribute(somePropertyInfo))
                     .Throws(serviceException);
 
             // when
+            Func<RESTFulFileContentNameAttribute> retrieveFileNameFunction = () =>
+                this.fileNameService.RetrieveFileName(somePropertyInfo);
+
             FileNameServiceException actualFileNameServiceException =
-                Assert.Throws<FileNameServiceException>(() =>
-                    this.fileNameService.RetrieveFileName(somePropertyInfo));
+                Assert.Throws<FileNameServiceException>(retrieveFileNameFunction);
 
             // then
             actualFileNameServiceException.Should().BeEquivalentTo(

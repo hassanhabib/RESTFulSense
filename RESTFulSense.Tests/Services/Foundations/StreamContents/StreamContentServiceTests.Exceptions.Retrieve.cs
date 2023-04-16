@@ -18,7 +18,6 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
         {
             // given
             PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
-
             var serviceException = new Exception();
 
             var failedStreamContentServiceException =

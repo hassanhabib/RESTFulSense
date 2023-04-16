@@ -15,10 +15,11 @@ namespace RESTFulSense.Services.Foundations.Properties
         public PropertyService(IReflectionBroker reflectionBroker) =>
             this.reflectionBroker = reflectionBroker;
 
-        public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
-        TryCatch(() =>
+        public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object)
+            where T : class => TryCatch(() =>
         {
-            ValidateObject(@object);
+            ValidateObjectNotNull(@object);
+
             return this.reflectionBroker.GetPropertyValues(@object);
         });
     }

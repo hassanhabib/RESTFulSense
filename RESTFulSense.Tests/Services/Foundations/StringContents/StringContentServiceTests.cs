@@ -22,7 +22,8 @@ namespace RESTFulSense.Tests.Services.Foundations.StringContents
             stringContentService = new StringContentService(reflectionBrokerMock.Object);
         }
 
-        private static PropertyInfo CreateMockPropertyInfo() => new Mock<PropertyInfo>().Object;
+        private static PropertyInfo CreateMockPropertyInfo() =>
+            new Mock<PropertyInfo>().Object;
 
         private static PropertyInfo CreateNullPropertyInfo() => null;
 
