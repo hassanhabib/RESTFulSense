@@ -23,7 +23,7 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         }
 
         private static PropertyInfo CreateMockPropertyInfo() =>
-                    new Mock<PropertyInfo>().Object;
+            new Mock<PropertyInfo>().Object;
 
         private static PropertyInfo CreateNullPropertyInfo() => null;
 
