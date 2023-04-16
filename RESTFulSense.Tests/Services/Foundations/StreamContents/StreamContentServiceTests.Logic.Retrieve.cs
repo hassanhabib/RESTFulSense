@@ -2,10 +2,10 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System.Reflection;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Models.Attributes;
-using System.Reflection;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Foundations.StreamContents
@@ -16,8 +16,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
         public void ShouldRetrieveStreamContent()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
-
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
             RESTFulFileContentStreamAttribute randomStreamContent = CreateRandomStreamContent();
             RESTFulFileContentStreamAttribute expectedStreamContent = randomStreamContent;
 
@@ -26,7 +25,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
                     .Returns(expectedStreamContent);
 
             // when
-            var actualStreamContent =
+            RESTFulFileContentStreamAttribute actualStreamContent =
                 this.streamContentService.RetrieveStreamContent(somePropertyInfo);
 
             // then

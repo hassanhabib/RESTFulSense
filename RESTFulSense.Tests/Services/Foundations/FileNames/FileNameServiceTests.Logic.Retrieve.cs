@@ -2,10 +2,10 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System.Reflection;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Models.Attributes;
-using System.Reflection;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Foundations.FileNames
@@ -16,8 +16,7 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         public void ShouldRetrieveFileName()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
-
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
             RESTFulFileContentNameAttribute randomFileNameContent = CreateRandomFileNameContent();
             RESTFulFileContentNameAttribute expectedFileNameContent = randomFileNameContent;
 
@@ -26,12 +25,14 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
                     .Returns(expectedFileNameContent);
 
             // when
-            var actualFileNameContent =
+            RESTFulFileContentNameAttribute actualFileNameContent =
                 this.fileNameService.RetrieveFileName(somePropertyInfo);
 
             // then
             this.reflectionBrokerMock.Verify(reflectionBroker =>
-                reflectionBroker.GetFileContentNameAttribute(It.IsAny<PropertyInfo>()), Times.Once);
+                reflectionBroker.GetFileContentNameAttribute(
+                    It.IsAny<PropertyInfo>()),
+                        Times.Once);
 
             actualFileNameContent.Should().BeSameAs(expectedFileNameContent);
 

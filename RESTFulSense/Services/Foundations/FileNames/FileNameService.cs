@@ -18,7 +18,7 @@ namespace RESTFulSense.Services.Foundations.FileNames
         public RESTFulFileContentNameAttribute RetrieveFileName(PropertyInfo propertyInfo) =>
         TryCatch(() =>
         {
-            ValidatePropertyInfo(propertyInfo);
+            ValidateObjectNotNull(propertyInfo);
 
             return this.reflectionBroker.GetFileContentNameAttribute(propertyInfo);
         });

@@ -2,10 +2,10 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System.Reflection;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Models.Foundations.StreamContents.Exceptions;
-using System.Reflection;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Foundations.StreamContents
@@ -15,7 +15,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
         [Fact]
         public void ShouldThrowValidationExceptionOnRetrieveStreamContentIfPropertyInfoIsNull()
         {
-            PropertyInfo someProperty = null;
+            PropertyInfo someProperty = CreateNullPropertyInfo();
 
             var nullPropertyInfoException = new NullPropertyInfoException();
 

@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Reflection;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Models.Attributes;
@@ -19,7 +18,7 @@ namespace RESTFulSense.Services.Foundations.StringContents
         public RESTFulStringContentAttribute RetrieveStringContent(PropertyInfo propertyInfo) =>
         TryCatch(() =>
         {
-            ValidatePropertyInfo(propertyInfo);
+            ValidateObjectNotNull(propertyInfo);
 
             return this.reflectionBroker.GetStringContentAttribute(propertyInfo);
         });

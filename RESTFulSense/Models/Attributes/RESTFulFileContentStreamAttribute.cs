@@ -6,7 +6,7 @@ using System;
 
 namespace RESTFulSense.Models.Attributes
 {
-    [AttributeUsage(validOn: AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(validOn: AttributeTargets.Property)]
     public class RESTFulFileContentStreamAttribute : Attribute
     {
         public RESTFulFileContentStreamAttribute(string name) =>

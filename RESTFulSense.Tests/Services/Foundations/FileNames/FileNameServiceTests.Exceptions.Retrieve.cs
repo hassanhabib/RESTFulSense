@@ -2,12 +2,13 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using Moq;
-using RESTFulSense.Models.Foundations.FileNames.Exceptions;
-using System.Reflection;
 using System;
-using Xunit;
+using System.Reflection;
 using FluentAssertions;
+using Moq;
+using RESTFulSense.Models.Attributes;
+using RESTFulSense.Models.Foundations.FileNames.Exceptions;
+using Xunit;
 
 namespace RESTFulSense.Tests.Services.Foundations.FileNames
 {
@@ -17,8 +18,7 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
         public void ShouldThrowServiceExceptionOnRetrieveFileNameIfServiceErrorOccurs()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
-
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
             var serviceException = new Exception();
 
             var failedFileNameServiceException =
@@ -28,14 +28,16 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
                 new FileNameServiceException(
                     failedFileNameServiceException);
 
-            this.reflectionBrokerMock.Setup(broker => broker.GetFileContentNameAttribute(
-                somePropertyInfo))
+            this.reflectionBrokerMock.Setup(
+                broker => broker.GetFileContentNameAttribute(somePropertyInfo))
                     .Throws(serviceException);
 
             // when
+            Func<RESTFulFileContentNameAttribute> retrieveFileNameFunction = () =>
+                this.fileNameService.RetrieveFileName(somePropertyInfo);
+
             FileNameServiceException actualFileNameServiceException =
-                Assert.Throws<FileNameServiceException>(() =>
-                    this.fileNameService.RetrieveFileName(somePropertyInfo));
+                Assert.Throws<FileNameServiceException>(retrieveFileNameFunction);
 
             // then
             actualFileNameServiceException.Should().BeEquivalentTo(
@@ -48,6 +50,5 @@ namespace RESTFulSense.Tests.Services.Foundations.FileNames
 
             this.reflectionBrokerMock.VerifyNoOtherCalls();
         }
-
     }
 }

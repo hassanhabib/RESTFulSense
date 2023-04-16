@@ -10,10 +10,11 @@ namespace RESTFulSense.Services.Foundations.FileNames
 {
     internal partial class FileNameService
     {
-        private delegate RESTFulFileContentNameAttribute ReturningRESTFulFileContentNameAttributeFunction();
+        private delegate RESTFulFileContentNameAttribute
+            ReturningRESTFulFileContentNameAttributeFunction();
 
-        private static RESTFulFileContentNameAttribute
-            TryCatch(ReturningRESTFulFileContentNameAttributeFunction returningRESTFulFileContentNameAttributeFunction)
+        private static RESTFulFileContentNameAttribute TryCatch(
+            ReturningRESTFulFileContentNameAttributeFunction returningRESTFulFileContentNameAttributeFunction)
         {
             try
             {

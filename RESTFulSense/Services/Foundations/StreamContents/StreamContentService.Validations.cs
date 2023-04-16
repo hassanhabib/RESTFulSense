@@ -9,11 +9,6 @@ namespace RESTFulSense.Services.Foundations.StreamContents
 {
     internal partial class StreamContentService
     {
-        private static void ValidatePropertyInfo(PropertyInfo propertyInfo)
-        {
-            ValidateObjectNotNull(propertyInfo);
-        }
-
         private static void ValidateObjectNotNull(PropertyInfo propertyInfo)
         {
             if (propertyInfo is null)

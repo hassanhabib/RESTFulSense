@@ -2,8 +2,8 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System.Reflection;
 using System;
+using System.Reflection;
 
 namespace RESTFulSense.WebAssembly.Brokers.Reflections
 {

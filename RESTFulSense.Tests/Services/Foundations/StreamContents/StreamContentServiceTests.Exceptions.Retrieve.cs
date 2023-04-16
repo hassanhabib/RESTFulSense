@@ -2,11 +2,11 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System;
+using System.Reflection;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Models.Foundations.StreamContents.Exceptions;
-using System;
-using System.Reflection;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Foundations.StreamContents
@@ -17,8 +17,7 @@ namespace RESTFulSense.Tests.Services.Foundations.StreamContents
         public void ShouldThrowServiceExceptionOnRetrieveStreamContentIfServiceErrorOccurs()
         {
             // given
-            PropertyInfo somePropertyInfo = new Mock<PropertyInfo>().Object;
-
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
             var serviceException = new Exception();
 
             var failedStreamContentServiceException =

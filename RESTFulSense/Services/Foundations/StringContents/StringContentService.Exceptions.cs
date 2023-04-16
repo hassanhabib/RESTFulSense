@@ -12,8 +12,8 @@ namespace RESTFulSense.Services.Foundations.StringContents
     {
         private delegate RESTFulStringContentAttribute ReturningRESTFulStringContentAttributeFunction();
 
-        private static RESTFulStringContentAttribute
-            TryCatch(ReturningRESTFulStringContentAttributeFunction returningRESTFulStringContentAttributeFunction)
+        private static RESTFulStringContentAttribute TryCatch(
+            ReturningRESTFulStringContentAttributeFunction returningRESTFulStringContentAttributeFunction)
         {
             try
             {

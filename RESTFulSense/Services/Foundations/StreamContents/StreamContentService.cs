@@ -18,7 +18,7 @@ namespace RESTFulSense.Services.Foundations.StreamContents
         public RESTFulFileContentStreamAttribute RetrieveStreamContent(PropertyInfo propertyInfo) =>
         TryCatch(() =>
         {
-            ValidatePropertyInfo(propertyInfo);
+            ValidateObjectNotNull(propertyInfo);
 
             return this.reflectionBroker.GetFileContentStreamAttribute(propertyInfo);
         });

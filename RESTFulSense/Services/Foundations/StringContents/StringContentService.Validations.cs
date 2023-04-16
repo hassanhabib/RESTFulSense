@@ -9,11 +9,6 @@ namespace RESTFulSense.Services.Foundations.StringContents
 {
     internal partial class StringContentService : IStringContentService
     {
-        private static void ValidatePropertyInfo(PropertyInfo propertyInfo)
-        {
-            ValidateObjectNotNull(propertyInfo);
-        }
-
         private static void ValidateObjectNotNull(PropertyInfo propertyInfo)
         {
             if (propertyInfo is null)
