@@ -1,4 +1,4 @@
-![RESTFulSense](RESTFulSense/images/rs_git_logo.png)
+![RESTFulSense](https://raw.githubusercontent.com/hassanhabib/RESTFulSense/master/RESTFulSense/images/rs_git_logo.png)
 
 [![.NET](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml)
 [![Nuget](https://img.shields.io/nuget/v/RESTFulSense?logo=nuget)](https://www.nuget.org/packages/RESTFulSense)
