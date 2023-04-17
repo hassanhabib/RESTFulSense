@@ -10,7 +10,7 @@ namespace RESTFulSense.Models.Processings.Properties.Exceptions
     public class PropertyProcessingServiceException : Xeption
     {
         public PropertyProcessingServiceException(Exception innerException)
-            : base(message: "Property processing service error occurred, contact support.",
+            : base(message: "Property service error occurred, contact support.",
                   innerException)
         { }
     }

@@ -2,11 +2,11 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using RESTFulSense.Models.Foundations.Properties.Exceptions;
-using RESTFulSense.Models.Foundations.Properties;
-using RESTFulSense.Models.Processings.Properties.Exceptions;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using RESTFulSense.Models.Foundations.Properties;
+using RESTFulSense.Models.Foundations.Properties.Exceptions;
+using RESTFulSense.Models.Processings.Properties.Exceptions;
 
 namespace RESTFulSense.Services.Processings.Properties
 {
@@ -29,7 +29,7 @@ namespace RESTFulSense.Services.Processings.Properties
             {
                 throw new PropertyProcessingDependencyException(propertyServiceException);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 throw new PropertyProcessingServiceException(exception);
             }

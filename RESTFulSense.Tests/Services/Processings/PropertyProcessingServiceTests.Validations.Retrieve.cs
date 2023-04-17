@@ -3,8 +3,10 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using RESTFulSense.Models.Processings.Properties.Exceptions;
 using Xunit;
@@ -19,22 +21,23 @@ namespace RESTFulSense.Tests.Services.Processings
             // given
             Object someObject = CreateSomeObject();
             Object inputObject = someObject;
-            NullObjectException nullObjectException = new NullObjectException();
+            var nullObjectException = new NullObjectException();
 
-            PropertyValidationException propertyValidationException =
+            var propertyValidationException =
                 new PropertyValidationException(nullObjectException);
 
-            PropertyProcessingDependencyValidationException expectedPropertyProcessingDependencyValidationException =
+            var expectedPropertyProcessingDependencyValidationException =
                 new PropertyProcessingDependencyValidationException(propertyValidationException);
 
             this.propertyServiceMock.Setup(service =>
                 service.RetrieveProperties(inputObject)).Throws(propertyValidationException);
 
-            Action retrievePropertiesAction = () => this.propertyProcessingService.RetrieveProperties(inputObject);
-
             // when
+            Func<IEnumerable<PropertyValue>> retrievePropertiesFunction = () =>
+               this.propertyProcessingService.RetrieveProperties(inputObject);
+
             PropertyProcessingDependencyValidationException actualPropertyProcessingDependencyValidationException =
-               Assert.Throws<PropertyProcessingDependencyValidationException>(retrievePropertiesAction);
+               Assert.Throws<PropertyProcessingDependencyValidationException>(retrievePropertiesFunction);
 
             // then
             actualPropertyProcessingDependencyValidationException.Should()

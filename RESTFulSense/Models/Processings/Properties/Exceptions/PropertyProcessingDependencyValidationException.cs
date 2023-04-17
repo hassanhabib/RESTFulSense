@@ -9,7 +9,7 @@ namespace RESTFulSense.Models.Processings.Properties.Exceptions
     public class PropertyProcessingDependencyValidationException : Xeption
     {
         public PropertyProcessingDependencyValidationException(Xeption innerException)
-            : base(message: "Properties processing validation error occurred, contact support.", innerException) 
+            : base(message: "Property validation error occurred, contact support.", innerException)
         { }
     }
 }

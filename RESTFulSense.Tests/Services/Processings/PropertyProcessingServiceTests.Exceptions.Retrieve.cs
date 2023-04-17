@@ -3,8 +3,10 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using RESTFulSense.Models.Processings.Properties.Exceptions;
 using Xunit;
@@ -19,22 +21,24 @@ namespace RESTFulSense.Tests.Services.Processings
             // given
             Object someObject = CreateSomeObject();
             Object inputObject = someObject;
-            NullObjectException nullObjectException = new NullObjectException();
+            var nullObjectException = new NullObjectException();
 
-            PropertyServiceException propertyServiceException =
+            var propertyServiceException =
                 new PropertyServiceException(nullObjectException);
 
-            PropertyProcessingDependencyException expectedPropertyProcessingDependencyException =
+            var expectedPropertyProcessingDependencyException =
                 new PropertyProcessingDependencyException(propertyServiceException);
 
-            this.propertyServiceMock.Setup(service =>
-                service.RetrieveProperties(inputObject)).Throws(propertyServiceException);
-
-            Action retrievePropertiesAction = () => this.propertyProcessingService.RetrieveProperties(inputObject);
+            this.propertyServiceMock.Setup(
+                service => service.RetrieveProperties(inputObject))
+                    .Throws(propertyServiceException);
 
             // when
+            Func<IEnumerable<PropertyValue>> retrievePropertiesFunction = () =>
+                this.propertyProcessingService.RetrieveProperties(inputObject);
+
             PropertyProcessingDependencyException actualPropertyProcessingDependencyException =
-               Assert.Throws<PropertyProcessingDependencyException>(retrievePropertiesAction);
+               Assert.Throws<PropertyProcessingDependencyException>(retrievePropertiesFunction);
 
             // then
             actualPropertyProcessingDependencyException.Should()
@@ -53,19 +57,21 @@ namespace RESTFulSense.Tests.Services.Processings
             // given
             Object someObject = CreateSomeObject();
             Object inputObject = someObject;
-            Exception inputException= new Exception();
+            var inputException = new Exception();
 
-            PropertyProcessingServiceException expectedPropertyProcessingServiceException =
+            var expectedPropertyProcessingServiceException =
                 new PropertyProcessingServiceException(inputException);
 
-            this.propertyServiceMock.Setup(service =>
-                service.RetrieveProperties(inputObject)).Throws(inputException);
-
-            Action retrievePropertiesAction = () => this.propertyProcessingService.RetrieveProperties(inputObject);
+            this.propertyServiceMock.Setup(
+                service => service.RetrieveProperties(inputObject))
+                    .Throws(inputException);
 
             // when
+            Func<IEnumerable<PropertyValue>> retrievePropertiesFunction = () =>
+               this.propertyProcessingService.RetrieveProperties(inputObject);
+
             PropertyProcessingServiceException actualPropertyProcessingServiceException =
-               Assert.Throws<PropertyProcessingServiceException>(retrievePropertiesAction);
+               Assert.Throws<PropertyProcessingServiceException>(retrievePropertiesFunction);
 
             // then
             actualPropertyProcessingServiceException.Should()
