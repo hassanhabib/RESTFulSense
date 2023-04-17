@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
@@ -17,9 +16,9 @@ namespace RESTFulSense.Tests.Services.Processings
         public void ShouldRetrieveProperties()
         {
             // given
-            Object someObject = CreateSomeObject();
-            Object inputObject = someObject;
-            Object expectedObject = inputObject;
+            object someObject = CreateSomeObject();
+            object inputObject = someObject;
+            object expectedObject = inputObject;
 
             IEnumerable<PropertyValue> randomProperties = CreateRandomPropertyValues();
             IEnumerable<PropertyValue> expectedProperties = randomProperties;

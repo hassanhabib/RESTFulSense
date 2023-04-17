@@ -16,6 +16,6 @@ namespace RESTFulSense.Services.Processings.Properties
             this.propertyService = propertyService;
 
         public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
-            throw new System.NotImplementedException();
+            this.propertyService.RetrieveProperties<T>(@object);
     }
 }

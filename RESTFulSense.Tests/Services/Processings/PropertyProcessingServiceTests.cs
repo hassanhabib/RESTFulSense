@@ -27,7 +27,7 @@ namespace RESTFulSense.Tests.Services.Processings
                 new PropertyProcessingService(propertyServiceMock.Object);
         }
 
-        private static Object CreateSomeObject() => new Object();
+        private static object CreateSomeObject() => new Object();
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
