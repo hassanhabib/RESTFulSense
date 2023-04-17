@@ -27,6 +27,10 @@ namespace RESTFulSense.Services.Processings.StringContents
             {
                 throw new StringContentProcessingDependencyValidationException(stringContentValidationException);
             }
+            catch (StringContentServiceException stringContentServiceException)
+            {
+                throw new StringContentProcessingDependencyException(stringContentServiceException);
+            }
         }
     }
 }
