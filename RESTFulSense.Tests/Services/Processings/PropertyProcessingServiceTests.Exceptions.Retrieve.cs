@@ -46,5 +46,36 @@ namespace RESTFulSense.Tests.Services.Processings
 
             this.propertyServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowPropertyProcessingServiceExceptionIfExceptionOccurs()
+        {
+            // given
+            Object someObject = CreateSomeObject();
+            Object inputObject = someObject;
+            Exception inputException= new Exception();
+
+            PropertyProcessingServiceException expectedPropertyProcessingServiceException =
+                new PropertyProcessingServiceException(inputException);
+
+            this.propertyServiceMock.Setup(service =>
+                service.RetrieveProperties(inputObject)).Throws(inputException);
+
+            Action retrievePropertiesAction = () => this.propertyProcessingService.RetrieveProperties(inputObject);
+
+            // when
+            PropertyProcessingServiceException actualPropertyProcessingServiceException =
+               Assert.Throws<PropertyProcessingServiceException>(retrievePropertiesAction);
+
+            // then
+            actualPropertyProcessingServiceException.Should()
+                .BeEquivalentTo(expectedPropertyProcessingServiceException);
+
+            this.propertyServiceMock.Verify(service =>
+                service.RetrieveProperties(inputObject),
+                    Times.Once);
+
+            this.propertyServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
