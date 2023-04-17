@@ -18,8 +18,11 @@ namespace RESTFulSense.Services.Processings.StringContents
         public StringContentProcessingService(IStringContentService stringContentService) =>
             this.stringContentService = stringContentService;
 
-        public IEnumerable<NamedStringContent> FilterStringContents(List<PropertyValue> propertyValues)
+        public IEnumerable<NamedStringContent> FilterStringContents(List<PropertyValue> propertyValues) =>
+        TryCatch(() =>
         {
+            List<NamedStringContent> namedStringContents = new List<NamedStringContent>();
+
             foreach (var propertyValue in propertyValues)
             {
                 RESTFulStringContentAttribute rESTFulStringContentAttribute =
@@ -33,9 +36,11 @@ namespace RESTFulSense.Services.Processings.StringContents
                         StringContent = new StringContent((string)propertyValue.Value)
                     };
 
-                    yield return namedStringContent;
+                    namedStringContents.Add(namedStringContent);
                 }
             }
-        }
+
+            return namedStringContents;
+        });
     }
 }
