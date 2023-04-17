@@ -8,7 +8,7 @@ using RESTFulSense.Services.Foundations.Properties;
 
 namespace RESTFulSense.Services.Processings.Properties
 {
-    internal class PropertyProcessingService : IPropertyProcessingService
+    internal partial class PropertyProcessingService : IPropertyProcessingService
     {
         private readonly IPropertyService propertyService;
 
