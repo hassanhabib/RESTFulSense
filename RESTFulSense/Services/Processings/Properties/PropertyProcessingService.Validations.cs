@@ -24,6 +24,10 @@ namespace RESTFulSense.Services.Processings.Properties
             {
                 throw new PropertyProcessingDependencyValidationException(propertyValidationException);
             }
+            catch (PropertyServiceException propertyServiceException)
+            {
+                throw new PropertyProcessingDependencyException(propertyServiceException);
+            }
         }
     }
 }

@@ -41,7 +41,8 @@ namespace RESTFulSense.Tests.Services.Processings
                 .BeEquivalentTo(expectedPropertyProcessingDependencyException);
 
             this.propertyServiceMock.Verify(service =>
-                service.RetrieveProperties(inputObject), Times.Once);
+                service.RetrieveProperties(inputObject),
+                    Times.Once);
 
             this.propertyServiceMock.VerifyNoOtherCalls();
         }
