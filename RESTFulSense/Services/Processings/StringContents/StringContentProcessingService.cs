@@ -18,7 +18,24 @@ namespace RESTFulSense.Services.Processings.StringContents
         public StringContentProcessingService(IStringContentService stringContentService) =>
             this.stringContentService = stringContentService;
 
-        public IEnumerable<NamedStringContent> FilterStringContents(List<PropertyValue> propertyValues) =>
-            throw new System.NotImplementedException();
+        public IEnumerable<NamedStringContent> FilterStringContents(List<PropertyValue> propertyValues)
+        {
+            foreach (var propertyValue in propertyValues)
+            {
+                RESTFulStringContentAttribute rESTFulStringContentAttribute =
+                    this.stringContentService.RetrieveStringContent(propertyValue.PropertyInfo);
+
+                if (rESTFulStringContentAttribute != null)
+                {
+                    NamedStringContent namedStringContent = new NamedStringContent
+                    {
+                        Name = rESTFulStringContentAttribute.Name,
+                        StringContent = new StringContent((string)propertyValue.Value)
+                    };
+
+                    yield return namedStringContent;
+                }
+            }
+        }
     }
 }
