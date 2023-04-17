@@ -118,5 +118,52 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
 
             this.stringContentServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowStringContentProcessingServiceExceptionIfExceptionOccurs()
+        {
+            // given
+            dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
+            dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
+            dynamic[] randomProperties =
+                ShuffleRandomProperties(randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
+
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
+            PropertyInfo inputPropertyInfo = somePropertyInfo;
+
+            List<PropertyValue> randomPropertyValues =
+                 randomProperties.Select(property => new PropertyValue
+                 {
+                     PropertyInfo = property.PropertyInfo,
+                     Value = property.Value
+                 }).ToList();
+
+            List<PropertyValue> inputPropertyValues = randomPropertyValues;
+
+            var exception = new Exception();
+
+            var expectedStringContentProcessingServiceException =
+                new StringContentProcessingServiceException(innerException: exception);
+
+            this.stringContentServiceMock.Setup(service =>
+                service.RetrieveStringContent(It.IsAny<PropertyInfo>()))
+                    .Throws(exception);
+
+            // when
+            Func<IEnumerable<NamedStringContent>> filterStringContentsFunction = () =>
+               this.stringContentProcessingService.FilterStringContents(inputPropertyValues).ToList();
+
+            StringContentProcessingServiceException actualStringContentProcessingServiceException =
+               Assert.Throws<StringContentProcessingServiceException>(filterStringContentsFunction);
+
+            // then
+            actualStringContentProcessingServiceException.Should()
+                .BeEquivalentTo(expectedStringContentProcessingServiceException);
+
+            this.stringContentServiceMock.Verify(service =>
+                service.RetrieveStringContent(It.IsAny<PropertyInfo>()), Times.Once);
+
+            this.stringContentServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
