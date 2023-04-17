@@ -15,7 +15,10 @@ namespace RESTFulSense.Services.Processings.Properties
         public PropertyProcessingService(IPropertyService propertyService) =>
             this.propertyService = propertyService;
 
-        public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
-            this.propertyService.RetrieveProperties<T>(@object);
+        public IEnumerable<PropertyValue> RetrieveProperties<T>(T @object)
+            where T : class => TryCatch(() =>
+        {
+            return this.propertyService.RetrieveProperties<T>(@object);
+        });
     }
 }
