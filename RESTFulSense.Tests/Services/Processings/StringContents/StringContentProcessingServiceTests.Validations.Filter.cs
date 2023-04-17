@@ -142,8 +142,12 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
 
             var exception = new Exception();
 
+            var failedStringContentProcessingServiceException =
+                new FailedStringContentProcessingServiceException(exception);
+
             var expectedStringContentProcessingServiceException =
-                new StringContentProcessingServiceException(innerException: exception);
+                new StringContentProcessingServiceException(
+                    innerException: failedStringContentProcessingServiceException);
 
             this.stringContentServiceMock.Setup(service =>
                 service.RetrieveStringContent(It.IsAny<PropertyInfo>()))
