@@ -3,7 +3,9 @@
 // ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using RESTFulSense.Models.Foundations.StreamContents.Exceptions;
 using RESTFulSense.Models.Processings.StreamContents;
+using RESTFulSense.Models.Processings.StreamContents.Exceptions;
 
 namespace RESTFulSense.Services.Processings.StreamContents
 {
@@ -15,7 +17,14 @@ namespace RESTFulSense.Services.Processings.StreamContents
         private static IEnumerable<NamedStreamContent> TryCatch(
             ReturningNamedStreamContentsFunction returningNamedStreamContentsFunction)
         {
-            return returningNamedStreamContentsFunction();
+            try
+            {
+                return returningNamedStreamContentsFunction();
+            }
+            catch(StreamContentValidationException streamContentValidationException)
+            {
+                throw new StreamContentProcessingDependencyValidationException(streamContentValidationException);
+            }
         }
     }
 }
