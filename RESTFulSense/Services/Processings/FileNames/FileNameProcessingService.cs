@@ -11,7 +11,7 @@ using RESTFulSense.Services.Foundations.FileNames;
 
 namespace RESTFulSense.Services.Processings.FileNames
 {
-    internal class FileNameProcessingService : IFileNameProcessingService
+    internal partial class FileNameProcessingService : IFileNameProcessingService
     {
         private readonly IFileNameService fileNameService;
 
@@ -20,7 +20,8 @@ namespace RESTFulSense.Services.Processings.FileNames
 
         public void UpdateFileNames(
             IEnumerable<NamedStreamContent> namedStreamContents,
-            IEnumerable<PropertyValue> propertyValues)
+            IEnumerable<PropertyValue> propertyValues) =>
+        TryCatch(() =>
         {
             Dictionary<string, string> fileNamesByName =
               GetFileNamesByName(propertyValues);
@@ -33,7 +34,7 @@ namespace RESTFulSense.Services.Processings.FileNames
                         fileNamesByName[namedStreamContent.Name];
                 }
             }
-        }
+        });
 
         private Dictionary<string, string> GetFileNamesByName(IEnumerable<PropertyValue> propertyValues)
         {
