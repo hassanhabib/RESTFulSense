@@ -209,7 +209,6 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
                 service.RetrieveFileName(It.IsAny<PropertyInfo>()), Times.Once);
 
             this.fileNameServiceMock.VerifyNoOtherCalls();
-
         }
     }
 }
