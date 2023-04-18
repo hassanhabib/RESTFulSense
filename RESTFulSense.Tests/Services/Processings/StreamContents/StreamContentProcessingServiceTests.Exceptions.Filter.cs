@@ -6,17 +6,17 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using Moq;
-using RESTFulSense.Models.Foundations.Properties;
-using RESTFulSense.Models.Foundations.StreamContents.Exceptions;
-using RESTFulSense.Models.Processings.StreamContents.Exceptions;
-using RESTFulSense.Models.Processings.StreamContents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System;
-using Xunit;
 using FluentAssertions;
+using Moq;
+using RESTFulSense.Models.Foundations.Properties;
+using RESTFulSense.Models.Foundations.StreamContents.Exceptions;
+using RESTFulSense.Models.Processings.StreamContents;
+using RESTFulSense.Models.Processings.StreamContents.Exceptions;
+using Xunit;
 
 namespace RESTFulSense.Tests.Services.Processings.StreamContents
 {
