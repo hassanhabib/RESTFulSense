@@ -22,8 +22,8 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
             // given
             dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
             dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
-            dynamic[] randomProperties =
-                ShuffleRandomProperties(randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
+            IEnumerable<dynamic> allProperties = randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute);
+            dynamic[] randomProperties = ShuffleRandomProperties(allProperties);
 
             List<PropertyInfo> randomPropertyInfos =
                 randomProperties.Select(GetPropertyInfo).ToList();

@@ -22,7 +22,7 @@ namespace RESTFulSense.Services.Processings.StreamContents
         public IEnumerable<NamedStreamContent> FilterStreamContents(List<PropertyValue> propertyValues) =>
         TryCatch(() =>
         {
-            List<NamedStreamContent> namedStreamContents = new List<NamedStreamContent>();
+            var namedStreamContents = new List<NamedStreamContent>();
 
             foreach (var propertyValue in propertyValues)
             {
