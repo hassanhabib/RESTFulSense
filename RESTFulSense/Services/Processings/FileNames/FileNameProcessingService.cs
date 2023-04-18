@@ -22,7 +22,17 @@ namespace RESTFulSense.Services.Processings.FileNames
             IEnumerable<NamedStreamContent> namedStreamContents,
             IEnumerable<PropertyValue> propertyValues)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> fileNamesByName =
+              GetFileNamesByName(propertyValues);
+
+            foreach (var namedStreamContent in namedStreamContents)
+            {
+                if (fileNamesByName.ContainsKey(namedStreamContent.Name))
+                {
+                    namedStreamContent.FileName =
+                        fileNamesByName[namedStreamContent.Name];
+                }
+            }
         }
 
         private Dictionary<string, string> GetFileNamesByName(IEnumerable<PropertyValue> propertyValues)
