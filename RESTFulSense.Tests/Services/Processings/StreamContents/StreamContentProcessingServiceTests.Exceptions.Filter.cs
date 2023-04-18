@@ -121,5 +121,54 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
 
             this.streamContentServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowStreamContentProcessingServiceExceptionIfExceptionOccurs()
+        {            // given
+            dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
+            dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
+            dynamic[] randomProperties =
+                ShuffleRandomProperties(randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
+
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
+            PropertyInfo inputPropertyInfo = somePropertyInfo;
+
+            List<PropertyValue> randomPropertyValues =
+                 randomProperties.Select(property => new PropertyValue
+                 {
+                     PropertyInfo = property.PropertyInfo,
+                     Value = property.Value
+                 }).ToList();
+
+            List<PropertyValue> inputPropertyValues = randomPropertyValues;
+
+            var exception = new Exception();
+
+            var failedStreamContentProcessingServiceException =
+                new FailedStreamContentProcessingServiceException(exception);
+
+            var expectedStreamContentProcessingServiceException =
+                new StreamContentProcessingServiceException(failedStreamContentProcessingServiceException);
+
+            this.streamContentServiceMock.Setup(service =>
+                service.RetrieveStreamContent(It.IsAny<PropertyInfo>()))
+                    .Throws(exception);
+
+            // when
+            Func<IEnumerable<NamedStreamContent>> filterStreamContentsFunction = () =>
+               this.streamContentProcessingService.FilterStreamContents(inputPropertyValues).ToList();
+
+            StreamContentProcessingServiceException actualStreamContentProcessingServiceException =
+               Assert.Throws<StreamContentProcessingServiceException>(filterStreamContentsFunction);
+
+            // then
+            actualStreamContentProcessingServiceException.Should()
+                .BeEquivalentTo(expectedStreamContentProcessingServiceException);
+
+            this.streamContentServiceMock.Verify(service =>
+                service.RetrieveStreamContent(It.IsAny<PropertyInfo>()), Times.Once);
+
+            this.streamContentServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
