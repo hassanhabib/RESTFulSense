@@ -21,9 +21,9 @@ namespace RESTFulSense.Services.Processings.StringContents
         public IEnumerable<NamedStringContent> FilterStringContents(List<PropertyValue> propertyValues) =>
         TryCatch(() =>
         {
-            List<NamedStringContent> namedStringContents = new List<NamedStringContent>();
+            var namedStringContents = new List<NamedStringContent>();
 
-            foreach (var propertyValue in propertyValues)
+            foreach (PropertyValue propertyValue in propertyValues)
             {
                 RESTFulStringContentAttribute rESTFulStringContentAttribute =
                     this.stringContentService.RetrieveStringContent(propertyValue.PropertyInfo);

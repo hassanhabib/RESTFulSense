@@ -10,8 +10,7 @@ namespace RESTFulSense.Models.Processings.StreamContents.Exceptions
     public class StreamContentProcessingServiceException : Xeption
     {
         public StreamContentProcessingServiceException(Exception innerException)
-            : base(message: "String stream service error occurred, contact support.",
-                  innerException)
+            : base(message: "String stream service error occurred, contact support.", innerException)
         { }
     }
 }
