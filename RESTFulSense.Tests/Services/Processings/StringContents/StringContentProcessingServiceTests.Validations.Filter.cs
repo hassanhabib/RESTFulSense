@@ -76,8 +76,8 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
             // given
             dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
             dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
-            dynamic[] randomProperties =
-                ShuffleRandomProperties(randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
+            IEnumerable<dynamic> allProperties = randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute);
+            dynamic[] randomProperties = ShuffleRandomProperties(allProperties);
 
             PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
             PropertyInfo inputPropertyInfo = somePropertyInfo;
@@ -126,8 +126,10 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
             // given
             dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
             dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
+
+            IEnumerable<dynamic> allProperties = randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute);
             dynamic[] randomProperties =
-                ShuffleRandomProperties(randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
+                ShuffleRandomProperties(allProperties);
 
             PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
             PropertyInfo inputPropertyInfo = somePropertyInfo;

@@ -22,8 +22,9 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
             // given
             dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
             dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
-            dynamic[] randomProperties =
-                ShuffleRandomProperties(randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
+
+            dynamic[] randomProperties = ShuffleRandomProperties(
+                randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
 
             List<PropertyInfo> randomPropertyInfos =
                 randomProperties.Select(GetPropertyInfo).ToList();
@@ -40,11 +41,12 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
                 }).ToList();
 
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
+
             List<RESTFulStringContentAttribute> expectedRESTFulStringContentAttributes =
                 randomProperties.Select(a => (RESTFulStringContentAttribute)a.Attribute)
                     .ToList();
 
-            foreach (var property in randomProperties)
+            foreach (dynamic property in randomProperties)
             {
                 PropertyInfo propertyInfo = GetPropertyInfo(property);
                 this.stringContentServiceMock.Setup(service =>
@@ -60,9 +62,10 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
             // then
             actualNamedStringContent.Should().BeEquivalentTo(expectedNamedStringContents);
 
-            foreach (var property in randomProperties)
+            foreach (dynamic property in randomProperties)
             {
                 PropertyInfo propertyInfo = GetPropertyInfo(property);
+
                 this.stringContentServiceMock.Verify(service =>
                     service.RetrieveStringContent(propertyInfo), Times.Once);
             }
