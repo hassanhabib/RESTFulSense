@@ -22,6 +22,10 @@ namespace RESTFulSense.Services.Processings.FileNames
             {
                 throw new FileNameProcessingDependencyValidationException(fileNameValidationException);
             }
+            catch(FileNameServiceException fileNameServiceException)
+            {
+                throw new FileNameProcessingDependencyException(fileNameServiceException);
+            }
         }
     }
 }
