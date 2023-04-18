@@ -9,7 +9,7 @@ using Moq;
 using RESTFulSense.Models.Foundations.Properties;
 using Xunit;
 
-namespace RESTFulSense.Tests.Services.Processings
+namespace RESTFulSense.Tests.Services.Processings.Properties
 {
     public partial class PropertyProcessingServiceTests
     {

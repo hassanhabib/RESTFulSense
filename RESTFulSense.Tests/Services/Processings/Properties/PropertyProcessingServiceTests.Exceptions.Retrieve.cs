@@ -11,7 +11,7 @@ using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using RESTFulSense.Models.Processings.Properties.Exceptions;
 using Xunit;
 
-namespace RESTFulSense.Tests.Services.Processings
+namespace RESTFulSense.Tests.Services.Processings.Properties
 {
     public partial class PropertyProcessingServiceTests
     {

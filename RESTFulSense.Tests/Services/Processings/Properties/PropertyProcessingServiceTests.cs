@@ -12,7 +12,7 @@ using RESTFulSense.Services.Foundations.Properties;
 using RESTFulSense.Services.Processings.Properties;
 using Tynamix.ObjectFiller;
 
-namespace RESTFulSense.Tests.Services.Processings
+namespace RESTFulSense.Tests.Services.Processings.Properties
 {
     public partial class PropertyProcessingServiceTests
     {
