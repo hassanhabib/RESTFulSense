@@ -124,7 +124,8 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
 
         [Fact]
         public void ShouldThrowStreamContentProcessingServiceExceptionIfExceptionOccurs()
-        {            // given
+        {
+            // given
             dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
             dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
             dynamic[] randomProperties =
