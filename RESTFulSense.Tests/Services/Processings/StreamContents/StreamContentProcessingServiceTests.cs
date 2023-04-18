@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using Moq;
 using RESTFulSense.Models.Attributes;
-using RESTFulSense.Models.Processings.StringContents;
+using RESTFulSense.Models.Processings.StreamContents;
 using RESTFulSense.Services.Foundations.StreamContents;
 using RESTFulSense.Services.Processings.StreamContents;
 using Tynamix.ObjectFiller;
@@ -53,9 +53,9 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
             return new
             {
                 PropertyInfo = CreateMockPropertyInfo(),
-                Object = CreateSomeObject(),
+                Object = CreateRandomStream(),
                 Name = CreateRandomString(),
-                Value = CreateRandomStream(),
+                Value = CreateRandomString(),
                 Attribute = default(RESTFulFileContentStreamAttribute),
             };
         }
@@ -65,9 +65,9 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
             return new
             {
                 PropertyInfo = CreateMockPropertyInfo(),
-                Object = CreateSomeObject(),
+                Object = CreateRandomStream(),
                 Name = CreateRandomString(),
-                Value = CreateRandomStream(),
+                Value = CreateRandomString(),
                 Attribute = CreateRandomRESTFulFileContentStreamAttribute(),
             };
         }
@@ -102,12 +102,13 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
         private static PropertyInfo GetPropertyInfo(dynamic property) =>
            (PropertyInfo)property.PropertyInfo;
 
-        private static NamedStringContent GetAttribute(dynamic property)
+        private static NamedStreamContent GetAttribute(dynamic property)
         {
-            return new NamedStringContent
+            return new NamedStreamContent
             {
                 Name = property.Attribute?.Name ?? null,
-                StringContent = new StringContent(CreateRandomString())
+                StreamContent = new StreamContent(CreateRandomStream()),
+                FileName = null,
             };
         }
     }

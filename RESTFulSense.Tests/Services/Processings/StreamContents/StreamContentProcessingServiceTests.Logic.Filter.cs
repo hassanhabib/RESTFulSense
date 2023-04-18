@@ -10,7 +10,6 @@ using Moq;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
-using RESTFulSense.Models.Processings.StringContents;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Processings.StreamContents
@@ -29,7 +28,7 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
             List<PropertyInfo> randomPropertyInfos =
                 randomProperties.Select(GetPropertyInfo).ToList();
 
-            List<NamedStringContent> expectedNamedStringContents =
+            List<NamedStreamContent> expectedNamedStreamContents =
                 randomProperties.Where(a => a.Attribute != null)
                     .Select(GetAttribute).ToList();
 
@@ -37,7 +36,7 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
                 randomProperties.Select(property => new PropertyValue
                 {
                     PropertyInfo = property.PropertyInfo,
-                    Value = property.Value
+                    Value = property.Object
                 }).ToList();
 
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
@@ -59,7 +58,7 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
                     .ToList();
 
             // then
-            actualNamedStreamContents.Should().BeEquivalentTo(expectedNamedStringContents);
+            actualNamedStreamContents.Should().BeEquivalentTo(expectedNamedStreamContents);
 
             foreach (var property in randomProperties)
             {
