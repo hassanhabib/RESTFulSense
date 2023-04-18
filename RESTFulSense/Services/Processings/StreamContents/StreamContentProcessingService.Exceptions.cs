@@ -25,6 +25,10 @@ namespace RESTFulSense.Services.Processings.StreamContents
             {
                 throw new StreamContentProcessingDependencyValidationException(streamContentValidationException);
             }
+            catch(StreamContentServiceException streamContentServiceException)
+            {
+                throw new StreamContentProcessingDependencyException(streamContentServiceException);
+            }
         }
     }
 }
