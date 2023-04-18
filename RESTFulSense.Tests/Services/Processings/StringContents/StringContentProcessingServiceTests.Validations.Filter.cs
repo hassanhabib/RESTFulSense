@@ -11,6 +11,7 @@ using Moq;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Foundations.StringContents.Exceptions;
 using RESTFulSense.Models.Processings.Properties.Exceptions;
+using RESTFulSense.Models.Processings.StreamContents.Exceptions;
 using RESTFulSense.Models.Processings.StringContents;
 using RESTFulSense.Models.Processings.StringContents.Exceptions;
 using Xunit;

@@ -54,7 +54,7 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
 
             // when
             IEnumerable<NamedStreamContent> actualNamedStreamContents =
-                this.streamContentProcessingService.FilterStringContents(inputPropertyValues)
+                this.streamContentProcessingService.FilterStreamContents(inputPropertyValues)
                     .ToList();
 
             // then

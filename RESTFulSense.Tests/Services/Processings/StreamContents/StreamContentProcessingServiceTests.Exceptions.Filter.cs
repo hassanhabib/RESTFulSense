@@ -1,0 +1,75 @@
+﻿// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
+
+using Moq;
+using RESTFulSense.Models.Foundations.Properties;
+using RESTFulSense.Models.Foundations.StreamContents.Exceptions;
+using RESTFulSense.Models.Processings.StreamContents.Exceptions;
+using RESTFulSense.Models.Processings.StreamContents;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System;
+using Xunit;
+using FluentAssertions;
+
+namespace RESTFulSense.Tests.Services.Processings.StreamContents
+{
+    public partial class StreamContentProcessingServiceTests
+    {
+        [Fact]
+        public void ShouldThrowStreamContentProcessingDependencyValidationExceptionIfStreamContentValidationExceptionOccurs()
+        {
+            // given
+            dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
+            dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
+            dynamic[] randomProperties =
+                ShuffleRandomProperties(randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
+
+            PropertyInfo somePropertyInfo = CreateMockPropertyInfo();
+            PropertyInfo inputPropertyInfo = somePropertyInfo;
+
+            List<PropertyValue> randomPropertyValues =
+                 randomProperties.Select(property => new PropertyValue
+                 {
+                     PropertyInfo = property.PropertyInfo,
+                     Value = property.Value
+                 }).ToList();
+
+            List<PropertyValue> inputPropertyValues = randomPropertyValues;
+
+            var nullPropertyInfoException = new NullPropertyInfoException();
+
+            var stringContentValidationException =
+                new StreamContentValidationException(nullPropertyInfoException);
+
+            var expectedStreamContentProcessingDependencyValidationException =
+                new StreamContentProcessingDependencyValidationException(stringContentValidationException);
+
+            this.streamContentServiceMock.Setup(service =>
+                service.RetrieveStreamContent(It.IsAny<PropertyInfo>()))
+                    .Throws(stringContentValidationException);
+
+            // when
+            Func<IEnumerable<NamedStreamContent>> filterStreamContentsFunction = () =>
+               this.streamContentProcessingService.FilterStreamContents(inputPropertyValues).ToList();
+
+            StreamContentProcessingDependencyValidationException actualStreamContentProcessingDependencyValidationException =
+               Assert.Throws<StreamContentProcessingDependencyValidationException>(filterStreamContentsFunction);
+
+            // then
+            actualStreamContentProcessingDependencyValidationException.Should()
+                .BeEquivalentTo(expectedStreamContentProcessingDependencyValidationException);
+
+            this.streamContentServiceMock.Verify(service =>
+                service.RetrieveStreamContent(It.IsAny<PropertyInfo>()), Times.Once);
+
+            this.streamContentServiceMock.VerifyNoOtherCalls();
+        }
+    }
+}

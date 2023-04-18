@@ -12,14 +12,15 @@ using RESTFulSense.Services.Foundations.StreamContents;
 
 namespace RESTFulSense.Services.Processings.StreamContents
 {
-    internal class StreamContentProcessingService : IStreamContentProcessingService
+    internal partial class StreamContentProcessingService : IStreamContentProcessingService
     {
         private readonly IStreamContentService streamContentService;
 
         public StreamContentProcessingService(IStreamContentService streamContentService) =>
             this.streamContentService = streamContentService;
 
-        public IEnumerable<NamedStreamContent> FilterStringContents(List<PropertyValue> propertyValues)
+        public IEnumerable<NamedStreamContent> FilterStreamContents(List<PropertyValue> propertyValues) =>
+        TryCatch(() =>
         {
             List<NamedStreamContent> namedStreamContents = new List<NamedStreamContent>();
 
@@ -41,6 +42,6 @@ namespace RESTFulSense.Services.Processings.StreamContents
             }
 
             return namedStreamContents;
-        }
+        });
     }
 }

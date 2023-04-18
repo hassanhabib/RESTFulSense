@@ -3,13 +3,19 @@
 // ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
 
 namespace RESTFulSense.Services.Processings.StreamContents
 {
-    internal interface IStreamContentProcessingService
+    internal partial class StreamContentProcessingService
     {
-        IEnumerable<NamedStreamContent> FilterStreamContents(List<PropertyValue> propertyValues);
+        private delegate IEnumerable<NamedStreamContent>
+            ReturningNamedStreamContentsFunction();
+
+        private static IEnumerable<NamedStreamContent> TryCatch(
+            ReturningNamedStreamContentsFunction returningNamedStreamContentsFunction)
+        {
+            return returningNamedStreamContentsFunction();
+        }
     }
 }
