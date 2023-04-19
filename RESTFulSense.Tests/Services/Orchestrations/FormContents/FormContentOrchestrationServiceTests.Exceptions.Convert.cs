@@ -99,8 +99,8 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
             var stringContentProcessingDependencyException =
                 new StringContentProcessingDependencyException(nullObjectException);
 
-            var expectedFormContentOrchestrationDependencyValidationException =
-                new FormContentOrchestrationDependencyValidationException(stringContentProcessingDependencyException);
+            var expectedFormContentOrchestrationDependencyException =
+                new FormContentOrchestrationDependencyException(stringContentProcessingDependencyException);
 
             this.propertyProcessingServiceMock.Setup(service =>
                 service.RetrieveProperties(It.IsAny<Object>()))
@@ -114,12 +114,12 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
             Func<MultipartFormDataContent> convertToMultipartFormDataContentFunction = () =>
                 this.formContentOrchestrationService.ConvertToMultipartFormDataContent(inputObject);
 
-            FormContentOrchestrationDependencyValidationException actualFormContentOrchestrationDependencyValidationException =
-               Assert.Throws<FormContentOrchestrationDependencyValidationException>(convertToMultipartFormDataContentFunction);
+            FormContentOrchestrationDependencyException actualFormContentOrchestrationDependencyException =
+               Assert.Throws<FormContentOrchestrationDependencyException>(convertToMultipartFormDataContentFunction);
 
             // then
-            actualFormContentOrchestrationDependencyValidationException.Should()
-                .BeEquivalentTo(expectedFormContentOrchestrationDependencyValidationException);
+            actualFormContentOrchestrationDependencyException.Should()
+                .BeEquivalentTo(expectedFormContentOrchestrationDependencyException);
 
             this.propertyProcessingServiceMock.Verify(service =>
                 service.RetrieveProperties(inputObject),
