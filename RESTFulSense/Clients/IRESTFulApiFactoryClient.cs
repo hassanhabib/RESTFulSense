@@ -1,8 +1,6 @@
-﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
-// Licensed under the MIT License.
-// See License.txt in the project root for license information.
-// ---------------------------------------------------------------
+﻿// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
 
 using System.IO;
 using System.Threading;
@@ -54,6 +52,17 @@ namespace RESTFulSense.Clients
             TContent content,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
+
+        ValueTask<TResult> PostFormAsync<TResult, TContent>(
+            string relativeUrl,
+            TContent content)
+            where TContent : class;
+
+        ValueTask<TResult> PostFormAsync<TResult, TContent>(
+            string relativeUrl,
+            TContent content,
+            CancellationToken cancellationToken)
+            where TContent : class;
 
         ValueTask<T> PutContentAsync<T>(
             string relativeUrl,

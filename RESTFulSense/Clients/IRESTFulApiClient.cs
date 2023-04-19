@@ -1,8 +1,6 @@
-﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
-// Licensed under the MIT License.
-// See License.txt in the project root for license information.
-// ---------------------------------------------------------------
+﻿// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
 
 using System.IO;
 using System.Threading;
@@ -87,5 +85,7 @@ namespace RESTFulSense.Clients
         ValueTask DeleteContentAsync(string relativeUrl, CancellationToken cancellationToken);
         ValueTask<T> DeleteContentAsync<T>(string relativeUrl);
         ValueTask<T> DeleteContentAsync<T>(string relativeUrl, CancellationToken cancellationToken);
+        ValueTask<TResult> PostFormAsync<TResult, TContent>(string relativeUrl, TContent content, CancellationToken cancellationToken) where TContent : class;
+        ValueTask<TResult> PostFormAsync<TResult, TContent>(string relativeUrl, TContent content) where TContent : class;
     }
 }

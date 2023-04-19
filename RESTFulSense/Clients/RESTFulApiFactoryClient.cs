@@ -1,15 +1,17 @@
-﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
-// Licensed under the MIT License.
-// See License.txt in the project root for license information.
-// ---------------------------------------------------------------
+﻿// ---------------------------------------------------------------------------------- 
+// Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
+// ----------------------------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using RESTFulSense.Extensions;
 using RESTFulSense.Services;
+using RESTFulSense.Services.Orchestrations.FormContents;
 
 namespace RESTFulSense.Clients
 {
@@ -130,6 +132,34 @@ namespace RESTFulSense.Clients
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public ValueTask<TResult> PostFormAsync<TResult, TContent>(
+            string relativeUrl,
+            TContent content)
+            where TContent : class =>
+            PostFormAsync<TResult, TContent>(relativeUrl, content, CancellationToken.None);
+
+        public async ValueTask<TResult> PostFormAsync<TResult, TContent>(
+            string relativeUrl,
+            TContent content,
+            CancellationToken cancellationToken)
+            where TContent : class
+        {
+            IServiceProvider serviceProvider = RegisterServices();
+
+            IFormContentOrchestrationService formContentOrchestrationService =
+                serviceProvider.GetRequiredService<IFormContentOrchestrationService>();
+
+            MultipartFormDataContent multipartFormDataContent =
+                formContentOrchestrationService.ConvertToMultipartFormDataContent(content);
+
+            HttpResponseMessage responseMessage =
+                  await this.httpClient.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -259,6 +289,19 @@ namespace RESTFulSense.Clients
             string responseString = await responseMessage.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(responseString);
+        }
+
+        private static IServiceProvider RegisterServices()
+        {
+            var serviceCollection = new ServiceCollection()
+                .AddBroker()
+                .AddFoundationServices()
+                .AddProcessingServices()
+                .AddOrchestrationService();
+
+            IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
+            return serviceProvider;
         }
     }
 }
