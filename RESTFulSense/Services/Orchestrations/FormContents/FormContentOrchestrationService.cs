@@ -36,22 +36,41 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
         }
 
         public MultipartFormDataContent ConvertToMultipartFormDataContent<T>(T @object)
-            where T : class
+            where T : class =>
+        TryCatch(() =>
         {
             List<PropertyValue> propertyValues = this.RetrieveProperties(@object);
 
-            List<NamedStringContent> namedStringContents = this.FilterStringContents(propertyValues);
-
-            List<NamedStreamContent> namedStreamContents = this.FilterStreamContents(propertyValues);
-
-            this.UpdateFileNames(namedStreamContents, propertyValues);
-
             MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
+
+            AddStringContents(propertyValues, multipartFormDataContent);
+
+            AddStreamContents(propertyValues, multipartFormDataContent);
+
+            return multipartFormDataContent;
+        });
+
+        private List<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
+            this.propertyProcessingService.RetrieveProperties(@object).ToList();
+
+        private void AddStringContents(List<PropertyValue> propertyValues, MultipartFormDataContent multipartFormDataContent)
+        {
+            List<NamedStringContent> namedStringContents = this.FilterStringContents(propertyValues);
 
             foreach (NamedStringContent namedStringContent in namedStringContents)
             {
                 multipartFormDataContent.Add(namedStringContent.StringContent, namedStringContent.Name);
             }
+        }
+
+        private List<NamedStringContent> FilterStringContents(List<PropertyValue> propertyValues) =>
+            this.stringContentProcessingService.FilterStringContents(propertyValues).ToList();
+
+        private void AddStreamContents(List<PropertyValue> propertyValues, MultipartFormDataContent multipartFormDataContent)
+        {
+            List<NamedStreamContent> namedStreamContents = this.FilterStreamContents(propertyValues);
+
+            this.UpdateFileNames(namedStreamContents, propertyValues);
 
             foreach (NamedStreamContent namedStreamContent in namedStreamContents)
             {
@@ -66,8 +85,14 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
                         .Add(namedStreamContent.StreamContent, namedStreamContent.Name, namedStreamContent.FileName);
                 }
             }
-
-            return multipartFormDataContent;
         }
+
+        private List<NamedStreamContent> FilterStreamContents(List<PropertyValue> propertyValues) =>
+            this.streamContentProcessingService.FilterStreamContents(propertyValues).ToList();
+
+        private void UpdateFileNames(
+            IEnumerable<NamedStreamContent> namedStreamContents,
+            IEnumerable<PropertyValue> propertyValues) =>
+            this.fileNameProcessingService.UpdateFileNames(namedStreamContents, propertyValues);
     }
 }
