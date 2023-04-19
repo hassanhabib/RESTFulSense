@@ -282,5 +282,58 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
             this.streamContentProcessingServiceMock.VerifyNoOtherCalls();
             this.fileNameProcessingServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowServiceExceptionOnConvertToMultipartFormDataContentIfServiceErrorOccurs()
+        {
+            // given
+            Object someObject = CreateSomeObject();
+            Object inputObject = someObject;
+
+            List<dynamic> randomProperties = GetRandomProperties();
+
+            List<PropertyValue> returnedPropertyValues =
+                randomProperties.Select(CreatePropertyValue).ToList();
+
+            List<NamedStringContent> returnedNamedStringContents
+                = randomProperties.Where(randomProperty => randomProperty.Type == PropertyType.StringContent)
+                     .Select(CreateNamedStringContent).ToList();
+
+            List<NamedStreamContent> returnedNamedStreamContents
+                = randomProperties.Where(randomProperty => randomProperty.Type == PropertyType.StreamContent)
+                     .Select(CreateNamedStreamContent).ToList();
+
+            var serviceException = new Exception();
+
+            var failedFormContentOrchestrationServiceException =
+                new FailedFormContentOrchestrationServiceException(serviceException);
+
+            var expectedFormContentOrchestrationServiceException =
+                new FormContentOrchestrationServiceException(failedFormContentOrchestrationServiceException);
+
+            this.propertyProcessingServiceMock.Setup(service =>
+                service.RetrieveProperties(It.IsAny<Object>()))
+                    .Throws(serviceException);
+
+            // when
+            Func<MultipartFormDataContent> convertToMultipartFormDataContentFunction = () =>
+                this.formContentOrchestrationService.ConvertToMultipartFormDataContent(inputObject);
+
+            FormContentOrchestrationServiceException actualFormContentOrchestrationServiceException =
+               Assert.Throws<FormContentOrchestrationServiceException>(convertToMultipartFormDataContentFunction);
+
+            // then
+            actualFormContentOrchestrationServiceException.Should()
+                .BeEquivalentTo(expectedFormContentOrchestrationServiceException);
+
+            this.propertyProcessingServiceMock.Verify(service =>
+                service.RetrieveProperties(inputObject),
+                    Times.Once);
+
+            this.propertyProcessingServiceMock.VerifyNoOtherCalls();
+            this.stringContentProcessingServiceMock.VerifyNoOtherCalls();
+            this.streamContentProcessingServiceMock.VerifyNoOtherCalls();
+            this.fileNameProcessingServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
