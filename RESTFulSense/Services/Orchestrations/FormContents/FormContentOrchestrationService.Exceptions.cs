@@ -54,6 +54,10 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
             {
                 throw new FormContentOrchestrationDependencyException(streamContentProcessingDependencyException);
             }
+            catch(FileNameProcessingDependencyException fileNameProcessingDependencyValidationException)
+            {
+                throw new FormContentOrchestrationDependencyException(fileNameProcessingDependencyValidationException);
+            }
         }
     }
 }
