@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Net.Http;
 using RESTFulSense.Models.Orchestrations.FormContents.Exceptions;
 using RESTFulSense.Models.Processings.FileNames.Exceptions;
@@ -54,9 +55,16 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
             {
                 throw new FormContentOrchestrationDependencyException(streamContentProcessingDependencyException);
             }
-            catch(FileNameProcessingDependencyException fileNameProcessingDependencyValidationException)
+            catch (FileNameProcessingDependencyException fileNameProcessingDependencyValidationException)
             {
                 throw new FormContentOrchestrationDependencyException(fileNameProcessingDependencyValidationException);
+            }
+            catch (Exception exception)
+            {
+                var failedFormContentOrchestrationServiceException =
+                    new FailedFormContentOrchestrationServiceException(exception);
+
+                throw new FormContentOrchestrationServiceException(failedFormContentOrchestrationServiceException);
             }
         }
     }
