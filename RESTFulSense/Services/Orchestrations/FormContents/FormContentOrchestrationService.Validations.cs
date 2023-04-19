@@ -15,7 +15,15 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
         private static MultipartFormDataContent TryCatch(
             ReturningMultipartFormDataContentFunction returningMultipartFormDataContentFunction)
         {
-            return returningMultipartFormDataContentFunction();
+            try
+            {
+                return returningMultipartFormDataContentFunction();
+            }
+            catch (PropertyProcessingDependencyValidationException propertyProcessingDependencyValidationException)
+            {
+                throw new FormContentOrchestrationDependencyValidationException(
+                    propertyProcessingDependencyValidationException);
+            }
         }
     }
 }
