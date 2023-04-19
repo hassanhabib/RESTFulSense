@@ -11,6 +11,7 @@ using Moq;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using RESTFulSense.Models.Orchestrations.FormContents.Exceptions;
+using RESTFulSense.Models.Processings.FileNames.Exceptions;
 using RESTFulSense.Models.Processings.Properties.Exceptions;
 using RESTFulSense.Models.Processings.StreamContents;
 using RESTFulSense.Models.Processings.StreamContents.Exceptions;
@@ -197,6 +198,83 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
 
             this.streamContentProcessingServiceMock.Verify(service =>
                  service.FilterStreamContents(returnedPropertyValues),
+                    Times.Once);
+
+            this.propertyProcessingServiceMock.VerifyNoOtherCalls();
+            this.stringContentProcessingServiceMock.VerifyNoOtherCalls();
+            this.streamContentProcessingServiceMock.VerifyNoOtherCalls();
+            this.fileNameProcessingServiceMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void ShouldThrowFormContentOrchestrationDependencyExceptionIfFileNameProcessingDependencyExceptionOccurs()
+        {
+            // given
+            Object someObject = CreateSomeObject();
+            Object inputObject = someObject;
+
+            List<dynamic> randomProperties = GetRandomProperties();
+
+            List<PropertyValue> returnedPropertyValues =
+                randomProperties.Select(CreatePropertyValue).ToList();
+
+            List<NamedStringContent> returnedNamedStringContents
+                = randomProperties.Where(randomProperty => randomProperty.Type == PropertyType.StringContent)
+                     .Select(CreateNamedStringContent).ToList();
+
+            List<NamedStreamContent> returnedNamedStreamContents
+                = randomProperties.Where(randomProperty => randomProperty.Type == PropertyType.StreamContent)
+                     .Select(CreateNamedStreamContent).ToList();
+
+            var nullObjectException = new NullObjectException();
+
+            var fileNameProcessingDependencyException =
+                new FileNameProcessingDependencyException(nullObjectException);
+
+            var expectedFormContentOrchestrationDependencyException =
+                new FormContentOrchestrationDependencyException(fileNameProcessingDependencyException);
+
+            this.propertyProcessingServiceMock.Setup(service =>
+                service.RetrieveProperties(It.IsAny<Object>()))
+                    .Returns(returnedPropertyValues);
+
+            this.stringContentProcessingServiceMock.Setup(service =>
+                service.FilterStringContents(returnedPropertyValues))
+                    .Returns(returnedNamedStringContents);
+
+            this.streamContentProcessingServiceMock.Setup(service =>
+                service.FilterStreamContents(returnedPropertyValues))
+                    .Returns(returnedNamedStreamContents);
+
+            this.fileNameProcessingServiceMock.Setup(service =>
+                service.UpdateFileNames(It.IsAny<IEnumerable<NamedStreamContent>>(), returnedPropertyValues))
+                    .Throws(fileNameProcessingDependencyException);
+
+            // when
+            Func<MultipartFormDataContent> convertToMultipartFormDataContentFunction = () =>
+                this.formContentOrchestrationService.ConvertToMultipartFormDataContent(inputObject);
+
+            FormContentOrchestrationDependencyException actualFormContentOrchestrationDependencyException =
+               Assert.Throws<FormContentOrchestrationDependencyException>(convertToMultipartFormDataContentFunction);
+
+            // then
+            actualFormContentOrchestrationDependencyException.Should()
+                .BeEquivalentTo(expectedFormContentOrchestrationDependencyException);
+
+            this.propertyProcessingServiceMock.Verify(service =>
+                service.RetrieveProperties(inputObject),
+                    Times.Once);
+
+            this.stringContentProcessingServiceMock.Verify(service =>
+                service.FilterStringContents(returnedPropertyValues),
+                     Times.Once);
+
+            this.streamContentProcessingServiceMock.Verify(service =>
+                 service.FilterStreamContents(returnedPropertyValues),
+                    Times.Once);
+
+            this.fileNameProcessingServiceMock.Verify(service =>
+                service.UpdateFileNames(It.IsAny<IEnumerable<NamedStreamContent>>(), returnedPropertyValues),
                     Times.Once);
 
             this.propertyProcessingServiceMock.VerifyNoOtherCalls();
