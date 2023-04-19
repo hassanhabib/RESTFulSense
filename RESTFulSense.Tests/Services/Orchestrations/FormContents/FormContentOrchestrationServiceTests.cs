@@ -6,9 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using Moq;
 using RESTFulSense.Models.Foundations.Properties;
+using RESTFulSense.Models.Processings.StreamContents;
+using RESTFulSense.Models.Processings.StringContents;
 using RESTFulSense.Services.Orchestrations.FormContents;
 using RESTFulSense.Services.Processings.FileNames;
 using RESTFulSense.Services.Processings.Properties;
@@ -40,6 +43,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
                     streamContentProcessingServiceMock.Object,
                     fileNameProcessingServiceMock.Object);
         }
+        private Object CreateSomeObject() => new Object();
 
         private enum PropertyType
         {
@@ -49,7 +53,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
             FileName
         }
 
-        private PropertyInfo GetMockPropertyInfo() => new Mock<PropertyInfo>().Object;
+        private static PropertyInfo GetMockPropertyInfo() => new Mock<PropertyInfo>().Object;
 
         private PropertyType GetRandomPropertyType() =>
             Enum.GetValues<PropertyType>().OrderBy(a => GetBigRandomNumber()).First();
@@ -152,5 +156,34 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
 
             return propertyValue;
         }
+
+        private static PropertyValue CreatePropertyValue(dynamic randomProperty)
+        {
+            return new PropertyValue
+            {
+                Value = randomProperty.Value,
+                PropertyInfo = GetMockPropertyInfo()
+            };
+        }
+
+        private static NamedStringContent CreateNamedStringContent(dynamic randomProperty)
+        {
+            return new NamedStringContent
+            {
+                Name = randomProperty.Name,
+                StringContent = new StringContent(randomProperty.Value)
+            };
+        }
+
+        private static NamedStreamContent CreateNamedStreamContent(dynamic randomProperty)
+        {
+            return new NamedStreamContent
+            {
+                Name = randomProperty.Name,
+                StreamContent = new StreamContent(randomProperty.Value),
+                FileName = randomProperty.FileName
+            };
+        }
+
     }
 }

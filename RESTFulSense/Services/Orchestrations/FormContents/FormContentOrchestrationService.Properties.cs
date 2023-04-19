@@ -3,13 +3,14 @@
 // ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using RESTFulSense.Models.Foundations.Properties;
 
 namespace RESTFulSense.Services.Orchestrations.FormContents
 {
     internal partial class FormContentOrchestrationService
     {
-        private IEnumerable<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
-            this.propertyProcessingService.RetrieveProperties(@object);
+        private List<PropertyValue> RetrieveProperties<T>(T @object) where T : class =>
+            this.propertyProcessingService.RetrieveProperties(@object).ToList();
     }
 }

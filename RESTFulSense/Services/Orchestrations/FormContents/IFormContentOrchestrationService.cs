@@ -8,6 +8,6 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
 {
     internal interface IFormContentOrchestrationService
     {
-        MultipartFormDataContent ConvertToMultipartFormDataContent<T>(T @object);
+        MultipartFormDataContent ConvertToMultipartFormDataContent<T>(T @object) where T : class;
     }
 }

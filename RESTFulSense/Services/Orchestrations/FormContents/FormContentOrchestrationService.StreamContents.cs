@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
 
@@ -10,7 +11,7 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
 {
     internal partial class FormContentOrchestrationService
     {
-        private IEnumerable<NamedStreamContent> FilterStreamContents(List<PropertyValue> propertyValues) =>
-            this.streamContentProcessingService.FilterStreamContents(propertyValues);
+        private List<NamedStreamContent> FilterStreamContents(List<PropertyValue> propertyValues) =>
+            this.streamContentProcessingService.FilterStreamContents(propertyValues).ToList();
     }
 }

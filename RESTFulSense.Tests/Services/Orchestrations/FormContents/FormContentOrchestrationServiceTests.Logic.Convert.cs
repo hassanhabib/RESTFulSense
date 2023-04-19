@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
+using FluentAssertions;
 using Moq;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
@@ -21,50 +21,39 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
         public void ShouldConvertToMultipartFormDataContent()
         {
             // given
-            Object someObject = new Object();
+            Object someObject = CreateSomeObject();
             Object inputObject = someObject;
 
             List<dynamic> randomProperties = GetRandomProperties();
 
-            List<PropertyValue> randomPropertyValues =
-                randomProperties.Select(randomProperty =>
-                    new PropertyValue
-                    {
-                        Value = randomProperty.Value,
-                        PropertyInfo = GetMockPropertyInfo()
-                    }).ToList();
+            List<PropertyValue> returnedPropertyValues =
+                randomProperties.Select(CreatePropertyValue).ToList();
 
-            List<NamedStringContent> namedStringContents
+            List<NamedStringContent> returnedNamedStringContents
                 = randomProperties.Where(randomProperty => randomProperty.Type == PropertyType.StringContent)
-                     .Select(randomProperty => new NamedStringContent
-                     {
-                         Name = randomProperty.Name,
-                         StringContent = new StringContent(randomProperty.Value)
-                     }).ToList();
+                     .Select(CreateNamedStringContent).ToList();
 
-            List<NamedStreamContent> namedStreamContents
+            List<NamedStreamContent> returnedNamedStreamContents
                 = randomProperties.Where(randomProperty => randomProperty.Type == PropertyType.StreamContent)
-                     .Select(randomProperty => new NamedStreamContent
-                     {
-                         Name = randomProperty.Name,
-                         StreamContent = new StreamContent(randomProperty.Value),
-                         FileName = randomProperty.FileName
-                     }).ToList();
+                     .Select(CreateNamedStreamContent).ToList();
 
-            this.propertyProcessingServiceMock.Setup(service =>
+            int expectedItemCount = returnedNamedStringContents.Count + returnedNamedStreamContents.Count;
+            var sequence = new MockSequence();
+
+            this.propertyProcessingServiceMock.InSequence(sequence).Setup(service =>
                 service.RetrieveProperties(It.IsAny<Object>()))
-                    .Returns(randomPropertyValues);
+                    .Returns(returnedPropertyValues);
 
-            this.stringContentProcessingServiceMock.Setup(service =>
-                service.FilterStringContents(It.IsAny<List<PropertyValue>>()))
-                    .Returns(namedStringContents);
+            this.stringContentProcessingServiceMock.InSequence(sequence).Setup(service =>
+                service.FilterStringContents(returnedPropertyValues))
+                    .Returns(returnedNamedStringContents);
 
-            this.streamContentProcessingServiceMock.Setup(service =>
-                service.FilterStreamContents(It.IsAny<List<PropertyValue>>()))
-                    .Returns(namedStreamContents);
+            this.streamContentProcessingServiceMock.InSequence(sequence).Setup(service =>
+                service.FilterStreamContents(returnedPropertyValues))
+                    .Returns(returnedNamedStreamContents);
 
-            this.fileNameProcessingServiceMock.Setup(service =>
-                service.UpdateFileNames(It.IsAny<IEnumerable<NamedStreamContent>>(), It.IsAny<List<PropertyValue>>()))
+            this.fileNameProcessingServiceMock.InSequence(sequence).Setup(service =>
+                service.UpdateFileNames(It.IsAny<IEnumerable<NamedStreamContent>>(), returnedPropertyValues))
                     .Verifiable();
 
             // when
@@ -72,20 +61,33 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
                 this.formContentOrchestrationService.ConvertToMultipartFormDataContent(inputObject);
 
             // then
+            foreach (NamedStringContent namedStringContents in returnedNamedStringContents)
+            {
+                actualMultipartFormDataContent.Contains(namedStringContents.StringContent).Should().BeTrue();
+                namedStringContents.StringContent.Headers.ContentDisposition.Name.Should().Be(namedStringContents.Name);
+            }
+
+            foreach (NamedStreamContent namedStreamContents in returnedNamedStreamContents)
+            {
+                actualMultipartFormDataContent.Contains(namedStreamContents.StreamContent).Should().BeTrue();
+                namedStreamContents.StreamContent.Headers.ContentDisposition.Name.Should().Be(namedStreamContents.Name);
+                namedStreamContents.StreamContent.Headers.ContentDisposition.FileName.Should().Be(namedStreamContents.FileName);
+            }
+
             this.propertyProcessingServiceMock.Verify(service =>
-                service.RetrieveProperties(It.IsAny<Object>()),
+                service.RetrieveProperties(inputObject),
                     Times.Once);
 
             this.stringContentProcessingServiceMock.Verify(service =>
-                service.FilterStringContents(It.IsAny<List<PropertyValue>>()),
+                service.FilterStringContents(returnedPropertyValues),
                     Times.Once);
 
             this.streamContentProcessingServiceMock.Verify(service =>
-                service.FilterStreamContents(It.IsAny<List<PropertyValue>>()),
+                service.FilterStreamContents(returnedPropertyValues),
                     Times.Once);
 
             this.fileNameProcessingServiceMock.Verify(service =>
-                service.UpdateFileNames(It.IsAny<IEnumerable<NamedStreamContent>>(), It.IsAny<List<PropertyValue>>()),
+                service.UpdateFileNames(It.IsAny<IEnumerable<NamedStreamContent>>(), returnedPropertyValues),
                     Times.Once);
 
             this.propertyProcessingServiceMock.VerifyNoOtherCalls();
