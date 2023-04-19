@@ -4,6 +4,7 @@
 
 using System.Net.Http;
 using RESTFulSense.Models.Orchestrations.FormContents.Exceptions;
+using RESTFulSense.Models.Processings.FileNames.Exceptions;
 using RESTFulSense.Models.Processings.Properties.Exceptions;
 using RESTFulSense.Models.Processings.StreamContents.Exceptions;
 using RESTFulSense.Models.Processings.StringContents.Exceptions;
@@ -35,6 +36,11 @@ namespace RESTFulSense.Services.Orchestrations.FormContents
             {
                 throw new FormContentOrchestrationDependencyValidationException(
                     streamContentProcessingDependencyValidationException);
+            }
+            catch (FileNameProcessingDependencyValidationException fileNameProcessingDependencyValidationException)
+            {
+                throw new FormContentOrchestrationDependencyValidationException(
+                    fileNameProcessingDependencyValidationException);
             }
         }
     }
