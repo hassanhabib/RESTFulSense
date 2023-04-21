@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Services.Foundations.FileNames;
@@ -19,10 +18,8 @@ namespace RESTFulSense.Extensions
 {
     internal static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddBroker(this IServiceCollection services)
-        {
-            return services.AddTransient<IReflectionBroker, ReflectionBroker>();
-        }
+        public static IServiceCollection AddBroker(this IServiceCollection services) =>
+            services.AddTransient<IReflectionBroker, ReflectionBroker>();
 
         public static IServiceCollection AddFoundationServices(this IServiceCollection services)
         {
@@ -42,10 +39,7 @@ namespace RESTFulSense.Extensions
                 .AddTransient<IPropertyProcessingService, PropertyProcessingService>();
         }
 
-        public static IServiceCollection AddOrchestrationService(this IServiceCollection services)
-        {
-            return services
-                .AddTransient<IFormContentOrchestrationService, FormContentOrchestrationService>();
-        }
+        public static IServiceCollection AddOrchestrationService(this IServiceCollection services) =>
+            services.AddTransient<IFormContentOrchestrationService, FormContentOrchestrationService>();
     }
 }
