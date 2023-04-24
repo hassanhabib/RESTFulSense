@@ -9,13 +9,11 @@
 # RESTFulSense 
 I designed & developed this library as a wrapper around the existing .NET Core ```HttpClient``` implementation to provide the following values:
 
-<ol>
-	<li>Meaningful Exceptions for APIs response status codes.</li>
-	<li>Simplified API communications.</li>
-	<li>Test-friendly implementation.</li>
-</ol>
+1. Meaningful Exceptions for APIs response status codes.
 
-<br />
+2. Simplified API communications.
+
+3. Test-friendly implementation.
 
 You can get RESTFulSense [Nuget](https://www.nuget.org/packages/RESTFulSense/) package by typing:
 ```powershell
@@ -25,8 +23,8 @@ Install-Package RESTFulSense
 Here's the details of what this library has to offer:
 
 ### 1. Meaningful Exceptions
-RESTFulSense provide the following exceptions for erroring HTTP Status Codes as follows:
-<br />
+
+##### RESTFulSense provide the following exceptions for erroring HTTP Status Codes as follows:
 
 |Status|Code|Exception|
 |--- |--- |--- |
@@ -70,12 +68,8 @@ RESTFulSense provide the following exceptions for erroring HTTP Status Codes as 
 |NotExtended|510|HttpResponseNotExtendedException|
 |NetworkAuthenticationRequired|511|HttpResponseNetworkAuthenticationRequiredException|
 
-
-<br />
-
 ### 2. Simplified API Communications
 API controllers in ASP.NET Core today don't offer the full range of HTTP Codes that can be used to communicate certain events and errors to end users, in this library we managed to implement all the missing methods to communicate the full range of error codes as follows:
-<br />
 
 #### 2.1 On Controller Level 
 
@@ -115,7 +109,6 @@ API controllers in ASP.NET Core today don't offer the full range of HTTP Codes t
 |NotExtended(object value)|510|
 |NetworkAuthenticationRequired(object value)|511|
 
-
 This can be achieved by simply replacing the inheritance ```ControllerBase``` in your ASP.NET Core Controller class with RESTFulController as follows:
 
 ```csharp
@@ -143,7 +136,6 @@ In your ASP.NET Core application, you can initialize the ```IRESTFulApiFactoryCl
 ```csharp
 services.AddHttpClient<IRESTFulApiFactoryClient, RESTFulApiFactoryClient>(client => client.BaseAddress = new Uri(YOUR_API_URL));
 ```
-<br />
 
 ###### 2.2.1.2 Basic Initialization
 You can also use the RESTFulClient simple initialize in a console app for instance as follows:
@@ -152,7 +144,6 @@ You can also use the RESTFulClient simple initialize in a console app for instan
 var apiClient = new RESTFulApiClient();
 ```
 
-<br />
 
 ##### 2.2.1 Deserialization
 ```csharp
@@ -166,17 +157,14 @@ List<Student> students =
 Student student = 
     await restfulApiClient.PostContentAsync<Student>(relativeUrl: "api/students", content: inputStudent); 
 ```
-<br />
 
 In addition to the wrappers around API calls and serialization/deserialization, this library also provides a simplified way to execute communications without any workarounds.
-<br />
+
 For instance, to execute a ```PUT``` API call without a body, to update a status for instance, you don't have to fake a ```PUT``` body to execute a successful call, you can just do the follows:
 ```csharp
 Account activatedAccount = 
     await restfulApiClient.PutContentAsync(relativeUrl: $"api/accounts/{accountId}/activate");
 ```
-
-<br />
 
 ### 3. Testing-Friendly Implementation
 RESTFulSense provides an interface to the API client class, to make it easier to mock and leverage dependency injection for the testability of the client consumers, here's an example:
@@ -189,15 +177,15 @@ restfulApiClient.Setup(client =>
         .ReturnsAsync(student);
 ```
 
-<br />
+
 
 If you have any suggestions, comments or questions, please feel free to contact me on:
-<br />
-Twitter: @hassanrezkhabib
-<br />
-LinkedIn: hassanrezkhabib
-<br />
-E-Mail: hassanhabib@live.com
-<br />
+
+[Twitter](https://twitter.com/hassanrezkhabib)
+
+[LinkedIn](https://www.linkedin.com/in/hassanrezkhabib/)
+
+[E-Mail](mailto:hassanhabib@live.com)
+
 
 Huge thanks to Mr. Brian Parker @BrianLParker for his RESTfulSense Web Assembly effort. 
