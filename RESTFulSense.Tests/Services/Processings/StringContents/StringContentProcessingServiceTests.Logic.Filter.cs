@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using Moq;
+using Moq.Language;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StringContents;
@@ -26,33 +27,35 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
             dynamic[] randomProperties = ShuffleRandomProperties(
                 randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute));
 
-            List<PropertyInfo> randomPropertyInfos =
-                randomProperties.Select(GetPropertyInfo).ToList();
+            IEnumerable<dynamic> randomPropertiesWithAttributesSequence =
+                randomProperties.Where(property => property.Attribute != null);
+
+            IEnumerable<dynamic> expectedPropertiesWithAttributesSequence =
+                randomPropertiesWithAttributesSequence;
 
             List<NamedStringContent> expectedNamedStringContents =
-                randomProperties.Where(a => a.Attribute != null)
+                randomProperties.Where(property => property.Attribute != null)
                     .Select(GetAttribute).ToList();
 
             List<PropertyValue> randomPropertyValues =
-                randomProperties.Select(property => new PropertyValue
-                {
-                    PropertyInfo = property.PropertyInfo,
-                    Value = property.Value
-                }).ToList();
+                randomProperties.Select(ConvertToPropertyValue).ToList();
 
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
 
-            List<RESTFulStringContentAttribute> expectedRESTFulStringContentAttributes =
-                randomProperties.Select(a => (RESTFulStringContentAttribute)a.Attribute)
+            List<RESTFulStringContentAttribute> randomdRESTFulStringContentAttributes =
+                randomProperties.Select(property => (RESTFulStringContentAttribute)property.Attribute)
                     .ToList();
 
-            foreach (dynamic property in randomProperties)
-            {
-                PropertyInfo propertyInfo = GetPropertyInfo(property);
-                this.stringContentServiceMock.Setup(service =>
-                    service.RetrieveStringContent(propertyInfo))
-                        .Returns((RESTFulStringContentAttribute)property.Attribute);
-            }
+            List<RESTFulStringContentAttribute> expectedRESTFulStringContentAttributes =
+                randomdRESTFulStringContentAttributes;
+
+            ISetupSequentialResult<RESTFulStringContentAttribute> attributeSequence =
+                this.stringContentServiceMock.SetupSequence(service =>
+                    service.RetrieveStringContent(It.IsAny<PropertyInfo>()));
+
+            attributeSequence = expectedPropertiesWithAttributesSequence.Aggregate(
+                seed: attributeSequence,
+                func: (sequence, property) => sequence.Returns(property.Attribute));
 
             // when
             IEnumerable<NamedStringContent> actualNamedStringContent =

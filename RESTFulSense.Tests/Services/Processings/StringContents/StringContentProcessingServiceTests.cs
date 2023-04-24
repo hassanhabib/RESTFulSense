@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Reflection;
 using Moq;
 using RESTFulSense.Models.Attributes;
+using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StringContents;
 using RESTFulSense.Services.Foundations.StringContents;
 using RESTFulSense.Services.Processings.StringContents;
@@ -33,17 +34,19 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
 
         private static dynamic[] ShuffleRandomProperties(IEnumerable<dynamic> properties)
         {
-            return properties.OrderBy(i => GetBigRandomNumber())
+            return properties.OrderBy(property => GetBigRangeRandomNumber())
                 .ToArray();
         }
 
         private static dynamic[] CreateRandomProperties() =>
             Enumerable.Range(start: 0, count: GetRandomNumber())
-                .Select(i => CreateRandomProperty()).ToArray();
+                .Select(property => CreateRandomProperty())
+                    .ToArray();
 
         private static dynamic[] CreateRandomPropertiesWithAttributes() =>
             Enumerable.Range(start: 0, count: GetRandomNumber())
-                .Select(i => CreateRandomPropertyWithAttribute()).ToArray();
+                .Select(property => CreateRandomPropertyWithAttribute())
+                    .ToArray();
 
         private static dynamic CreateRandomProperty()
         {
@@ -74,7 +77,7 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
-        private static int GetBigRandomNumber() =>
+        private static int GetBigRangeRandomNumber() =>
             new IntRange(min: int.MinValue, max: int.MaxValue).GetValue();
 
         private static RESTFulStringContentAttribute CreateRandomRESTFulStringContentAttribute() =>
@@ -98,6 +101,15 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
             {
                 Name = property.Attribute?.Name ?? null,
                 StringContent = new StringContent(CreateRandomString())
+            };
+        }
+
+        private static PropertyValue ConvertToPropertyValue(dynamic property)
+        {
+            return new PropertyValue
+            {
+                PropertyInfo = property.PropertyInfo,
+                Value = property.Value
             };
         }
     }
