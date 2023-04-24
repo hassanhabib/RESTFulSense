@@ -63,15 +63,23 @@ namespace RESTFulSense.Tests.Services.Orchestrations.FormContents
             // then
             foreach (NamedStringContent namedStringContents in returnedNamedStringContents)
             {
-                actualMultipartFormDataContent.Contains(namedStringContents.StringContent).Should().BeTrue();
-                namedStringContents.StringContent.Headers.ContentDisposition.Name.Should().Be(namedStringContents.Name);
+                actualMultipartFormDataContent.Contains(namedStringContents.StringContent)
+                    .Should().BeTrue();
+
+                namedStringContents.StringContent.Headers.ContentDisposition.Name
+                    .Should().Be(namedStringContents.Name);
             }
 
             foreach (NamedStreamContent namedStreamContents in returnedNamedStreamContents)
             {
-                actualMultipartFormDataContent.Contains(namedStreamContents.StreamContent).Should().BeTrue();
-                namedStreamContents.StreamContent.Headers.ContentDisposition.Name.Should().Be(namedStreamContents.Name);
-                namedStreamContents.StreamContent.Headers.ContentDisposition.FileName.Should().Be(namedStreamContents.FileName);
+                actualMultipartFormDataContent.Contains(namedStreamContents.StreamContent)
+                    .Should().BeTrue();
+
+                namedStreamContents.StreamContent.Headers.ContentDisposition.Name
+                    .Should().Be(namedStreamContents.Name);
+
+                namedStreamContents.StreamContent.Headers.ContentDisposition.FileName
+                    .Should().Be(namedStreamContents.FileName);
             }
 
             this.propertyProcessingServiceMock.Verify(service =>

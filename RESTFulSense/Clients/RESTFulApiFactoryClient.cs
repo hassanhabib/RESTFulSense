@@ -9,9 +9,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using RESTFulSense.Extensions;
+using RESTFulSense.Brokers.Reflections;
 using RESTFulSense.Services;
+using RESTFulSense.Services.Foundations.FileNames;
+using RESTFulSense.Services.Foundations.Properties;
+using RESTFulSense.Services.Foundations.StreamContents;
+using RESTFulSense.Services.Foundations.StringContents;
 using RESTFulSense.Services.Orchestrations.FormContents;
+using RESTFulSense.Services.Processings.FileNames;
+using RESTFulSense.Services.Processings.Properties;
+using RESTFulSense.Services.Processings.StreamContents;
+using RESTFulSense.Services.Processings.StringContents;
 
 namespace RESTFulSense.Clients
 {
@@ -293,15 +301,38 @@ namespace RESTFulSense.Clients
 
         private static IServiceProvider RegisterServices()
         {
-            var serviceCollection = new ServiceCollection()
-                .AddBroker()
-                .AddFoundationServices()
-                .AddProcessingServices()
-                .AddOrchestrationService();
+            var services = new ServiceCollection();
 
-            IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+            AddBroker(services);
+            AddFoundationServices(services);
+            AddProcessingServices(services);
+            AddOrchestrationService(services);
+
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
 
             return serviceProvider;
         }
+
+        private static void AddBroker(ServiceCollection services) =>
+            services.AddTransient<IReflectionBroker, ReflectionBroker>();
+
+        private static void AddFoundationServices(ServiceCollection services)
+        {
+            services.AddTransient<IPropertyService, PropertyService>();
+            services.AddTransient<IStringContentService, StringContentService>();
+            services.AddTransient<IFileNameService, FileNameService>();
+            services.AddTransient<IStreamContentService, StreamContentService>();
+        }
+
+        private static void AddProcessingServices(ServiceCollection services)
+        {
+            services.AddTransient<IStringContentProcessingService, StringContentProcessingService>();
+            services.AddTransient<IStreamContentProcessingService, StreamContentProcessingService>();
+            services.AddTransient<IFileNameProcessingService, FileNameProcessingService>();
+            services.AddTransient<IPropertyProcessingService, PropertyProcessingService>();
+        }
+
+        private static void AddOrchestrationService(ServiceCollection services) =>
+            services.AddTransient<IFormContentOrchestrationService, FormContentOrchestrationService>();
     }
 }
