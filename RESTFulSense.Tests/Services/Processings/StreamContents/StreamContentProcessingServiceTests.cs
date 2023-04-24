@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using Moq;
 using RESTFulSense.Models.Attributes;
+using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
 using RESTFulSense.Services.Foundations.StreamContents;
 using RESTFulSense.Services.Processings.StreamContents;
@@ -20,7 +21,6 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
 {
     public partial class StreamContentProcessingServiceTests
     {
-
         private readonly Mock<IStreamContentService> streamContentServiceMock;
         private readonly IStreamContentProcessingService streamContentProcessingService;
 
@@ -109,6 +109,15 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
                 Name = property.Attribute?.Name ?? null,
                 StreamContent = new StreamContent(CreateRandomStream()),
                 FileName = null,
+            };
+        }
+
+        private static PropertyValue ConvertToPropertyValue(dynamic property)
+        {
+            return new PropertyValue
+            {
+                PropertyInfo = property.PropertyInfo,
+                Value = (Stream)property.Object
             };
         }
     }
