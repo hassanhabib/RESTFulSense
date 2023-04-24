@@ -34,7 +34,7 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
                 randomProperties.Select(GetPropertyInfo).ToList();
 
             List<NamedStreamContent> expectedNamedStreamContents =
-                randomProperties.Where(a => a.Attribute != null)
+                randomProperties.Where(property => property.Attribute != null)
                     .Select(GetAttribute).ToList();
 
             var outNamedStreamContents = expectedNamedStreamContents.DeepClone();
@@ -49,7 +49,7 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
 
             List<RESTFulFileContentNameAttribute> expectedRESTFulFileContentNameAttributes =
-                randomProperties.Select(a => (RESTFulFileContentNameAttribute)a.Attribute)
+                randomProperties.Select(property => (RESTFulFileContentNameAttribute)property.Attribute)
                     .ToList();
 
 
@@ -66,14 +66,12 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
                 service.RetrieveFileName(It.IsAny<PropertyInfo>()))
                     .Throws(fileNameValidationException);
 
-
             // when
             Action updateFileNamesFunction = () =>
                 this.fileNameProcessingService.UpdateFileNames(expectedNamedStreamContents, inputPropertyValues);
 
             FileNameProcessingDependencyValidationException actualFileNameProcessingDependencyException =
                Assert.Throws<FileNameProcessingDependencyValidationException>(updateFileNamesFunction);
-
 
             // then
             actualFileNameProcessingDependencyException.Should()
@@ -99,7 +97,7 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
                 randomProperties.Select(GetPropertyInfo).ToList();
 
             List<NamedStreamContent> expectedNamedStreamContents =
-                randomProperties.Where(a => a.Attribute != null)
+                randomProperties.Where(property => property.Attribute != null)
                     .Select(GetAttribute).ToList();
 
             var outNamedStreamContents = expectedNamedStreamContents.DeepClone();
@@ -114,7 +112,7 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
 
             List<RESTFulFileContentNameAttribute> expectedRESTFulFileContentNameAttributes =
-                randomProperties.Select(a => (RESTFulFileContentNameAttribute)a.Attribute)
+                randomProperties.Select(property => (RESTFulFileContentNameAttribute)property.Attribute)
                     .ToList();
 
             var nullPropertyInfoException = new NullPropertyInfoException();
@@ -124,7 +122,6 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
 
             var expectedFileNameProcessingDependencyException =
                 new FileNameProcessingDependencyException(fileNameServiceException);
-
 
             this.fileNameServiceMock.Setup(service =>
                 service.RetrieveFileName(It.IsAny<PropertyInfo>()))
@@ -136,7 +133,6 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
 
             FileNameProcessingDependencyException actualFileNameProcessingDependencyException =
                Assert.Throws<FileNameProcessingDependencyException>(updateFileNamesFunction);
-
 
             // then
             actualFileNameProcessingDependencyException.Should()
@@ -162,7 +158,7 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
                 randomProperties.Select(GetPropertyInfo).ToList();
 
             List<NamedStreamContent> expectedNamedStreamContents =
-                randomProperties.Where(a => a.Attribute != null)
+                randomProperties.Where(property => property.Attribute != null)
                     .Select(GetAttribute).ToList();
 
             var outNamedStreamContents = expectedNamedStreamContents.DeepClone();
@@ -177,7 +173,7 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
 
             List<RESTFulFileContentNameAttribute> expectedRESTFulFileContentNameAttributes =
-                randomProperties.Select(a => (RESTFulFileContentNameAttribute)a.Attribute)
+                randomProperties.Select(property => (RESTFulFileContentNameAttribute)property.Attribute)
                     .ToList();
 
             var exception = new Exception();
@@ -187,7 +183,6 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
 
             var expectedFileNameProcessingServiceException =
                 new FileNameProcessingServiceException(failedFileNameProcessingServiceException);
-
 
             this.fileNameServiceMock.Setup(service =>
                 service.RetrieveFileName(It.IsAny<PropertyInfo>()))
@@ -199,7 +194,6 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
 
             FileNameProcessingServiceException actualFileNameProcessingServiceException =
                Assert.Throws<FileNameProcessingServiceException>(updateFileNamesFunction);
-
 
             // then
             actualFileNameProcessingServiceException.Should()

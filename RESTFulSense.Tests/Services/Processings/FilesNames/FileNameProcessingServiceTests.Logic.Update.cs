@@ -2,15 +2,16 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using FluentAssertions;
-using Force.DeepCloner;
-using Moq;
-using RESTFulSense.Models.Attributes;
-using RESTFulSense.Models.Foundations.Properties;
-using RESTFulSense.Models.Processings.StreamContents;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentAssertions;
+using Force.DeepCloner;
+using Moq;
+using Moq.Language;
+using RESTFulSense.Models.Attributes;
+using RESTFulSense.Models.Foundations.Properties;
+using RESTFulSense.Models.Processings.StreamContents;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Processings.FilesNames
@@ -23,18 +24,24 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
             // given
             dynamic[] randomPropertiesNoAttribute = CreateRandomProperties();
             dynamic[] randomPropertiesWithAttribute = CreateRandomPropertiesWithAttributes();
-
             IEnumerable<dynamic> allProperties = randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute);
             dynamic[] randomProperties = ShuffleRandomProperties(allProperties);
+
+            IEnumerable<dynamic> randomPropertiesWithAttributesSequence =
+                randomProperties.Where(property => property.Attribute != null);
+
+            IEnumerable<dynamic> expectedPropertiesWithAttributesSequence =
+                randomPropertiesWithAttributesSequence;
 
             List<PropertyInfo> randomPropertyInfos =
                 randomProperties.Select(GetPropertyInfo).ToList();
 
             List<NamedStreamContent> expectedNamedStreamContents =
-                randomProperties.Where(a => a.Attribute != null)
+                randomProperties.Where(property => property.Attribute != null)
                     .Select(GetAttribute).ToList();
 
-            var outNamedStreamContents = expectedNamedStreamContents.DeepClone();
+            List<NamedStreamContent> outNamedStreamContents =
+                expectedNamedStreamContents.DeepClone();
 
             List<PropertyValue> randomPropertyValues =
                 randomProperties.Select(property => new PropertyValue
@@ -46,16 +53,16 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
 
             List<RESTFulFileContentNameAttribute> expectedRESTFulFileContentNameAttributes =
-                randomProperties.Select(a => (RESTFulFileContentNameAttribute)a.Attribute)
+                randomProperties.Select(property => (RESTFulFileContentNameAttribute)property.Attribute)
                     .ToList();
 
-            foreach (var property in randomProperties)
-            {
-                PropertyInfo propertyInfo = GetPropertyInfo(property);
-                this.fileNameServiceMock.Setup(service =>
-                    service.RetrieveFileName(propertyInfo))
-                        .Returns((RESTFulFileContentNameAttribute)property.Attribute);
-            }
+            ISetupSequentialResult<RESTFulFileContentNameAttribute> attributeSequence =
+                this.fileNameServiceMock.SetupSequence(service =>
+                    service.RetrieveFileName(It.IsAny<PropertyInfo>()));
+
+            attributeSequence = expectedPropertiesWithAttributesSequence.Aggregate(
+               seed: attributeSequence,
+               func: (sequence, property) => sequence.Returns(property.Attribute));
 
             // when
             this.fileNameProcessingService.UpdateFileNames(
