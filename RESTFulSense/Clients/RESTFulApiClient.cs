@@ -147,16 +147,14 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken)
             where TContent : class
         {
-            IServiceProvider serviceProvider = RegisterServices();
-
             IFormContentOrchestrationService formContentOrchestrationService =
-                serviceProvider.GetRequiredService<IFormContentOrchestrationService>();
+                CreateFormContentOrchestrationService();
 
             MultipartFormDataContent multipartFormDataContent =
                 formContentOrchestrationService.ConvertToMultipartFormDataContent(content);
 
             HttpResponseMessage responseMessage =
-                  await this.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
+                await this.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -286,6 +284,16 @@ namespace RESTFulSense.Clients
             string responseString = await responseMessage.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(responseString);
+        }
+
+        private static IFormContentOrchestrationService CreateFormContentOrchestrationService()
+        {
+            IServiceProvider serviceProvider = RegisterServices();
+
+            IFormContentOrchestrationService formContentOrchestrationService =
+                serviceProvider.GetRequiredService<IFormContentOrchestrationService>();
+
+            return formContentOrchestrationService;
         }
 
         private static IServiceProvider RegisterServices()
