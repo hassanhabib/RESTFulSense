@@ -11,7 +11,9 @@ using System.Reflection;
 using System.Text;
 using Moq;
 using RESTFulSense.Models.Attributes;
+using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
+using RESTFulSense.Models.Processings.StringContents;
 using RESTFulSense.Services.Foundations.StreamContents;
 using RESTFulSense.Services.Processings.StreamContents;
 using Tynamix.ObjectFiller;
@@ -111,5 +113,15 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
                 FileName = null,
             };
         }
+
+        private static PropertyValue ConvertToPropertyValue(dynamic property)
+        {
+            return new PropertyValue
+            {
+                PropertyInfo = property.PropertyInfo,
+                Value = (Stream)property.Object
+            };
+        }
+
     }
 }

@@ -42,12 +42,12 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
 
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
 
-            List<RESTFulStringContentAttribute> randomdRESTFulStringContentAttributes =
+            List<RESTFulStringContentAttribute> randomRESTFulStringContentAttributes =
                 randomProperties.Select(property => (RESTFulStringContentAttribute)property.Attribute)
                     .ToList();
 
             List<RESTFulStringContentAttribute> expectedRESTFulStringContentAttributes =
-                randomdRESTFulStringContentAttributes;
+                randomRESTFulStringContentAttributes;
 
             ISetupSequentialResult<RESTFulStringContentAttribute> attributeSequence =
                 this.stringContentServiceMock.SetupSequence(service =>

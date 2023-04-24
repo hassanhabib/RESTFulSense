@@ -10,6 +10,7 @@ using System.Reflection;
 using Moq;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Foundations.Properties;
+using RESTFulSense.Models.Processings.StreamContents;
 using RESTFulSense.Models.Processings.StringContents;
 using RESTFulSense.Services.Foundations.StringContents;
 using RESTFulSense.Services.Processings.StringContents;
@@ -112,5 +113,6 @@ namespace RESTFulSense.Tests.Services.Processings.StringContents
                 Value = property.Value
             };
         }
+
     }
 }

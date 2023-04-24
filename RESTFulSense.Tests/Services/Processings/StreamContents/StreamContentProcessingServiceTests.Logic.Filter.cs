@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using Moq;
+using Moq.Language;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
@@ -25,44 +26,48 @@ namespace RESTFulSense.Tests.Services.Processings.StreamContents
             IEnumerable<dynamic> allProperties = randomPropertiesNoAttribute.Union(randomPropertiesWithAttribute);
             dynamic[] randomProperties = ShuffleRandomProperties(allProperties);
 
-            List<PropertyInfo> randomPropertyInfos =
-                randomProperties.Select(GetPropertyInfo).ToList();
+            IEnumerable<dynamic> randomPropertiesWithAttributesSequence =
+                randomProperties.Where(property => property.Attribute != null);
+
+            IEnumerable<dynamic> expectedPropertiesWithAttributesSequence =
+                randomPropertiesWithAttributesSequence;
 
             List<NamedStreamContent> expectedNamedStreamContents =
-                randomProperties.Where(a => a.Attribute != null)
+                randomProperties.Where(property => property.Attribute != null)
                     .Select(GetAttribute).ToList();
 
             List<PropertyValue> randomPropertyValues =
-                randomProperties.Select(property => new PropertyValue
-                {
-                    PropertyInfo = property.PropertyInfo,
-                    Value = property.Object
-                }).ToList();
+                randomProperties.Select(ConvertToPropertyValue).ToList();
 
             List<PropertyValue> inputPropertyValues = randomPropertyValues;
-            List<RESTFulFileContentStreamAttribute> expectedRESTFulFileContentStreamAttributes =
-                randomProperties.Select(a => (RESTFulFileContentStreamAttribute)a.Attribute)
+
+            List<RESTFulFileContentStreamAttribute> randomRESTFulStringContentAttributes =
+                randomProperties.Select(property => (RESTFulFileContentStreamAttribute)property.Attribute)
                     .ToList();
 
-            foreach (var property in randomProperties)
-            {
-                PropertyInfo propertyInfo = GetPropertyInfo(property);
-                this.streamContentServiceMock.Setup(service =>
-                    service.RetrieveStreamContent(propertyInfo))
-                        .Returns((RESTFulFileContentStreamAttribute)property.Attribute);
-            }
+            List<RESTFulFileContentStreamAttribute> expectedRESTFulStringContentAttributes =
+                randomRESTFulStringContentAttributes;
+
+            ISetupSequentialResult<RESTFulFileContentStreamAttribute> attributeSequence =
+                this.streamContentServiceMock.SetupSequence(service =>
+                    service.RetrieveStreamContent(It.IsAny<PropertyInfo>()));
+
+            attributeSequence = expectedPropertiesWithAttributesSequence.Aggregate(
+                seed: attributeSequence,
+                func: (sequence, property) => sequence.Returns(property.Attribute));
 
             // when
-            IEnumerable<NamedStreamContent> actualNamedStreamContents =
+            IEnumerable<NamedStreamContent> actualNamedStreamContent =
                 this.streamContentProcessingService.FilterStreamContents(inputPropertyValues)
                     .ToList();
 
             // then
-            actualNamedStreamContents.Should().BeEquivalentTo(expectedNamedStreamContents);
+            actualNamedStreamContent.Should().BeEquivalentTo(expectedNamedStreamContents);
 
-            foreach (var property in randomProperties)
+            foreach (dynamic property in randomProperties)
             {
                 PropertyInfo propertyInfo = GetPropertyInfo(property);
+
                 this.streamContentServiceMock.Verify(service =>
                     service.RetrieveStreamContent(propertyInfo), Times.Once);
             }
