@@ -33,9 +33,6 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
             IEnumerable<dynamic> expectedPropertiesWithAttributesSequence =
                 randomPropertiesWithAttributesSequence;
 
-            List<PropertyInfo> randomPropertyInfos =
-                randomProperties.Select(GetPropertyInfo).ToList();
-
             List<NamedStreamContent> expectedNamedStreamContents =
                 randomProperties.Where(property => property.Attribute != null)
                     .Select(GetAttribute).ToList();

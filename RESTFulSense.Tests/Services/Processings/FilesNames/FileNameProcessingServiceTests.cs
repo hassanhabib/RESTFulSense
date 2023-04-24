@@ -2,17 +2,14 @@
 // Copyright (c) The Standard Organization, a coalition of the Good-Hearted Engineers 
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
-using System.Xml.Linq;
 using Moq;
 using RESTFulSense.Models.Attributes;
-using RESTFulSense.Models.Foundations.Properties;
 using RESTFulSense.Models.Processings.StreamContents;
 using RESTFulSense.Services.Foundations.FileNames;
 using RESTFulSense.Services.Processings.FileNames;
@@ -73,8 +70,6 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
             };
         }
 
-        private static object CreateSomeObject() => new Object();
-
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
@@ -112,6 +107,5 @@ namespace RESTFulSense.Tests.Services.Processings.FilesNames
                 FileName = null,
             };
         }
-
     }
 }
