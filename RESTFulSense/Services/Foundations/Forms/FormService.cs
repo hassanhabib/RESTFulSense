@@ -32,7 +32,13 @@ namespace RESTFulSense.Services.Foundations.Forms
             MultipartFormDataContent multipartFormDataContent,
             byte[] content,
             string name,
-            string fileName) =>
-            throw new NotImplementedException();
+            string fileName)
+        {
+            MultipartFormDataContent returnedMultipartFormDataContent =
+                this.multipartFormDataContentBroker
+                    .AddByteArrayContent(multipartFormDataContent, content, name, fileName);
+
+            return returnedMultipartFormDataContent;
+        }
     }
 }
