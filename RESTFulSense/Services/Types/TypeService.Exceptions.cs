@@ -22,6 +22,10 @@ namespace RESTFulSense.Services.Types
                 var typeValidationException = new TypeValidationException(nullObjectException);
                 throw typeValidationException;
             }
+            catch (ArgumentNullException argumentNullException)
+            {
+                throw CreateDependencyValidationException(argumentNullException);
+            }
         }
 
         private static TypeDependencyValidationException CreateDependencyValidationException(
