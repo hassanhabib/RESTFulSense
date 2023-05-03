@@ -3,15 +3,14 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using System.Reflection;
 
-namespace RESTFulSense.Brokers.Attributes
+namespace RESTFulSense.Models.Attributes
 {
-    internal interface IAttributeBroker
+    [AttributeUsage(validOn: AttributeTargets.Property)]
+    public sealed class RESTFulStreamContentAttribute : Attribute
     {
-        TAttribute GetPropertyCustomAttribute<TAttribute>(
-            PropertyInfo propertyInfo,
-            bool inspectAncestors)
-            where TAttribute : Attribute;
+        public RESTFulStreamContentAttribute(string name) => Name = name;
+
+        public string Name { get; }
     }
 }
