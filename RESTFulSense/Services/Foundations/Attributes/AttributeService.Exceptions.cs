@@ -31,6 +31,36 @@ namespace RESTFulSense.Services.Foundations.Attributes
 
                 throw attributeValidationException;
             }
+            catch (NotSupportedException notSupportedException)
+            {
+                var failedAttributeServiceException =
+                    new FailedAttributeServiceException(notSupportedException);
+
+                var attributeDependencyValidationException =
+                    new AttributeDependencyValidationException(failedAttributeServiceException);
+
+                throw attributeDependencyValidationException;
+            }
+            catch (AmbiguousMatchException ambiguousMatchException)
+            {
+                var failedAttributeServiceException =
+                    new FailedAttributeServiceException(ambiguousMatchException);
+
+                var attributeDependencyValidationException =
+                    new AttributeDependencyValidationException(failedAttributeServiceException);
+
+                throw attributeDependencyValidationException;
+            }
+            catch (TypeLoadException typeLoadException)
+            {
+                var failedAttributeServiceException =
+                    new FailedAttributeServiceException(typeLoadException);
+
+                var attributeDependencyValidationException =
+                    new AttributeDependencyValidationException(failedAttributeServiceException);
+
+                throw attributeDependencyValidationException;
+            }
         }
     }
 }
