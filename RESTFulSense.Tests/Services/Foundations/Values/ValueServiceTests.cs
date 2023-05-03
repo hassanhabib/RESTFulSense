@@ -7,7 +7,7 @@ using Moq;
 using RESTFulSense.Brokers.Values;
 using RESTFulSense.Services.Foundations.Values;
 
-namespace RESTFulSense.Unit.Tests.Services.Foundations.Values
+namespace RESTFulSense.Tests.Services.Foundations.Values
 {
     public partial class ValueServiceTests
     {

@@ -12,7 +12,7 @@ using RESTFulSense.Services.Foundations.Forms;
 using Tynamix.ObjectFiller;
 using Xunit;
 
-namespace RESTFulSense.Unit.Tests.Services.Foundations.Forms
+namespace RESTFulSense.Tests.Services.Foundations.Forms
 {
     public partial class FormServiceTests
     {

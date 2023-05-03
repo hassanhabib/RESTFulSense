@@ -7,7 +7,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace RESTFulSense.Unit.Tests.Services.Foundations.Forms
+namespace RESTFulSense.Tests.Services.Foundations.Forms
 {
     public partial class FormServiceTests
     {
