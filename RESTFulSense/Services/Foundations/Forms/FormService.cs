@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.IO;
 using System.Net.Http;
 using RESTFulSense.Brokers.MultipartFormDataContents;
@@ -81,13 +80,16 @@ namespace RESTFulSense.Services.Foundations.Forms
         public MultipartFormDataContent AddStringContent(
             MultipartFormDataContent multipartFormDataContent,
             string content,
-            string name)
+            string name) =>
+        TryCatch(() =>
         {
+            ValidateOnAddStringContent(multipartFormDataContent, stringContent: content, name);
+
             MultipartFormDataContent returnedMultipartFormDataContent =
                 this.multipartFormDataContentBroker
                     .AddStringContent(multipartFormDataContent, content, name);
 
             return returnedMultipartFormDataContent;
-        }
+        });
     }
 }
