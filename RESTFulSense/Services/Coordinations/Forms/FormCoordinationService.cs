@@ -3,6 +3,8 @@
 // ----------------------------------------------------------------------------------
 
 using System.Net.Http;
+using RESTFulSense.Models.Orchestrations.Forms;
+using RESTFulSense.Models.Orchestrations.Properties;
 using RESTFulSense.Services.Orchestrations.Forms;
 using RESTFulSense.Services.Orchestrations.Properties;
 
@@ -21,7 +23,25 @@ namespace RESTFulSense.Services.Coordinations.Forms
             this.formOrchestrationService = formOrchestrationService;
         }
 
-        public MultipartFormDataContent ConvertToMultipartFormDataContent<T>(T @object) where T : class =>
-            throw new System.NotImplementedException();
+        public MultipartFormDataContent ConvertToMultipartFormDataContent<T>(T @object) where T : class
+        {
+            PropertyModel propertyModel = new PropertyModel
+            {
+                Object = @object
+            };
+
+            PropertyModel returnPropertyModel = this.propertyOrchestrationService.RetrieveProperties(propertyModel);
+
+            FormModel formModel = new FormModel
+            {
+                MultipartFormDataContent = new MultipartFormDataContent(),
+                Object = @object,
+                Properties = returnPropertyModel.Properties
+            };
+
+            FormModel returnedFormModel = this.formOrchestrationService.BuildFormModel(formModel);
+
+            return returnedFormModel.MultipartFormDataContent;
+        }
     }
 }
