@@ -24,7 +24,7 @@ namespace RESTFulSense.Tests.Services.Properties
                     innerException: nullTypeException);
 
             // when
-            Action retrievePropertiesAction = () =>                
+            Action retrievePropertiesAction = () =>
                 this.propertyService.RetrieveProperties(nullType);
 
             PropertyValidationException actualPropertyValidationException =

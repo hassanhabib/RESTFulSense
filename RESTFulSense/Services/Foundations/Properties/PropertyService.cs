@@ -5,6 +5,7 @@
 using System;
 using System.Reflection;
 using RESTFulSense.Brokers.Properties;
+using RESTFulSense.Services.Foundations.Properties;
 
 namespace RESTFulSense.Services.Properties
 {
@@ -20,7 +21,7 @@ namespace RESTFulSense.Services.Properties
         {
             ValidateTypeIsNotNullOnRetrieveProperties(type);
 
-            PropertyInfo[] properties = 
+            PropertyInfo[] properties =
                 this.propertyBroker.GetProperties(type);
 
             return properties;

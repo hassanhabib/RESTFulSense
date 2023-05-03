@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using RESTFulSense.Models.Foundations.Types.Exceptions;
 
-namespace RESTFulSense.Services.Types
+namespace RESTFulSense.Services.Foundations.Types
 {
     internal partial class TypeService : ITypeService
     {

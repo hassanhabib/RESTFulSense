@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Moq;
 using RESTFulSense.Brokers.Properties;
+using RESTFulSense.Services.Foundations.Properties;
 using RESTFulSense.Services.Properties;
 using Tynamix.ObjectFiller;
 

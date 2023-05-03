@@ -8,7 +8,7 @@ using System.IO;
 using System.Reflection;
 using Moq;
 using RESTFulSense.Brokers.Types;
-using RESTFulSense.Services.Types;
+using RESTFulSense.Services.Foundations.Types;
 using Tynamix.ObjectFiller;
 using Xeptions;
 

@@ -3,11 +3,12 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Reflection;
 
-namespace RESTFulSense.Services.Types
+namespace RESTFulSense.Services.Foundations.Properties
 {
-    internal interface ITypeService
+    internal interface IPropertyService
     {
-        Type RetrieveType(object @object);
+        PropertyInfo[] RetrieveProperties(Type type);
     }
 }
