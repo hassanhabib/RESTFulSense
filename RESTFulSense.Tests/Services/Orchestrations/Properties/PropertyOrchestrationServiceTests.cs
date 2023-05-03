@@ -71,5 +71,20 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
                 new PropertyDependencyValidationException(innerException),
             };
         }
+
+        public static TheoryData DependencyExceptions()
+        {
+            string randomMessage = GetRandomString();
+            string exceptionMessage = randomMessage;
+            var innerException = new Xeption(exceptionMessage);
+
+            return new TheoryData<Xeption>
+            {
+                new TypeDependencyException(innerException),
+                new TypeServiceException(innerException),
+                new PropertyDependencyException(innerException),
+                new PropertyServiceException(innerException)
+            };
+        }
     }
 }

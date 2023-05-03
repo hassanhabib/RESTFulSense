@@ -52,5 +52,45 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
             typeServiceMock.VerifyNoOtherCalls();
             propertyServiceMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(DependencyExceptions))]
+        public void ShouldThrowPropertyOrchestrationDependencyExceptionIfDependencyExceptionOccurs(
+            Exception dependencyException)
+        {
+            // given
+            object someObject = new object();
+            object inputObject = someObject;
+            PropertyModel somePropertyModel = CreateSomePropertyModel(inputObject);
+
+            var expectedPropertyOrchestrationDependencyException =
+                new PropertyOrchestrationDependencyException(dependencyException);
+
+            this.typeServiceMock.Setup(service =>
+                service.RetrieveType(It.IsAny<object>()))
+                    .Throws(dependencyException);
+
+            // when
+            Action retrievePropertiesAction =
+                () => this.propertyOrchestrationService.RetrieveProperties(somePropertyModel);
+
+            PropertyOrchestrationDependencyException actualPropertyOrchestrationDependencyException =
+                Assert.Throws<PropertyOrchestrationDependencyException>(retrievePropertiesAction);
+
+            // then
+            actualPropertyOrchestrationDependencyException.Should()
+                .BeEquivalentTo(expectedPropertyOrchestrationDependencyException);
+
+            this.typeServiceMock.Verify(service =>
+                service.RetrieveType(It.IsAny<object>()),
+                    Times.Once());
+
+            this.propertyServiceMock.Verify(service =>
+                service.RetrieveProperties(It.IsAny<Type>()),
+                    Times.Never());
+
+            this.typeServiceMock.VerifyNoOtherCalls();
+            this.propertyServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
