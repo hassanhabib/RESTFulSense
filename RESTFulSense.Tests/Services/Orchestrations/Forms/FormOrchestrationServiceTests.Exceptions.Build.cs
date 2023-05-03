@@ -136,5 +136,68 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
             this.valueServiceMock.VerifyNoOtherCalls();
             this.formServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowServiceExceptionOnBuildIfServiceErrorOccurs()
+        {
+            // given
+            FormModel someFormModel = CreateRandomFormModel();
+            FormModel inputFormModel = someFormModel;
+            dynamic[] randomTestData = CreateTestData();
+
+            dynamic[] randomFileNameData =
+                randomTestData.Where(a => a.Attribute is RESTFulFileNameAttribute).ToArray();
+
+            dynamic[] randomStringContentData =
+                randomTestData.Where(a => a.Attribute is RESTFulStringContentAttribute).ToArray();
+
+            dynamic[] randomByteArrayContentData =
+                randomTestData.Where(a => a.Attribute is RESTFulByteArrayContentAttribute).ToArray();
+
+            dynamic[] randomStreamContentData =
+                randomTestData.Where(a => a.Attribute is RESTFulStreamContentAttribute).ToArray();
+
+            dynamic[] randomPropertyContents = randomFileNameData
+                .Union(randomStringContentData)
+                .Union(randomByteArrayContentData)
+                .Union(randomStreamContentData)
+                .ToArray();
+
+            dynamic[] inputPropertyContents = randomPropertyContents;
+            PropertyInfo[] randomProperties = CreateRandomProperties(inputPropertyContents);
+            PropertyInfo[] inputProperties = randomProperties;
+            someFormModel.Properties = inputProperties;
+
+            var serviceException = new Exception();
+
+            var failedFormOrchestrationServiceException =
+                new FailedFormOrchestrationServiceException(serviceException);
+
+            var expectedFormOrchestrationServiceException =
+                new FormOrchestrationServiceException(failedFormOrchestrationServiceException);
+
+            this.attributeServiceMock.Setup(service =>
+                service.RetrieveAttribute<RESTFulFileNameAttribute>(It.IsAny<PropertyInfo>()))
+                    .Throws(serviceException);
+
+            // when
+            Action buildFormModelAction = () =>
+                this.formOrchestrationService.BuildFormModel(inputFormModel);
+
+            FormOrchestrationServiceException actualFormOrchestrationServiceException =
+                Assert.Throws<FormOrchestrationServiceException>(buildFormModelAction);
+
+            // then
+            actualFormOrchestrationServiceException.Should()
+                .BeEquivalentTo(expectedFormOrchestrationServiceException);
+
+            this.attributeServiceMock.Verify(service =>
+                service.RetrieveAttribute<RESTFulFileNameAttribute>(It.IsAny<PropertyInfo>()),
+                Times.Once);
+
+            this.attributeServiceMock.VerifyNoOtherCalls();
+            this.valueServiceMock.VerifyNoOtherCalls();
+            this.formServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
