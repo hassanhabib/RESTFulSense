@@ -4,6 +4,7 @@
 
 using System;
 using System.Reflection;
+using System.Security;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
 
 namespace RESTFulSense.Services.Properties
@@ -22,6 +23,38 @@ namespace RESTFulSense.Services.Properties
             {
                 var propertyValidationException = new PropertyValidationException(nullTypeException);
                 throw propertyValidationException;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                throw CreateDependencyValidationException(argumentNullException);
+            }
+            catch (TargetException targetException)
+            {
+                throw CreateDependencyException(targetException);
+            }
+            catch (TypeLoadException typeLoadException)
+            {
+                throw CreateDependencyException(typeLoadException);
+            }
+            catch (NotSupportedException notSupportedException)
+            {
+                throw CreateDependencyException(notSupportedException);
+            }
+            catch (AmbiguousMatchException ambiguousMatchException)
+            {
+                throw CreateDependencyException(ambiguousMatchException);
+            }
+            catch (SecurityException securityException)
+            {
+                throw CreateDependencyException(securityException);
+            }
+            catch (ReflectionTypeLoadException reflectionTypeLoadException)
+            {
+                throw CreateDependencyException(reflectionTypeLoadException);
+            }
+            catch (Exception exception)
+            {
+                throw CreateServiceException(exception);
             }
         }
 
