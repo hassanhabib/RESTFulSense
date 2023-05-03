@@ -16,6 +16,14 @@ namespace RESTFulSense.Services.Properties
             this.propertyBroker = propertyBroker;
 
         public PropertyInfo[] RetrieveProperties(Type type) =>
-            this.propertyBroker.GetProperties(type);
+        TryCatch(() =>
+        {
+            ValidateTypeIsNotNullOnRetrieveProperties(type);
+
+            PropertyInfo[] properties = 
+                this.propertyBroker.GetProperties(type);
+
+            return properties;
+        });
     }
 }

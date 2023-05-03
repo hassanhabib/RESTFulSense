@@ -14,7 +14,15 @@ namespace RESTFulSense.Services.Properties
 
         private PropertyInfo[] TryCatch(ReturningPropertiesFunction returningPropertiesFunction)
         {
-            return returningPropertiesFunction();
+            try
+            {
+                return returningPropertiesFunction();
+            }
+            catch (NullTypeException nullTypeException)
+            {
+                var propertyValidationException = new PropertyValidationException(nullTypeException);
+                throw propertyValidationException;
+            }
         }
 
         private static PropertyDependencyValidationException CreateDependencyValidationException(
