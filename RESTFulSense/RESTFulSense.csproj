@@ -64,8 +64,4 @@
 		</EmbeddedResource>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Models\Coordinations\Forms\" />
-	</ItemGroup>
-
 </Project>
