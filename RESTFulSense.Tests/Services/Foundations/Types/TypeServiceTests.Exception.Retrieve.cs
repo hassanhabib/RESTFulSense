@@ -79,7 +79,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Types
 
             this.typeBrokerMock.VerifyNoOtherCalls();
         }
-        
+
         [Fact]
         public void ShouldThrowTypeServiceExceptionIfExceptionOccurs()
         {

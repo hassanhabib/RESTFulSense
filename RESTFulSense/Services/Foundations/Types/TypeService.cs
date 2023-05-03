@@ -5,7 +5,7 @@
 using System;
 using RESTFulSense.Brokers.Types;
 
-namespace RESTFulSense.Services.Types
+namespace RESTFulSense.Services.Foundations.Types
 {
     internal partial class TypeService : ITypeService
     {
