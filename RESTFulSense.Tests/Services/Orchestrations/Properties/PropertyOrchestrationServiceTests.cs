@@ -5,11 +5,15 @@
 using System.Linq;
 using System.Reflection;
 using Moq;
+using RESTFulSense.Models.Foundations.Properties.Exceptions;
+using RESTFulSense.Models.Foundations.Types.Exceptions;
 using RESTFulSense.Models.Orchestrations.Properties;
 using RESTFulSense.Services.Foundations.Properties;
 using RESTFulSense.Services.Foundations.Types;
 using RESTFulSense.Services.Orchestrations.Properties;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace RESTFulSense.Tests.Services.Orchestrations.Properties
 {
@@ -48,6 +52,24 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
                     .ToArray();
 
             return properties;
+        }
+
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
+
+        public static TheoryData DependencyValidationExceptions()
+        {
+            string randomMessage = GetRandomString();
+            string exceptionMessage = randomMessage;
+            var innerException = new Xeption(exceptionMessage);
+
+            return new TheoryData<Xeption>
+            {
+                new TypeValidationException(innerException),
+                new TypeDependencyValidationException(innerException),
+                new PropertyValidationException(innerException),
+                new PropertyDependencyValidationException(innerException),
+            };
         }
     }
 }
