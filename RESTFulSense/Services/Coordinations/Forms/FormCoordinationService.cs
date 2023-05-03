@@ -23,25 +23,29 @@ namespace RESTFulSense.Services.Coordinations.Forms
             this.formOrchestrationService = formOrchestrationService;
         }
 
-        public MultipartFormDataContent ConvertToMultipartFormDataContent<T>(T @object) where T : class
-        {
-            PropertyModel propertyModel = new PropertyModel
+        public MultipartFormDataContent ConvertToMultipartFormDataContent<T>(T @object)
+            where T : class =>
+            TryCatch(() =>
             {
-                Object = @object
-            };
+                ValidateOnConvertToMultipartFormDataContent(@object);
 
-            PropertyModel returnPropertyModel = this.propertyOrchestrationService.RetrieveProperties(propertyModel);
+                PropertyModel propertyModel = new PropertyModel
+                {
+                    Object = @object
+                };
 
-            FormModel formModel = new FormModel
-            {
-                MultipartFormDataContent = new MultipartFormDataContent(),
-                Object = @object,
-                Properties = returnPropertyModel.Properties
-            };
+                PropertyModel returnPropertyModel = this.propertyOrchestrationService.RetrieveProperties(propertyModel);
 
-            FormModel returnedFormModel = this.formOrchestrationService.BuildFormModel(formModel);
+                FormModel formModel = new FormModel
+                {
+                    MultipartFormDataContent = new MultipartFormDataContent(),
+                    Object = @object,
+                    Properties = returnPropertyModel.Properties
+                };
 
-            return returnedFormModel.MultipartFormDataContent;
-        }
+                FormModel returnedFormModel = this.formOrchestrationService.BuildFormModel(formModel);
+
+                return returnedFormModel.MultipartFormDataContent;
+            });
     }
 }
