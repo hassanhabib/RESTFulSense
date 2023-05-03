@@ -55,6 +55,34 @@ namespace RESTFulSense.Services.Coordinations.Forms
 
                 throw formCoordinationDependencyValidationException;
             }
+            catch (FormOrchestrationDependencyException formOrchestrationDependencyException)
+            {
+                var formCoordinationDependencyException =
+                    new FormCoordinationDependencyException(formOrchestrationDependencyException);
+
+                throw formCoordinationDependencyException;
+            }
+            catch (FormOrchestrationServiceException formOrchestrationServiceException)
+            {
+                var formCoordinationDependencyException =
+                    new FormCoordinationDependencyException(formOrchestrationServiceException);
+
+                throw formCoordinationDependencyException;
+            }
+            catch (PropertyOrchestrationDependencyException propertyOrchestrationDependencyException)
+            {
+                var formCoordinationDependencyException =
+                    new FormCoordinationDependencyException(propertyOrchestrationDependencyException);
+
+                throw formCoordinationDependencyException;
+            }
+            catch (PropertyOrchestrationServiceException propertyOrchestrationServiceException)
+            {
+                var formCoordinationDependencyException =
+                    new FormCoordinationDependencyException(propertyOrchestrationServiceException);
+
+                throw formCoordinationDependencyException;
+            }
         }
     }
 }
