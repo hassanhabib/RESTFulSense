@@ -18,7 +18,8 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
         [InlineData(data: null)]
         [InlineData(data: "")]
         [InlineData(data: "   ")]
-        public void ShouldThrowFormValidationExceptionWithNoFileNameOnAddStreamContentIfArgumentsInvalid(string invalidInput)
+        public void ShouldThrowFormValidationExceptionOnAddStreamContentWithNoFileNameIfArgumentsInvalid(
+            string invalidInput)
         {
             // given
             MultipartFormDataContent nullMultipartFormDataContent = CreateNullMultipartFormDataContent();
