@@ -45,5 +45,39 @@ namespace RESTFulSense.Tests.Services.Foundations.Types
 
             this.typeBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(GetDependencyExceptions))]
+        public void ShouldThrowDependencyExceptionOnRetrieveTypeIfErrorOccurs(
+        Exception dependencyException)
+        {
+            // given
+            var someObject = new object();
+
+            var failedTypeDependencyException =
+                new FailedTypeDependencyException(dependencyException);
+
+            var expectedTypeDependencyException =
+                new TypeDependencyException(failedTypeDependencyException);
+
+            this.typeBrokerMock.Setup(broker =>
+                broker.GetType(It.IsAny<object>()))
+                    .Throws(dependencyException);
+
+            // when
+            Action retrieveTypeAction = () => this.typeService.RetrieveType(someObject);
+
+            TypeDependencyException actualTypeDependencyException =
+                Assert.Throws<TypeDependencyException>(retrieveTypeAction);
+
+            // then
+            actualTypeDependencyException.Should().BeEquivalentTo(expectedTypeDependencyException);
+
+            this.typeBrokerMock.Verify(broker =>
+                broker.GetType(It.IsAny<object>()),
+                    Times.Once);
+
+            this.typeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
