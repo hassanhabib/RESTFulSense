@@ -12,7 +12,8 @@ namespace RESTFulSense.Services.Foundations.Forms
     {
         private delegate MultipartFormDataContent ReturningMultipartFormDataContentFunction();
 
-        private MultipartFormDataContent TryCatch(ReturningMultipartFormDataContentFunction returningMultipartFormDataContentFunction)
+        private MultipartFormDataContent TryCatch(
+            ReturningMultipartFormDataContentFunction returningMultipartFormDataContentFunction)
         {
             try
             {
@@ -54,6 +55,13 @@ namespace RESTFulSense.Services.Foundations.Forms
                     new FormValidationException(formDependencyValidationException);
 
                 throw formValidationException;
+            }
+            catch (Exception exception)
+            {
+                var failedFormServiceException = new FailedFormServiceException(exception);
+                var formServiceException = new FormServiceException(failedFormServiceException);
+
+                throw formServiceException;
             }
         }
     }
