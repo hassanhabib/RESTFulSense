@@ -5,9 +5,9 @@
 using System.IO;
 using System.Net.Http;
 
-namespace RESTFulSense.Brokers.MultipartFormDataContents
+namespace RESTFulSense.Services.Foundations.Forms
 {
-    internal interface IMultipartFormDataContentBroker
+    internal interface IFormService
     {
         MultipartFormDataContent AddByteArrayContent(
             MultipartFormDataContent multipartFormDataContent,
@@ -20,14 +20,9 @@ namespace RESTFulSense.Brokers.MultipartFormDataContents
             string name,
             string fileName);
 
-        MultipartFormDataContent AddStringContent(
-            MultipartFormDataContent multipartFormDataContent,
-            string content,
-            string name);
-
         MultipartFormDataContent AddStreamContent(
             MultipartFormDataContent multipartFormDataContent,
-            Stream stream,
+            Stream content,
             string name);
 
         MultipartFormDataContent AddStreamContent(
@@ -35,5 +30,10 @@ namespace RESTFulSense.Brokers.MultipartFormDataContents
             Stream content,
             string name,
             string fileName);
+
+        MultipartFormDataContent AddStringContent(
+            MultipartFormDataContent multipartFormDataContent,
+            string content,
+            string name);
     }
 }
