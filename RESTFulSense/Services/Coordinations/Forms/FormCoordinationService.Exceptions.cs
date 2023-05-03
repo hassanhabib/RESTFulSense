@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Net.Http;
 using RESTFulSense.Models.Coordinations.Forms.Exceptions;
 using RESTFulSense.Models.Orchestrations.Forms.Exceptions;
@@ -82,6 +83,16 @@ namespace RESTFulSense.Services.Coordinations.Forms
                     new FormCoordinationDependencyException(propertyOrchestrationServiceException);
 
                 throw formCoordinationDependencyException;
+            }
+            catch (Exception exception)
+            {
+                var failedFormCoordinationServiceException =
+                    new FailedFormCoordinationServiceException(exception);
+
+                var formCoordinationServiceException =
+                    new FormCoordinationServiceException(failedFormCoordinationServiceException);
+
+                throw formCoordinationServiceException;
             }
         }
     }
