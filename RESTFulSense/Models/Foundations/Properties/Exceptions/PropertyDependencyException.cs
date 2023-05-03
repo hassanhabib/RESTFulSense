@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
-    internal class PropertyDependencyException : Xeption
+    public class PropertyDependencyException : Xeption
     {
         public PropertyDependencyException(Xeption innerException) :
             base(message: "Property dependency error occurred, contact support.", innerException)

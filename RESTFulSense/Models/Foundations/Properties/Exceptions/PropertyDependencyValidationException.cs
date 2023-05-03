@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
-    internal class PropertyDependencyValidationException : Xeption
+    public class PropertyDependencyValidationException : Xeption
     {
         public PropertyDependencyValidationException(Xeption innerException)
             : base(message: "Property dependency validation occurred, fix errors and try again.", innerException)

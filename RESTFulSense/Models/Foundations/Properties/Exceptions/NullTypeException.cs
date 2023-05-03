@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
-    internal class NullTypeException : Xeption
+    public class NullTypeException : Xeption
     {
         public NullTypeException()
             : base(message: "Type is null.")
