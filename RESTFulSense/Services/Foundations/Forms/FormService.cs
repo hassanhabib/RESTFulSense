@@ -81,7 +81,13 @@ namespace RESTFulSense.Services.Foundations.Forms
         public MultipartFormDataContent AddStringContent(
             MultipartFormDataContent multipartFormDataContent,
             string content,
-            string name) =>
-            throw new NotImplementedException();
+            string name)
+        {
+            MultipartFormDataContent returnedMultipartFormDataContent =
+                this.multipartFormDataContentBroker
+                    .AddStringContent(multipartFormDataContent, content, name);
+
+            return returnedMultipartFormDataContent;
+        }
     }
 }
