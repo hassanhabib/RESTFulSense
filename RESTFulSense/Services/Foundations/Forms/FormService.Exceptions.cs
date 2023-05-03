@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Net.Http;
 using RESTFulSense.Models.Foundations.Forms.Exceptions;
 
