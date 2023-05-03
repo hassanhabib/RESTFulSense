@@ -9,7 +9,7 @@ using RESTFulSense.Brokers.MultipartFormDataContents;
 
 namespace RESTFulSense.Services.Foundations.Forms
 {
-    internal class FormService : IFormService
+    internal partial class FormService : IFormService
     {
         private readonly IMultipartFormDataContentBroker multipartFormDataContentBroker;
 
@@ -19,14 +19,17 @@ namespace RESTFulSense.Services.Foundations.Forms
         public MultipartFormDataContent AddByteArrayContent(
             MultipartFormDataContent multipartFormDataContent,
             byte[] content,
-            string name)
+            string name) =>
+        TryCatch(() =>
         {
+            ValidateOnAddByteContent(multipartFormDataContent, byteArrayContent: content, name);
+
             MultipartFormDataContent returnedMultipartFormDataContent =
                 this.multipartFormDataContentBroker
                     .AddByteArrayContent(multipartFormDataContent, content, name);
 
             return returnedMultipartFormDataContent;
-        }
+        });
 
         public MultipartFormDataContent AddByteArrayContent(
             MultipartFormDataContent multipartFormDataContent,
