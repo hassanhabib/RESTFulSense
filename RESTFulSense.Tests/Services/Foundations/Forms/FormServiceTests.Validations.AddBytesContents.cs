@@ -59,5 +59,57 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [InlineData(data: null)]
+        [InlineData(data: "")]
+        [InlineData(data: "   ")]
+        public void ShouldThrowFormValidationExceptionOnAddByteContentWithFileNameIfArgumentsIsInvalid(string invalidInput)
+        {
+            // given
+            MultipartFormDataContent nullMultipartFormDataContent = CreateNullMultipartFormDataContent();
+            byte[] nullContent = null;
+            string invalidName = invalidInput;
+            string invalidFileName = invalidInput;
+
+            var invalidFormArgumentException =
+                new InvalidFormArgumentException();
+
+            invalidFormArgumentException.AddData(
+                key: "MultipartFormDataContent",
+                values: "Form data content is required");
+
+            invalidFormArgumentException.AddData(
+                key: "ByteArrayContent",
+                values: "Content is required");
+
+            invalidFormArgumentException.AddData(
+                key: "Name",
+                values: "Text is required");
+
+            invalidFormArgumentException.AddData(
+                key: "FileName",
+                values: "Text is required");
+
+            var expectedFormValidationException =
+                new FormValidationException(invalidFormArgumentException);
+
+            // when
+            Action addByteContentAction =
+                () => formService.AddByteArrayContent(nullMultipartFormDataContent, nullContent, invalidName, invalidFileName);
+
+            FormValidationException actualFormValidationException =
+                Assert.Throws<FormValidationException>(addByteContentAction);
+
+            // then
+            actualFormValidationException.Should()
+                .BeEquivalentTo(expectedFormValidationException);
+
+            this.multipartFormDataContentBroker.Verify(broker =>
+                broker.AddByteArrayContent(nullMultipartFormDataContent, nullContent, invalidName, invalidFileName),
+                    Times.Never);
+
+            this.multipartFormDataContentBroker.VerifyNoOtherCalls();
+        }
     }
 }

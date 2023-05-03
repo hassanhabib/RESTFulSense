@@ -25,43 +25,6 @@ namespace RESTFulSense.Services.Foundations.Forms
 
                 throw formValidationException;
             }
-            catch (ArgumentOutOfRangeException argumentOutOfRangeException)
-            {
-                var formDependencyValidationException =
-                    new FormDependencyValidationException(argumentOutOfRangeException);
-
-                var formValidationException =
-                    new FormValidationException(formDependencyValidationException);
-
-                throw formValidationException;
-            }
-            catch (ArgumentNullException argumentNullException)
-            {
-                var formDependencyValidationException =
-                    new FormDependencyValidationException(argumentNullException);
-
-                var formValidationException =
-                    new FormValidationException(formDependencyValidationException);
-
-                throw formValidationException;
-            }
-            catch (ArgumentException argumentException)
-            {
-                var formDependencyValidationException =
-                    new FormDependencyValidationException(argumentException);
-
-                var formValidationException =
-                    new FormValidationException(formDependencyValidationException);
-
-                throw formValidationException;
-            }
-            catch (Exception exception)
-            {
-                var failedFormServiceException = new FailedFormServiceException(exception);
-                var formServiceException = new FormServiceException(failedFormServiceException);
-
-                throw formServiceException;
-            }
         }
     }
 }
