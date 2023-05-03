@@ -16,6 +16,6 @@ namespace RESTFulSense.Services.Properties
             this.propertyBroker = propertyBroker;
 
         public PropertyInfo[] RetrieveProperties(Type type) =>
-            throw new NotImplementedException();
+            this.propertyBroker.GetProperties(type);
     }
 }
