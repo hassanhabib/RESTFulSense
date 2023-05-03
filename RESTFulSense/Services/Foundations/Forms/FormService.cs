@@ -5,7 +5,6 @@
 using System;
 using System.IO;
 using System.Net.Http;
-using System.Xml.Linq;
 using RESTFulSense.Brokers.MultipartFormDataContents;
 
 namespace RESTFulSense.Services.Foundations.Forms
@@ -78,5 +77,11 @@ namespace RESTFulSense.Services.Foundations.Forms
 
             return returnedMultipartFormDataContent;
         });
+
+        public MultipartFormDataContent AddStringContent(
+            MultipartFormDataContent multipartFormDataContent,
+            string content,
+            string name) =>
+            throw new NotImplementedException();
     }
 }
