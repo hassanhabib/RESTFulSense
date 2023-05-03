@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// ----------------------------------------------------------------------------------
+// Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
+// ----------------------------------------------------------------------------------
+
+using System.Linq;
 using System.Reflection;
 using Moq;
 using RESTFulSense.Models.Orchestrations.Properties;
