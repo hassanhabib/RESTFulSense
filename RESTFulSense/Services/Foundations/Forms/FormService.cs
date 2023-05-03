@@ -2,9 +2,8 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System;
+using System.IO;
 using System.Net.Http;
-using System.Xml.Linq;
 using RESTFulSense.Brokers.MultipartFormDataContents;
 
 namespace RESTFulSense.Services.Foundations.Forms
@@ -46,5 +45,11 @@ namespace RESTFulSense.Services.Foundations.Forms
 
             return returnedMultipartFormDataContent;
         });
+
+        public MultipartFormDataContent AddStreamContent(
+            MultipartFormDataContent multipartFormDataContent,
+            Stream content,
+            string name) =>
+            throw new System.NotImplementedException();
     }
 }
