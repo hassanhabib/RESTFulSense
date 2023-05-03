@@ -61,6 +61,34 @@ namespace RESTFulSense.Services.Orchestrations.Properties
 
                 throw propertyOrchestrationDependencyValidationException;
             }
+            catch (TypeDependencyException typeDependencyException)
+            {
+                var propertyOrchestrationDependencyException =
+                    new PropertyOrchestrationDependencyException(typeDependencyException);
+
+                throw propertyOrchestrationDependencyException;
+            }
+            catch (TypeServiceException typeServiceException)
+            {
+                var propertyOrchestrationDependencyException =
+                    new PropertyOrchestrationDependencyException(typeServiceException);
+
+                throw propertyOrchestrationDependencyException;
+            }
+            catch (PropertyDependencyException propertyDependencyException)
+            {
+                var propertyOrchestrationDependencyException =
+                    new PropertyOrchestrationDependencyException(propertyDependencyException);
+
+                throw propertyOrchestrationDependencyException;
+            }
+            catch (PropertyServiceException propertyServiceException)
+            {
+                var propertyOrchestrationDependencyException =
+                    new PropertyOrchestrationDependencyException(propertyServiceException);
+
+                throw propertyOrchestrationDependencyException;
+            }
         }
     }
 }
