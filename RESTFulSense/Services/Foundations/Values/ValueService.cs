@@ -15,6 +15,6 @@ namespace RESTFulSense.Services.Foundations.Values
             this.valueBroker = valueBroker;
 
         public object RetrievePropertyValue(object @object, PropertyInfo propertyInfo) =>
-            throw new System.NotImplementedException();
+            this.valueBroker.GetPropertyValue(@object, propertyInfo);
     }
 }
