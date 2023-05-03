@@ -47,6 +47,10 @@ namespace RESTFulSense.Services.Types
             {
                 throw CreateDependencyException(missingMethodException);
             }
+            catch (Exception exception)
+            {
+                throw CreateServiceException(exception);
+            }
         }
 
         private static TypeDependencyValidationException CreateDependencyValidationException(
