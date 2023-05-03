@@ -24,6 +24,13 @@ namespace RESTFulSense.Services.Orchestrations.Properties
 
                 throw propertyOrchestrationValidationException;
             }
+            catch (Models.Orchestrations.Properties.Exceptions.NullObjectException nullObjectException)
+            {
+                var propertyOrchestrationValidationException =
+                    new PropertyOrchestrationValidationException(nullObjectException);
+
+                throw propertyOrchestrationValidationException;
+            }
         }
     }
 }
