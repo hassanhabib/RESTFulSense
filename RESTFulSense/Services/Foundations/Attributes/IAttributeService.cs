@@ -5,13 +5,11 @@
 using System;
 using System.Reflection;
 
-namespace RESTFulSense.Brokers.Attributes
+namespace RESTFulSense.Services.Foundations.Attributes
 {
-    internal interface IAttributeBroker
+    internal interface IAttributeService
     {
-        TAttribute GetPropertyCustomAttribute<TAttribute>(
-            PropertyInfo propertyInfo,
-            bool inspectAncestors)
+        TAttribute RetrieveAttribute<TAttribute>(PropertyInfo propertyInfo)
             where TAttribute : Attribute;
     }
 }
