@@ -2,7 +2,9 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Net.Http;
+using System.Xml.Linq;
 using RESTFulSense.Brokers.MultipartFormDataContents;
 
 namespace RESTFulSense.Services.Foundations.Forms
@@ -33,13 +35,16 @@ namespace RESTFulSense.Services.Foundations.Forms
             MultipartFormDataContent multipartFormDataContent,
             byte[] content,
             string name,
-            string fileName)
+            string fileName) =>
+        TryCatch(() =>
         {
+            ValidateOnAddByteContent(multipartFormDataContent, byteArrayContent: content, name, fileName);
+
             MultipartFormDataContent returnedMultipartFormDataContent =
                 this.multipartFormDataContentBroker
                     .AddByteArrayContent(multipartFormDataContent, content, name, fileName);
 
             return returnedMultipartFormDataContent;
-        }
+        });
     }
 }
