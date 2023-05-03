@@ -52,5 +52,45 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
             typeServiceMock.VerifyNoOtherCalls();
             propertyServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowPropertyOrchestrationValidationExceptionOnRetrievePropertiesIfNullObjectOccurs()
+        {
+            // given
+            PropertyModel nullObjectModel = CreateSomePropertyModel(null);
+            PropertyModel inputPropertyModel = nullObjectModel;
+            Type someType = typeof(object);
+
+            var argumentNullException =
+                new ArgumentNullException(paramName: "object");
+
+            var nullPropertyModelException =
+                new NullObjectException(argumentNullException);
+
+            var expectedPropertyOrchestrationValidationException =
+                new PropertyOrchestrationValidationException(nullPropertyModelException);
+
+            // when
+            Action retrievePropertiesAction =
+                () => propertyOrchestrationService.RetrieveProperties(inputPropertyModel);
+
+            PropertyOrchestrationValidationException actualPropertyOrchestrationValidationException =
+                Assert.Throws<PropertyOrchestrationValidationException>(retrievePropertiesAction);
+
+            // then
+            actualPropertyOrchestrationValidationException.Should()
+                .BeEquivalentTo(expectedPropertyOrchestrationValidationException);
+
+            typeServiceMock.Verify(service =>
+                service.RetrieveType(It.IsAny<PropertyModel>()),
+                    Times.Never());
+
+            propertyServiceMock.Verify(service =>
+                service.RetrieveProperties(someType),
+                    Times.Never());
+
+            typeServiceMock.VerifyNoOtherCalls();
+            propertyServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
