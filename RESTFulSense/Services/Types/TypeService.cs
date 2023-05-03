@@ -14,7 +14,11 @@ namespace RESTFulSense.Services.Types
         public TypeService(ITypeBroker typeBroker) =>
             this.typeBroker = typeBroker;
 
-        public Type RetrieveType(object @object) =>
-            throw new NotImplementedException();
+        public Type RetrieveType(object @object) 
+        {
+            Type type = this.typeBroker.GetType(@object);
+
+            return type;
+        }
     }
 }
