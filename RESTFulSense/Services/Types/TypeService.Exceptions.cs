@@ -22,34 +22,6 @@ namespace RESTFulSense.Services.Types
                 var typeValidationException = new TypeValidationException(nullObjectException);
                 throw typeValidationException;
             }
-            //catch (ArgumentNullException argumentNullException)
-            //{
-            //    throw CreateDependencyValidationException(argumentNullException);
-            //}
-            //catch (MethodAccessException methodAccessException)
-            //{
-            //    throw CreateDependencyException(methodAccessException);
-            //}
-            //catch (TargetInvocationException targetInvocationException)
-            //{
-            //    throw CreateDependencyException(targetInvocationException);
-            //}
-            //catch (TypeLoadException typeLoadException)
-            //{
-            //    throw CreateDependencyException(typeLoadException);
-            //}
-            //catch (NotSupportedException notSupportedException)
-            //{
-            //    throw CreateDependencyException(notSupportedException);
-            //}
-            //catch (MissingMethodException missingMethodException)
-            //{
-            //    throw CreateDependencyException(missingMethodException);
-            //}
-            //catch (Exception exception)
-            //{
-            //    throw CreateServiceException(exception);
-            //}
         }
 
         private static TypeDependencyValidationException CreateDependencyValidationException(
