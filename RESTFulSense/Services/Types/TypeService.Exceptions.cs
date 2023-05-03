@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Reflection;
 using RESTFulSense.Models.Foundations.Types.Exceptions;
 
 namespace RESTFulSense.Services.Types
@@ -25,6 +26,26 @@ namespace RESTFulSense.Services.Types
             catch (ArgumentNullException argumentNullException)
             {
                 throw CreateDependencyValidationException(argumentNullException);
+            }
+            catch (MethodAccessException methodAccessException)
+            {
+                throw CreateDependencyException(methodAccessException);
+            }
+            catch (TargetInvocationException targetInvocationException)
+            {
+                throw CreateDependencyException(targetInvocationException);
+            }
+            catch (TypeLoadException typeLoadException)
+            {
+                throw CreateDependencyException(typeLoadException);
+            }
+            catch (NotSupportedException notSupportedException)
+            {
+                throw CreateDependencyException(notSupportedException);
+            }
+            catch (MissingMethodException missingMethodException)
+            {
+                throw CreateDependencyException(missingMethodException);
             }
         }
 
