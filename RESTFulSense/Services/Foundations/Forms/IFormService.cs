@@ -24,5 +24,11 @@ namespace RESTFulSense.Services.Foundations.Forms
             MultipartFormDataContent multipartFormDataContent,
             Stream content,
             string name);
+
+        MultipartFormDataContent AddStreamContent(
+            MultipartFormDataContent multipartFormDataContent,
+            Stream someContent,
+            string randomName,
+            string randomFileName);
     }
 }

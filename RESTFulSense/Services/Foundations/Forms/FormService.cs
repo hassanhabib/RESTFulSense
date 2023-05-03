@@ -57,5 +57,12 @@ namespace RESTFulSense.Services.Foundations.Forms
 
             return returnedMultipartFormDataContent;
         }
+
+        public MultipartFormDataContent AddStreamContent(
+            MultipartFormDataContent multipartFormDataContent,
+            Stream someContent,
+            string randomName,
+            string randomFileName) =>
+            throw new System.NotImplementedException();
     }
 }
