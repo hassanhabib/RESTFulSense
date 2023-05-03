@@ -7,7 +7,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
-    internal class FailedPropertyDependencyValidationException : Xeption
+    public class FailedPropertyDependencyValidationException : Xeption
     {
         public FailedPropertyDependencyValidationException(Exception innerException)
             : base(

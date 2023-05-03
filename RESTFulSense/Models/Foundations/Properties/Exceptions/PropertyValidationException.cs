@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
-    internal class PropertyValidationException : Xeption
+    public class PropertyValidationException : Xeption
     {
         public PropertyValidationException(Xeption innerException)
             : base(
