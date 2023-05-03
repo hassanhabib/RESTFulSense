@@ -16,7 +16,13 @@ namespace RESTFulSense.Services.Foundations.Attributes
             this.attributeBroker = attributeBroker;
 
         public TAttribute RetrieveAttribute<TAttribute>(PropertyInfo propertyInfo)
-            where TAttribute : Attribute =>
-            throw new NotImplementedException();
+            where TAttribute : Attribute
+        {
+            TAttribute attribute = this.attributeBroker.GetPropertyCustomAttribute<TAttribute>(
+                propertyInfo,
+                inspectAncestors: true);
+
+            return attribute;
+        }
     }
 }
