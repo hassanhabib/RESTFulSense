@@ -67,13 +67,16 @@ namespace RESTFulSense.Services.Foundations.Forms
             MultipartFormDataContent multipartFormDataContent,
             Stream content,
             string name,
-            string fileName)
+            string fileName) =>
+        TryCatch(() =>
         {
+            ValidateOnAddStreamContent(multipartFormDataContent, streamContent: content, name, fileName);
+
             MultipartFormDataContent returnedMultipartFormDataContent =
                 this.multipartFormDataContentBroker
                     .AddStreamContent(multipartFormDataContent, content, name, fileName);
 
             return returnedMultipartFormDataContent;
-        }
+        });
     }
 }
