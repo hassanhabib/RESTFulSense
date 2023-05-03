@@ -125,5 +125,22 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
                 new FormDependencyValidationException(innerException)
             };
         }
+
+        public static TheoryData DependencyExceptions()
+        {
+            string randomMessage = GetRandomString();
+            string exceptionMessage = randomMessage;
+            var innerException = new Xeption(exceptionMessage);
+
+            return new TheoryData<Xeption>
+            {
+                new AttributeDependencyException(innerException),
+                new AttributeServiceException(innerException),
+                new ValueDependencyException(innerException),
+                new ValueServiceException(innerException),
+                new FormDependencyException(innerException),
+                new FormServiceException(innerException)
+            };
+        }
     }
 }
