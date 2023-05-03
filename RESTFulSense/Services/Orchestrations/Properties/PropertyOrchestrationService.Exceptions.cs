@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using RESTFulSense.Models.Foundations.Properties.Exceptions;
 using RESTFulSense.Models.Foundations.Types.Exceptions;
 using RESTFulSense.Models.Orchestrations.Properties;
@@ -88,6 +89,16 @@ namespace RESTFulSense.Services.Orchestrations.Properties
                     new PropertyOrchestrationDependencyException(propertyServiceException);
 
                 throw propertyOrchestrationDependencyException;
+            }
+            catch (Exception exception)
+            {
+                var failedPropertyOrchestrationException =
+                    new FailedPropertyOrchestrationException(exception);
+
+                var propertyPropertyOrchestrationException =
+                    new PropertyOrchestrationServiceException(failedPropertyOrchestrationException);
+
+                throw propertyPropertyOrchestrationException;
             }
         }
     }
