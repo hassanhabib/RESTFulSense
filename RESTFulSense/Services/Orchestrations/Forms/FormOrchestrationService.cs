@@ -28,15 +28,18 @@ namespace RESTFulSense.Services.Orchestrations.Forms
             this.formService = formService;
         }
 
-        public FormModel BuildFormModel(FormModel formModel)
-        {
-            var nameToFileNameMap = CreateNameToFileNameMap(formModel);
-            AddStringContents(formModel);
-            AddByteArrayContents(formModel, nameToFileNameMap);
-            AddStreamContents(formModel, nameToFileNameMap);
+        public FormModel BuildFormModel(FormModel formModel) =>
+            TryCatch(() =>
+            {
+                ValidateFormModelIsNotNull(formModel);
 
-            return formModel;
-        }
+                var nameToFileNameMap = CreateNameToFileNameMap(formModel);
+                AddStringContents(formModel);
+                AddByteArrayContents(formModel, nameToFileNameMap);
+                AddStreamContents(formModel, nameToFileNameMap);
+
+                return formModel;
+            });
 
         private Dictionary<string, string> CreateNameToFileNameMap(FormModel formModel)
         {
