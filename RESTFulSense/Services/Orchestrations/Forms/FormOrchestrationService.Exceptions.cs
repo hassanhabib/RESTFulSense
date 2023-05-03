@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using RESTFulSense.Models.Foundations.Attributes.Exceptions;
 using RESTFulSense.Models.Foundations.Forms.Exceptions;
 using RESTFulSense.Models.Foundations.Values.Exceptions;
@@ -110,6 +111,16 @@ namespace RESTFulSense.Services.Orchestrations.Forms
                     new FormOrchestrationDependencyException(formServiceException);
 
                 throw formOrchestrationDependencyException;
+            }
+            catch (Exception exception)
+            {
+                var failedFormOrchestrationServiceException =
+                    new FailedFormOrchestrationServiceException(exception);
+
+                var formOrchestrationServiceException =
+                    new FormOrchestrationServiceException(failedFormOrchestrationServiceException);
+
+                throw formOrchestrationServiceException;
             }
         }
     }
