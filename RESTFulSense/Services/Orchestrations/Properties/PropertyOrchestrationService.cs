@@ -21,13 +21,16 @@ namespace RESTFulSense.Services.Orchestrations.Properties
             this.propertyService = propertyService;
         }
 
-        public PropertyModel RetrieveProperties(PropertyModel propertyModel)
+        public PropertyModel RetrieveProperties(PropertyModel propertyModel) =>
+        TryCatch(() =>
         {
+            ValidatePropertyModel(propertyModel);
+
             Type type = typeService.RetrieveType(propertyModel.Object);
             PropertyInfo[] properties = propertyService.RetrieveProperties(type);
             propertyModel.Properties = properties;
 
             return propertyModel;
-        }
+        });
     }
 }
