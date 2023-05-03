@@ -2,6 +2,8 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using RESTFulSense.Models.Foundations.Properties.Exceptions;
+using RESTFulSense.Models.Foundations.Types.Exceptions;
 using RESTFulSense.Models.Orchestrations.Properties;
 using RESTFulSense.Models.Orchestrations.Properties.Exceptions;
 
@@ -30,6 +32,34 @@ namespace RESTFulSense.Services.Orchestrations.Properties
                     new PropertyOrchestrationValidationException(nullObjectException);
 
                 throw propertyOrchestrationValidationException;
+            }
+            catch (TypeValidationException typeValidationException)
+            {
+                var propertyOrchestrationDependencyValidationException =
+                    new PropertyOrchestrationDependencyValidationException(typeValidationException);
+
+                throw propertyOrchestrationDependencyValidationException;
+            }
+            catch (TypeDependencyValidationException typeDependencyValidationException)
+            {
+                var propertyOrchestrationDependencyValidationException =
+                    new PropertyOrchestrationDependencyValidationException(typeDependencyValidationException);
+
+                throw propertyOrchestrationDependencyValidationException;
+            }
+            catch (PropertyValidationException propertyValidationException)
+            {
+                var propertyOrchestrationDependencyValidationException =
+                    new PropertyOrchestrationDependencyValidationException(propertyValidationException);
+
+                throw propertyOrchestrationDependencyValidationException;
+            }
+            catch (PropertyDependencyValidationException propertyDependencyValidationException)
+            {
+                var propertyOrchestrationDependencyValidationException =
+                    new PropertyOrchestrationDependencyValidationException(propertyDependencyValidationException);
+
+                throw propertyOrchestrationDependencyValidationException;
             }
         }
     }
