@@ -14,11 +14,13 @@ namespace RESTFulSense.Services.Types
         public TypeService(ITypeBroker typeBroker) =>
             this.typeBroker = typeBroker;
 
-        public Type RetrieveType(object @object) 
+        public Type RetrieveType(object @object) =>
+        TryCatch(() =>
         {
+            ValidateObjectIsNotNullOnRetrieve(@object);
             Type type = this.typeBroker.GetType(@object);
 
             return type;
-        }
+        });
     }
 }
