@@ -24,6 +24,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
             this.multipartFormDataContentBroker = new Mock<IMultipartFormDataContentBroker>();
             this.formService = new FormService(multipartFormDataContentBroker.Object);
         }
+
         private static MultipartFormDataContent CreateNullMultipartFormDataContent() => null;
 
         private static byte[] CreateSomeByteArrayContent() =>
@@ -33,9 +34,6 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
             new MnemonicString().GetValue();
 
         private static MemoryStream CreateSomeStreamContent() =>
-            new MemoryStream();
-
-        private static MemoryStream CreateSomeStream() =>
             new MemoryStream();
 
         public static TheoryData GetAddExceptions()
