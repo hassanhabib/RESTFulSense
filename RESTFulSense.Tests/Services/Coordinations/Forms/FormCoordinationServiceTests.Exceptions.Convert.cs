@@ -61,5 +61,49 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
             propertyOrchestrationServiceMock.VerifyNoOtherCalls();
             formOrchestrationServiceMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(DependencyExceptions))]
+        public void ShouldThrowDependencyExceptionOnConvertIfDependencyErrorOccurs(
+            Xeption dependancyException)
+        {
+            // given
+            object someObject = new object();
+            object inputObject = someObject;
+            PropertyModel somePropertyModel = CreateSomePropertyModel(inputObject);
+            PropertyModel inputPropertyModel = somePropertyModel;
+            PropertyModel expectedPropertyModel = somePropertyModel.DeepClone();
+            PropertyInfo[] randomProperties = CreateRandomProperties();
+            expectedPropertyModel.Properties = randomProperties;
+            MultipartFormDataContent someMultipartFormDataContent = CreateNewMultipartFormDataContent();
+            MultipartFormDataContent inputMultipartFormDataContent = someMultipartFormDataContent;
+            MultipartFormDataContent expectedMultipartFormDataContent = inputMultipartFormDataContent;
+            FormModel someFormModel = CreateSomeFormModel(inputObject, inputMultipartFormDataContent);
+            FormModel inputFormModel = someFormModel;
+
+            var expectedFormCoordinationDependencyException =
+                new FormCoordinationDependencyException(dependancyException);
+
+            this.propertyOrchestrationServiceMock.Setup(service =>
+                service.RetrieveProperties(It.IsAny<PropertyModel>()))
+                    .Throws(dependancyException);
+
+            Action convertToMultipartFormDataContentAction = () =>
+                this.formCoordinationService.ConvertToMultipartFormDataContent(inputObject);
+
+            FormCoordinationDependencyException actualFormCoordinationDependencyException =
+                Assert.Throws<FormCoordinationDependencyException>(convertToMultipartFormDataContentAction);
+
+            // then
+            actualFormCoordinationDependencyException.Should()
+                .BeEquivalentTo(expectedFormCoordinationDependencyException);
+
+            this.propertyOrchestrationServiceMock.Verify(service =>
+                service.RetrieveProperties(It.IsAny<PropertyModel>()),
+                    Times.Once());
+
+            this.propertyOrchestrationServiceMock.VerifyNoOtherCalls();
+            this.formOrchestrationServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
