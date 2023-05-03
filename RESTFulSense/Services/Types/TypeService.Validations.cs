@@ -8,7 +8,6 @@ namespace RESTFulSense.Services.Types
 {
     internal partial class TypeService : ITypeService
     {
-
         private void ValidateObjectIsNotNullOnRetrieve(object @object)
         {
             if (@object is null)
