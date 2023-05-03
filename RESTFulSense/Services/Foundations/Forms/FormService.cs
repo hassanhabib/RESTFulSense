@@ -60,9 +60,15 @@ namespace RESTFulSense.Services.Foundations.Forms
 
         public MultipartFormDataContent AddStreamContent(
             MultipartFormDataContent multipartFormDataContent,
-            Stream someContent,
-            string randomName,
-            string randomFileName) =>
-            throw new System.NotImplementedException();
+            Stream content,
+            string name,
+            string fileName)
+        {
+            MultipartFormDataContent returnedMultipartFormDataContent =
+                this.multipartFormDataContentBroker
+                    .AddStreamContent(multipartFormDataContent, content, name, fileName);
+
+            return returnedMultipartFormDataContent;
+        }
     }
 }
