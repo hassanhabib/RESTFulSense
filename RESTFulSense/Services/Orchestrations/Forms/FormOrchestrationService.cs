@@ -55,7 +55,9 @@ namespace RESTFulSense.Services.Orchestrations.Forms
                     object propertyValue =
                         this.valueService.RetrievePropertyValue(formModel.Object, property);
 
+                    ValidatePropertyValue(propertyValue);
                     string fileName = (string)propertyValue;
+                    ValidateFileName(fileName);
                     nameToFileNameMap[fileNameAttribute.Name] = fileName;
                 }
             }

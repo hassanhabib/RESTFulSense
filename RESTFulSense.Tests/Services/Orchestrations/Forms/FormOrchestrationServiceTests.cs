@@ -11,12 +11,17 @@ using System.Reflection;
 using System.Text;
 using Moq;
 using RESTFulSense.Models.Attributes;
+using RESTFulSense.Models.Foundations.Attributes.Exceptions;
+using RESTFulSense.Models.Foundations.Forms.Exceptions;
+using RESTFulSense.Models.Foundations.Values.Exceptions;
 using RESTFulSense.Models.Orchestrations.Forms;
 using RESTFulSense.Services.Foundations.Attributes;
 using RESTFulSense.Services.Foundations.Forms;
 using RESTFulSense.Services.Foundations.Values;
 using RESTFulSense.Services.Orchestrations.Forms;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace RESTFulSense.Tests.Services.Orchestrations.Forms
 {
@@ -100,5 +105,25 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
                 RESTFulStringContentAttribute => CreateRandomString(),
                 _ => throw new NotImplementedException(),
             };
+
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
+
+        public static TheoryData DependencyValidationExceptions()
+        {
+            string randomMessage = GetRandomString();
+            string exceptionMessage = randomMessage;
+            var innerException = new Xeption(exceptionMessage);
+
+            return new TheoryData<Xeption>
+            {
+                new AttributeValidationException(innerException),
+                new AttributeDependencyValidationException(innerException),
+                new ValueValidationException(innerException),
+                new ValueDependencyValidationException(innerException),
+                new FormValidationException(innerException),
+                new FormDependencyValidationException(innerException)
+            };
+        }
     }
 }
