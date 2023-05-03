@@ -2,17 +2,18 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using RESTFulSense.Models.Foundations.Types.Exceptions;
+using System;
+using RESTFulSense.Models.Foundations.Properties.Exceptions;
 
-namespace RESTFulSense.Services.Types
+namespace RESTFulSense.Services.Properties
 {
-    internal partial class TypeService : ITypeService
+    internal partial class PropertyService
     {
-        private void ValidateObjectIsNotNullOnRetrieve(object @object)
+        private void ValidateTypeIsNotNullOnRetrieveProperties(Type type)
         {
-            if (@object is null)
+            if (type is null)
             {
-                throw new NullObjectException();
+                throw new NullTypeException();
             }
         }
     }
