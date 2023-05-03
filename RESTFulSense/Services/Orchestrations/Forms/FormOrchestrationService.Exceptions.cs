@@ -69,6 +69,48 @@ namespace RESTFulSense.Services.Orchestrations.Forms
 
                 throw formOrchestrationDependencyValidationException;
             }
+            catch (AttributeDependencyException attributeDependencyException)
+            {
+                var formOrchestrationDependencyException =
+                    new FormOrchestrationDependencyException(attributeDependencyException);
+
+                throw formOrchestrationDependencyException;
+            }
+            catch (AttributeServiceException attributeServiceException)
+            {
+                var formOrchestrationDependencyException =
+                    new FormOrchestrationDependencyException(attributeServiceException);
+
+                throw formOrchestrationDependencyException;
+            }
+            catch (ValueDependencyException valueDependencyException)
+            {
+                var formOrchestrationDependencyException =
+                    new FormOrchestrationDependencyException(valueDependencyException);
+
+                throw formOrchestrationDependencyException;
+            }
+            catch (ValueServiceException valueServiceException)
+            {
+                var formOrchestrationDependencyException =
+                    new FormOrchestrationDependencyException(valueServiceException);
+
+                throw formOrchestrationDependencyException;
+            }
+            catch (FormDependencyException formDependencyException)
+            {
+                var formOrchestrationDependencyException =
+                    new FormOrchestrationDependencyException(formDependencyException);
+
+                throw formOrchestrationDependencyException;
+            }
+            catch (FormServiceException formServiceException)
+            {
+                var formOrchestrationDependencyException =
+                    new FormOrchestrationDependencyException(formServiceException);
+
+                throw formOrchestrationDependencyException;
+            }
         }
     }
 }
