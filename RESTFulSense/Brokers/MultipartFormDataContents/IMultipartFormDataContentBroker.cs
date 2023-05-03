@@ -14,7 +14,7 @@ namespace RESTFulSense.Brokers.MultipartFormDataContents
             byte[] content,
             string name);
 
-        MultipartFormDataContent AddByteContent(
+        MultipartFormDataContent AddByteArrayContent(
             MultipartFormDataContent multipartFormDataContent,
             byte[] content,
             string name,

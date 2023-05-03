@@ -2,7 +2,9 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Net.Http;
+using System.Xml.Linq;
 using RESTFulSense.Brokers.MultipartFormDataContents;
 
 namespace RESTFulSense.Services.Foundations.Forms
@@ -31,6 +33,6 @@ namespace RESTFulSense.Services.Foundations.Forms
             byte[] content,
             string name,
             string fileName) =>
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
     }
 }

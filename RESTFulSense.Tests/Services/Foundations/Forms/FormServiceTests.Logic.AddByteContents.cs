@@ -12,7 +12,7 @@ namespace RESTFulSense.Unit.Tests.Services.Foundations.Forms
     public partial class FormServiceTests
     {
         [Fact]
-        public void ShouldAddByteContentWithNoFileName()
+        public void ShouldAddByteArrayContentWithNoFileName()
         {
             // given
             var multipartFormDataContent = new MultipartFormDataContent();
@@ -36,6 +36,39 @@ namespace RESTFulSense.Unit.Tests.Services.Foundations.Forms
 
             this.multipartFormDataContentBroker.Verify(broker =>
                 broker.AddByteArrayContent(multipartFormDataContent, inputContent, inputName),
+                    Times.Once);
+
+            this.multipartFormDataContentBroker.VerifyNoOtherCalls();
+        }
+
+
+        [Fact]
+        public void ShouldAddByteArrayContentWithFileName()
+        {
+            // given
+            var multipartFormDataContent = new MultipartFormDataContent();
+            var expectedMultipartFormDataContent = new MultipartFormDataContent();
+            byte[] someContent = CreateSomeByteArrayContent();
+            byte[] inputContent = someContent;
+            string randomName = CreateRandomString();
+            string inputName = randomName;
+            string randomFileName = CreateRandomString();
+            string inputFileName = randomFileName;
+
+            this.multipartFormDataContentBroker.Setup(broker =>
+                broker.AddByteArrayContent(multipartFormDataContent, inputContent, inputName, inputFileName))
+                    .Returns(expectedMultipartFormDataContent);
+
+            // when
+            var actualMultipartFormDataContent =
+                formService.AddByteArrayContent(multipartFormDataContent, inputContent, inputName, inputFileName);
+
+            // then
+            actualMultipartFormDataContent.Should()
+                .BeSameAs(expectedMultipartFormDataContent);
+
+            this.multipartFormDataContentBroker.Verify(broker =>
+                broker.AddByteArrayContent(multipartFormDataContent, inputContent, inputName, inputFileName),
                     Times.Once);
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();
