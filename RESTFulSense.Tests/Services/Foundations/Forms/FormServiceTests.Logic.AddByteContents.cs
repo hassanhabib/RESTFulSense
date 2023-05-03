@@ -23,7 +23,7 @@ namespace RESTFulSense.Unit.Tests.Services.Foundations.Forms
             string inputName = randomName;
 
             this.multipartFormDataContentBroker.Setup(broker =>
-                broker.AddByteContent(multipartFormDataContent, inputContent, inputName))
+                broker.AddByteArrayContent(multipartFormDataContent, inputContent, inputName))
                     .Returns(expectedMultipartFormDataContent);
 
             // when
@@ -35,7 +35,7 @@ namespace RESTFulSense.Unit.Tests.Services.Foundations.Forms
                 .BeSameAs(expectedMultipartFormDataContent);
 
             this.multipartFormDataContentBroker.Verify(broker =>
-                broker.AddByteContent(multipartFormDataContent, inputContent, inputName),
+                broker.AddByteArrayContent(multipartFormDataContent, inputContent, inputName),
                     Times.Once);
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();

@@ -9,7 +9,7 @@ namespace RESTFulSense.Brokers.MultipartFormDataContents
 {
     internal interface IMultipartFormDataContentBroker
     {
-        MultipartFormDataContent AddByteContent(
+        MultipartFormDataContent AddByteArrayContent(
             MultipartFormDataContent multipartFormDataContent,
             byte[] content,
             string name);

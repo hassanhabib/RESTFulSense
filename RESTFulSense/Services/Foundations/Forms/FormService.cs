@@ -17,8 +17,14 @@ namespace RESTFulSense.Services.Foundations.Forms
         public MultipartFormDataContent AddByteArrayContent(
             MultipartFormDataContent multipartFormDataContent,
             byte[] content,
-            string name) =>
-            throw new System.NotImplementedException();
+            string name)
+        {
+            MultipartFormDataContent returnedMultipartFormDataContent =
+                this.multipartFormDataContentBroker
+                    .AddByteArrayContent(multipartFormDataContent, content, name);
+
+            return returnedMultipartFormDataContent;
+        }
 
         public MultipartFormDataContent AddByteArrayContent(
             MultipartFormDataContent multipartFormDataContent,
