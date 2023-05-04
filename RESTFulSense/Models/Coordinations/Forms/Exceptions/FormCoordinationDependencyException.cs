@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
 {
-    public class FormCoordinationDependencyException : Xeption
+    internal class FormCoordinationDependencyException : Xeption
     {
         public FormCoordinationDependencyException(Xeption innerException)
          : base(

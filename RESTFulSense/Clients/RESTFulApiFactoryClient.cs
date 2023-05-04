@@ -11,8 +11,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using RESTFulSense.Models.Client.Exceptions;
+using RESTFulSense.Models.Coordinations.Forms.Exceptions;
 using RESTFulSense.Services;
 using RESTFulSense.Services.Coordinations.Forms;
+using Xeptions;
 
 namespace RESTFulSense.Clients
 {
@@ -153,20 +156,38 @@ namespace RESTFulSense.Clients
             CancellationToken cancellationToken)
             where TContent : class
         {
-            IServiceProvider serviceProvider = RegisterFormServices();
+            try
+            {
+                IServiceProvider serviceProvider = RegisterFormServices();
 
-            IFormCoordinationService formCoordinationService =
-                serviceProvider.GetRequiredService<IFormCoordinationService>();
+                IFormCoordinationService formCoordinationService =
+                    serviceProvider.GetRequiredService<IFormCoordinationService>();
 
-            MultipartFormDataContent multipartFormDataContent =
-                formCoordinationService.ConvertToMultipartFormDataContent(content);
+                MultipartFormDataContent multipartFormDataContent =
+                    formCoordinationService.ConvertToMultipartFormDataContent(content);
 
-            HttpResponseMessage responseMessage =
-               await this.httpClient.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
+                HttpResponseMessage responseMessage =
+                   await this.httpClient.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
 
-            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+                await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<TResult>(responseMessage);
+                return await DeserializeResponseContent<TResult>(responseMessage);
+            }
+            catch (FormCoordinationValidationException formCoordinationValidationException)
+            {
+                throw new RESTFulApiClientValidationException(
+                    formCoordinationValidationException.InnerException as Xeption);
+            }
+            catch (FormCoordinationDependencyException formCoordinationDependencyException)
+            {
+                throw new RESTFulApiClientDependencyException(
+                    formCoordinationDependencyException.InnerException as Xeption);
+            }
+            catch (FormCoordinationServiceException formCoordinationServiceException)
+            {
+                throw new RESTFulApiClientServiceException(
+                    formCoordinationServiceException.InnerException as Xeption);
+            }
         }
 
         public async ValueTask<T> PutContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json", bool ignoreDefaultValues = false)

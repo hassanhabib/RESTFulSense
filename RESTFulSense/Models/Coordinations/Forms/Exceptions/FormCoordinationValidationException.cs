@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
 {
-    public class FormCoordinationValidationException : Xeption
+    internal class FormCoordinationValidationException : Xeption
     {
         public FormCoordinationValidationException(Xeption innerException)
             : base(

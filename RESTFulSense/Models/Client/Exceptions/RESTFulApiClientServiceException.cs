@@ -4,12 +4,12 @@
 
 using Xeptions;
 
-namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
+namespace RESTFulSense.Models.Client.Exceptions
 {
-    internal class FormCoordinationServiceException : Xeption
+    public class RESTFulApiClientServiceException : Xeption
     {
-        public FormCoordinationServiceException(Xeption innerException)
-            : base(message: "Form coordination service error occurred, contact support.", innerException)
+        public RESTFulApiClientServiceException(Xeption innerException)
+            : base(message: "Api Client error occurred, contact support.", innerException)
         { }
     }
 }
