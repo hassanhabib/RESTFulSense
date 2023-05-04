@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
 {
-    internal class FormCoordinationServiceException : Xeption
+    public class FormCoordinationServiceException : Xeption
     {
         public FormCoordinationServiceException(Xeption innerException)
             : base(message: "Form coordination service error occurred, contact support.", innerException)

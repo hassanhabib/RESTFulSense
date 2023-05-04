@@ -6,7 +6,7 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
 {
-    internal class NullObjectException : Xeption
+    public class NullObjectException : Xeption
     {
         public NullObjectException()
             : base(message: "Object is null.")
