@@ -11,9 +11,9 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageIcon>api.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>2.13</Version>
-		<AssemblyVersion>2.13.0.0</AssemblyVersion>
-		<FileVersion>2.13.0.0</FileVersion>
+		<Version>2.14</Version>
+		<AssemblyVersion>2.14.0.0</AssemblyVersion>
+		<FileVersion>2.14.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
@@ -21,7 +21,7 @@
 		<RepositoryUrl>https://github.com/hassanhabib/RESTFulSense</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>RESTFul API</PackageTags>
-		<PackageReleaseNotes>This release will add support for POST content with a Stream response.</PackageReleaseNotes>
+		<PackageReleaseNotes>This release will add support for creating MultipartFormDataContent.</PackageReleaseNotes>
 		<Title>RESTFulSense</Title>
 	</PropertyGroup>
 
