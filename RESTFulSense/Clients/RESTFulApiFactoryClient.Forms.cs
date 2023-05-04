@@ -21,7 +21,7 @@ using RESTFulSense.Services.Properties;
 
 namespace RESTFulSense.Clients
 {
-    public partial class RESTFulApiFactoryClient : IRESTFulApiFactoryClient
+    public partial class RESTFulApiFactoryClient
     {
         internal static IServiceProvider RegisterFormServices()
         {
@@ -32,16 +32,13 @@ namespace RESTFulSense.Clients
             services.AddTransient<IAttributeBroker, AttributeBroker>();
             services.AddTransient<IValueBroker, ValueBroker>();
             services.AddTransient<IMultipartFormDataContentBroker, MultipartFormDataContentBroker>();
-
             services.AddTransient<ITypeService, TypeService>();
             services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IAttributeService, AttributeService>();
             services.AddTransient<IValueService, ValueService>();
             services.AddTransient<IFormService, FormService>();
-
             services.AddTransient<IPropertyOrchestrationService, PropertyOrchestrationService>();
             services.AddTransient<IFormOrchestrationService, FormOrchestrationService>();
-
             services.AddTransient<IFormCoordinationService, FormCoordinationService>();
 
             IServiceProvider serviceProvider = services.BuildServiceProvider();
