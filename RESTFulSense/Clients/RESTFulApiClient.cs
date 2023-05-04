@@ -21,6 +21,16 @@ namespace RESTFulSense.Clients
 {
     public partial class RESTFulApiClient : HttpClient, IRESTFulApiClient
     {
+        private IFormCoordinationService formCoordinationService;
+        
+        public RESTFulApiClient()
+        {
+            IServiceProvider serviceProvider = RegisterFormServices();
+
+            this.formCoordinationService =
+                serviceProvider.GetRequiredService<IFormCoordinationService>();
+        }
+
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
@@ -133,27 +143,14 @@ namespace RESTFulSense.Clients
 
         public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
             string relativeUrl,
-            TContent content)
-            where TContent : class
-        {
-            return await PostFormAsync<TContent, TResult>(relativeUrl, content, CancellationToken.None);
-        }
-
-        public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
-            string relativeUrl,
             TContent content,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default(CancellationToken))
             where TContent : class
         {
             try
             {
-                IServiceProvider serviceProvider = RegisterFormServices();
-
-                IFormCoordinationService formCoordinationService =
-                    serviceProvider.GetRequiredService<IFormCoordinationService>();
-
                 MultipartFormDataContent multipartFormDataContent =
-                    formCoordinationService.ConvertToMultipartFormDataContent(content);
+                    this.formCoordinationService.ConvertToMultipartFormDataContent(content);
 
                 HttpResponseMessage responseMessage =
                    await PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);

@@ -64,13 +64,8 @@ namespace RESTFulSense.Clients
 
         ValueTask<TResult> PostFormAsync<TContent, TResult>(
             string relativeUrl,
-            TContent content)
-            where TContent : class;
-
-        ValueTask<TResult> PostFormAsync<TContent, TResult>(
-            string relativeUrl,
             TContent content,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default(CancellationToken))
             where TContent : class;
 
         ValueTask<T> PutContentAsync<T>(

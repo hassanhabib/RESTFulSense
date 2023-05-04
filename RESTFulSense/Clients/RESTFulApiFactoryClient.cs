@@ -22,9 +22,16 @@ namespace RESTFulSense.Clients
     public partial class RESTFulApiFactoryClient : IRESTFulApiFactoryClient
     {
         private readonly HttpClient httpClient;
+        private IFormCoordinationService formCoordinationService;
 
-        public RESTFulApiFactoryClient(HttpClient httpClient) =>
-            this.httpClient = httpClient;
+        public RESTFulApiFactoryClient(HttpClient httpClient)
+        {
+            this.httpClient = httpClient;             
+            IServiceProvider serviceProvider = RegisterFormServices();
+
+            this.formCoordinationService =
+                serviceProvider.GetRequiredService<IFormCoordinationService>();
+        }
 
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
@@ -144,27 +151,14 @@ namespace RESTFulSense.Clients
 
         public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
             string relativeUrl,
-            TContent content)
-            where TContent : class
-        {
-            return await PostFormAsync<TContent, TResult>(relativeUrl, content, CancellationToken.None);
-        }
-
-        public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
-            string relativeUrl,
             TContent content,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken = default(CancellationToken))
             where TContent : class
         {
             try
             {
-                IServiceProvider serviceProvider = RegisterFormServices();
-
-                IFormCoordinationService formCoordinationService =
-                    serviceProvider.GetRequiredService<IFormCoordinationService>();
-
                 MultipartFormDataContent multipartFormDataContent =
-                    formCoordinationService.ConvertToMultipartFormDataContent(content);
+                    this.formCoordinationService.ConvertToMultipartFormDataContent(content);
 
                 HttpResponseMessage responseMessage =
                    await this.httpClient.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
