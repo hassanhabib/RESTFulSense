@@ -4,17 +4,33 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using RESTFulSense.Models.Client.Exceptions;
+using RESTFulSense.Models.Coordinations.Forms.Exceptions;
 using RESTFulSense.Services;
+using RESTFulSense.Services.Coordinations.Forms;
+using Xeptions;
 
 namespace RESTFulSense.Clients
 {
     public partial class RESTFulApiClient : HttpClient, IRESTFulApiClient
     {
+        private IFormCoordinationService formCoordinationService;
+        
+        public RESTFulApiClient()
+        {
+            IServiceProvider serviceProvider = RegisterFormServices();
+
+            this.formCoordinationService =
+                serviceProvider.GetRequiredService<IFormCoordinationService>();
+        }
+
         public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
             HttpResponseMessage responseMessage = await GetAsync(relativeUrl);
@@ -124,6 +140,42 @@ namespace RESTFulSense.Clients
 
             return await DeserializeResponseContent<TResult>(responseMessage);
         }
+
+        public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
+            string relativeUrl,
+            TContent content,
+            CancellationToken cancellationToken = default(CancellationToken))
+            where TContent : class
+        {
+            try
+            {
+                MultipartFormDataContent multipartFormDataContent =
+                    this.formCoordinationService.ConvertToMultipartFormDataContent(content);
+
+                HttpResponseMessage responseMessage =
+                   await PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
+
+                await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+                return await DeserializeResponseContent<TResult>(responseMessage);
+            }
+            catch (FormCoordinationValidationException formCoordinationValidationException)
+            {
+                throw new RESTFulApiClientValidationException(
+                    formCoordinationValidationException.InnerException as Xeption);
+            }
+            catch (FormCoordinationDependencyException formCoordinationDependencyException)
+            {
+                throw new RESTFulApiClientDependencyException(
+                    formCoordinationDependencyException.InnerException as Xeption);
+            }
+            catch (FormCoordinationServiceException formCoordinationServiceException)
+            {
+                throw new RESTFulApiClientServiceException(
+                    formCoordinationServiceException.InnerException as Xeption);
+            }
+        }
+
 
         public async ValueTask<T> PutContentAsync<T>(
             string relativeUrl,

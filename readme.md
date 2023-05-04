@@ -166,7 +166,51 @@ Account activatedAccount =
     await restfulApiClient.PutContentAsync(relativeUrl: $"api/accounts/{accountId}/activate");
 ```
 
-### 3. Testing-Friendly Implementation
+### 3. MultipartFormDataContent support
+
+`RESTFulSense`  allows you to easily convert a C# class with attributes into a MultipartFormDataContent and send it as a `POST` request using the `PostFormAsync` method.
+
+The library includes the following attributes:
+
+| Attribute | Description |
+| --- | --- |
+| `RESTFulByteArrayContentAttribute` | Specifies a byte array content type |
+| `RESTFulStreamContentAttribute` | Specifies a stream content type |
+| `RESTFulStringContentAttribute` | Specifies a string content type |
+| `RESTFulFileNameAttribute` | Adds a file name to the content |
+
+These attributes allow you to specify the content types and names of the form data. The `RESTFulFileNameAttribute` also allows you to add a file name to the content. Simply apply the attributes to your class properties and the library will handle the rest.
+
+Here's an example usage:
+
+```csharp
+public class FormUpload
+{
+    [RESTFulStreamContent(name: "file")]
+    public Stream Stream { get; set; }
+
+    [RESTFulStringContent(name: "purpose")]
+    public string Purpose { get; set; }
+
+    [RESTFulFileName(name: "file")]
+    public string FileName { get; set; }
+}
+
+// ...
+
+var formUpload = new FormUpload
+{
+    Stream = GetStream(),
+    Purpose = "fine-tune",
+    FileName = "SomeFile.jsonl"
+};
+
+var result = await PostFormAsync<FormUpload, ResultType>("https://example.com/upload", formUpload);
+```
+
+Note the linking of the FileName to the StreamContent via the name parameter in the attributes.
+
+### 4. Testing-Friendly Implementation
 RESTFulSense provides an interface to the API client class, to make it easier to mock and leverage dependency injection for the testability of the client consumers, here's an example:
  
 ```csharp

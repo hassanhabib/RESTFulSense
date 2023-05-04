@@ -4,12 +4,12 @@
 
 using Xeptions;
 
-namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
+namespace RESTFulSense.Models.Client.Exceptions
 {
-    public class NullObjectException : Xeption
+    public class RESTFulApiClientValidationException : Xeption
     {
-        public NullObjectException()
-            : base(message: "Object is null.")
+        public RESTFulApiClientValidationException(Xeption innerException)
+            : base(message: "Api Client validation errors occurred, please try again.", innerException)
         { }
     }
 }
