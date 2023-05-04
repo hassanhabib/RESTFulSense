@@ -4,12 +4,15 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RESTFulSense.Services;
+using RESTFulSense.Services.Coordinations.Forms;
 
 namespace RESTFulSense.Clients
 {
@@ -130,6 +133,36 @@ namespace RESTFulSense.Clients
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
+            string relativeUrl,
+            TContent content)
+            where TContent : class
+        {
+            return await PostFormAsync<TContent, TResult>(relativeUrl, content, CancellationToken.None);
+        }
+
+        public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
+            string relativeUrl,
+            TContent content,
+            CancellationToken cancellationToken)
+            where TContent : class
+        {
+            IServiceProvider serviceProvider = RegisterFormServices();
+
+            IFormCoordinationService formCoordinationService =
+                serviceProvider.GetRequiredService<IFormCoordinationService>();
+
+            MultipartFormDataContent multipartFormDataContent =
+                formCoordinationService.ConvertToMultipartFormDataContent(content);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
