@@ -40,7 +40,6 @@ namespace RESTFulSense.Clients
             services.AddTransient<IPropertyOrchestrationService, PropertyOrchestrationService>();
             services.AddTransient<IFormOrchestrationService, FormOrchestrationService>();
             services.AddTransient<IFormCoordinationService, FormCoordinationService>();
-
             IServiceProvider serviceProvider = services.BuildServiceProvider();
 
             return serviceProvider;
