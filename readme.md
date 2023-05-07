@@ -6,7 +6,7 @@
 [![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f)](https://github.com/hassanhabib/The-Standard)
 [![The Standard Community](https://img.shields.io/discord/934130100008538142?color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
 
-# RESTFulSense 
+# RESTFulSense
 I designed & developed this library as a wrapper around the existing .NET Core ```HttpClient``` implementation to provide the following values:
 
 1. Meaningful Exceptions for APIs response status codes.
