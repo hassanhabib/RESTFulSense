@@ -74,7 +74,7 @@ namespace RESTFulSense.Services.Orchestrations.Forms
 
                 if (attribute != null)
                 {
-                    string value = (string)this.valueService.RetrievePropertyValue(formModel.Object, property);
+                    string value = this.valueService.RetrievePropertyValue(formModel.Object, property).ToString();
                     this.formService.AddStringContent(formModel.MultipartFormDataContent, value, attribute.Name);
                 }
             }
