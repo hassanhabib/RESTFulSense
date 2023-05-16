@@ -266,6 +266,88 @@ namespace RESTFulSense.Clients
             return await DeserializeResponseContent<T>(responseMessage);
         }
 
+        public async ValueTask<T> PatchContentAsync<T>(string relativeUrl, T content, string mediaType = "text/json", bool ignoreDefaultValues = false)
+        {
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PatchAsync(relativeUrl, contentString);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(responseMessage);
+        }
+
+        public async ValueTask<T> PatchContentAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false)
+        {
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PatchAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(responseMessage);
+        }
+
+        public async ValueTask<TResult> PatchContentAsync<TContent, TResult>(
+            string relativeUrl,
+            TContent content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false)
+        {
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PatchAsync(relativeUrl, contentString);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<TResult> PatchContentAsync<TContent, TResult>(
+            string relativeUrl,
+            TContent content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false)
+        {
+            HttpContent contentString = ConvertToHttpContent(content, mediaType, ignoreDefaultValues);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PatchAsync(relativeUrl, contentString, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(responseMessage);
+        }
+
+        public async ValueTask<T> PatchContentAsync<T>(string relativeUrl)
+        {
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PatchAsync(relativeUrl, content: default);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(responseMessage);
+        }
+
+        public async ValueTask<T> PatchContentAsync<T>(string relativeUrl, CancellationToken cancellationToken)
+        {
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PatchAsync(relativeUrl, content: default, cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(responseMessage);
+        }
+
         public async ValueTask DeleteContentAsync(string relativeUrl)
         {
             HttpResponseMessage responseMessage =
