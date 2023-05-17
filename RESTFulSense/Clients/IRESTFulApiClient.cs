@@ -74,6 +74,13 @@ namespace RESTFulSense.Clients
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
 
+        ValueTask<T> PutContentAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false);
+
         ValueTask<TResult> PutContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
@@ -92,6 +99,13 @@ namespace RESTFulSense.Clients
         ValueTask<T> PatchContentAsync<T>(
             string relativeUrl,
             T content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false);
+
+        ValueTask<T> PatchContentAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false);
 
