@@ -85,8 +85,19 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
             return testData;
         }
 
-        private static PropertyInfo[] CreateRandomProperties(dynamic[] testData) =>
-            testData.Select(a => new Mock<PropertyInfo>().Object).ToArray();
+        private static PropertyInfo[] CreateRandomProperties(dynamic[] testData)
+        {
+            var propertyMocks = testData.Select(_ => new Mock<PropertyInfo>()).ToList();
+
+            propertyMocks.ForEach(propertyInfoMock => propertyInfoMock.Setup(propertyInfo =>
+                    propertyInfo.PropertyType)
+                        .Returns(typeof(Object)));
+
+            var properties =
+                propertyMocks.Select(propertyInfoMock => propertyInfoMock.Object).ToArray();
+
+            return properties;
+        }
 
         private static string CreateRandomString() =>
             new MnemonicString().GetValue();

@@ -2,8 +2,10 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Orchestrations.Forms;
 using RESTFulSense.Services.Foundations.Attributes;
@@ -74,10 +76,62 @@ namespace RESTFulSense.Services.Orchestrations.Forms
 
                 if (attribute != null)
                 {
-                    string value = (string)this.valueService.RetrievePropertyValue(formModel.Object, property);
-                    this.formService.AddStringContent(formModel.MultipartFormDataContent, value, attribute.Name);
+                    bool ignoreDefaultValues = attribute.IgnoreDefaultValues;
+                    object propertyValue = this.valueService.RetrievePropertyValue(formModel.Object, property);
+
+                    bool isDefaultValue = IsDefaultValue(property.PropertyType, propertyValue);
+
+                    if (isDefaultValue is false || ignoreDefaultValues is false)
+                    {
+                        string value = ConvertToString(propertyValue, attribute.MediaType, ignoreDefaultValues);
+
+                        this.formService.AddStringContent(formModel.MultipartFormDataContent, value, attribute.Name);
+                    }
                 }
             }
+        }
+
+        private static bool IsDefaultValue(Type type, object value)
+        {
+            if (type.IsValueType)
+            {
+                object defaultValue = Activator.CreateInstance(type);
+
+                return value.Equals(defaultValue);
+            }
+            else
+            {
+                return value is null;
+            }
+        }
+
+        private static string ConvertToString(object propertyValue, string mediaType, bool ignoreDefaultValues)
+        {
+            return mediaType switch
+            {
+                "text/json" => ConvertToJsonString(propertyValue, ignoreDefaultValues),
+                "application/json" => ConvertToJsonString(propertyValue, ignoreDefaultValues),
+                _ => propertyValue.ToString()
+            };
+        }
+
+        private static string ConvertToJsonString<T>(T content, bool ignoreDefaultValues)
+        {
+            JsonSerializerSettings jsonSerializerSettings = CreateJsonSerializerSettings(ignoreDefaultValues);
+
+            string serializedRestrictionRequest = JsonConvert.SerializeObject(
+                content,
+                formatting: Formatting.None,
+                settings: jsonSerializerSettings);
+
+            return serializedRestrictionRequest;
+        }
+
+        private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreDefaultValues)
+        {
+            var defaultValueHandling = ignoreDefaultValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
+            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = defaultValueHandling };
+            return jsonSerializerSettings;
         }
 
         private void AddByteArrayContents(FormModel formModel, Dictionary<string, string> fileNames)
