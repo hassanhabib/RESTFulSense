@@ -78,13 +78,11 @@ namespace RESTFulSense.Services.Orchestrations.Forms
                 {
                     bool ignoreDefaultValues = attribute.IgnoreDefaultValues;
                     object propertyValue = this.valueService.RetrievePropertyValue(formModel.Object, property);
-
                     bool isDefaultValue = IsDefaultValue(property.PropertyType, propertyValue);
 
                     if (isDefaultValue is false || ignoreDefaultValues is false)
                     {
                         string value = ConvertToString(propertyValue, attribute.MediaType, ignoreDefaultValues);
-
                         this.formService.AddStringContent(formModel.MultipartFormDataContent, value, attribute.Name);
                     }
                 }
