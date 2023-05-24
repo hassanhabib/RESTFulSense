@@ -67,7 +67,7 @@ namespace RESTFulSense.Services.Foundations.Forms
 
         private static dynamic IsInvalidContent(string text) => new
         {
-            Condition = String.IsNullOrWhiteSpace(text),
+            Condition = text is null,
             Message = "Content is required"
         };
 

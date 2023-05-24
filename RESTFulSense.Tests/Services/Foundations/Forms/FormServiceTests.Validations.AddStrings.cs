@@ -15,8 +15,6 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
     {
         [Theory]
         [InlineData(data: null)]
-        [InlineData(data: "")]
-        [InlineData(data: "   ")]
         public void ShouldThrowFormValidationExceptionOnAddStringContentIfArgumentsIsInvalid(string invalidInput)
         {
             // given

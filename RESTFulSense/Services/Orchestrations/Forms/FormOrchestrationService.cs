@@ -95,7 +95,7 @@ namespace RESTFulSense.Services.Orchestrations.Forms
             {
                 object defaultValue = Activator.CreateInstance(type);
 
-                return value.Equals(defaultValue);
+                return value == defaultValue;
             }
             else
             {
