@@ -109,7 +109,7 @@ namespace RESTFulSense.Services.Orchestrations.Forms
             {
                 "text/json" => ConvertToJsonString(propertyValue, ignoreDefaultValues),
                 "application/json" => ConvertToJsonString(propertyValue, ignoreDefaultValues),
-                _ => propertyValue.ToString()
+                _ => propertyValue?.ToString()
             };
         }
 
