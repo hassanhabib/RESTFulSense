@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Orchestrations.Forms;
@@ -105,12 +106,21 @@ namespace RESTFulSense.Services.Orchestrations.Forms
 
         private static string ConvertToString(object propertyValue, string mediaType, bool ignoreDefaultValues)
         {
-            return mediaType switch
+            string stringContent;
+
+            switch (mediaType)
             {
-                "text/json" => ConvertToJsonString(propertyValue, ignoreDefaultValues),
-                "application/json" => ConvertToJsonString(propertyValue, ignoreDefaultValues),
-                _ => propertyValue?.ToString()
-            };
+                case "text/json":
+                case "application/json":
+                    stringContent = ConvertToJsonString(propertyValue, ignoreDefaultValues);
+                    break;
+                default:
+                    ValidateStringContent(propertyValue);
+                    stringContent = propertyValue.ToString();
+                    break;
+            }
+
+            return stringContent;
         }
 
         private static string ConvertToJsonString<T>(T content, bool ignoreDefaultValues)

@@ -38,5 +38,13 @@ namespace RESTFulSense.Services.Orchestrations.Forms
                 throw new ArgumentException(message: "FileName is invalid.");
             }
         }
+
+        private static void ValidateStringContent(object value)
+        {
+            if (value is null)
+            {
+                throw new ArgumentException(message: "String Content is null.");
+            }
+        }
     }
 }
