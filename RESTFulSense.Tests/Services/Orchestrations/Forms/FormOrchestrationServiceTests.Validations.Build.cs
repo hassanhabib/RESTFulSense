@@ -9,7 +9,6 @@ using Moq;
 using RESTFulSense.Models.Attributes;
 using RESTFulSense.Models.Orchestrations.Forms;
 using RESTFulSense.Models.Orchestrations.Forms.Exceptions;
-using RESTFulSense.Services.Foundations.Attributes;
 using Xunit;
 
 namespace RESTFulSense.Tests.Services.Orchestrations.Forms
@@ -48,7 +47,6 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
         {
             // given
             Mock<PropertyInfo> invalidPropertyInfoMock = new Mock<PropertyInfo>();
-            invalidPropertyInfoMock.Setup(propertyInfo => propertyInfo.PropertyType).Returns(typeof(object));
             PropertyInfo inputPropertyInfo = invalidPropertyInfoMock.Object;
             var someRESTFulStringContentAttribute = new RESTFulStringContentAttribute(name: "", ignoreDefaultValues: false);
 
@@ -56,12 +54,16 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
             {
                 Properties = new PropertyInfo[] { inputPropertyInfo }
             };
-            var argumentException = new ArgumentException(message: "String Content is null.");
 
+            var argumentException = new ArgumentException(message: "String Content is null.");
             var nullStringContentException = new NullStringContentException(argumentException);
 
             var expectedFormOrchestrationValidationException =
                 new FormOrchestrationValidationException(nullStringContentException);
+
+            invalidPropertyInfoMock.Setup(propertyInfo =>
+                propertyInfo.PropertyType)
+                    .Returns(typeof(object));
 
             this.attributeServiceMock.Setup(service =>
                 service.RetrieveAttribute<RESTFulFileNameAttribute>(inputPropertyInfo))
@@ -72,7 +74,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
                     .Returns(someRESTFulStringContentAttribute);
 
             this.valueServiceMock.Setup(service =>
-                service.RetrievePropertyValue(It.IsAny<object>() ,It.IsAny<PropertyInfo>()))
+                service.RetrievePropertyValue(It.IsAny<object>(), It.IsAny<PropertyInfo>()))
                     .Returns(null);
 
             // when
