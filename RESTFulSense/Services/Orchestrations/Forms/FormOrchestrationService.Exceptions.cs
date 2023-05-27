@@ -28,6 +28,13 @@ namespace RESTFulSense.Services.Orchestrations.Forms
 
                 throw formOrchestrationValidationException;
             }
+            catch (NullStringContentException nullStringContentException)
+            {
+                var formOrchestrationValidationException =
+                    new FormOrchestrationValidationException(nullStringContentException);
+
+                throw formOrchestrationValidationException;
+            }
             catch (AttributeValidationException attributeValidationException)
             {
                 var formOrchestrationDependencyValidationException =

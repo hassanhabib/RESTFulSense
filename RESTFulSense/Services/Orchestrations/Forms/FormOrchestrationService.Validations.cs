@@ -43,7 +43,9 @@ namespace RESTFulSense.Services.Orchestrations.Forms
         {
             if (value is null)
             {
-                throw new ArgumentException(message: "String Content is null.");
+                var argumentException = new ArgumentException(message: "String Content is null.");
+
+                throw new NullStringContentException(argumentException);
             }
         }
     }
