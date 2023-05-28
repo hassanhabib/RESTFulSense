@@ -94,6 +94,13 @@ namespace RESTFulSense.Services.Orchestrations.Forms
         {
             if (type.IsValueType)
             {
+                Type underlyingType = Nullable.GetUnderlyingType(type);
+                bool isNullableType = underlyingType != null;
+                if (isNullableType && value is null)
+                {
+                    return true;
+                }
+
                 object defaultValue = Activator.CreateInstance(type);
 
                 return value == defaultValue;
