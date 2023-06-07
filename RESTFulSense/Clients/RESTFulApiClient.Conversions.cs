@@ -1,8 +1,6 @@
-﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
-// Licensed under the MIT License.
-// See License.txt in the project root for license information.
-// ---------------------------------------------------------------
+﻿// ----------------------------------------------------------------------------------
+// Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
+// ----------------------------------------------------------------------------------
 
 using System.IO;
 using System.Net.Http;
@@ -14,6 +12,35 @@ namespace RESTFulSense.Clients
 {
     public partial class RESTFulApiClient
     {
+        private static JsonSerializerSettings jsonSerializerSettingsIgnore = null;
+        private static JsonSerializerSettings jsonSerializerSettingsInclude = null;
+
+        private static JsonSerializerSettings JsonSerializerSettingsIgnore
+        {
+            get
+            {
+                if (jsonSerializerSettingsIgnore == null)
+                {
+                    jsonSerializerSettingsIgnore = new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore };
+                }
+
+                return jsonSerializerSettingsIgnore;
+            }
+        }
+
+        private static JsonSerializerSettings JsonSerializerSettingsInclude
+        {
+            get
+            {
+                if (jsonSerializerSettingsInclude == null)
+                {
+                    jsonSerializerSettingsInclude = new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Include };
+                }
+
+                return jsonSerializerSettingsInclude;
+            }
+        }
+
         private static HttpContent ConvertToHttpContent<T>(T content, string mediaType, bool ignoreDefaultValues)
         {
             return mediaType switch
@@ -63,9 +90,9 @@ namespace RESTFulSense.Clients
 
         private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreDefaultValues)
         {
-            DefaultValueHandling defaultValueHandling = ignoreDefaultValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
-            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = defaultValueHandling };
-            return jsonSerializerSettings;
+            return ignoreDefaultValues
+                ? JsonSerializerSettingsIgnore
+                : JsonSerializerSettingsInclude;
         }
     }
 }

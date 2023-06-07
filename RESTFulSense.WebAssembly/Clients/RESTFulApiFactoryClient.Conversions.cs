@@ -14,6 +14,35 @@ namespace RESTFulSense.WebAssembly.Clients
 {
     public partial class RESTFulApiFactoryClient
     {
+        private static JsonSerializerSettings jsonSerializerSettingsIgnore = null;
+        private static JsonSerializerSettings jsonSerializerSettingsInclude = null;
+
+        private static JsonSerializerSettings JsonSerializerSettingsIgnore
+        {
+            get
+            {
+                if (jsonSerializerSettingsIgnore == null)
+                {
+                    jsonSerializerSettingsIgnore = new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore };
+                }
+
+                return jsonSerializerSettingsIgnore;
+            }
+        }
+
+        private static JsonSerializerSettings JsonSerializerSettingsInclude
+        {
+            get
+            {
+                if (jsonSerializerSettingsInclude == null)
+                {
+                    jsonSerializerSettingsInclude = new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Include };
+                }
+
+                return jsonSerializerSettingsInclude;
+            }
+        }
+
         private static HttpContent ConvertToHttpContent<T>(T content, string mediaType, bool ignoreDefaultValues)
         {
             return mediaType switch
@@ -63,9 +92,9 @@ namespace RESTFulSense.WebAssembly.Clients
 
         private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreDefaultValues)
         {
-            DefaultValueHandling defaultValueHandling = ignoreDefaultValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
-            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = defaultValueHandling };
-            return jsonSerializerSettings;
+            return ignoreDefaultValues
+                ? JsonSerializerSettingsIgnore
+                : JsonSerializerSettingsInclude;
         }
     }
 }
