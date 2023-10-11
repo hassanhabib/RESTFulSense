@@ -1,14 +1,13 @@
-﻿// ---------------------------------------------------------------
-// Copyright (c) Hassan Habib
-// Licensed under the MIT License.
-// See License.txt in the project root for license information.
-// ---------------------------------------------------------------
+﻿// ----------------------------------------------------------------------------------
+// Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
+// ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.IO;
 using ADotNet.Clients;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
-using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
+using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV3s;
 
 namespace RESTFulSense.Infrastructure.Build
 {
@@ -35,50 +34,62 @@ namespace RESTFulSense.Infrastructure.Build
                     }
                 },
 
-                Jobs = new Jobs
+                Jobs = new Dictionary<string, Job>
                 {
-                    Build = new BuildJob
                     {
-                        RunsOn = BuildMachines.Windows2019,
-
-                        Steps = new List<GithubTask>
+                        "build",
+                        new Job
                         {
-                            new CheckoutTaskV2
-                            {
-                                Name = "Check Out"
-                            },
+                            RunsOn = BuildMachines.Windows2019,
 
-                            new SetupDotNetTaskV1
+                            Steps = new List<GithubTask>
                             {
-                                Name = "Setup .Net",
-
-                                TargetDotNetVersion = new TargetDotNetVersion
+                                new CheckoutTaskV3
                                 {
-                                    DotNetVersion = "6.0.101",
-                                    IncludePrerelease = true
+                                    Name = "Check Out"
+                                },
+
+                                new SetupDotNetTaskV3
+                                {
+                                    Name = "Setup .Net",
+
+                                    With = new TargetDotNetVersionV3
+                                    {
+                                        DotNetVersion = "6.0.101",
+                                    }
+                                },
+
+                                new RestoreTask
+                                {
+                                    Name = "Restore"
+                                },
+
+                                new DotNetBuildTask
+                                {
+                                    Name = "Build"
+                                },
+
+                                new TestTask
+                                {
+                                    Name = "Test"
                                 }
-                            },
-
-                            new RestoreTask
-                            {
-                                Name = "Restore"
-                            },
-
-                            new DotNetBuildTask
-                            {
-                                Name = "Build"
-                            },
-
-                            new TestTask
-                            {
-                                Name = "Test"
                             }
                         }
                     }
                 }
             };
 
-            adotNetClient.SerializeAndWriteToFile(githubPipeline, "../../../../.github/workflows/dotnet.yml");
+            string buildScriptPath = "../../../../.github/workflows/dotnet.yml";
+            string directoryPath = Path.GetDirectoryName(buildScriptPath);
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            adotNetClient.SerializeAndWriteToFile(
+                adoPipeline: githubPipeline,
+                path: buildScriptPath);
         }
     }
 }
