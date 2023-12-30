@@ -57,6 +57,9 @@ namespace RESTFulSense.WebAssembly.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
+        public async ValueTask<byte[]> GetContentByteArrayAsync(string relativeUrl) =>
+            await this.httpClient.GetByteArrayAsync(relativeUrl);
+
         public async ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
