@@ -15,6 +15,7 @@ namespace RESTFulSense.Clients
         ValueTask<T> GetContentAsync<T>(string relativeUrl);
         ValueTask<T> GetContentAsync<T>(string relativeUrl, CancellationToken cancellationToken);
         ValueTask<string> GetContentStringAsync(string relativeUrl);
+        ValueTask<Stream> GetContentStreamAsync(string relativeUrl);
 
         ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
