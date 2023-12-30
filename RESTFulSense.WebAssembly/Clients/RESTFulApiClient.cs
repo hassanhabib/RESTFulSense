@@ -34,6 +34,9 @@ namespace RESTFulSense.WebAssembly.Clients
         public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
             await GetStringAsync(relativeUrl);
 
+        public async ValueTask<byte[]> GetContentByteArrayAsync(string relativeUrl) =>
+            await GetByteArrayAsync(relativeUrl);
+
         public async ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
