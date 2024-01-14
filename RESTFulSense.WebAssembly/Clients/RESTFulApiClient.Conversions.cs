@@ -4,22 +4,27 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace RESTFulSense.WebAssembly.Clients
 {
     public partial class RESTFulApiClient
     {
-        private static HttpContent ConvertToHttpContent<T>(T content, string mediaType, bool ignoreDefaultValues)
+        private async static ValueTask<HttpContent> ConvertToHttpContent<T>(
+            T content,
+            string mediaType,
+            bool ignoreDefaultValues,
+            Func<T, ValueTask<string>> serializationFunction = null)
         {
             return mediaType switch
             {
-                "text/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues),
-                "application/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues),
+                "text/json" => await ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
+                "application/json" => await ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
                 "text/plain" => ConvertToStringContent(content, mediaType),
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
@@ -34,14 +39,15 @@ namespace RESTFulSense.WebAssembly.Clients
                 mediaType);
         }
 
-        private static StringContent ConvertToJsonStringContent<T>(T content, string mediaType, bool ignoreDefaultValues)
+        private async static ValueTask<StringContent> ConvertToJsonStringContent<T>(
+            T content,
+            string mediaType,
+            bool ignoreDefaultValues,
+            Func<T, ValueTask<string>> serializationFunction = null)
         {
-            JsonSerializerSettings jsonSerializerSettings = CreateJsonSerializerSettings(ignoreDefaultValues);
-
-            string serializedRestrictionRequest = JsonConvert.SerializeObject(
-                content,
-                formatting: Formatting.None,
-                settings: jsonSerializerSettings);
+            string serializedRestrictionRequest = serializationFunction == null
+                    ? ConvertToJsonNewtonSoftStringContent<T>(content, ignoreDefaultValues)
+                    : await serializationFunction(content);
 
             var contentString =
                 new StringContent(
@@ -50,7 +56,7 @@ namespace RESTFulSense.WebAssembly.Clients
                     mediaType);
 
             return contentString;
-        }
+            }
 
         private static StreamContent ConvertToStreamContent<T>(T content, string mediaType)
             where T : Stream
@@ -59,14 +65,6 @@ namespace RESTFulSense.WebAssembly.Clients
             contentStream.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
 
             return contentStream;
-        }
-
-        private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreDefaultValues)
-        {
-            DefaultValueHandling defaultValueHandling = ignoreDefaultValues ? DefaultValueHandling.Ignore : DefaultValueHandling.Include;
-            var jsonSerializerSettings = new JsonSerializerSettings { DefaultValueHandling = defaultValueHandling };
-
-            return jsonSerializerSettings;
         }
     }
 }

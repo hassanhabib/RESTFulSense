@@ -9,21 +9,22 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RESTFulSense.Clients
 {
     public partial class RESTFulApiClient
     {
-        private static HttpContent ConvertToHttpContent<T>(
+        private async static ValueTask<HttpContent> ConvertToHttpContent<T>(
             T content,
             string mediaType,
             bool ignoreDefaultValues,
-            Func<T, string> serializationFunction = null)
+            Func<T, ValueTask<string>> serializationFunction = null)
         {
             return mediaType switch
             {
-                "text/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
-                "application/json" => ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
+                "text/json" => await ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
+                "application/json" => await ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
                 "text/plain" => ConvertToStringContent(content, mediaType),
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
@@ -38,15 +39,15 @@ namespace RESTFulSense.Clients
                 mediaType);
         }
 
-        private static StringContent ConvertToJsonStringContent<T>(
+        private async static ValueTask<StringContent> ConvertToJsonStringContent<T>(
             T content,
             string mediaType,
             bool ignoreDefaultValues,
-            Func<T, string> serializationFunction = null)
+            Func<T, ValueTask<string>> serializationFunction = null)
         {
             string serializedRestrictionRequest = serializationFunction == null
                     ? ConvertToJsonNewtonSoftStringContent<T>(content, ignoreDefaultValues)
-                    : serializationFunction(content);
+                    : await serializationFunction(content);
 
             var contentString =
                 new StringContent(
