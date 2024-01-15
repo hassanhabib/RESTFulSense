@@ -212,10 +212,10 @@ var result = await PostFormAsync<FormUpload, ResultType>("https://example.com/up
 Note the linking of the FileName to the StreamContent via the name parameter in the attributes.
 
 ### 4. Custom serialization/deserialization support
-RESTFulSense uses by default NewtonSoft serialization/deserialization support. However, in some scenarios this could present some drawbacks. Imagine
-1) your models don´t have NewtonSoft annotations (because your main project doesn´t uses NewtonSoft).
-1) you have some types which they need custom converters to specify how to deal with those types. For example, TimeOnly type. This type if you try serializate it with NewtonSoft or System.Text then raises an exception because it doesn´t know how to deal with it.
-1) you need to use a custom JsonSerializerSettings or JsonSerializerOptions.
+RESTFulSense uses by default NewtonSoft serialization/deserialization support. However, in some scenarios this could present some drawbacks. Imagine:
+1) Your models donÂ´t have NewtonSoft annotations (because your main project doesnÂ´t uses NewtonSoft).
+1) You have some types which they need custom converters to specify how to deal with those types. For example, TimeOnly type. This type if you try serializate it with NewtonSoft or System.Text then raises an exception because it doesnÂ´t know how to deal with it.
+1) You need to use a custom JsonSerializerSettings or JsonSerializerOptions.
 
 Here we have an example for a POST using System.Text.Json.JsonSerializer:
 
