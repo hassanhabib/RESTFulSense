@@ -211,7 +211,54 @@ var result = await PostFormAsync<FormUpload, ResultType>("https://example.com/up
 
 Note the linking of the FileName to the StreamContent via the name parameter in the attributes.
 
-### 4. Testing-Friendly Implementation
+### 4. Custom serialization/deserialization support
+RESTFulSense uses by default NewtonSoft serialization/deserialization support. However, in some scenarios this could present some drawbacks. Imagine:
+1) Your models don´t have NewtonSoft annotations (because your main project doesn´t uses NewtonSoft).
+1) You have some types which they need custom converters to specify how to deal with those types. For example, TimeOnly type. This type if you try serializate it with NewtonSoft or System.Text then raises an exception because it doesn´t know how to deal with it.
+1) You need to use a custom JsonSerializerSettings or JsonSerializerOptions.
+
+Here we have an example for a POST using System.Text.Json.JsonSerializer:
+
+```csharp
+private readonly var jsonSerializerOptions =
+    new JsonSerializerOptions
+    {
+    // ...
+    };
+
+private async ValueTask<string> Serialize<TContent>(TContent requestToSerialize)
+{
+    using var memoryStream = new MemoryStream();
+    await JsonSerializer.SerializeAsync(memoryStream, requestToSerialize, jsonSerializerOptions);
+    using var streamReader = new StreamReader(memoryStream, Encoding.UTF8);
+    memoryStream.Position = 0;
+    return streamReader.ReadToEnd();
+}
+
+private async ValueTask<TResult> Deserialize<TResult>(string responseToDeserialize)
+{
+    byte[] responseBytes = Encoding.UTF8.GetBytes(responseToDeserialize);
+    using var memoryStream = new MemoryStream(responseBytes);
+    var responseObject =
+        await JsonSerializer.DeserializeAsync<TResult>(memoryStream, jsonSerializerOptions);
+
+    return responseObject;
+}
+
+var result =
+    await restfulApiClient.PostContentAsync<Student>(
+        relativeUrl: "api/students",
+        content: inputStudent,
+        cancellationToken,
+        mediaType: "text/json",
+        ignoreDefaultValues: false,
+        serializationFunction: Serialize<TContent>,
+        deserializationFuntion: Deserialize<TResult>);
+
+
+```
+
+### 5. Testing-Friendly Implementation
 RESTFulSense provides an interface to the API client class, to make it easier to mock and leverage dependency injection for the testability of the client consumers, here's an example:
  
 ```csharp
