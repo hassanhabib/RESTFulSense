@@ -11,9 +11,9 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageIcon>api.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>2.16</Version>
-		<AssemblyVersion>2.16.0.0</AssemblyVersion>
-		<FileVersion>2.16.0.0</FileVersion>
+		<Version>2.17</Version>
+		<AssemblyVersion>2.17.0.0</AssemblyVersion>
+		<FileVersion>2.17.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
@@ -21,7 +21,7 @@
 		<RepositoryUrl>https://github.com/hassanhabib/RESTFulSense</RepositoryUrl>
 		<RepositoryType>Github</RepositoryType>
 		<PackageTags>RESTFul API</PackageTags>
-		<PackageReleaseNotes>This release will add support for creating MultipartFormDataContent.</PackageReleaseNotes>
+		<PackageReleaseNotes>Abstract JSON serializers.</PackageReleaseNotes>
 		<Title>RESTFulSense</Title>
 	</PropertyGroup>
 
