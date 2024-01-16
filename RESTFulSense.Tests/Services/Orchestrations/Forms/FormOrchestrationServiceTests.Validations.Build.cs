@@ -13,15 +13,19 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
     public partial class FormOrchestrationServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnBuildFormModelIfModelIsInvalid()
+        private void ShouldThrowValidationExceptionOnBuildFormModelIfModelIsInvalid()
         {
             // given
             FormModel nullFormModel = null;
 
-            var nullFormModelException = new NullFormModelException();
+            var nullFormModelException =
+                new NullFormModelException(
+                    message: "Form model is null. Please correct the errors and try again.");
 
             var expectedFormOrchestrationValidationException =
-                new FormOrchestrationValidationException(nullFormModelException);
+                new FormOrchestrationValidationException(
+                    message: "Form orchestration validation errors occurred, please try again.",
+                innerException: nullFormModelException);
 
             // when
             Action buildFormModelAction = () =>

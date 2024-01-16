@@ -12,7 +12,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
     public partial class AttributeServiceTests
     {
         [Fact]
-        public void ShouldRetrieveAttribute()
+        private void ShouldRetrieveAttribute()
         {
             // given
             PropertyInfo somePropertyInfo = CreateSomePropertyInfo();
@@ -20,7 +20,9 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
             TestAttribute expectedSomeAttribute = someAttribute;
 
             this.attributeBrokerMock.Setup(broker =>
-                broker.GetPropertyCustomAttribute<TestAttribute>(It.IsAny<PropertyInfo>(), It.IsAny<bool>()))
+                broker.GetPropertyCustomAttribute<TestAttribute>(
+                    It.IsAny<PropertyInfo>(),
+                    It.IsAny<bool>()))
                     .Returns(someAttribute);
 
             // when
@@ -31,7 +33,9 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
             actualSomeAttribute.Should().BeSameAs(expectedSomeAttribute);
 
             this.attributeBrokerMock.Verify(broker =>
-                broker.GetPropertyCustomAttribute<TestAttribute>(It.IsAny<PropertyInfo>(), It.IsAny<bool>()),
+                broker.GetPropertyCustomAttribute<TestAttribute>(
+                    It.IsAny<PropertyInfo>(),
+                    It.IsAny<bool>()),
                     Times.Once());
 
             this.attributeBrokerMock.VerifyNoOtherCalls();

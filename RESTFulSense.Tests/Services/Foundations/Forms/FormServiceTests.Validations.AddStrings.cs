@@ -17,15 +17,18 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
         [InlineData(data: null)]
         [InlineData(data: "")]
         [InlineData(data: "   ")]
-        public void ShouldThrowFormValidationExceptionOnAddStringContentIfArgumentsIsInvalid(string invalidInput)
+        private void ShouldThrowFormValidationExceptionOnAddStringContentIfArgumentsIsInvalid(string invalidInput)
         {
             // given
-            MultipartFormDataContent nullMultipartFormDataContent = CreateNullMultipartFormDataContent();
+            MultipartFormDataContent nullMultipartFormDataContent =
+                CreateNullMultipartFormDataContent();
+            
             string invalidContent = invalidInput;
             string invalidName = invalidInput;
 
             var invalidFormArgumentException =
-                new InvalidFormArgumentException();
+                new InvalidFormArgumentException(
+                    message: "Invalid form arguments. Please fix the errors and try again.");
 
             invalidFormArgumentException.AddData(
                 key: "MultipartFormDataContent",
@@ -40,11 +43,14 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 values: "Text is required");
 
             var expectedFormValidationException =
-                new FormValidationException(invalidFormArgumentException);
+                new FormValidationException(
+                    message: "Form validation error occurred, fix errors and try again.",
+                    innerException: invalidFormArgumentException);
 
             // when
             Action addByteContentAction =
-                () => formService.AddStringContent(nullMultipartFormDataContent, content: invalidContent, name: invalidName);
+                () => formService.AddStringContent(
+                    nullMultipartFormDataContent, content: invalidContent, name: invalidName);
 
             FormValidationException actualFormValidationException =
                 Assert.Throws<FormValidationException>(addByteContentAction);
@@ -54,7 +60,8 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 .BeEquivalentTo(expectedFormValidationException);
 
             this.multipartFormDataContentBroker.Verify(broker =>
-                broker.AddStringContent(nullMultipartFormDataContent, invalidContent, invalidName),
+                broker.AddStringContent(
+                    nullMultipartFormDataContent, invalidContent, invalidName),
                     Times.Never);
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();

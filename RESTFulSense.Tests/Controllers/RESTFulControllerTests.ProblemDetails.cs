@@ -20,7 +20,7 @@ namespace RESTFulSense.Tests.Controllers
     public partial class RESTFulControllerTests
     {
         [Fact]
-        public void ShouldReturnValidationProblemDetailMatchingPascalCaseSerialization()
+        private void ShouldReturnValidationProblemDetailMatchingPascalCaseSerialization()
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -55,7 +55,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnValidationProblemDetailMatchingCamelCaseSerialization()
+        private void ShouldReturnValidationProblemDetailMatchingCamelCaseSerialization()
         {
             // given
             Dictionary<string, List<string>> randomDictionary =
@@ -100,7 +100,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnBadRequest(
+        private void ShouldReturnValidationProblemDetailOnBadRequest(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -138,7 +138,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnUnathorized(
+        private void ShouldReturnValidationProblemDetailOnUnathorized(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -176,7 +176,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnPaymentRequired(
+        private void ShouldReturnValidationProblemDetailOnPaymentRequired(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -215,7 +215,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnForbidden(
+        private void ShouldReturnValidationProblemDetailOnForbidden(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -253,7 +253,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnNotFound(
+        private void ShouldReturnValidationProblemDetailOnNotFound(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -291,7 +291,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnMethodNotAllowed(
+        private void ShouldReturnValidationProblemDetailOnMethodNotAllowed(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -329,7 +329,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnNotAcceptable(
+        private void ShouldReturnValidationProblemDetailOnNotAcceptable(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -367,7 +367,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnProxyAuthenticationRequired(
+        private void ShouldReturnValidationProblemDetailOnProxyAuthenticationRequired(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -405,7 +405,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnRequestTimeout(
+        private void ShouldReturnValidationProblemDetailOnRequestTimeout(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -443,7 +443,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnConflict(
+        private void ShouldReturnValidationProblemDetailOnConflict(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -481,7 +481,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnGone(
+        private void ShouldReturnValidationProblemDetailOnGone(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -519,7 +519,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnLengthRequired(
+        private void ShouldReturnValidationProblemDetailOnLengthRequired(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -557,7 +557,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnPreconditionFailed(
+        private void ShouldReturnValidationProblemDetailOnPreconditionFailed(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -595,7 +595,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnRequestEntityTooLarge(
+        private void ShouldReturnValidationProblemDetailOnRequestEntityTooLarge(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -633,7 +633,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnRequestUriTooLong(
+        private void ShouldReturnValidationProblemDetailOnRequestUriTooLong(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -671,7 +671,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnUnsupportedMediaType(
+        private void ShouldReturnValidationProblemDetailOnUnsupportedMediaType(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -709,7 +709,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnRequestedRangeNotSatisfiable(
+        private void ShouldReturnValidationProblemDetailOnRequestedRangeNotSatisfiable(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -747,7 +747,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnExpectationFailed(
+        private void ShouldReturnValidationProblemDetailOnExpectationFailed(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -785,7 +785,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnMisdirectedRequest(
+        private void ShouldReturnValidationProblemDetailOnMisdirectedRequest(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -823,7 +823,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnUnprocessableEntity(
+        private void ShouldReturnValidationProblemDetailOnUnprocessableEntity(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -861,7 +861,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnLocked(
+        private void ShouldReturnValidationProblemDetailOnLocked(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -899,7 +899,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnFailedDependency(
+        private void ShouldReturnValidationProblemDetailOnFailedDependency(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -937,7 +937,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnUpgradeRequired(
+        private void ShouldReturnValidationProblemDetailOnUpgradeRequired(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -975,7 +975,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnPreconditionRequired(
+        private void ShouldReturnValidationProblemDetailOnPreconditionRequired(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1013,7 +1013,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnTooManyRequests(
+        private void ShouldReturnValidationProblemDetailOnTooManyRequests(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1051,7 +1051,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnRequestHeaderFieldsTooLarge(
+        private void ShouldReturnValidationProblemDetailOnRequestHeaderFieldsTooLarge(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1089,7 +1089,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnUnavailableForLegalReasons(
+        private void ShouldReturnValidationProblemDetailOnUnavailableForLegalReasons(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1127,7 +1127,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnInternalServerError(
+        private void ShouldReturnValidationProblemDetailOnInternalServerError(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1165,7 +1165,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnNotImplemented(
+        private void ShouldReturnValidationProblemDetailOnNotImplemented(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1203,7 +1203,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnBadGateway(
+        private void ShouldReturnValidationProblemDetailOnBadGateway(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1241,7 +1241,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnServiceUnavailable(
+        private void ShouldReturnValidationProblemDetailOnServiceUnavailable(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1279,7 +1279,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnGatewayTimeout(
+        private void ShouldReturnValidationProblemDetailOnGatewayTimeout(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1317,7 +1317,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnHttpVersionNotSupported(
+        private void ShouldReturnValidationProblemDetailOnHttpVersionNotSupported(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1355,7 +1355,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnVariantAlsoNegotiates(
+        private void ShouldReturnValidationProblemDetailOnVariantAlsoNegotiates(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1393,7 +1393,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnInsufficientStorage(
+        private void ShouldReturnValidationProblemDetailOnInsufficientStorage(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1431,7 +1431,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnLoopDetected(
+        private void ShouldReturnValidationProblemDetailOnLoopDetected(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1469,7 +1469,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnNotExtended(
+        private void ShouldReturnValidationProblemDetailOnNotExtended(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1507,7 +1507,7 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
-        public void ShouldReturnValidationProblemDetailOnNetworkAuthenticationRequired(
+        private void ShouldReturnValidationProblemDetailOnNetworkAuthenticationRequired(
             JsonSerializerOptions jsonSerializerOptions)
         {
             // given
@@ -1543,7 +1543,7 @@ namespace RESTFulSense.Tests.Controllers
                 .BeEquivalentTo(expectedNetworkAuthenticationRequiredObjectResult);
         }
 
-        public static Dictionary<string, List<string>> CreateRandomDictionary()
+        private static Dictionary<string, List<string>> CreateRandomDictionary()
         {
             var filler = new Filler<Dictionary<string, List<string>>>();
 

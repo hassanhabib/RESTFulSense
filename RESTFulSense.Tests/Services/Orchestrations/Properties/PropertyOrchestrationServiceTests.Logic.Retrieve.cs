@@ -15,7 +15,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
     public partial class PropertyOrchestrationServiceTests
     {
         [Fact]
-        public void ShouldRetrieveProperties()
+        private void ShouldRetrieveProperties()
         {
             // given
             object someObject = new object();

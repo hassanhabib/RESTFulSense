@@ -19,7 +19,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
     {
         [Theory]
         [MemberData(nameof(DependencyValidationExceptions))]
-        public void ShouldThrowDependencyValidationExceptionOnBuildIfDependValidationErrorOccurs(
+        private void ShouldThrowDependencyValidationExceptionOnBuildIfDependValidationErrorOccurs(
             Xeption dependancyValidationException)
         {
             // given
@@ -51,7 +51,9 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
             someFormModel.Properties = inputProperties;
 
             var expectedFormOrchestrationDependencyValidationException =
-                new FormOrchestrationDependencyValidationException(dependancyValidationException);
+                new FormOrchestrationDependencyValidationException(
+                    message: "Form orchestration dependency validation error occurred, fix the errors and try again.",
+                    innerException: dependancyValidationException);
 
             this.attributeServiceMock.Setup(service =>
                 service.RetrieveAttribute<RESTFulFileNameAttribute>(It.IsAny<PropertyInfo>()))
@@ -79,7 +81,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
 
         [Theory]
         [MemberData(nameof(DependencyExceptions))]
-        public void ShouldThrowDependencyExceptionOnBuildIfDependencyErrorOccurs(
+        private void ShouldThrowDependencyExceptionOnBuildIfDependencyErrorOccurs(
             Xeption dependancyException)
         {
             // given
@@ -111,7 +113,9 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
             someFormModel.Properties = inputProperties;
 
             var expectedFormOrchestrationDependencyException =
-                new FormOrchestrationDependencyException(dependancyException);
+                new FormOrchestrationDependencyException(
+                    message: "Form orchestration dependency error occurred, fix errors and try again.",
+                innerException: dependancyException);
 
             this.attributeServiceMock.Setup(service =>
                 service.RetrieveAttribute<RESTFulFileNameAttribute>(It.IsAny<PropertyInfo>()))
@@ -138,7 +142,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
         }
 
         [Fact]
-        public void ShouldThrowServiceExceptionOnBuildIfServiceErrorOccurs()
+        private void ShouldThrowServiceExceptionOnBuildIfServiceErrorOccurs()
         {
             // given
             FormModel someFormModel = CreateRandomFormModel();
@@ -171,10 +175,14 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
             var serviceException = new Exception();
 
             var failedFormOrchestrationServiceException =
-                new FailedFormOrchestrationServiceException(serviceException);
+                new FailedFormOrchestrationServiceException(
+                    message: "Failed form orchestration service occurred, please contact support",
+                    innerException: serviceException);
 
             var expectedFormOrchestrationServiceException =
-                new FormOrchestrationServiceException(failedFormOrchestrationServiceException);
+                new FormOrchestrationServiceException(
+                    message: "Form orchestration service error occurred, contact support.",
+                    innerException: failedFormOrchestrationServiceException);
 
             this.attributeServiceMock.Setup(service =>
                 service.RetrieveAttribute<RESTFulFileNameAttribute>(It.IsAny<PropertyInfo>()))

@@ -12,14 +12,16 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
     public partial class FormCoordinationServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnConvertIfModelIsInvalid()
+        private void ShouldThrowValidationExceptionOnConvertIfModelIsInvalid()
         {
             // given
             object nullObject = null;
             var nullObjectException = new NullObjectException();
 
             var expectedFormCoordinationValidationException =
-                new FormCoordinationValidationException(nullObjectException);
+                new FormCoordinationValidationException(
+                    message: "Form coordination validation errors occurred, please try again.",
+                    innerException: nullObjectException);
 
             // when
             Action convertToMultipartFormDataContentAction = () =>

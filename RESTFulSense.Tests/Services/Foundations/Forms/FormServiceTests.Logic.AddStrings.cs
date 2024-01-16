@@ -12,7 +12,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
     public partial class FormServiceTests
     {
         [Fact]
-        public void ShouldAddStringContent()
+        private void ShouldAddStringContent()
         {
             // given
             var multipartFormDataContent = new MultipartFormDataContent();
