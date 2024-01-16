@@ -9,7 +9,13 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
     public class PropertyServiceException : Xeption
     {
         public PropertyServiceException(Xeption innerException)
-            : base(message: "Property service error occurred, contact support.", innerException)
+            : base(
+                message: "Property service error occurred, contact support.",
+                innerException: innerException)
+        { }
+        
+        public PropertyServiceException(string message, Xeption innerException)
+            : base(message, innerException)
         { }
     }
 }

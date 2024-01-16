@@ -12,7 +12,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
     public partial class FormServiceTests
     {
         [Fact]
-        public void ShouldAddByteArrayContentWithNoFileName()
+        private void ShouldAddByteArrayContentWithNoFileName()
         {
             // given
             var multipartFormDataContent = new MultipartFormDataContent();
@@ -43,7 +43,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
 
 
         [Fact]
-        public void ShouldAddByteArrayContentWithFileName()
+        private void ShouldAddByteArrayContentWithFileName()
         {
             // given
             var multipartFormDataContent = new MultipartFormDataContent();

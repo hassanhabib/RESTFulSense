@@ -15,7 +15,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
     public partial class AttributeServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnRetrieveIfPropertyInfoIsNull()
+        private void ShouldThrowValidationExceptionOnRetrieveIfPropertyInfoIsNull()
         {
             // given
             PropertyInfo nullPropertyInfo = CreateNullPropertyInfo();
@@ -23,10 +23,14 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
             var argumentNullException = new ArgumentNullException();
 
             var nullPropertyInfoException =
-                new NullPropertyInfoException(argumentNullException);
+                new NullPropertyInfoException(
+                    message: "PropertyInfo is null, fix errors and try again.",
+                    innerException: argumentNullException);
 
             var expectedAttributeValidationException =
-                new AttributeValidationException(nullPropertyInfoException);
+                new AttributeValidationException(
+                    message: "Attribute validation error occurred, fix errors and try again.",
+                    innerException: nullPropertyInfoException);
 
             // when
             Action retrieveAttributeAction =
@@ -36,10 +40,13 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
                   Assert.Throws<AttributeValidationException>(retrieveAttributeAction);
 
             // then
-            actualAttributeValidationException.Should().BeEquivalentTo(expectedAttributeValidationException);
+            actualAttributeValidationException.Should().BeEquivalentTo(
+                expectedAttributeValidationException);
 
             this.attributeBrokerMock.Verify(broker =>
-                broker.GetPropertyCustomAttribute<TestAttribute>(It.IsAny<PropertyInfo>(), It.IsAny<bool>()),
+                broker.GetPropertyCustomAttribute<TestAttribute>(
+                    It.IsAny<PropertyInfo>(),
+                    It.IsAny<bool>()),
                     Times.Never());
 
             this.attributeBrokerMock.VerifyNoOtherCalls();
@@ -47,19 +54,26 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
 
         [Theory]
         [MemberData(nameof(GetCustomAttributeExceptions))]
-        public void ShouldThrowDependencyValidationExceptionOnRetrieveIfDependencyValidationExceptionErrorOccurs(
+        private void ShouldThrowDependencyValidationExceptionOnRetrieveIfDependencyValidationExceptionErrorOccurs(
          Exception dependencyValidationException)
         {
             // given
             PropertyInfo somePropertyInfo = CreateSomePropertyInfo();
 
-            var failedAttributeServiceException = new FailedAttributeServiceException(dependencyValidationException);
+            var failedAttributeServiceException =
+                new FailedAttributeServiceException(
+                    message: "Failed Attribute Service Exception occurred, please contact support for assistance.",
+                    innerException: dependencyValidationException);
 
             var expectedAttributeDependencyValidationException =
-                new AttributeDependencyValidationException(failedAttributeServiceException);
+                new AttributeDependencyValidationException(
+                    message: "Attribute dependency validation error occurred, fix errors and try again.",
+                    innerException: failedAttributeServiceException);
 
             this.attributeBrokerMock.Setup(broker =>
-                broker.GetPropertyCustomAttribute<TestAttribute>(It.IsAny<PropertyInfo>(), It.IsAny<bool>()))
+                broker.GetPropertyCustomAttribute<TestAttribute>(
+                    It.IsAny<PropertyInfo>(),
+                    It.IsAny<bool>()))
                     .Throws(dependencyValidationException);
 
             // when
@@ -74,7 +88,9 @@ namespace RESTFulSense.Tests.Services.Foundations.Attributes
                 .BeEquivalentTo(expectedAttributeDependencyValidationException);
 
             this.attributeBrokerMock.Verify(broker =>
-                broker.GetPropertyCustomAttribute<TestAttribute>(It.IsAny<PropertyInfo>(), It.IsAny<bool>()),
+                broker.GetPropertyCustomAttribute<TestAttribute>(
+                    It.IsAny<PropertyInfo>(),
+                    It.IsAny<bool>()),
                     Times.Once());
 
             this.attributeBrokerMock.VerifyNoOtherCalls();

@@ -13,26 +13,31 @@ namespace RESTFulSense.Tests.Services.Foundations.Types
     public partial class TypeServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnRetrieveTypeIfTypeIsNull()
+        private void ShouldThrowValidationExceptionOnRetrieveTypeIfTypeIsNull()
         {
             // given
             object nullObject = null;
             object inputObject = nullObject;
 
-            NullObjectException nullObjectException = new NullObjectException();
+            NullObjectException nullObjectException =
+                new NullObjectException(
+                    message: "Object is null.");
 
             var expectedTypeValidationException =
                 new TypeValidationException(
+                    message: "Type validation errors occurred, fix errors and try again.",
                     innerException: nullObjectException);
 
             // when
-            Action retrieveTypeAction = () => this.typeService.RetrieveType(inputObject);
+            Action retrieveTypeAction = () =>
+                this.typeService.RetrieveType(inputObject);
 
             TypeValidationException actualTypeValidationException =
                 Assert.Throws<TypeValidationException>(retrieveTypeAction);
 
             // then
-            actualTypeValidationException.Should().BeEquivalentTo(expectedTypeValidationException);
+            actualTypeValidationException.Should().BeEquivalentTo(
+                expectedTypeValidationException);
 
             this.typeBrokerMock.Verify(broker =>
                 broker.GetType(inputObject),

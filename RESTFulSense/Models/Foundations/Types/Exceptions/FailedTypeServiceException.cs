@@ -10,8 +10,13 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
     public class FailedTypeServiceException : Xeption
     {
         public FailedTypeServiceException(Exception innerException)
-            : base(message: "Failed Type Service Exception occurred, please contact support for assistance.",
-                  innerException)
+            : base(
+                message: "Failed Type Service Exception occurred, please contact support for assistance.",
+                innerException: innerException)
+        { }
+        
+        public FailedTypeServiceException(string message, Exception innerException)
+            : base(message, innerException)
         { }
     }
 }

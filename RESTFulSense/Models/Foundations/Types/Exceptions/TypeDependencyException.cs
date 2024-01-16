@@ -8,8 +8,14 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
 {
     internal class TypeDependencyException : Xeption
     {
-        public TypeDependencyException(Xeption innerException) :
-            base(message: "Type dependency error occurred, contact support.", innerException)
+        public TypeDependencyException(Xeption innerException)
+            : base(
+                message: "Type dependency error occurred, contact support.",
+                innerException: innerException)
+        { }
+        
+        public TypeDependencyException(string message, Xeption innerException)
+            : base(message, innerException)
         { }
     }
 }

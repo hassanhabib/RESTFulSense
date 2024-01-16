@@ -9,9 +9,13 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
     internal class FormOrchestrationDependencyValidationException : Xeption
     {
         public FormOrchestrationDependencyValidationException(Xeption innerException)
-         : base(
+            : base(
                 message: "Form orchestration dependency validation error occurred, fix the errors and try again.",
-                innerException)
+                innerException: innerException)
+        { }
+        
+        public FormOrchestrationDependencyValidationException(string message, Xeption innerException)
+         : base(message, innerException)
         { }
     }
 }

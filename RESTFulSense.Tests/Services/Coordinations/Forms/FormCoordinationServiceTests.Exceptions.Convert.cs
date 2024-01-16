@@ -20,7 +20,7 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
     {
         [Theory]
         [MemberData(nameof(DependencyValidationExceptions))]
-        public void ShouldThrowDependencyValidationExceptionOnConvertIfDependencyValidationErrorOccurs(
+        private void ShouldThrowDependencyValidationExceptionOnConvertIfDependencyValidationErrorOccurs(
             Xeption dependancyValidationException)
         {
             // given
@@ -38,7 +38,9 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
             FormModel inputFormModel = someFormModel;
 
             var expectedFormCoordinationDependencyValidationException =
-                new FormCoordinationDependencyValidationException(dependancyValidationException);
+                new FormCoordinationDependencyValidationException(
+                    message: "Form coordination dependency validation error occurred, fix the errors and try again.",
+                    innerException: dependancyValidationException);
 
             propertyOrchestrationServiceMock.Setup(service =>
                 service.RetrieveProperties(It.IsAny<PropertyModel>()))
@@ -64,7 +66,7 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
 
         [Theory]
         [MemberData(nameof(DependencyExceptions))]
-        public void ShouldThrowDependencyExceptionOnConvertIfDependencyErrorOccurs(
+        private void ShouldThrowDependencyExceptionOnConvertIfDependencyErrorOccurs(
             Xeption dependancyException)
         {
             // given
@@ -82,7 +84,9 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
             FormModel inputFormModel = someFormModel;
 
             var expectedFormCoordinationDependencyException =
-                new FormCoordinationDependencyException(dependancyException);
+                new FormCoordinationDependencyException(
+                    message: "Form coordination dependency error occurred, fix the errors and try again.",
+                    innerException: dependancyException);
 
             this.propertyOrchestrationServiceMock.Setup(service =>
                 service.RetrieveProperties(It.IsAny<PropertyModel>()))
@@ -107,7 +111,7 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
         }
 
         [Fact]
-        public void ShouldThrowServiceExceptionOnConvertIfServiceErrorOccurs()
+        private void ShouldThrowServiceExceptionOnConvertIfServiceErrorOccurs()
         {
             // given
             object someObject = new object();
@@ -125,10 +129,14 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
             var serviceException = new Exception();
 
             var failedFormCoordinationServiceException =
-                new FailedFormCoordinationServiceException(serviceException);
+                new FailedFormCoordinationServiceException(
+                    message: "Form coordination service error occurred, contact support.",
+                    innerException: serviceException);
 
             var expectedFormCoordinationServiceException =
-                new FormCoordinationServiceException(failedFormCoordinationServiceException);
+                new FormCoordinationServiceException(
+                    message: "Form coordination service error occurred, contact support.",
+                    innerException: failedFormCoordinationServiceException);
 
             this.propertyOrchestrationServiceMock.Setup(service =>
                 service.RetrieveProperties(It.IsAny<PropertyModel>()))

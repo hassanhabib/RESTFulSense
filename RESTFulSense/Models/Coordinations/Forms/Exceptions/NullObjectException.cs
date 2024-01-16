@@ -11,5 +11,9 @@ namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
         public NullObjectException()
             : base(message: "Object is null.")
         { }
+        
+        public NullObjectException(string message)
+            : base(message)
+        { }
     }
 }
