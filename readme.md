@@ -30,6 +30,12 @@ This library is also a community effort which involved many nights of pair-progr
 The most important fulfillment aspect in a Standard complaint system is aimed towards contributing to people, its evolution, and principles.
 An organization that systematically honors an environment of learning, training, and sharing knowledge is an organization that learns from the past, makes calculated risks for the future, 
 and brings everyone within it up to speed on the current state of things as honestly, rapidly, and efficiently as possible. 
+ 
+We believe that everyone has the right to privacy, and will never do anything that could violate that right.
+We are committed to writing ethical and responsible software, and will always strive to use our skills, coding, and systems for the good.
+We believe that these beliefs will help to ensure that our software(s) are safe and secure and that it will never be used to harm or collect personal data for malicious purposes.
+ 
+The Standard Community as a promise to you is in upholding these values. 
 
 ## Here's the details of what this library has to offer:
 
@@ -242,5 +248,7 @@ If you have any suggestions, comments or questions, please feel free to contact 
 
 [E-Mail](mailto:hassanhabib@live.com)
 
+### Important Notice
+This library is a community effort.
 
 Huge thanks to Mr. Brian Parker @BrianLParker for his RESTfulSense Web Assembly effort. 
