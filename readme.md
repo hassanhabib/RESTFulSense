@@ -220,27 +220,27 @@ RESTFulSense uses by default NewtonSoft serialization/deserialization support. H
 Here we have an example for a POST using System.Text.Json.JsonSerializer:
 
 ```csharp
-private readonly JsonSerializerOptions opcionesSerializacion =
+private readonly var jsonSerializerOptions =
     new JsonSerializerOptions
     {
     // ...
     };
 
-private async ValueTask<string> Serializa<TContent>(TContent requestToSerialize)
+private async ValueTask<string> Serialize<TContent>(TContent requestToSerialize)
 {
     using var memoryStream = new MemoryStream();
-    await JsonSerializer.SerializeAsync(memoryStream, requestToSerialize, serializationOptions);
+    await JsonSerializer.SerializeAsync(memoryStream, requestToSerialize, jsonSerializerOptions);
     using var streamReader = new StreamReader(memoryStream, Encoding.UTF8);
     memoryStream.Position = 0;
     return streamReader.ReadToEnd();
 }
 
-private async ValueTask<T> Deserialize<T>(string responseToDeserialize)
+private async ValueTask<TResult> Deserialize<TResult>(string responseToDeserialize)
 {
     byte[] responseBytes = Encoding.UTF8.GetBytes(responseToDeserialize);
     using var memoryStream = new MemoryStream(responseBytes);
     var responseObject =
-        await JsonSerializer.DeserializeAsync<T>(memoryStream, serializationOptions);
+        await JsonSerializer.DeserializeAsync<TResult>(memoryStream, jsonSerializerOptions);
 
     return responseObject;
 }
