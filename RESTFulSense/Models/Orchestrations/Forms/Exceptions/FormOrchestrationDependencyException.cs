@@ -10,7 +10,13 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
     internal class FormOrchestrationDependencyException : Xeption
     {
         public FormOrchestrationDependencyException(Exception innerException)
-            : base(message: "Form orchestration dependency error occurred, fix errors and try again.", innerException)
+            : base(
+                message: "Form orchestration dependency error occurred, fix errors and try again.",
+                innerException: innerException)
+        { }
+        
+        public FormOrchestrationDependencyException(string message, Exception innerException)
+            : base(message, innerException)
         { }
     }
 }

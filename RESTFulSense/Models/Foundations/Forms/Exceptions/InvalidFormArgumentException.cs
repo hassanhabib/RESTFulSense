@@ -11,5 +11,9 @@ namespace RESTFulSense.Models.Foundations.Forms.Exceptions
         public InvalidFormArgumentException()
             : base(message: "Invalid form arguments. Please fix the errors and try again.")
         { }
+        
+        public InvalidFormArgumentException(string message)
+            : base(message)
+        { }
     }
 }
