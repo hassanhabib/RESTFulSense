@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseUnauthorizedException : HttpResponseException
     {
+        public HttpResponseTooManyRequestsException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseUnauthorizedException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

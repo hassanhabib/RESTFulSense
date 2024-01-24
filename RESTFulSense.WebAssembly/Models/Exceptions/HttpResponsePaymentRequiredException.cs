@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponsePaymentRequiredException : HttpResponseException
     {
+        public HttpResponsePaymentRequiredException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponsePaymentRequiredException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

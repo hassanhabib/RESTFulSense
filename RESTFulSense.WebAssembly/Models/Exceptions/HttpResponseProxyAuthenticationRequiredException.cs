@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseProxyAuthenticationRequiredException : HttpResponseException
     {
+        public HttpResponseProxyAuthenticationRequiredException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseProxyAuthenticationRequiredException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

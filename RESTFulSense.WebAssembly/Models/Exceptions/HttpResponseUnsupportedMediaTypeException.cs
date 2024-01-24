@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseUnsupportedMediaTypeException : HttpResponseException
     {
+        public HttpResponseUnsupportedMediaTypeException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseUnsupportedMediaTypeException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

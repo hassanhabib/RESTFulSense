@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseVariantAlsoNegotiatesException : HttpResponseException
     {
+        public HttpResponseVariantAlsoNegotiatesException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseVariantAlsoNegotiatesException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

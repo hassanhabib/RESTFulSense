@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseRequestHeaderFieldsTooLargeException : HttpResponseException
     {
+        public HttpResponseRequestHeaderFieldsTooLargeException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseRequestHeaderFieldsTooLargeException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseRequestedRangeNotSatisfiableException : HttpResponseException
     {
+        public HttpResponseRequestedRangeNotSatisfiableException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseRequestedRangeNotSatisfiableException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

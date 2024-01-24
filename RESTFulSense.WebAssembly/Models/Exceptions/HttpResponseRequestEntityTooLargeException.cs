@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseRequestEntityTooLargeException : HttpResponseException
     {
+        public HttpResponseRequestEntityTooLargeException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseRequestEntityTooLargeException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 
