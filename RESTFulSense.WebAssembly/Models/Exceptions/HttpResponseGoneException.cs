@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseGoneException : HttpResponseException
     {
+        public HttpResponseGoneException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseGoneException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

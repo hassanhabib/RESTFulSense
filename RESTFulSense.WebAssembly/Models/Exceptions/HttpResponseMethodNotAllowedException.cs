@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseMethodNotAllowedException : HttpResponseException
     {
+        public HttpResponseMethodNotAllowedException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseMethodNotAllowedException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

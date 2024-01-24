@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseExpectationFailedException : HttpResponseException
     {
+        public HttpResponseExpectationFailedException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseExpectationFailedException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

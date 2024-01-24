@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseGatewayTimeoutException : HttpResponseException
     {
+        public HttpResponseGatewayTimeoutException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseGatewayTimeoutException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

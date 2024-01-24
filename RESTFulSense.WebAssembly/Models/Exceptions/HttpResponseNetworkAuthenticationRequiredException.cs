@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseNetworkAuthenticationRequiredException : HttpResponseException
     {
+        public HttpResponseNetworkAuthenticationRequiredException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseNetworkAuthenticationRequiredException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

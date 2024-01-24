@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseLockedException : HttpResponseException
     {
+        public HttpResponseLockedException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseLockedException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

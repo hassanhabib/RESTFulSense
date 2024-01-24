@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseInsufficientStorageException : HttpResponseException
     {
+        public HttpResponseInsufficientStorageException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseInsufficientStorageException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

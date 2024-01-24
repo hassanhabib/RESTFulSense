@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseLengthRequiredException : HttpResponseException
     {
+        public HttpResponseLengthRequiredException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseLengthRequiredException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

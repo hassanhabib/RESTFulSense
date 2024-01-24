@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseHttpVersionNotSupportedException : HttpResponseException
     {
+        public HttpResponseHttpVersionNotSupportedException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseHttpVersionNotSupportedException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 

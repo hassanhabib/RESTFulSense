@@ -11,6 +11,9 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseConflictException : HttpResponseException
     {
+        public HttpResponseConflictException()
+            : base(httpResponseMessage: default, message: default) { }
+
         public HttpResponseConflictException(HttpResponseMessage responseMessage, string message)
             : base(responseMessage, message) { }
 
