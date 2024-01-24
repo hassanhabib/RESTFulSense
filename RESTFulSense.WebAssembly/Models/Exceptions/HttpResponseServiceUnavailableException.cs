@@ -11,7 +11,7 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseServiceUnavailableException : HttpResponseException
     {
-        public HttpResponseRequestedRangeNotSatisfiableException()
+        public HttpResponseServiceUnavailableException()
             : base(httpResponseMessage: default, message: default) { }
 
         public HttpResponseServiceUnavailableException(HttpResponseMessage responseMessage, string message)

@@ -10,7 +10,7 @@ namespace RESTFulSense.WebAssembly.Exceptions
 {
     public class HttpResponseTooManyRequestsException : HttpResponseException
     {
-        public HttpResponseServiceUnavailableException()
+        public HttpResponseTooManyRequestsException()
             : base(httpResponseMessage: default, message: default) { }
 
         public HttpResponseTooManyRequestsException(HttpResponseMessage responseMessage, string message)
