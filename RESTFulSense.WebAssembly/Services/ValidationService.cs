@@ -293,15 +293,24 @@ namespace RESTFulSense.WebAssembly.Services
             }
         }
 
-        private static bool NotFoundWithNoContent(HttpResponseMessage httpResponseMessage) =>
-            httpResponseMessage.Content.Headers.Contains(name: "Content-Type") == false
-            && httpResponseMessage.StatusCode == HttpStatusCode.NotFound;
+        private static bool NotFoundWithNoContent(HttpResponseMessage httpResponseMessage)
+        {
+            return httpResponseMessage.Content.Headers.Contains(name: "Content-Type")
+             && httpResponseMessage.StatusCode is HttpStatusCode.NotFound;
+        }
 
-        private static ValidationProblemDetails MapToProblemDetails(string content) =>
-            JsonSerializer.Deserialize<ValidationProblemDetails>(content);
+        private static ValidationProblemDetails MapToProblemDetails(string content)
+        {
+            return JsonSerializer.Deserialize<ValidationProblemDetails>(
+                 json: content,
+                 options: new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        }
 
-        private static bool IsProblemDetail(string content) =>
-            content.Contains(value: "\"title\":", StringComparison.OrdinalIgnoreCase) &&
-            content.Contains(value: "\"type\":", StringComparison.OrdinalIgnoreCase);
+        private static bool IsProblemDetail(string content)
+        {
+            return content.Contains(value: "\"title\":", StringComparison.OrdinalIgnoreCase)
+                && content.Contains(value: "\"type\":", StringComparison.OrdinalIgnoreCase);
+        }
+
     }
 }
