@@ -2,7 +2,7 @@
 
 [![.NET](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hassanhabib/RESTFulSense/actions/workflows/dotnet.yml)
 [![Nuget](https://img.shields.io/nuget/v/RESTFulSense?logo=nuget&style=default)](https://www.nuget.org/packages/RESTFulSense)
-![Nuget](https://img.shields.io/nuget/dt/RESTFulSense?logo=nuget&style=default&color=blue&label=Downloads)
+[![Nuget](https://img.shields.io/nuget/dt/RESTFulSense?logo=nuget&style=default&color=blue&label=Downloads)](https://www.nuget.org/packages/RESTFulSense)
 [![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f?style=default)](https://github.com/hassanhabib/The-Standard)
 [![The Standard](https://img.shields.io/github/v/release/hassanhabib/The-Standard?filter=v2.10.0&style=default&label=Standard%20Version&color=2ea44f)](https://github.com/hassanhabib/The-Standard/tree/2.10.0)
 [![The Standard Community](https://img.shields.io/discord/934130100008538142?style=default&color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
@@ -37,7 +37,7 @@ We believe that these beliefs will help to ensure that our software(s) are safe 
  
 The Standard Community as a promise to you is in upholding these values. 
 
-## Here's the details of what this library has to offer:
+## Details of what this library has to offer:
 
 ### 1. Meaningful Exceptions
 
@@ -166,7 +166,6 @@ var apiClient = new RESTFulApiClient();
 ```csharp
 List<Student> students = 
     await restfulApiClient.GetContentAsync<List<Student>>(relativeUrl: "api/students");
-
 ```
 
 ##### 2.2.2 Serialization
@@ -270,8 +269,6 @@ var result =
         ignoreDefaultValues: false,
         serializationFunction: Serialize<TContent>,
         deserializationFuntion: Deserialize<TResult>);
-
-
 ```
 
 ### 5. Testing-Friendly Implementation
