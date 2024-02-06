@@ -295,7 +295,7 @@ namespace RESTFulSense.WebAssembly.Services
 
         private static bool NotFoundWithNoContent(HttpResponseMessage httpResponseMessage)
         {
-            return httpResponseMessage.Content.Headers.Contains(name: "Content-Type")
+            return httpResponseMessage.Content.Headers.Contains(name: "Content-Type") is false
              && httpResponseMessage.StatusCode is HttpStatusCode.NotFound;
         }
 
