@@ -13,7 +13,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
     public partial class FormServiceTests
     {
         [Fact]
-        public void ShouldAddStreamContentWithNoFileName()
+        private void ShouldAddStreamContentWithNoFileName()
         {
             // given
             var multipartFormDataContent = new MultipartFormDataContent();
@@ -41,7 +41,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
         }
 
         [Fact]
-        public void ShouldAddStreamContentWithFileName()
+        private void ShouldAddStreamContentWithFileName()
         {
             // given
             var multipartFormDataContent = new MultipartFormDataContent();

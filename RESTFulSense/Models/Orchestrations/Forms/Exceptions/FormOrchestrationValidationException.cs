@@ -11,7 +11,11 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
         public FormOrchestrationValidationException(Xeption innerException)
             : base(
                 message: "Form orchestration validation errors occurred, please try again.",
-                innerException)
+                innerException: innerException)
+        { }
+        
+        public FormOrchestrationValidationException(string message, Xeption innerException)
+            : base(message, innerException)
         { }
     }
 }

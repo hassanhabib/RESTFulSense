@@ -14,7 +14,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
     public partial class PropertyOrchestrationServiceTests
     {
         [Fact]
-        public void ShouldThrowPropertyOrchestrationValidationExceptionOnRetrievePropertiesIfNullPropertyModelOccurs()
+        private void ShouldThrowPropertyOrchestrationValidationExceptionOnRetrievePropertiesIfNullPropertyModelOccurs()
         {
             // given
             PropertyModel nullPropertyModel = null;
@@ -25,10 +25,14 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
                 new ArgumentNullException(paramName: "propertyModel");
 
             var nullPropertyModelException =
-                new NullPropertyModelException(argumentNullException);
+                new NullPropertyModelException(
+                    message: "PropertyModel is null, fix errors and try again.",
+                    innerException: argumentNullException);
 
             var expectedPropertyOrchestrationValidationException =
-                new PropertyOrchestrationValidationException(nullPropertyModelException);
+                new PropertyOrchestrationValidationException(
+                    message: "Property validation error occurred, fix errors and try again.",
+                    innerException: nullPropertyModelException);
 
             // when
             Action retrievePropertiesAction =
@@ -54,7 +58,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
         }
 
         [Fact]
-        public void ShouldThrowPropertyOrchestrationValidationExceptionOnRetrievePropertiesIfNullObjectOccurs()
+        private void ShouldThrowPropertyOrchestrationValidationExceptionOnRetrievePropertiesIfNullObjectOccurs()
         {
             // given
             PropertyModel nullObjectModel = CreateSomePropertyModel(null);
@@ -65,10 +69,14 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
                 new ArgumentNullException(paramName: "object");
 
             var nullPropertyModelException =
-                new NullObjectException(argumentNullException);
+                new NullObjectException(
+                    message: "Object is null, fix errors and try again.",
+                    innerException: argumentNullException);
 
             var expectedPropertyOrchestrationValidationException =
-                new PropertyOrchestrationValidationException(nullPropertyModelException);
+                new PropertyOrchestrationValidationException(
+                    message: "Property validation error occurred, fix errors and try again.",
+                    innerException: nullPropertyModelException);
 
             // when
             Action retrievePropertiesAction =

@@ -9,7 +9,13 @@ namespace RESTFulSense.Models.Foundations.Forms.Exceptions
     public class FormDependencyException : Xeption
     {
         public FormDependencyException(Xeption innerException)
-            : base(message: "Form dependency error occurred, contact support.", innerException)
+            : base(
+                message: "Form dependency error occurred, contact support.",
+                innerException: innerException)
+        { }
+        
+        public FormDependencyException(string message, Xeption innerException)
+            : base(message, innerException)
         { }
     }
 }

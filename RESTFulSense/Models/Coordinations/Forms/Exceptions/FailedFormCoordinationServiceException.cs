@@ -10,7 +10,13 @@ namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
     public class FailedFormCoordinationServiceException : Xeption
     {
         public FailedFormCoordinationServiceException(Exception innerException)
-            : base(message: "Form coordination service error occurred, contact support.", innerException)
+            : base(
+                message: "Form coordination service error occurred, contact support.",
+                innerException: innerException)
+        { }
+        
+        public FailedFormCoordinationServiceException(string message, Exception innerException)
+            : base(message, innerException)
         { }
     }
 }

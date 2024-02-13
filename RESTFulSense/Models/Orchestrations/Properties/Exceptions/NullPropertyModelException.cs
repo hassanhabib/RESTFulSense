@@ -10,7 +10,13 @@ namespace RESTFulSense.Models.Orchestrations.Properties.Exceptions
     public class NullPropertyModelException : Xeption
     {
         public NullPropertyModelException(Exception innerException)
-            : base(message: "PropertyModel is null, fix errors and try again.", innerException)
+            : base(
+                message: "PropertyModel is null, fix errors and try again.",
+                innerException: innerException)
+        { }
+        
+        public NullPropertyModelException(string message, Exception innerException)
+            : base(message, innerException)
         { }
     }
 }

@@ -15,7 +15,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
     {
         [Theory]
         [MemberData(nameof(DependencyValidationExceptions))]
-        public void ShouldThrowPropertyOrchestrationDependencyValidationExceptionIfDependencyExceptionOccurs(
+        private void ShouldThrowPropertyOrchestrationDependencyValidationExceptionIfDependencyExceptionOccurs(
             Exception dependencyValidationException)
         {
             // given
@@ -24,7 +24,9 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
             PropertyModel somePropertyModel = CreateSomePropertyModel(inputObject);
 
             var expectedPropertyOrchestrationDependencyValidationException =
-                new PropertyOrchestrationDependencyValidationException(dependencyValidationException);
+                new PropertyOrchestrationDependencyValidationException(
+                    message: "Property orchestration dependency validation error occurred, fix errors and try again.",
+                    innerException: dependencyValidationException);
 
             typeServiceMock.Setup(service =>
                 service.RetrieveType(It.IsAny<object>()))
@@ -34,7 +36,8 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
             Action retrievePropertiesAction =
                 () => propertyOrchestrationService.RetrieveProperties(somePropertyModel);
 
-            PropertyOrchestrationDependencyValidationException actualPropertyOrchestrationDependencyValidationException =
+            PropertyOrchestrationDependencyValidationException
+                actualPropertyOrchestrationDependencyValidationException =
                 Assert.Throws<PropertyOrchestrationDependencyValidationException>(retrievePropertiesAction);
 
             // then
@@ -55,7 +58,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
 
         [Theory]
         [MemberData(nameof(DependencyExceptions))]
-        public void ShouldThrowPropertyOrchestrationDependencyExceptionIfDependencyExceptionOccurs(
+        private void ShouldThrowPropertyOrchestrationDependencyExceptionIfDependencyExceptionOccurs(
             Exception dependencyException)
         {
             // given
@@ -64,7 +67,9 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
             PropertyModel somePropertyModel = CreateSomePropertyModel(inputObject);
 
             var expectedPropertyOrchestrationDependencyException =
-                new PropertyOrchestrationDependencyException(dependencyException);
+                new PropertyOrchestrationDependencyException(
+                    message: "Property orchestration dependency error occurred, fix errors and try again.",
+                    innerException: dependencyException);
 
             this.typeServiceMock.Setup(service =>
                 service.RetrieveType(It.IsAny<object>()))
@@ -94,7 +99,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
         }
 
         [Fact]
-        public void ShouldThrowPropertyOrchestrationServiceExceptionIfExceptionOccurs()
+        private void ShouldThrowPropertyOrchestrationServiceExceptionIfExceptionOccurs()
         {
             // given
             object someObject = new object();
@@ -104,10 +109,14 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
             Exception someException = new Exception();
 
             var expectedFailedPropertyOrchestrationException =
-                new FailedPropertyOrchestrationException(someException);
+                new FailedPropertyOrchestrationException(
+                    message: "Failed property orchestration service exception occurred, please contact support.",
+                    innerException: someException);
 
             var expectedPropertyOrchestrationException =
-                new PropertyOrchestrationServiceException(expectedFailedPropertyOrchestrationException);
+                new PropertyOrchestrationServiceException(
+                    message: "Property orchestration service error occurred, contact support.",
+                    innerException: expectedFailedPropertyOrchestrationException);
 
             this.typeServiceMock.Setup(service =>
                 service.RetrieveType(It.IsAny<object>()))

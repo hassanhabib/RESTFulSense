@@ -11,7 +11,11 @@ namespace RESTFulSense.Models.Foundations.Values.Exceptions
         public ValueValidationException(Xeption innerException)
             : base(
                 message: "Value validation errors occurred, fix errors and try again.",
-                innerException)
+                innerException: innerException)
+        { }
+        
+        public ValueValidationException(string message, Xeption innerException)
+            : base(message, innerException)
         { }
     }
 }

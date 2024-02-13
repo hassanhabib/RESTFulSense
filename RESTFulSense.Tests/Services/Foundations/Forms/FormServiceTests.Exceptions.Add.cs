@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
     {
         [Theory]
         [MemberData(nameof(GetAddExceptions))]
-        public void ShouldThrowFormDependencyValidationExceptionOnAddIfDependencyValidationExceptionErrorOccurs(
+        private void ShouldThrowFormDependencyValidationExceptionOnAddIfDependencyValidationExceptionErrorOccurs(
             Exception dependencyValidationException)
         {
             // given
@@ -26,18 +26,25 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
             string randomName = CreateRandomString();
 
             var formDependencyValidationException =
-                new FormDependencyValidationException(dependencyValidationException);
+                new FormDependencyValidationException(
+                    message: "Form dependency validation error occurred, fix errors and try again.",
+                    innerException: dependencyValidationException);
 
             var expectedFormValidationException =
-                new FormValidationException(formDependencyValidationException);
+                new FormValidationException(
+                    message: "Form validation error occurred, fix errors and try again.",
+                    innerException: formDependencyValidationException);
 
             this.multipartFormDataContentBroker.Setup(broker =>
-                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(), It.IsAny<Stream>(), It.IsAny<string>()))
+                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(),
+                    It.IsAny<Stream>(),
+                    It.IsAny<string>()))
                     .Throws(dependencyValidationException);
 
             // when
             Action retrieveAttributeAction =
-                () => this.formService.AddStreamContent(multipartFormDataContent, someContent, randomName);
+                () => this.formService.AddStreamContent(
+                    multipartFormDataContent, someContent, randomName);
 
             FormValidationException actualFormValidationException =
                   Assert.Throws<FormValidationException>(retrieveAttributeAction);
@@ -47,14 +54,16 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 .BeEquivalentTo(expectedFormValidationException);
 
             this.multipartFormDataContentBroker.Verify(broker =>
-                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(), It.IsAny<Stream>(), It.IsAny<string>()),
+                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(),
+                    It.IsAny<Stream>(),
+                    It.IsAny<string>()),
                     Times.Once());
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public void ShouldThrowFormServiceExceptionIfExceptionOccurs()
+        private void ShouldThrowFormServiceExceptionIfExceptionOccurs()
         {
             // given
             var multipartFormDataContent = new MultipartFormDataContent();
@@ -65,18 +74,25 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
             var someException = new Exception();
 
             var failedFormServiceException =
-                new FailedFormServiceException(someException);
+                new FailedFormServiceException(
+                    message: "Failed Form Service Exception occurred, please contact support for assistance.",
+                    innerException: someException);
 
             var expectedFormServiceException =
-                new FormServiceException(failedFormServiceException);
+                new FormServiceException(
+                    message: "Form service error occurred, contact support.",
+                    innerException: failedFormServiceException);
 
             this.multipartFormDataContentBroker.Setup(broker =>
-                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(), It.IsAny<Stream>(), It.IsAny<string>()))
+                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(),
+                    It.IsAny<Stream>(),
+                    It.IsAny<string>()))
                     .Throws(someException);
 
             // when
             Action retrieveAttributeAction =
-                () => this.formService.AddStreamContent(multipartFormDataContent, someContent, randomName);
+                () => this.formService.AddStreamContent(
+                    multipartFormDataContent, someContent, randomName);
 
             FormServiceException actualFormServiceException =
                   Assert.Throws<FormServiceException>(retrieveAttributeAction);
@@ -86,7 +102,9 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 .BeEquivalentTo(expectedFormServiceException);
 
             this.multipartFormDataContentBroker.Verify(broker =>
-                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(), It.IsAny<Stream>(), It.IsAny<string>()),
+                broker.AddStreamContent(It.IsAny<MultipartFormDataContent>(),
+                    It.IsAny<Stream>(),
+                    It.IsAny<string>()),
                     Times.Once());
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();

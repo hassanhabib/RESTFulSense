@@ -17,7 +17,14 @@ namespace RESTFulSense.WebAssembly.Exceptions
         }
 
         public string Title { get; set; }
-        public IDictionary<string, string[]> Errors => Data;
+
+        public IDictionary<string, string[]> Errors
+        {
+            get => Data;
+
+            set => Data = new Dictionary<string, string[]>(value);
+        }
+
         public Dictionary<string, string[]> Data { get; set; }
         public string Type { get; set; }
     }

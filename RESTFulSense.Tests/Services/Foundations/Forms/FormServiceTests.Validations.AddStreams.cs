@@ -18,16 +18,19 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
         [InlineData(data: null)]
         [InlineData(data: "")]
         [InlineData(data: "   ")]
-        public void ShouldThrowFormValidationExceptionOnAddStreamContentWithNoFileNameIfArgumentsInvalid(
+        private void ShouldThrowFormValidationExceptionOnAddStreamContentWithNoFileNameIfArgumentsInvalid(
             string invalidInput)
         {
             // given
-            MultipartFormDataContent nullMultipartFormDataContent = CreateNullMultipartFormDataContent();
+            MultipartFormDataContent nullMultipartFormDataContent =
+                CreateNullMultipartFormDataContent();
+            
             Stream nullContent = null;
             string invalidName = invalidInput;
 
             var invalidFormArgumentException =
-                new InvalidFormArgumentException();
+                new InvalidFormArgumentException(
+                    message: "Invalid form arguments. Please fix the errors and try again.");
 
             invalidFormArgumentException.AddData(
                 key: "MultipartFormDataContent",
@@ -42,11 +45,14 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 values: "Text is required");
 
             var expectedFormValidationException =
-                new FormValidationException(invalidFormArgumentException);
+                new FormValidationException(
+                    message: "Form validation error occurred, fix errors and try again.",
+                    innerException: invalidFormArgumentException);
 
             // when
             Action addByteContentAction =
-                () => formService.AddStreamContent(nullMultipartFormDataContent, nullContent, invalidName);
+                () => formService.AddStreamContent(
+                    nullMultipartFormDataContent, nullContent, invalidName);
 
             FormValidationException actualFormValidationException =
                 Assert.Throws<FormValidationException>(addByteContentAction);
@@ -56,7 +62,8 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 .BeEquivalentTo(expectedFormValidationException);
 
             this.multipartFormDataContentBroker.Verify(broker =>
-                broker.AddStreamContent(nullMultipartFormDataContent, nullContent, invalidName),
+                broker.AddStreamContent(
+                    nullMultipartFormDataContent, nullContent, invalidName),
                     Times.Never);
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();
@@ -66,17 +73,20 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
         [InlineData(data: null)]
         [InlineData(data: "")]
         [InlineData(data: "   ")]
-        public void ShouldThrowFormValidationExceptionOnAddStreamContentWithFileNameIfArgumentsInvalid(
+        private void ShouldThrowFormValidationExceptionOnAddStreamContentWithFileNameIfArgumentsInvalid(
             string invalidInput)
         {
             // given
-            MultipartFormDataContent nullMultipartFormDataContent = CreateNullMultipartFormDataContent();
+            MultipartFormDataContent nullMultipartFormDataContent =
+                CreateNullMultipartFormDataContent();
+            
             Stream nullContent = null;
             string invalidName = invalidInput;
             string invalidFileName = invalidInput;
 
             var invalidFormArgumentException =
-                new InvalidFormArgumentException();
+                new InvalidFormArgumentException(
+                    message: "Invalid form arguments. Please fix the errors and try again.");
 
             invalidFormArgumentException.AddData(
                 key: "MultipartFormDataContent",
@@ -95,7 +105,9 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 values: "Text is required");
 
             var expectedFormValidationException =
-                new FormValidationException(invalidFormArgumentException);
+                new FormValidationException(
+                    message: "Form validation error occurred, fix errors and try again.",
+                    innerException: invalidFormArgumentException);
 
             // when
             Action addByteContentAction =
@@ -113,7 +125,11 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                 .BeEquivalentTo(expectedFormValidationException);
 
             this.multipartFormDataContentBroker.Verify(broker =>
-                broker.AddStreamContent(nullMultipartFormDataContent, nullContent, invalidName, invalidFileName),
+                broker.AddStreamContent(
+                    nullMultipartFormDataContent,
+                    nullContent,
+                    invalidName,
+                    invalidFileName),
                     Times.Never);
 
             this.multipartFormDataContentBroker.VerifyNoOtherCalls();

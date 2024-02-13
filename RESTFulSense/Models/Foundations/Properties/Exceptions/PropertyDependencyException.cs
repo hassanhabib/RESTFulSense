@@ -9,7 +9,13 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
     public class PropertyDependencyException : Xeption
     {
         public PropertyDependencyException(Xeption innerException) :
-            base(message: "Property dependency error occurred, contact support.", innerException)
+            base(
+                message: "Property dependency error occurred, contact support.",
+                innerException: innerException)
+        { }
+        
+        public PropertyDependencyException(string message, Xeption innerException) :
+            base(message, innerException)
         { }
     }
 }

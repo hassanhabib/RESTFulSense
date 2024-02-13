@@ -17,7 +17,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
     public partial class ValidationServiceTests
     {
         [Fact]
-        public async Task ShouldThrowHttpResponseBadRequestExceptionIfResponseStatusCodeWasBadRequestAsync()
+        private async Task ShouldThrowHttpResponseBadRequestExceptionIfResponseStatusCodeWasBadRequestAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -40,7 +40,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorizedAsync()
+        private async Task ShouldThrowHttpResponseUnauthorizedExceptionIfResponseStatusCodeWasUnauthorizedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -63,7 +63,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponsePaymentRequiredExceptionIfResponseStatusCodeWasPaymentRequiredAsync()
+        private async Task ShouldThrowHttpResponsePaymentRequiredExceptionIfResponseStatusCodeWasPaymentRequiredAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -86,7 +86,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseForbiddenExceptionIfResponseStatusCodeWasForbiddenAsync()
+        private async Task ShouldThrowHttpResponseForbiddenExceptionIfResponseStatusCodeWasForbiddenAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -109,7 +109,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotFoundExceptionIfResponseStatusCodeWasNotFoundAsync()
+        private async Task ShouldThrowHttpResponseNotFoundExceptionIfResponseStatusCodeWasNotFoundAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -134,7 +134,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUrlNotFoundExceptionIfResponseStatusCodeWasNotFoundAsync()
+        private async Task ShouldThrowHttpResponseUrlNotFoundExceptionIfResponseStatusCodeWasNotFoundAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -157,7 +157,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowMethodNotAllowedExceptionIfResponseStatusCodeWasMethodNotAllowedAsync()
+        private async Task ShouldThrowMethodNotAllowedExceptionIfResponseStatusCodeWasMethodNotAllowedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -180,7 +180,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotAcceptableExceptionIfResponseStatusCodeWasNotAcceptableAsync()
+        private async Task ShouldThrowHttpResponseNotAcceptableExceptionIfResponseStatusCodeWasNotAcceptableAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -203,7 +203,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task
+        private async Task
             ShouldThrowProxyAuthenticationRequiredExceptionIfResponseStatusCodeWasProxyAuthenticationRequiredAsync()
         {
             // given
@@ -227,7 +227,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseRequestTimeoutExceptionIfResponseStatusCodeWasRequestTimeoutAsync()
+        private async Task ShouldThrowHttpResponseRequestTimeoutExceptionIfResponseStatusCodeWasRequestTimeoutAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -248,7 +248,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseConflictExceptionIfResponseStatusCodeWasConflictAsync()
+        private async Task ShouldThrowHttpResponseConflictExceptionIfResponseStatusCodeWasConflictAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -269,7 +269,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseGoneExceptionIfResponseStatusCodeWasGoneAsync()
+        private async Task ShouldThrowHttpResponseGoneExceptionIfResponseStatusCodeWasGoneAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -290,7 +290,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseLengthRequiredExceptionIfResponseStatusCodeWasLengthRequiredAsync()
+        private async Task ShouldThrowHttpResponseLengthRequiredExceptionIfResponseStatusCodeWasLengthRequiredAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -311,7 +311,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowPreconditionFailedExceptionIfResponseStatusCodeWasPreconditionFailedAsync()
+        private async Task ShouldThrowPreconditionFailedExceptionIfResponseStatusCodeWasPreconditionFailedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -334,7 +334,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestEntityTooLargeExceptionIfResponseStatusCodeWasRequestEntityTooLargeAsync()
+        private async Task ShouldThrowRequestEntityTooLargeExceptionIfResponseStatusCodeWasRequestEntityTooLargeAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -357,7 +357,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestUriTooLongExceptionIfResponseStatusCodeWasRequestUriTooLongAsync()
+        private async Task ShouldThrowRequestUriTooLongExceptionIfResponseStatusCodeWasRequestUriTooLongAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -380,7 +380,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowUnsupportedMediaTypeExceptionIfResponseStatusCodeWasUnsupportedMediaTypeAsync()
+        private async Task ShouldThrowUnsupportedMediaTypeExceptionIfResponseStatusCodeWasUnsupportedMediaTypeAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -403,7 +403,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestedRangeNotSatisfiableExceptionIfCodeWasRequestedRangeNotSatisfiableAsync()
+        private async Task ShouldThrowRequestedRangeNotSatisfiableExceptionIfCodeWasRequestedRangeNotSatisfiableAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -427,7 +427,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowExpectationFailedExceptionIfResponseStatusCodeWasExpectationFailedAsync()
+        private async Task ShouldThrowExpectationFailedExceptionIfResponseStatusCodeWasExpectationFailedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -450,7 +450,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowMisdirectedRequestExceptionIfResponseStatusCodeWasMisdirectedRequestAsync()
+        private async Task ShouldThrowMisdirectedRequestExceptionIfResponseStatusCodeWasMisdirectedRequestAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -473,7 +473,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowUnprocessableEntityExceptionIfResponseStatusCodeWasUnprocessableEntityAsync()
+        private async Task ShouldThrowUnprocessableEntityExceptionIfResponseStatusCodeWasUnprocessableEntityAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -496,7 +496,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseLockedExceptionIfResponseStatusCodeWasLockedAsync()
+        private async Task ShouldThrowHttpResponseLockedExceptionIfResponseStatusCodeWasLockedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -519,7 +519,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowFailedDependencyExceptionIfResponseStatusCodeWasFailedDependencyAsync()
+        private async Task ShouldThrowFailedDependencyExceptionIfResponseStatusCodeWasFailedDependencyAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -542,7 +542,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUpgradeRequiredExceptionIfResponseStatusCodeWasUpgradeRequiredAsync()
+        private async Task ShouldThrowHttpResponseUpgradeRequiredExceptionIfResponseStatusCodeWasUpgradeRequiredAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -565,7 +565,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowPreconditionRequiredExceptionIfResponseStatusCodeWasPreconditionRequiredAsync()
+        private async Task ShouldThrowPreconditionRequiredExceptionIfResponseStatusCodeWasPreconditionRequiredAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -588,7 +588,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseTooManyRequestsExceptionIfResponseStatusCodeWasTooManyRequestsAsync()
+        private async Task ShouldThrowHttpResponseTooManyRequestsExceptionIfResponseStatusCodeWasTooManyRequestsAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -611,7 +611,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestHeaderFieldsTooLargeExceptionIfCodeWasRequestHeaderFieldsTooLargeAsync()
+        private async Task ShouldThrowRequestHeaderFieldsTooLargeExceptionIfCodeWasRequestHeaderFieldsTooLargeAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -634,7 +634,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowUnavailableForLegalReasonsExceptionIfStatusCodeIsUnavailableForLegalReasonsAsync()
+        private async Task ShouldThrowUnavailableForLegalReasonsExceptionIfStatusCodeIsUnavailableForLegalReasonAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -657,7 +657,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowInternalServerErrorExceptionIfResponseStatusCodeWasInternalServerErrorAsync()
+        private async Task ShouldThrowInternalServerErrorExceptionIfResponseStatusCodeWasInternalServerErrorAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -680,7 +680,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotImplementedExceptionIfResponseStatusCodeWasNotImplementedAsync()
+        private async Task ShouldThrowHttpResponseNotImplementedExceptionIfResponseStatusCodeWasNotImplementedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -703,7 +703,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseBadGatewayExceptionIfResponseStatusCodeWasBadGatewayAsync()
+        private async Task ShouldThrowHttpResponseBadGatewayExceptionIfResponseStatusCodeWasBadGatewayAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -726,7 +726,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowServiceUnavailableExceptionIfResponseStatusCodeWasServiceUnavailableAsync()
+        private async Task ShouldThrowServiceUnavailableExceptionIfResponseStatusCodeWasServiceUnavailableAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -749,7 +749,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseGatewayTimeoutExceptionIfResponseStatusCodeWasGatewayTimeoutAsync()
+        private async Task ShouldThrowHttpResponseGatewayTimeoutExceptionIfResponseStatusCodeWasGatewayTimeoutAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -772,7 +772,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpVersionNotSupportedExceptionIfStatusCodeWasHttpVersionNotSupportedAsync()
+        private async Task ShouldThrowHttpVersionNotSupportedExceptionIfStatusCodeWasHttpVersionNotSupportedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -795,7 +795,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowVariantAlsoNegotiatesExceptionIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
+        private async Task ShouldThrowVariantAlsoNegotiatesExceptionIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -818,7 +818,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowInsufficientStorageExceptionIfResponseStatusCodeWasInsufficientStorageAsync()
+        private async Task ShouldThrowInsufficientStorageExceptionIfResponseStatusCodeWasInsufficientStorageAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -841,7 +841,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseLoopDetectedExceptionIfResponseStatusCodeWasLoopDetectedAsync()
+        private async Task ShouldThrowHttpResponseLoopDetectedExceptionIfResponseStatusCodeWasLoopDetectedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -864,7 +864,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotExtendedExceptionIfResponseStatusCodeWasNotExtendedAsync()
+        private async Task ShouldThrowHttpResponseNotExtendedExceptionIfResponseStatusCodeWasNotExtendedAsync()
         {
             // given
             string randomContent = GetRandomContent();
@@ -887,7 +887,7 @@ namespace RESTFulSense.WebAssembly.Tests.Services
         }
 
         [Fact]
-        public async Task
+        private async Task
             ShouldThrowNetworkAuthenticationRequiredExceptionIfStatusCodeWasNetworkAuthenticationRequiredAsync()
         {
             // given

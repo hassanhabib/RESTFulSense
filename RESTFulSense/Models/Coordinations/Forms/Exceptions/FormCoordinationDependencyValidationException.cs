@@ -6,12 +6,16 @@ using Xeptions;
 
 namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
 {
-    internal class FormCoordinationDependencyValidationException : Xeption
+    public class FormCoordinationDependencyValidationException : Xeption
     {
         public FormCoordinationDependencyValidationException(Xeption innerException)
-         : base(
+            : base(
                 message: "Form coordination dependency validation error occurred, fix the errors and try again.",
-                innerException)
+                innerException: innerException)
+        { }
+        
+        public FormCoordinationDependencyValidationException(string message, Xeption innerException)
+         : base(message, innerException)
         { }
     }
 }

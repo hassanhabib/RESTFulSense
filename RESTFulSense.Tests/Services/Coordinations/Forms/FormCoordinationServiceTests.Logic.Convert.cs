@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
     public partial class FormCoordinationServiceTests
     {
         [Fact]
-        public void ShouldConvertToMultipartFormDataContent()
+        private void ShouldConvertToMultipartFormDataContent()
         {
             // given
             object someObject = new object();

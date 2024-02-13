@@ -9,7 +9,12 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
     internal class NullFormModelException : Xeption
     {
         public NullFormModelException()
-            : base(message: "Form model is null. Please correct the errors and try again.")
+            : base(
+                message: "Form model is null. Please correct the errors and try again.")
+        { }
+        
+        public NullFormModelException(string message)
+            : base(message)
         { }
     }
 }

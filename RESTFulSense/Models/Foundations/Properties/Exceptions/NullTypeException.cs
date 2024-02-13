@@ -11,5 +11,9 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
         public NullTypeException()
             : base(message: "Type is null.")
         { }
+        
+        public NullTypeException(string message)
+            : base(message)
+        { }
     }
 }

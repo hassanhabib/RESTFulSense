@@ -12,7 +12,11 @@ namespace RESTFulSense.Models.Orchestrations.Properties.Exceptions
         public FailedPropertyOrchestrationException(Exception innerException)
             : base(
                   message: "Failed property orchestration service exception occurred, please contact support.",
-                  innerException)
+                  innerException: innerException)
+        { }
+        
+        public FailedPropertyOrchestrationException(string message, Exception innerException)
+            : base(message, innerException)
         { }
     }
 }

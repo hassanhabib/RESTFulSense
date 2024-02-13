@@ -13,7 +13,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Types
     {
         [Theory]
         [MemberData(nameof(TestData))]
-        public void ShouldRetrieveType(Type expectedType)
+        private void ShouldRetrieveType(Type expectedType)
         {
             // given
             object someObject = new object();
@@ -24,7 +24,8 @@ namespace RESTFulSense.Tests.Services.Foundations.Types
                     .Returns(expectedType);
 
             // when
-            Type actualType = this.typeService.RetrieveType(inputObject);
+            Type actualType =
+                this.typeService.RetrieveType(inputObject);
 
             // then
             actualType.Should().Be(expectedType);

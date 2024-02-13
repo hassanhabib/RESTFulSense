@@ -13,7 +13,7 @@ namespace RESTFulSense.Tests.Controllers
     public partial class RESTFulControllerTests
     {
         [Fact]
-        public void ShouldReturnCreatedObjectResult()
+        private void ShouldReturnCreatedObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -29,7 +29,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnLockedObjectResult()
+        private void ShouldReturnLockedObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -45,7 +45,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnBadGatewayObjectResult()
+        private void ShouldReturnBadGatewayObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -61,7 +61,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnExpectationFailedObjectResult()
+        private void ShouldReturnExpectationFailedObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -77,7 +77,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnFailedDependencyObjectResult()
+        private void ShouldReturnFailedDependencyObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -93,7 +93,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnGatewayTimeoutObjectResult()
+        private void ShouldReturnGatewayTimeoutObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -109,7 +109,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnGoneObjectResult()
+        private void ShouldReturnGoneObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -125,7 +125,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnHttpVersionNotSupportedObjectResult()
+        private void ShouldReturnHttpVersionNotSupportedObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -141,7 +141,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnInsufficientStorageObjectResult()
+        private void ShouldReturnInsufficientStorageObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -157,7 +157,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnInternalServerErrorObjectResult()
+        private void ShouldReturnInternalServerErrorObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -173,7 +173,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnLengthRequiredObjectResult()
+        private void ShouldReturnLengthRequiredObjectResult()
         {
             // given 
             string randomMessage = GetRandomMessage();
@@ -189,7 +189,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnLoopDetectedObjectResult()
+        private void ShouldReturnLoopDetectedObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -205,7 +205,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnMethodNotAllowedObjectResult()
+        private void ShouldReturnMethodNotAllowedObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -221,7 +221,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnMisdirectedRequestObjectResult()
+        private void ShouldReturnMisdirectedRequestObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -237,7 +237,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnNetworkAuthenticationRequiredObjectResult()
+        private void ShouldReturnNetworkAuthenticationRequiredObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -253,7 +253,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnNotAcceptableObjectResult()
+        private void ShouldReturnNotAcceptableObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -269,7 +269,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnNotExtendedObjectResult()
+        private void ShouldReturnNotExtendedObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -285,7 +285,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnNotImplementedObjectResult()
+        private void ShouldReturnNotImplementedObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -301,7 +301,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnPaymentRequiredObjectResult()
+        private void ShouldReturnPaymentRequiredObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -317,7 +317,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnPreconditionFailedObjectResult()
+        private void ShouldReturnPreconditionFailedObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -333,7 +333,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnPreconditionRequiredObjectResult()
+        private void ShouldReturnPreconditionRequiredObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -349,7 +349,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnProxyAuthenticationRequiredObjectResult()
+        private void ShouldReturnProxyAuthenticationRequiredObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -365,7 +365,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnRequestedRangeNotSatisfiableObjectResult()
+        private void ShouldReturnRequestedRangeNotSatisfiableObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -381,7 +381,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnRequestEntityTooLargeObjectResult()
+        private void ShouldReturnRequestEntityTooLargeObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -397,7 +397,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnRequestHeaderFieldsTooLargeObjectResult()
+        private void ShouldReturnRequestHeaderFieldsTooLargeObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -413,7 +413,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnRequestTimeoutObjectResult()
+        private void ShouldReturnRequestTimeoutObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -429,7 +429,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnRequestUriTooLongObjectResult()
+        private void ShouldReturnRequestUriTooLongObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -445,7 +445,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnServiceUnavailableObjectResult()
+        private void ShouldReturnServiceUnavailableObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -461,7 +461,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnTooManyRequestsObjectResult()
+        private void ShouldReturnTooManyRequestsObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -477,7 +477,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnUnavailableForLegalReasonsObjectResult()
+        private void ShouldReturnUnavailableForLegalReasonsObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -493,7 +493,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnUpgradeRequiredObjectResult()
+        private void ShouldReturnUpgradeRequiredObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -509,7 +509,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnVariantAlsoNegotiatesObjectResult()
+        private void ShouldReturnVariantAlsoNegotiatesObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();
@@ -525,7 +525,7 @@ namespace RESTFulSense.Tests.Controllers
         }
 
         [Fact]
-        public void ShouldReturnUnsupportedMediaTypeObjectResult()
+        private void ShouldReturnUnsupportedMediaTypeObjectResult()
         {
             // given
             string randomMessage = GetRandomMessage();

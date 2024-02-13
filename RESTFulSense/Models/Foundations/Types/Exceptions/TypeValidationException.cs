@@ -13,5 +13,9 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
                 message: "Type validation errors occurred, fix errors and try again.",
                 innerException)
         { }
+        
+        public TypeValidationException(string message, Xeption innerException)
+            : base(message, innerException)
+        { }
     }
 }

@@ -11,7 +11,11 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
         public PropertyValidationException(Xeption innerException)
             : base(
                 message: "Property validation errors occurred, fix errors and try again.",
-                innerException)
+                innerException: innerException)
+        { }
+        
+        public PropertyValidationException(string message, Xeption innerException)
+            : base(message, innerException)
         { }
     }
 }

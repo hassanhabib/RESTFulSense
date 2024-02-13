@@ -12,15 +12,18 @@ namespace RESTFulSense.Tests.Services.Properties
     public partial class PropertyServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnRetrieveTypeIfTypeIsNull()
+        private void ShouldThrowValidationExceptionOnRetrieveTypeIfTypeIsNull()
         {
             // given
             Type nullType = null;
 
-            NullTypeException nullTypeException = new NullTypeException();
+            NullTypeException nullTypeException =
+                new NullTypeException(
+                    message: "Type is null.");
 
             var expectedPropertyValidationException =
                 new PropertyValidationException(
+                    message: "Property validation errors occurred, fix errors and try again.",
                     innerException: nullTypeException);
 
             // when

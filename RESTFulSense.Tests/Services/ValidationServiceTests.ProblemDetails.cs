@@ -22,7 +22,7 @@ namespace RESTFulSense.Tests.Services
     public partial class ValidationServiceTests
     {
         [Fact]
-        public async Task ShouldThrowHttpResponseBadRequestDetailsIfResponseStatusCodeWasBadRequestAsync()
+        private async Task ShouldThrowHttpResponseBadRequestDetailsIfResponseStatusCodeWasBadRequestAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -53,7 +53,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUnauthorizedDetailsIfResponseStatusCodeWasUnauthorizedAsync()
+        private async Task ShouldThrowHttpResponseUnauthorizedDetailsIfResponseStatusCodeWasUnauthorizedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -84,7 +84,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponsePaymentRequiredDetailsIfResponseStatusCodeWasPaymentRequiredAsync()
+        private async Task ShouldThrowHttpResponsePaymentRequiredDetailsIfResponseStatusCodeWasPaymentRequiredAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -115,7 +115,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseForbiddenDetailsIfResponseStatusCodeWasForbiddenAsync()
+        private async Task ShouldThrowHttpResponseForbiddenDetailsIfResponseStatusCodeWasForbiddenAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -146,7 +146,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotFoundDetailsIfResponseStatusCodeWasNotFoundAsync()
+        private async Task ShouldThrowHttpResponseNotFoundDetailsIfResponseStatusCodeWasNotFoundAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -179,7 +179,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowMethodNotAllowedDetailsIfResponseStatusCodeWasMethodNotAllowedAsync()
+        private async Task ShouldThrowMethodNotAllowedDetailsIfResponseStatusCodeWasMethodNotAllowedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -210,7 +210,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotAcceptableDetailsIfResponseStatusCodeWasNotAcceptableAsync()
+        private async Task ShouldThrowHttpResponseNotAcceptableDetailsIfResponseStatusCodeWasNotAcceptableAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -241,7 +241,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task
+        private async Task
             ShouldThrowProxyAuthenticationRequiredDetailsIfResponseStatusCodeWasProxyAuthenticationRequiredAsync()
         {
             // given
@@ -273,7 +273,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseRequestTimeoutDetailsIfResponseStatusCodeWasRequestTimeoutAsync()
+        private async Task ShouldThrowHttpResponseRequestTimeoutDetailsIfResponseStatusCodeWasRequestTimeoutAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -304,7 +304,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseConflictDetailsIfResponseStatusCodeWasConflictAsync()
+        private async Task ShouldThrowHttpResponseConflictDetailsIfResponseStatusCodeWasConflictAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -335,7 +335,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseGoneDetailsIfResponseStatusCodeWasGoneAsync()
+        private async Task ShouldThrowHttpResponseGoneDetailsIfResponseStatusCodeWasGoneAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -366,7 +366,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseLengthRequiredDetailsIfResponseStatusCodeWasLengthRequiredAsync()
+        private async Task ShouldThrowHttpResponseLengthRequiredDetailsIfResponseStatusCodeWasLengthRequiredAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -397,7 +397,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowPreconditionFailedDetailsIfResponseStatusCodeWasPreconditionFailedAsync()
+        private async Task ShouldThrowPreconditionFailedDetailsIfResponseStatusCodeWasPreconditionFailedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -428,7 +428,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestEntityTooLargeDetailsIfResponseStatusCodeWasRequestEntityTooLargeAsync()
+        private async Task ShouldThrowRequestEntityTooLargeDetailsIfResponseStatusCodeWasRequestEntityTooLargeAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -459,7 +459,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestUriTooLongDetailsIfResponseStatusCodeWasRequestUriTooLongAsync()
+        private async Task ShouldThrowRequestUriTooLongDetailsIfResponseStatusCodeWasRequestUriTooLongAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -490,7 +490,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowUnsupportedMediaTypeDetailsIfResponseStatusCodeWasUnsupportedMediaTypeAsync()
+        private async Task ShouldThrowUnsupportedMediaTypeDetailsIfResponseStatusCodeWasUnsupportedMediaTypeAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -521,7 +521,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestedRangeNotSatisfiableDetailsIfCodeWasRequestedRangeNotSatisfiableAsync()
+        private async Task ShouldThrowRequestedRangeNotSatisfiableDetailsIfCodeWasRequestedRangeNotSatisfiableAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -552,7 +552,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowExpectationFailedDetailsIfResponseStatusCodeWasExpectationFailedAsync()
+        private async Task ShouldThrowExpectationFailedDetailsIfResponseStatusCodeWasExpectationFailedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -583,7 +583,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowMisdirectedRequestDetailsIfResponseStatusCodeWasMisdirectedRequestAsync()
+        private async Task ShouldThrowMisdirectedRequestDetailsIfResponseStatusCodeWasMisdirectedRequestAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -614,7 +614,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowUnprocessableEntityDetailsIfResponseStatusCodeWasUnprocessableEntityAsync()
+        private async Task ShouldThrowUnprocessableEntityDetailsIfResponseStatusCodeWasUnprocessableEntityAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -645,7 +645,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseLockedDetailsIfResponseStatusCodeWasLockedAsync()
+        private async Task ShouldThrowHttpResponseLockedDetailsIfResponseStatusCodeWasLockedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -676,7 +676,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowFailedDependencyDetailsIfResponseStatusCodeWasFailedDependencyAsync()
+        private async Task ShouldThrowFailedDependencyDetailsIfResponseStatusCodeWasFailedDependencyAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -707,7 +707,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseUpgradeRequiredDetailsIfResponseStatusCodeWasUpgradeRequiredAsync()
+        private async Task ShouldThrowHttpResponseUpgradeRequiredDetailsIfResponseStatusCodeWasUpgradeRequiredAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -738,7 +738,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowPreconditionRequiredDetailsIfResponseStatusCodeWasPreconditionRequiredAsync()
+        private async Task ShouldThrowPreconditionRequiredDetailsIfResponseStatusCodeWasPreconditionRequiredAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -769,7 +769,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseTooManyRequestsDetailsIfResponseStatusCodeWasTooManyRequestsAsync()
+        private async Task ShouldThrowHttpResponseTooManyRequestsDetailsIfResponseStatusCodeWasTooManyRequestsAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -800,7 +800,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowRequestHeaderFieldsTooLargeDetailsIfCodeWasRequestHeaderFieldsTooLargeAsync()
+        private async Task ShouldThrowRequestHeaderFieldsTooLargeDetailsIfCodeWasRequestHeaderFieldsTooLargeAsync()
         {
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
             string randomContent = MapDetailsToString(problemDetails: randomProblemDetails);
@@ -830,7 +830,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowUnavailableForLegalReasonsDetailsIfStatusCodeIsUnavailableForLegalReasonsAsync()
+        private async Task ShouldThrowUnavailableForLegalReasonsDetailsIfStatusCodeIsUnavailableForLegalReasonsAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -861,7 +861,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowInternalServerErrorDetailsIfResponseStatusCodeWasInternalServerErrorAsync()
+        private async Task ShouldThrowInternalServerErrorDetailsIfResponseStatusCodeWasInternalServerErrorAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -892,7 +892,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotImplementedDetailsIfResponseStatusCodeWasNotImplementedAsync()
+        private async Task ShouldThrowHttpResponseNotImplementedDetailsIfResponseStatusCodeWasNotImplementedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -923,7 +923,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseBadGatewayDetailsIfResponseStatusCodeWasBadGatewayAsync()
+        private async Task ShouldThrowHttpResponseBadGatewayDetailsIfResponseStatusCodeWasBadGatewayAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -954,7 +954,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowServiceUnavailableDetailsIfResponseStatusCodeWasServiceUnavailableAsync()
+        private async Task ShouldThrowServiceUnavailableDetailsIfResponseStatusCodeWasServiceUnavailableAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -985,7 +985,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseGatewayTimeoutDetailsIfResponseStatusCodeWasGatewayTimeoutAsync()
+        private async Task ShouldThrowHttpResponseGatewayTimeoutDetailsIfResponseStatusCodeWasGatewayTimeoutAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -1016,7 +1016,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpVersionNotSupportedDetailsIfStatusCodeWasHttpVersionNotSupportedAsync()
+        private async Task ShouldThrowHttpVersionNotSupportedDetailsIfStatusCodeWasHttpVersionNotSupportedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -1047,7 +1047,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowVariantAlsoNegotiatesDetailsIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
+        private async Task ShouldThrowVariantAlsoNegotiatesDetailsIfResponseStatusCodeWasVariantAlsoNegotiatesAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -1078,7 +1078,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowInsufficientStorageDetailsIfResponseStatusCodeWasInsufficientStorageAsync()
+        private async Task ShouldThrowInsufficientStorageDetailsIfResponseStatusCodeWasInsufficientStorageAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -1109,7 +1109,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseLoopDetectedDetailIfResponseStatusCodeWasLoopDetectedAsync()
+        private async Task ShouldThrowHttpResponseLoopDetectedDetailIfResponseStatusCodeWasLoopDetectedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -1140,7 +1140,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task ShouldThrowHttpResponseNotExtendedDetailsIfResponseStatusCodeWasNotExtendedAsync()
+        private async Task ShouldThrowHttpResponseNotExtendedDetailsIfResponseStatusCodeWasNotExtendedAsync()
         {
             // given
             ValidationProblemDetails randomProblemDetails = CreateRandomProblemDetails();
@@ -1171,7 +1171,7 @@ namespace RESTFulSense.Tests.Services
         }
 
         [Fact]
-        public async Task
+        private async Task
             ShouldThrowNetworkAuthenticationRequiredDetailsIfStatusCodeWasNetworkAuthenticationRequiredAsync()
         {
             // given

@@ -19,7 +19,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
     public partial class FormOrchestrationServiceTests
     {
         [Fact]
-        public void ShouldBuildFormModel()
+        private void ShouldBuildFormModel()
         {
             // given
             FormModel someFormModel = CreateRandomFormModel();
