@@ -286,7 +286,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         [Fact]
         private async Task ShouldPostFormWithTContentReturnsTResultAsync()
         {
-            // Arrange
+            // given
             TEntity randomTEntity = GetRandomTEntity();
             var cancellationToken = new CancellationToken();
 
@@ -299,7 +299,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithStatusCode(200)
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
-            // Act
+            // when
             var result =
                 await this.factoryClient.PostFormAsync(
                     relativeUrl,
@@ -307,7 +307,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     cancellationToken: cancellationToken,
                     deserializationFunction: DeserializationContentFunction);
 
-            // Assert
+            // then
             Assert.Equal(randomTEntity.TEntityId, result.TEntityId);
             Assert.Equal(randomTEntity.TEntityName, result.TEntityName);
             Assert.Equal(randomTEntity.TEntityCreateDate, result.TEntityCreateDate);
