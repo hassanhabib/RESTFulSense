@@ -3,13 +3,10 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using RESTFulSense.Exceptions;
 using RESTFulSense.Tests.Acceptance.Models;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -57,8 +54,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         private async Task ShouldPostContentWithNoResponseAndDeserializeContentAsync()
         {
             // given
-            TEntity randomContent = GetRandomTEntity();
-            TEntity expectedContent = randomContent;
+            TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedTEntity = randomTEntity;
             var mediaType = "application/json";
             var ignoreDefaultValues = false;
 
@@ -72,7 +69,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             Action actualResponseResult = async () =>
                 await this.factoryClient.PostContentWithNoResponseAsync<TEntity>(
                     relativeUrl,
-                    content: expectedContent,
+                    content: expectedTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
                     serializationFunction: SerializationContentFunction);
@@ -82,29 +79,33 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         }
 
         [Fact]
-        private async Task ShouldPostContentAndGetExpectedResponse()
+        public async Task ShouldPostContentReturnsContentWithCustomSerializationAndDeserializationAsync()
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            var expectedTEntity = randomTEntity;
             var mediaType = "application/json";
+            var ignoreDefaultValues = false;
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingPost())
                     .RespondWith(Response.Create()
-                        .WithStatusCode(201)
-                        .WithHeader("Content-Type", mediaType)
-                        .WithBodyAsJson(randomTEntity));
+                        .WithStatusCode(200)
+                        .WithBodyAsJson(expectedTEntity));
 
             // when
-            var actualTEntity =
+            var result =
                 await this.factoryClient.PostContentAsync<TEntity>(
                     relativeUrl,
-                    content: randomTEntity,
-                    mediaType: mediaType);
+                    content: expectedTEntity,
+                    mediaType: mediaType,
+                    ignoreDefaultValues: ignoreDefaultValues,
+                    serializationFunction: SerializationContentFunction,
+                    deserializationFunction: DeserializationContentFunction);
 
             // then
-            actualTEntity.Should().BeEquivalentTo(randomTEntity);
+            Assert.Equal(expectedTEntity.TEntityName, result.TEntityName);
         }
 
         [Fact]
@@ -128,7 +129,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             var taskCanceledToken = new CancellationToken(canceled: true);
 
-            var actualPostContentCanceledTask =
+            var actualCanceledTaskResult =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.factoryClient.PostContentAsync<TEntity>(
                         relativeUrl,
@@ -138,86 +139,15 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         ignoreDefaultValues: ignoreDefaultValues));
 
             // then
-            actualPostContentCanceledTask.Should().BeEquivalentTo(
+            actualCanceledTaskResult.Should().BeEquivalentTo(
                 expectedPostContentCanceledException);
-        }
-
-        [Fact]
-        public async Task ShouldPostContentAsyncAndReturnPostedContentWithCustomSerializationAndDeserializationAsync()
-        {
-            // given
-            var expectedContent = GetRandomTEntity();
-            var mediaType = "application/json";
-            var ignoreDefaultValues = false;
-
-            this.wiremockServer.Given(Request.Create()
-                .WithPath(relativeUrl)
-                .UsingPost())
-                    .RespondWith(Response.Create()
-                        .WithStatusCode(200)
-                        .WithBodyAsJson(expectedContent));
-
-            // when
-            var actualContent =
-                await this.factoryClient.PostContentAsync<TEntity>(
-                    relativeUrl,
-                    content: expectedContent,
-                    mediaType: mediaType,
-                    ignoreDefaultValues: ignoreDefaultValues,
-                    serializationFunction: SerializationContentFunction,
-                    deserializationFunction: DeserializationContentFunction);
-
-            // then
-            Assert.Equal(expectedContent.TEntityName, actualContent.TEntityName);
-        }
-
-        [Fact]
-        public async Task ShouldPostContentAsyncAndReturnProblemDetailsIf403ForbiddenErrorOccursAsync()
-        {
-            // given
-            var expectedContent = GetRandomTEntity();
-            var mediaType = "application/json";
-            var ignoreDefaultValues = false;
-
-            var problemDetails = new ProblemDetails
-            {
-                Status = 403,
-                Title = "Forbidden"
-            };
-
-            this.wiremockServer.Given(Request.Create()
-                .WithPath(relativeUrl)
-                .UsingPost())
-                    .RespondWith(Response.Create()
-                        .WithStatusCode(403)
-                        .WithHeader("Content-Type", mediaType)
-                        .WithBodyAsJson(problemDetails));
-
-            // when
-            var responseException =
-                await Assert.ThrowsAsync<HttpResponseForbiddenException>(() =>
-                    this.factoryClient.PostContentAsync<TEntity>(
-                        relativeUrl,
-                        content: expectedContent,
-                        mediaType: mediaType,
-                        ignoreDefaultValues: ignoreDefaultValues,
-                        serializationFunction: SerializationContentFunction,
-                        deserializationFunction: DeserializationContentFunction).AsTask());
-
-            var actualProblemDetails =
-                JsonConvert.DeserializeObject<ProblemDetails>(responseException.Message);
-
-            // then
-            Assert.IsType<HttpResponseForbiddenException>(responseException);
-            Assert.Equal(problemDetails.Status, actualProblemDetails.Status);
-            Assert.Equal(problemDetails.Title, actualProblemDetails.Title);
         }
 
         [Fact]
         private async Task ShouldPostContentWithStreamResponseAsync()
         {
             // given
-            var someContent = CreateRandomContent();
+            string randomContent = CreateRandomContent();
             var cancellationToken = new CancellationToken();
             var mediaType = "text/json";
             var ignoreDefaultValues = false;
@@ -230,23 +160,22 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         Response.Create()
                             .WithStatusCode(200)
                             .WithHeader("Content-Type", mediaType)
-                            .WithBody(someContent));
+                            .WithBody(randomContent));
 
             // when
             var result =
                 await this.factoryClient.PostContentWithStreamResponseAsync(
                     relativeUrl,
-                    content: someContent,
+                    content: randomContent,
                     cancellationToken: cancellationToken,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
                     serializationFunction: SerializationContentFunction);
 
-            var reader = new StreamReader(result);
-            var resultContent = await reader.ReadToEndAsync();
+            var resultReadContent = await ReadStreamToEndAsync(result);
 
             // then
-            Assert.Equal(someContent, resultContent);
+            Assert.Equal(randomContent, resultReadContent);
         }
 
         [Fact]

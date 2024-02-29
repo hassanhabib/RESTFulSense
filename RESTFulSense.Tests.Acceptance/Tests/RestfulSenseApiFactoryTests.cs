@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RESTFulSense.Clients;
@@ -28,6 +29,12 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                 new HttpClient { BaseAddress = new Uri(wiremockServer.Urls[0]) };
 
             this.factoryClient = new RESTFulApiFactoryClient(httpClient);
+        }
+
+        private async Task<string> ReadStreamToEndAsync(Stream result)
+        {
+            var reader = new StreamReader(result, leaveOpen: false );
+            return await reader.ReadToEndAsync();
         }
 
         private static ValueTask<string> SerializationContentFunction<TEntity>(TEntity entityContent)

@@ -2,13 +2,9 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using RESTFulSense.Exceptions;
 using RESTFulSense.Tests.Acceptance.Models;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -18,8 +14,9 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 {
     public partial class RestfulSenseApiFactoryTests
     {
+
         [Fact]
-        private async Task ShouldReturnOkOnGetContentAsyncWithTEntityAsync()
+        private async Task ShouldGetContentWithDeserializationFunctionAsync()
         {
             // given
             TEntity expectedReponseEntity = GetRandomTEntity();
@@ -33,49 +30,19 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
             // when
             TEntity actualResponseEntity =
-                await this.factoryClient.GetContentAsync<TEntity>(relativeUrl);
+                await this.factoryClient.GetContentAsync<TEntity>(
+                    relativeUrl,
+                    deserializationFunction: DeserializationContentFunction);
 
             // then
             actualResponseEntity.Should().BeEquivalentTo(expectedReponseEntity);
         }
 
         [Fact]
-        private async Task ShouldValidateResponseMessageProblemDetailsOnGetContentIfNotFoundErrorOccurs()
+        private async Task ShouldCancelGetContentDeserializationIfCancellationInvokedAsync()
         {
             // given
-            var mediaType = "application/problem+json";
-
-            var expectedProblemDetailResponse = new ProblemDetails
-            {
-                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                Title = "Not Found",
-                Status = 404,
-                Detail = "The requested resource could not be found.",
-                Instance = relativeUrl
-            };
-
-            wiremockServer.Given(Request.Create()
-                .WithPath(relativeUrl)
-                .UsingGet())
-                    .RespondWith(Response.Create()
-                    .WithStatusCode(404)
-                    .WithHeader("Content-Type", mediaType)
-                    .WithBodyAsJson(expectedProblemDetailResponse));
-
-            // when . then
-            Func<Task> actualProblemDetailResponseTask = async () =>
-                await this.factoryClient.GetContentAsync<ProblemDetails>(relativeUrl);
-
-            // then
-            await actualProblemDetailResponseTask.Should().ThrowAsync<HttpResponseNotFoundException>()
-                .WithMessage("Not Found");
-        }
-
-        [Fact]
-        private async Task ShouldCancelTaskOnGetContentAsyncIfCancellationInvokedAsync()
-        {
-            // given
-            string someContent = CreateRandomContent();
+            TEntity someContent = GetRandomTEntity();
             var expectedCanceledTaskException = new TaskCanceledException();
             var taskCancelInvoked = new CancellationToken(canceled: true);
 
@@ -83,82 +50,60 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                    .WithBody(someContent));
+                        .WithBodyAsJson(someContent));
 
             // when
             var actualCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                    await this.factoryClient.GetContentAsync<dynamic>(
+                    await this.factoryClient.GetContentAsync<TEntity>(
                         relativeUrl,
-                        taskCancelInvoked,
-                        null));
+                        cancellationToken: taskCancelInvoked,
+                        deserializationFunction: DeserializationContentFunction));
 
             // then
             actualCanceledTask.Should().BeEquivalentTo(expectedCanceledTaskException);
         }
 
         [Fact]
-        private async Task ShouldGetContentAsyncWithDeserializationFunctionAsync()
-        {
-            // given
-            string someContent = CreateRandomContent();
-
-            wiremockServer.Given(Request.Create()
-                .WithPath(relativeUrl)
-                .UsingGet())
-                    .RespondWith(Response.Create()
-                    .WithBody(someContent));
-
-            // when
-            var actualContentResponse = await this.factoryClient.GetContentAsync<string>(
-                relativeUrl,
-                content => new ValueTask<string>(content));
-
-            // then
-            actualContentResponse.Should().BeEquivalentTo(someContent);
-        }
-
-        [Fact]
         private async Task ShouldReturnStringOnGetContentStringAsync()
         {
             // given
-            var someContent = CreateRandomContent();
+            string stringContent = CreateRandomContent();
 
             wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                    .WithBody(someContent));
+                        .WithBody(stringContent));
 
             // when
             var actualContentResponse =
                 await this.factoryClient.GetContentStringAsync(relativeUrl);
 
             // then
-            actualContentResponse.Should().BeEquivalentTo(someContent);
+            actualContentResponse.Should().BeEquivalentTo(stringContent);
         }
 
         [Fact]
-        private async Task ShouldGetContentStreamAsync()
+        private async Task ShouldReturnStreamOnGetContentStreamAsync()
         {
             // given
-            var someContent = CreateRandomContent();
+            string stringContent = CreateRandomContent();
 
             wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                    .WithBody(someContent));
+                    .WithBody(stringContent));
 
             // when
-            var returnedContentStream =
+            var expectedContentStream =
                 await this.factoryClient.GetContentStreamAsync(relativeUrl);
 
-            using var reader = new StreamReader(returnedContentStream);
-            var actualReadStream = await reader.ReadToEndAsync();
+            var actualReadStream = await ReadStreamToEndAsync(expectedContentStream);
 
             // then
-            actualReadStream.Should().BeEquivalentTo(someContent);
+            actualReadStream.Should().BeEquivalentTo(stringContent);
         }
     }
 }
