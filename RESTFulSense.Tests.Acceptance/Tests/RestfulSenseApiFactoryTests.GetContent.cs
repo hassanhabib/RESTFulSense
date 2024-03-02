@@ -21,7 +21,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity expectedReponseEntity = GetRandomTEntity();
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
@@ -46,11 +46,11 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             var expectedCanceledTaskException = new TaskCanceledException();
             var taskCancelInvoked = new CancellationToken(canceled: true);
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                        .WithBodyAsJson(someContent));
+                    .WithBodyAsJson(someContent));
 
             // when
             var actualCanceledTask =
@@ -70,14 +70,14 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             string stringContent = CreateRandomContent();
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                        .WithBody(stringContent));
+                    .WithBody(stringContent));
 
             // when
-            var actualContentResponse =
+            string actualContentResponse =
                 await this.factoryClient.GetContentStringAsync(relativeUrl);
 
             // then
@@ -90,7 +90,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             string stringContent = CreateRandomContent();
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()

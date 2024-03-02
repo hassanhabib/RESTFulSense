@@ -23,8 +23,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             TEntity expectedTEntity = randomTEntity;
-            var mediaType = "application/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "application/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
@@ -52,7 +52,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             TEntity randomTEntity = GetRandomTEntity();
             var expectedPostContentCanceledException = new TaskCanceledException();
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                .WithPath(relativeUrl)
                .UsingPost())
                    .RespondWith(Response.Create()
@@ -84,9 +84,9 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
-            var expectedTEntity = randomTEntity;
-            var mediaType = "application/json";
-            var ignoreDefaultValues = false;
+            TEntity expectedTEntity = randomTEntity;
+            string mediaType = "application/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
@@ -114,8 +114,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
-            var mediaType = "application/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "application/json";
+            bool ignoreDefaultValues = false;
 
             var expectedPostContentCanceledException = new TaskCanceledException();
 
@@ -150,8 +150,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             string randomContent = CreateRandomContent();
             var cancellationToken = new CancellationToken();
-            var mediaType = "text/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "text/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer.Given(
                 Request.Create()
@@ -184,8 +184,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
-            var mediaType = "text/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "text/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer.Given(
                 Request.Create()
@@ -219,8 +219,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             var cancellationToken = new CancellationToken();
-            var mediaType = "text/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "text/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer.Given(
                 Request.Create()

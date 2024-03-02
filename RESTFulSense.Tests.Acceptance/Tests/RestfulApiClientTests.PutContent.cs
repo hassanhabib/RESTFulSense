@@ -19,8 +19,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
-            var mediaType = "text/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "text/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer
                 .Given(Request.Create()
@@ -51,8 +51,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
-            var mediaType = "text/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "text/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer.Given(
                 Request.Create()
@@ -90,8 +90,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             CancellationToken cancellationToken =
                 new CancellationToken(canceled: false);
 
-            var mediaType = "text/json";
-            var ignoreDefaultValues = false;
+            string mediaType = "text/json";
+            bool ignoreDefaultValues = false;
 
             this.wiremockServer.Given(
                 Request.Create()

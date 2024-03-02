@@ -2,10 +2,8 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentAssertions;
 using RESTFulSense.Tests.Acceptance.Models;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -29,15 +27,10 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
             // when
             await this.factoryClient.DeleteContentAsync(relativeUrl);
-            var requestLogs = this.wiremockServer.LogEntries;
-
-            var deleteContentRequest =
-                requestLogs.FirstOrDefault(
-                    request => request.RequestMessage.Path == relativeUrl);
 
             // then
-            deleteContentRequest.Should().NotBeNull();
-            deleteContentRequest.RequestMessage.Path.Should().Be(relativeUrl);
+            bool deletedContentResult = GetDeleteContentVerification();
+            Assert.True(deletedContentResult);
         }
 
         [Fact]
@@ -58,15 +51,9 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                 relativeUrl,
                 cancellationToken: cancellationToken);
 
-            var requestLogs = this.wiremockServer.LogEntries;
-
-            var deleteContentRequest =
-                requestLogs.FirstOrDefault(
-                    request => request.RequestMessage.Path == relativeUrl);
-
             // then
-            deleteContentRequest.Should().NotBeNull();
-            deleteContentRequest.RequestMessage.Path.Should().Be(relativeUrl);
+            bool deletedContentResult = GetDeleteContentVerification();
+            Assert.True(deletedContentResult);
         }
 
         [Fact]

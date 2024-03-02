@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using RESTFulSense.Clients;
@@ -22,16 +23,27 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         public RestfulApiClientTests()
         {
             this.wiremockServer = WireMockServer.Start();
-            
-            this.restfulApiClient = 
-                new RESTFulApiClient 
-                    { BaseAddress = new Uri(this.wiremockServer.Urls[0]) };
+
+            this.restfulApiClient =
+                new RESTFulApiClient
+                { BaseAddress = new Uri(this.wiremockServer.Urls[0]) };
         }
 
         private async Task<string> ReadStreamToEndAsync(Stream result)
         {
             var reader = new StreamReader(result, leaveOpen: false);
             return await reader.ReadToEndAsync();
+        }
+
+        private bool GetDeleteContentVerification()
+        {
+            var requestLogs = this.wiremockServer.LogEntries;
+
+            var deleteContentResult =
+                requestLogs.FirstOrDefault(
+                    request => request.RequestMessage.Path == relativeUrl);
+
+            return deleteContentResult != null;
         }
 
         private static ValueTask<string> SerializationContentFunction<TEntity>(TEntity entityContent)

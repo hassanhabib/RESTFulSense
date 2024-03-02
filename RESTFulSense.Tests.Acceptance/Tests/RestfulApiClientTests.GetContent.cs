@@ -21,7 +21,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity expectedReponseEntity = GetRandomTEntity();
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
@@ -46,7 +46,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             var expectedCanceledTaskException = new TaskCanceledException();
             var taskCancelInvoked = new CancellationToken(canceled: true);
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
@@ -70,7 +70,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             string stringContent = CreateRandomContent();
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
@@ -90,7 +90,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             string stringContent = CreateRandomContent();
 
-            wiremockServer.Given(Request.Create()
+            this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
