@@ -81,7 +81,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         }
 
         [Fact]
-        public async Task ShouldPostContentReturnsContentWithCustomSerializationAndDeserializationAsync()
+        private async Task ShouldPostContentReturnsContentWithCustomSerializationAndDeserializationAsync()
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
@@ -97,7 +97,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .WithBodyAsJson(expectedTEntity));
 
             // when
-            TEntity result =
+            TEntity actualTEntity =
                 await this.restfulApiClient.PostContentAsync<TEntity>(
                     relativeUrl,
                     content: expectedTEntity,
@@ -107,7 +107,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     deserializationFunction: DeserializationContentFunction);
 
             // then
-            Assert.Equal(expectedTEntity.TEntityName, result.TEntityName);
+            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
         }
 
         [Fact]
@@ -118,7 +118,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             string mediaType = "application/json";
             bool ignoreDefaultValues = false;
 
-            var expectedPostContentCanceledException = new TaskCanceledException();
+            var expectedPostContentCanceledException =
+                new TaskCanceledException();
 
 
             this.wiremockServer.Given(Request.Create()
@@ -165,7 +166,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(randomContent));
 
             // when
-            Stream result =
+            Stream actualContent =
                 await this.restfulApiClient.PostContentWithStreamResponseAsync(
                     relativeUrl,
                     content: randomContent,
@@ -174,10 +175,10 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     ignoreDefaultValues: ignoreDefaultValues,
                     serializationFunction: SerializationContentFunction);
 
-            var resultReadContent = await ReadStreamToEndAsync(result);
+            string actualReadContent = await ReadStreamToEndAsync(actualContent);
 
             // then
-            Assert.Equal(randomContent, resultReadContent);
+            randomContent.Should().BeEquivalentTo(actualReadContent);
         }
 
         [Fact]
@@ -185,6 +186,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedTEntity = randomTEntity;
             string mediaType = "text/json";
             bool ignoreDefaultValues = false;
 
@@ -199,7 +201,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            TEntity result =
+            TEntity actualTEntity =
                 await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -209,9 +211,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     DeserializationContentFunction);
 
             // then
-            Assert.Equal(randomTEntity.TEntityId, result.TEntityId);
-            Assert.Equal(randomTEntity.TEntityName, result.TEntityName);
-            Assert.Equal(randomTEntity.TEntityCreateDate, result.TEntityCreateDate);
+            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
         }
 
         [Fact]
@@ -219,6 +219,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedTEntity = randomTEntity;
             var cancellationToken = new CancellationToken();
             string mediaType = "text/json";
             bool ignoreDefaultValues = false;
@@ -234,7 +235,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            TEntity result =
+            TEntity actualTEntity =
                 await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -245,9 +246,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     DeserializationContentFunction);
 
             // then
-            Assert.Equal(randomTEntity.TEntityId, result.TEntityId);
-            Assert.Equal(randomTEntity.TEntityName, result.TEntityName);
-            Assert.Equal(randomTEntity.TEntityCreateDate, result.TEntityCreateDate);
+            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
         }
 
         [Fact]
@@ -255,6 +254,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedTEntity = randomTEntity;
             var cancellationToken = new CancellationToken();
 
             this.wiremockServer.Given(
@@ -267,7 +267,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            TEntity result =
+            TEntity actualTEntity =
                 await this.restfulApiClient.PostFormAsync(
                     relativeUrl,
                     content: randomTEntity,
@@ -275,9 +275,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     deserializationFunction: DeserializationContentFunction);
 
             // then
-            Assert.Equal(randomTEntity.TEntityId, result.TEntityId);
-            Assert.Equal(randomTEntity.TEntityName, result.TEntityName);
-            Assert.Equal(randomTEntity.TEntityCreateDate, result.TEntityCreateDate);
+            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
         }
     }
 }

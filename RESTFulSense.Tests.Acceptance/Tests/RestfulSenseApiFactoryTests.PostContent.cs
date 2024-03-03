@@ -80,7 +80,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         }
 
         [Fact]
-        public async Task ShouldPostContentReturnsContentWithCustomSerializationAndDeserializationAsync()
+        private async Task ShouldPostContentReturnsContentWithCustomSerializationAndDeserializationAsync()
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
@@ -96,19 +96,17 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .WithBodyAsJson(expectedTEntity));
 
             // when
-            TEntity result =
+            TEntity actualTEntity =
                 await this.factoryClient.PostContentAsync<TEntity>(
                     relativeUrl,
                     content: expectedTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
                     serializationFunction: SerializationContentFunction,
-                    deserializationFunction: DeserializationContentFunction);
+                    deserializationFunction: ContentDeserializationFunction);
 
             // then
-            Assert.Equal(expectedTEntity.TEntityId, result.TEntityId);
-            Assert.Equal(expectedTEntity.TEntityName, result.TEntityName);
-            Assert.Equal(expectedTEntity.TEntityCreateDate, result.TEntityCreateDate);
+            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
         }
 
         [Fact]
@@ -166,7 +164,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(randomContent));
 
             // when
-            Stream result =
+            Stream actualStream =
                 await this.factoryClient.PostContentWithStreamResponseAsync(
                     relativeUrl,
                     content: randomContent,
@@ -175,10 +173,10 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     ignoreDefaultValues: ignoreDefaultValues,
                     serializationFunction: SerializationContentFunction);
 
-            var resultReadContent = await ReadStreamToEndAsync(result);
+            string actualReadContent = await ReadStreamToEndAsync(actualStream);
 
             // then
-            Assert.Equal(randomContent, resultReadContent);
+            actualReadContent.Should().BeEquivalentTo(randomContent);
         }
 
         [Fact]
@@ -186,6 +184,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedTEntity = randomTEntity;
             string mediaType = "text/json";
             bool ignoreDefaultValues = false;
 
@@ -200,19 +199,17 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            TEntity result =
+            TEntity actualTEntity =
                 await this.factoryClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
                     SerializationContentFunction,
-                    DeserializationContentFunction);
+                    ContentDeserializationFunction);
 
             // then
-            Assert.Equal(randomTEntity.TEntityId, result.TEntityId);
-            Assert.Equal(randomTEntity.TEntityName, result.TEntityName);
-            Assert.Equal(randomTEntity.TEntityCreateDate, result.TEntityCreateDate);
+            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
         }
 
         [Fact]
@@ -220,6 +217,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedTEntity = randomTEntity;
             var cancellationToken = new CancellationToken();
 
             this.wiremockServer.Given(
@@ -232,17 +230,15 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            TEntity result =
+            TEntity actualTEntity =
                 await this.factoryClient.PostFormAsync(
                     relativeUrl,
                     content: randomTEntity,
                     cancellationToken: cancellationToken,
-                    deserializationFunction: DeserializationContentFunction);
+                    deserializationFunction: ContentDeserializationFunction);
 
             // then
-            Assert.Equal(randomTEntity.TEntityId, result.TEntityId);
-            Assert.Equal(randomTEntity.TEntityName, result.TEntityName);
-            Assert.Equal(randomTEntity.TEntityCreateDate, result.TEntityCreateDate);
+            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
         }
     }
 }

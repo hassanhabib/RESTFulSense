@@ -3,15 +3,12 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using RESTFulSense.Clients;
 using RESTFulSense.Tests.Acceptance.Models;
 using Tynamix.ObjectFiller;
-using WireMock.Logging;
 using WireMock.Server;
 
 namespace RESTFulSense.Tests.Acceptance.Tests
@@ -38,18 +35,6 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             return await reader.ReadToEndAsync();
         }
 
-        private bool GetDeleteContentVerification()
-        {
-            IEnumerable<ILogEntry> requestLogs = this.wiremockServer.LogEntries;
-
-            ILogEntry deleteContentResult =
-                requestLogs.FirstOrDefault(
-                    request => request.RequestMessage.Path == relativeUrl &&
-                    request.RequestMessage.Method == "DELETE");
-
-            return deleteContentResult is not null;
-        }
-
         private static ValueTask<string> SerializationContentFunction<TEntity>(TEntity entityContent)
         {
             string jsonContent = JsonSerializer.Serialize(entityContent);
@@ -67,9 +52,15 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             return randomContent.ToString();
         }
 
-        private static Func<string, ValueTask<TEntity>> DeserializationContentFunction =>
-            async (entityContent) =>
-                await Task.FromResult(JsonSerializer.Deserialize<TEntity>(entityContent));
+        private static Func<string, ValueTask<TEntity>> DeserializationContentFunction
+        {
+            get
+            {
+                return async (entityContent) =>
+                    await Task.FromResult(JsonSerializer.Deserialize<TEntity>(
+                        entityContent));
+            }
+        }
 
         private static TEntity GetRandomTEntity() =>
             CreateTEntityFiller(GetTestDateTimeOffset()).Create();

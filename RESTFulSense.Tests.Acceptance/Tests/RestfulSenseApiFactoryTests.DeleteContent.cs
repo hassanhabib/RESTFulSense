@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using RESTFulSense.Tests.Acceptance.Models;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -25,12 +26,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .RespondWith(Response.Create()
                             .WithStatusCode(200));
 
-            // when
+            // when . then
             await this.factoryClient.DeleteContentAsync(relativeUrl);
-
-            // then
-            bool deletedContentResult = GetDeleteContentVerification();
-            Assert.True(deletedContentResult);
         }
 
         [Fact]
@@ -46,21 +43,18 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .RespondWith(Response.Create()
                             .WithStatusCode(200));
 
-            // when
+            // when . then
             await this.factoryClient.DeleteContentAsync(
                 relativeUrl,
                 cancellationToken: cancellationToken);
-
-            // then
-            bool deletedContentResult = GetDeleteContentVerification();
-            Assert.True(deletedContentResult);
         }
 
         [Fact]
-        public async Task ShouldDeleteContentReturnsExpectedContentDeserializeAsync()
+        private async Task ShouldDeleteContentReturnsExpectedContentDeserializeAsync()
         {
             // given
-            TEntity randomContent = GetRandomTEntity();
+            TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedDeletedTEntity = randomTEntity;
 
             this.wiremockServer
                 .Given(Request.Create()
@@ -68,25 +62,24 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     .UsingDelete())
                         .RespondWith(Response.Create()
                             .WithStatusCode(200)
-                            .WithBodyAsJson(randomContent));
+                            .WithBodyAsJson(randomTEntity));
 
             // when
-            TEntity result =
+            TEntity actualDeletedTEntity =
                 await this.factoryClient.DeleteContentAsync<TEntity>(
                     relativeUrl,
-                    deserializationFunction: DeserializationContentFunction);
+                    deserializationFunction: ContentDeserializationFunction);
 
             // then
-            Assert.Equal(randomContent.TEntityId, result.TEntityId);
-            Assert.Equal(randomContent.TEntityName, result.TEntityName);
-            Assert.Equal(randomContent.TEntityCreateDate, result.TEntityCreateDate);
+            actualDeletedTEntity.Should().BeEquivalentTo(expectedDeletedTEntity);
         }
 
         [Fact]
-        public async Task ShouldDeleteContentReturnsExpectedContentCancellationTokenAsync()
+        private async Task ShouldDeleteContentReturnsExpectedContentCancellationTokenAsync()
         {
             // given
-            TEntity randomContent = GetRandomTEntity();
+            TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedDeletedTEntity = randomTEntity;
             var cancellationToken = new CancellationToken(canceled: false);
 
             this.wiremockServer
@@ -95,18 +88,16 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     .UsingDelete())
                         .RespondWith(Response.Create()
                             .WithStatusCode(200)
-                            .WithBodyAsJson(randomContent));
+                            .WithBodyAsJson(randomTEntity));
 
             // when
-            TEntity result =
+            TEntity actualDeletedTEntity =
                 await this.factoryClient.DeleteContentAsync<TEntity>(
                     relativeUrl,
                     cancellationToken: cancellationToken);
 
             // then
-            Assert.Equal(randomContent.TEntityId, result.TEntityId);
-            Assert.Equal(randomContent.TEntityName, result.TEntityName);
-            Assert.Equal(randomContent.TEntityCreateDate, result.TEntityCreateDate);
+            actualDeletedTEntity.Should().BeEquivalentTo(expectedDeletedTEntity);
         }
     }
 }

@@ -20,7 +20,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         private async Task ShouldGetContentWithDeserializationFunctionAsync()
         {
             // given
-            TEntity expectedReponseEntity = GetRandomTEntity();
+            TEntity randomTEntity = GetRandomTEntity();
+            TEntity expectedReponseEntity = randomTEntity;
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
@@ -30,13 +31,13 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     .WithBodyAsJson(expectedReponseEntity));
 
             // when
-            TEntity actualResponseEntity =
+            TEntity actualTEntity =
                 await this.factoryClient.GetContentAsync<TEntity>(
                     relativeUrl,
-                    deserializationFunction: DeserializationContentFunction);
+                    deserializationFunction: ContentDeserializationFunction);
 
             // then
-            actualResponseEntity.Should().BeEquivalentTo(expectedReponseEntity);
+            actualTEntity.Should().BeEquivalentTo(expectedReponseEntity);
         }
 
         [Fact]
@@ -59,7 +60,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     await this.factoryClient.GetContentAsync<TEntity>(
                         relativeUrl,
                         cancellationToken: taskCancelInvoked,
-                        deserializationFunction: DeserializationContentFunction));
+                        deserializationFunction: ContentDeserializationFunction));
 
             // then
             actualCanceledTask.Should().BeEquivalentTo(expectedCanceledTaskException);
@@ -69,33 +70,33 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         private async Task ShouldReturnStringOnGetContentStringAsync()
         {
             // given
-            string stringContent = CreateRandomContent();
+            string someContent = CreateRandomContent();
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                    .WithBody(stringContent));
+                    .WithBody(someContent));
 
             // when
-            string actualContentResponse =
+            string actualContent =
                 await this.factoryClient.GetContentStringAsync(relativeUrl);
 
             // then
-            actualContentResponse.Should().BeEquivalentTo(stringContent);
+            actualContent.Should().BeEquivalentTo(someContent);
         }
 
         [Fact]
         private async Task ShouldReturnStreamOnGetContentStreamAsync()
         {
             // given
-            string stringContent = CreateRandomContent();
+            string someContent = CreateRandomContent();
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                    .WithBody(stringContent));
+                    .WithBody(someContent));
 
             // when
             Stream expectedContentStream =
@@ -104,7 +105,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             var actualReadStream = await ReadStreamToEndAsync(expectedContentStream);
 
             // then
-            actualReadStream.Should().BeEquivalentTo(stringContent);
+            actualReadStream.Should().BeEquivalentTo(someContent);
         }
     }
 }
