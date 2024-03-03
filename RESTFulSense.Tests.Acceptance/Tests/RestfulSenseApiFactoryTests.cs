@@ -37,6 +37,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         private async Task<string> ReadStreamToEndAsync(Stream result)
         {
             var reader = new StreamReader(result, leaveOpen: false);
+            
             return await reader.ReadToEndAsync();
         }
 
