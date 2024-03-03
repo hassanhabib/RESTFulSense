@@ -71,7 +71,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBodyAsJson(randomContent));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.DeleteContentAsync<TEntity>(
                     relativeUrl,
                     deserializationFunction: DeserializationContentFunction);
@@ -98,7 +98,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBodyAsJson(randomContent));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.DeleteContentAsync<TEntity>(
                     relativeUrl,
                     cancellationToken: cancellationToken);

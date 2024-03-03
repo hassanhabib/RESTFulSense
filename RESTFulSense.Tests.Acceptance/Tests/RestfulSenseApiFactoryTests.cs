@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using RESTFulSense.Clients;
 using RESTFulSense.Tests.Acceptance.Models;
 using Tynamix.ObjectFiller;
+using WireMock.Logging;
 using WireMock.Server;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -40,13 +42,14 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
         private bool GetDeleteContentVerification()
         {
-            var requestLogs = this.wiremockServer.LogEntries;
+            IEnumerable<ILogEntry> requestLogs = this.wiremockServer.LogEntries;
 
-            var deleteContentResult =
+            ILogEntry deleteContentResult =
                 requestLogs.FirstOrDefault(
-                    request => request.RequestMessage.Path == relativeUrl);
+                    request => request.RequestMessage.Path == relativeUrl &&
+                    request.RequestMessage.Method == "DELETE");
 
-            return deleteContentResult != null;
+            return deleteContentResult is not null;
         }
 
         private static ValueTask<string> SerializationContentFunction<TEntity>(TEntity entityContent)
@@ -58,7 +61,10 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
         private static string CreateRandomContent()
         {
-            var randomContent = new Lipsum(LipsumFlavor.LoremIpsum, minWords: 3, maxWords: 10);
+            var randomContent = new Lipsum(
+                LipsumFlavor.LoremIpsum,
+                minWords: 3,
+                maxWords: 10);
 
             return randomContent.ToString();
         }

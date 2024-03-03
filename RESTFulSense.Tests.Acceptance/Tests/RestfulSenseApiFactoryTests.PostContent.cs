@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -33,7 +34,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             var taskCanceledToken = new CancellationToken(canceled: true);
 
-            var actualPostContentCanceledTask =
+            TaskCanceledException actualPostContentCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.factoryClient.PostContentWithNoResponseAsync<TEntity>(
                         relativeUrl,
@@ -95,7 +96,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .WithBodyAsJson(expectedTEntity));
 
             // when
-            var result =
+            TEntity result =
                 await this.factoryClient.PostContentAsync<TEntity>(
                     relativeUrl,
                     content: expectedTEntity,
@@ -131,7 +132,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             var taskCanceledToken = new CancellationToken(canceled: true);
 
-            var actualCanceledTaskResult =
+            TaskCanceledException actualCanceledTaskResult =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.factoryClient.PostContentAsync<TEntity>(
                         relativeUrl,
@@ -165,7 +166,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(randomContent));
 
             // when
-            var result =
+            Stream result =
                 await this.factoryClient.PostContentWithStreamResponseAsync(
                     relativeUrl,
                     content: randomContent,
@@ -199,7 +200,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.factoryClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -231,7 +232,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.factoryClient.PostFormAsync(
                     relativeUrl,
                     content: randomTEntity,

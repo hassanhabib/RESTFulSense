@@ -65,7 +65,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .WithBodyAsJson(randomTEntity));
 
             // when
-            var actualCanceledTask =
+            TaskCanceledException actualCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.factoryClient.PutContentAsync<TEntity>(
                         relativeUrl,
@@ -100,7 +100,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                     JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.factoryClient.PutContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -139,7 +139,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                     JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.factoryClient.PutContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -171,7 +171,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.factoryClient.PutContentAsync<TEntity>(
                     relativeUrl,
                     deserializationFunction: DeserializationContentFunction);
@@ -199,7 +199,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.factoryClient.PutContentAsync<TEntity>(
                     relativeUrl,
                     cancellationToken: cancellationToken,

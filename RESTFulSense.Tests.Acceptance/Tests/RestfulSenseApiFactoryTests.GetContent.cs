@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -53,7 +54,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     .WithBodyAsJson(someContent));
 
             // when
-            var actualCanceledTask =
+            TaskCanceledException actualCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.factoryClient.GetContentAsync<TEntity>(
                         relativeUrl,
@@ -97,7 +98,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                     .WithBody(stringContent));
 
             // when
-            var expectedContentStream =
+            Stream expectedContentStream =
                 await this.factoryClient.GetContentStreamAsync(relativeUrl);
 
             var actualReadStream = await ReadStreamToEndAsync(expectedContentStream);

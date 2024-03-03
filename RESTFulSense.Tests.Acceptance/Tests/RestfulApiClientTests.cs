@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using RESTFulSense.Clients;
 using RESTFulSense.Tests.Acceptance.Models;
 using Tynamix.ObjectFiller;
+using WireMock.Logging;
 using WireMock.Server;
 
 namespace RESTFulSense.Tests.Acceptance.Tests
@@ -18,32 +20,34 @@ namespace RESTFulSense.Tests.Acceptance.Tests
     {
         private readonly WireMockServer wiremockServer;
         private const string relativeUrl = "/tests";
-        private readonly IRESTFulApiClient restfulApiClient;
+        private readonly RESTFulApiClient restfulApiClient;
 
         public RestfulApiClientTests()
         {
             this.wiremockServer = WireMockServer.Start();
+            this.restfulApiClient = new RESTFulApiClient();
 
-            this.restfulApiClient =
-                new RESTFulApiClient
-                { BaseAddress = new Uri(this.wiremockServer.Urls[0]) };
+            this.restfulApiClient.BaseAddress = new Uri(
+                this.wiremockServer.Urls[0]);
         }
 
         private async Task<string> ReadStreamToEndAsync(Stream result)
         {
             var reader = new StreamReader(result, leaveOpen: false);
+
             return await reader.ReadToEndAsync();
         }
 
         private bool GetDeleteContentVerification()
         {
-            var requestLogs = this.wiremockServer.LogEntries;
+            IEnumerable<ILogEntry> requestLogs = this.wiremockServer.LogEntries;
 
-            var deleteContentResult =
+            ILogEntry deleteContentResult =
                 requestLogs.FirstOrDefault(
-                    request => request.RequestMessage.Path == relativeUrl);
+                    request => request.RequestMessage.Path == relativeUrl &&
+                    request.RequestMessage.Method == "DELETE");
 
-            return deleteContentResult != null;
+            return deleteContentResult is not null;
         }
 
         private static ValueTask<string> SerializationContentFunction<TEntity>(TEntity entityContent)
@@ -55,7 +59,10 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
         private static string CreateRandomContent()
         {
-            var randomContent = new Lipsum(LipsumFlavor.LoremIpsum, minWords: 3, maxWords: 10);
+            var randomContent = new Lipsum(
+                LipsumFlavor.LoremIpsum,
+                minWords: 3,
+                maxWords: 10);
 
             return randomContent.ToString();
         }

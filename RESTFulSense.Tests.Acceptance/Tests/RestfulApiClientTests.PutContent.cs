@@ -66,7 +66,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                     JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PutContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -105,7 +105,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                     JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PutContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -137,7 +137,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PutContentAsync<TEntity>(
                     relativeUrl,
                     deserializationFunction: DeserializationContentFunction);
@@ -165,7 +165,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PutContentAsync<TEntity>(
                     relativeUrl,
                     cancellationToken: cancellationToken,

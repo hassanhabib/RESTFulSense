@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -62,7 +63,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             var taskCanceledToken = new CancellationToken(canceled: true);
 
-            var actualPostContentCanceledTask =
+            TaskCanceledException actualPostContentCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.restfulApiClient.PostContentWithNoResponseAsync<TEntity>(
                         relativeUrl,
@@ -96,7 +97,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .WithBodyAsJson(expectedTEntity));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PostContentAsync<TEntity>(
                     relativeUrl,
                     content: expectedTEntity,
@@ -130,7 +131,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             var taskCanceledToken = new CancellationToken(canceled: true);
 
-            var actualCanceledTaskResult =
+            TaskCanceledException actualCanceledTaskResult =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.restfulApiClient.PostContentAsync<TEntity>(
                         relativeUrl,
@@ -164,7 +165,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithBody(randomContent));
 
             // when
-            var result =
+            Stream result =
                 await this.restfulApiClient.PostContentWithStreamResponseAsync(
                     relativeUrl,
                     content: randomContent,
@@ -198,7 +199,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -233,7 +234,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl,
                     content: randomTEntity,
@@ -266,7 +267,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                                 .WithBody(JsonConvert.SerializeObject(randomTEntity)));
 
             // when
-            var result =
+            TEntity result =
                 await this.restfulApiClient.PostFormAsync(
                     relativeUrl,
                     content: randomTEntity,
