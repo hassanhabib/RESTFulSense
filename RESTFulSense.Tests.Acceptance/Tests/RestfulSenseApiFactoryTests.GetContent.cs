@@ -33,7 +33,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             TEntity actualTEntity =
                 await this.factoryClient.GetContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     deserializationFunction: ContentDeserializationFunction);
 
             // then
@@ -58,7 +58,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             TaskCanceledException actualCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.factoryClient.GetContentAsync<TEntity>(
-                        relativeUrl,
+                        relativeUrl: relativeUrl,
                         cancellationToken: taskCancelInvoked,
                         deserializationFunction: ContentDeserializationFunction));
 
@@ -80,7 +80,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
             // when
             string actualContent =
-                await this.factoryClient.GetContentStringAsync(relativeUrl);
+                await this.factoryClient.GetContentStringAsync(
+                    relativeUrl: relativeUrl);
 
             // then
             actualContent.Should().BeEquivalentTo(someContent);
@@ -90,22 +91,24 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         private async Task ShouldReturnStreamOnGetContentStreamAsync()
         {
             // given
-            string someContent = CreateRandomContent();
+            string expectedContent = CreateRandomContent();
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                    .WithBody(someContent));
+                    .WithBody(expectedContent));
 
             // when
             Stream expectedContentStream =
-                await this.factoryClient.GetContentStreamAsync(relativeUrl);
+                await this.factoryClient.GetContentStreamAsync(
+                    relativeUrl: relativeUrl);
 
-            var actualReadStream = await ReadStreamToEndAsync(expectedContentStream);
+            var actualReadStream = await ReadStreamToEndAsync(
+                expectedContentStream);
 
             // then
-            actualReadStream.Should().BeEquivalentTo(someContent);
+            actualReadStream.Should().BeEquivalentTo(expectedContent);
         }
     }
 }

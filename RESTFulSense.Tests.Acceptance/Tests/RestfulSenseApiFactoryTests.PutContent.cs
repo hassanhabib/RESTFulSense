@@ -36,12 +36,12 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             TEntity actualTEntity =
                 await this.factoryClient.PutContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     content: randomTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
-                    SerializationContentFunction<TEntity>,
-                    ContentDeserializationFunction);
+                    serializationFunction: SerializationContentFunction<TEntity>,
+                    deserializationFunction: ContentDeserializationFunction);
 
             // then
             actualTEntity.Should().BeEquivalentTo(expectedTEntity);
@@ -67,7 +67,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             TaskCanceledException actualCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.factoryClient.PutContentAsync<TEntity>(
-                        relativeUrl,
+                        relativeUrl: relativeUrl,
                         content: randomTEntity,
                         cancellationToken: taskCancelInvoked,
                         mediaType: mediaType,
@@ -85,6 +85,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             TEntity expectedTEntity = randomTEntity;
+            string expectedBody = JsonSerializer.Serialize(randomTEntity);
             string mediaType = "text/json";
             bool ignoreDefaultValues = false;
 
@@ -96,13 +97,12 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             Response.Create()
                                 .WithStatusCode(200)
                                 .WithHeader("Content-Type", mediaType)
-                                .WithBody(
-                                    JsonConvert.SerializeObject(randomTEntity)));
+                                .WithBody(expectedBody));
 
             // when
             TEntity actualTEntity =
                 await this.factoryClient.PutContentAsync<TEntity, TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     content: randomTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
@@ -119,6 +119,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             TEntity expectedTEntity = randomTEntity;
+            string expectedBody = JsonSerializer.Serialize(randomTEntity);
 
             CancellationToken cancellationToken =
                 new CancellationToken(canceled: false);
@@ -134,13 +135,12 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             Response.Create()
                                 .WithStatusCode(200)
                                 .WithHeader("Content-Type", mediaType)
-                                .WithBody(
-                                    JsonConvert.SerializeObject(randomTEntity)));
+                                .WithBody(expectedBody));
 
             // when
             TEntity actualTEntity =
                 await this.factoryClient.PutContentAsync<TEntity, TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     content: randomTEntity,
                     cancellationToken: cancellationToken,
                     mediaType: mediaType,
@@ -158,6 +158,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             TEntity expectedTEntity = randomTEntity;
+            string expectedBody = JsonSerializer.Serialize(randomTEntity);
 
             this.wiremockServer.Given(
                 Request.Create()
@@ -166,12 +167,12 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .RespondWith(
                             Response.Create()
                                 .WithStatusCode(200)
-                                .WithBody(JsonConvert.SerializeObject(randomTEntity)));
+                                .WithBody(expectedBody));
 
             // when
             TEntity actualTEntity =
                 await this.factoryClient.PutContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     deserializationFunction: ContentDeserializationFunction);
 
             // then
@@ -184,6 +185,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             TEntity expectedTEntity = randomTEntity;
+            string expectedBody = JsonSerializer.Serialize(randomTEntity);
             var cancellationToken = new CancellationToken(canceled: false);
 
             this.wiremockServer.Given(
@@ -193,12 +195,12 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .RespondWith(
                             Response.Create()
                                 .WithStatusCode(200)
-                                .WithBody(JsonConvert.SerializeObject(randomTEntity)));
+                                .WithBody(expectedBody));
 
             // when
             TEntity actualTEntity =
                 await this.factoryClient.PutContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     cancellationToken: cancellationToken,
                     deserializationFunction: ContentDeserializationFunction);
 

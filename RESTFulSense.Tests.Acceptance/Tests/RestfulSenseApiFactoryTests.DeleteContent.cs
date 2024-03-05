@@ -14,7 +14,6 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 {
     public partial class RestfulSenseApiFactoryTests
     {
-
         [Fact]
         private async Task ShouldDeleteContentAsync()
         {
@@ -27,7 +26,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithStatusCode(200));
 
             // when . then
-            await this.factoryClient.DeleteContentAsync(relativeUrl);
+            await this.factoryClient.DeleteContentAsync(
+                relativeUrl: relativeUrl);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
             // when . then
             await this.factoryClient.DeleteContentAsync(
-                relativeUrl,
+                relativeUrl: relativeUrl,
                 cancellationToken: cancellationToken);
         }
 
@@ -67,7 +67,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             TEntity actualDeletedTEntity =
                 await this.factoryClient.DeleteContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     deserializationFunction: ContentDeserializationFunction);
 
             // then
@@ -93,7 +93,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             TEntity actualDeletedTEntity =
                 await this.factoryClient.DeleteContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     cancellationToken: cancellationToken);
 
             // then

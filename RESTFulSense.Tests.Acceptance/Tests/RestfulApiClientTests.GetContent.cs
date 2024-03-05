@@ -33,7 +33,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             TEntity actualTEntityEntity =
                 await this.restfulApiClient.GetContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     deserializationFunction: DeserializationContentFunction);
 
             // then
@@ -58,7 +58,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             TaskCanceledException actualCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.restfulApiClient.GetContentAsync<TEntity>(
-                        relativeUrl,
+                        relativeUrl: relativeUrl,
                         cancellationToken: taskCancelInvoked,
                         deserializationFunction: DeserializationContentFunction));
 
@@ -90,22 +90,24 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         private async Task ShouldReturnStreamOnGetContentStreamAsync()
         {
             // given
-            string someContent = CreateRandomContent();
+            string expectedContent = CreateRandomContent();
 
             this.wiremockServer.Given(Request.Create()
                 .WithPath(relativeUrl)
                 .UsingGet())
                     .RespondWith(Response.Create()
-                    .WithBody(someContent));
+                    .WithBody(expectedContent));
 
             // when
             Stream expectedContentStream =
-                await this.restfulApiClient.GetContentStreamAsync(relativeUrl);
+                await this.restfulApiClient.GetContentStreamAsync(
+                    relativeUrl: relativeUrl);
 
-            string actualReadStream = await ReadStreamToEndAsync(expectedContentStream);
+            string actualReadStream =
+                await ReadStreamToEndAsync(expectedContentStream);
 
             // then
-            actualReadStream.Should().BeEquivalentTo(someContent);
+            actualReadStream.Should().BeEquivalentTo(expectedContent);
         }
     }
 }

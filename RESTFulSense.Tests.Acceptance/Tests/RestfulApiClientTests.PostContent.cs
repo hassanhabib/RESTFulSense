@@ -23,7 +23,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
-            TEntity expectedTEntity = randomTEntity;
+            TEntity inputTEntity = randomTEntity;
             string mediaType = "application/json";
             bool ignoreDefaultValues = false;
 
@@ -36,8 +36,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             Action actualResponseResult = async () =>
                 await this.restfulApiClient.PostContentWithNoResponseAsync<TEntity>(
-                    relativeUrl,
-                    content: expectedTEntity,
+                    relativeUrl: relativeUrl,
+                    content: inputTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
                     serializationFunction: SerializationContentFunction);
@@ -51,6 +51,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            TEntity returnedTEntity = randomTEntity;
             var expectedPostContentCanceledException = new TaskCanceledException();
 
             this.wiremockServer.Given(Request.Create()
@@ -58,7 +59,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                .UsingPost())
                    .RespondWith(Response.Create()
                        .WithHeader("Content-Type", "application/json")
-                       .WithBodyAsJson(randomTEntity));
+                       .WithBodyAsJson(returnedTEntity));
 
             // when
             var taskCanceledToken = new CancellationToken(canceled: true);
@@ -66,7 +67,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             TaskCanceledException actualPostContentCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.restfulApiClient.PostContentWithNoResponseAsync<TEntity>(
-                        relativeUrl,
+                        relativeUrl: relativeUrl,
                         content: randomTEntity,
                         cancellationToken: taskCanceledToken,
                         mediaType: "application/json",
@@ -85,7 +86,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
-            TEntity expectedTEntity = randomTEntity;
+            TEntity returnedTEntity = randomTEntity;
             string mediaType = "application/json";
             bool ignoreDefaultValues = false;
 
@@ -94,20 +95,20 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                 .UsingPost())
                     .RespondWith(Response.Create()
                         .WithStatusCode(200)
-                        .WithBodyAsJson(expectedTEntity));
+                        .WithBodyAsJson(returnedTEntity));
 
             // when
             TEntity actualTEntity =
                 await this.restfulApiClient.PostContentAsync<TEntity>(
-                    relativeUrl,
-                    content: expectedTEntity,
+                    relativeUrl: relativeUrl,
+                    content: returnedTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
                     serializationFunction: SerializationContentFunction,
                     deserializationFunction: DeserializationContentFunction);
 
             // then
-            actualTEntity.Should().BeEquivalentTo(expectedTEntity);
+            actualTEntity.Should().BeEquivalentTo(returnedTEntity);
         }
 
         [Fact]
@@ -115,6 +116,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();
+            TEntity returnedTEntity = randomTEntity;
             string mediaType = "application/json";
             bool ignoreDefaultValues = false;
 
@@ -127,7 +129,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                .UsingPost())
                    .RespondWith(Response.Create()
                        .WithHeader("Content-Type", mediaType)
-                       .WithBodyAsJson(randomTEntity));
+                       .WithBodyAsJson(returnedTEntity));
 
             // when
             var taskCanceledToken = new CancellationToken(canceled: true);
@@ -135,7 +137,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             TaskCanceledException actualCanceledTaskResult =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
                     await this.restfulApiClient.PostContentAsync<TEntity>(
-                        relativeUrl,
+                        relativeUrl: relativeUrl,
                         content: randomTEntity,
                         cancellationToken: taskCanceledToken,
                         mediaType: mediaType,
@@ -168,7 +170,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             Stream actualContent =
                 await this.restfulApiClient.PostContentWithStreamResponseAsync(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     content: randomContent,
                     cancellationToken: cancellationToken,
                     mediaType: mediaType,
@@ -187,6 +189,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             TEntity expectedTEntity = randomTEntity;
+            string expectedBody = JsonConvert.SerializeObject(randomTEntity);
             string mediaType = "text/json";
             bool ignoreDefaultValues = false;
 
@@ -198,17 +201,17 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             Response.Create()
                                 .WithStatusCode(200)
                                 .WithHeader("Content-Type", mediaType)
-                                .WithBody(JsonConvert.SerializeObject(randomTEntity)));
+                                .WithBody(expectedBody));
 
             // when
             TEntity actualTEntity =
                 await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     content: randomTEntity,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
-                    SerializationContentFunction,
-                    DeserializationContentFunction);
+                    serializationFunction: SerializationContentFunction,
+                    deserializationFunction: DeserializationContentFunction);
 
             // then
             actualTEntity.Should().BeEquivalentTo(expectedTEntity);
@@ -220,6 +223,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // given
             TEntity randomTEntity = GetRandomTEntity();
             TEntity expectedTEntity = randomTEntity;
+            string expectedBody = JsonConvert.SerializeObject(randomTEntity);
             var cancellationToken = new CancellationToken();
             string mediaType = "text/json";
             bool ignoreDefaultValues = false;
@@ -232,18 +236,18 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             Response.Create()
                                 .WithStatusCode(200)
                                 .WithHeader("Content-Type", mediaType)
-                                .WithBody(JsonConvert.SerializeObject(randomTEntity)));
+                                .WithBody(expectedBody));
 
             // when
             TEntity actualTEntity =
                 await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     content: randomTEntity,
                     cancellationToken: cancellationToken,
                     mediaType: mediaType,
                     ignoreDefaultValues: ignoreDefaultValues,
-                    SerializationContentFunction,
-                    DeserializationContentFunction);
+                    serializationFunction: SerializationContentFunction,
+                    deserializationFunction: DeserializationContentFunction);
 
             // then
             actualTEntity.Should().BeEquivalentTo(expectedTEntity);
@@ -257,6 +261,9 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             TEntity expectedTEntity = randomTEntity;
             var cancellationToken = new CancellationToken();
 
+            string expectedBody =
+                JsonConvert.SerializeObject(randomTEntity);
+
             this.wiremockServer.Given(
                 Request.Create()
                     .WithPath(relativeUrl)
@@ -264,12 +271,12 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                         .RespondWith(
                             Response.Create()
                                 .WithStatusCode(200)
-                                .WithBody(JsonConvert.SerializeObject(randomTEntity)));
+                                .WithBody(expectedBody));
 
             // when
             TEntity actualTEntity =
                 await this.restfulApiClient.PostFormAsync(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     content: randomTEntity,
                     cancellationToken: cancellationToken,
                     deserializationFunction: DeserializationContentFunction);

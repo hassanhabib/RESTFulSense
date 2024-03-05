@@ -27,7 +27,8 @@ namespace RESTFulSense.Tests.Acceptance.Tests
                             .WithStatusCode(200));
 
             // when . then
-            await this.restfulApiClient.DeleteContentAsync(relativeUrl);
+            await this.restfulApiClient.DeleteContentAsync(
+                relativeUrl: relativeUrl);
         }
 
         [Fact]
@@ -45,7 +46,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
 
             // when . then
             await this.restfulApiClient.DeleteContentAsync(
-                relativeUrl,
+                relativeUrl: relativeUrl,
                 cancellationToken: cancellationToken);
         }
 
@@ -67,7 +68,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             TEntity actualDeletedTEntity =
                 await this.restfulApiClient.DeleteContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     deserializationFunction: DeserializationContentFunction);
 
             // then
@@ -93,7 +94,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
             // when
             TEntity actualDeletedTEntity =
                 await this.restfulApiClient.DeleteContentAsync<TEntity>(
-                    relativeUrl,
+                    relativeUrl: relativeUrl,
                     cancellationToken: cancellationToken);
 
             // then
