@@ -27,6 +27,7 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="RESTFulSense.Tests" />
+		<InternalsVisibleTo Include="RESTFulSense.Tests.Acceptance" />
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
 	</ItemGroup>
 

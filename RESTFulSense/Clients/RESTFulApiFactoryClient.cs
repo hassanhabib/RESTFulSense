@@ -26,21 +26,24 @@ namespace RESTFulSense.Clients
 
         public RESTFulApiFactoryClient(HttpClient httpClient)
         {
-            this.httpClient = httpClient;             
+            this.httpClient = httpClient;
             IServiceProvider serviceProvider = RegisterFormServices();
 
             this.formCoordinationService =
                 serviceProvider.GetRequiredService<IFormCoordinationService>();
         }
 
-        public async ValueTask<T> GetContentAsync<T>(string relativeUrl, Func<string, ValueTask<T>> deserializationFunction = null)
+        public async ValueTask<T> GetContentAsync<T>(
+            string relativeUrl,
+            Func<string, ValueTask<T>> deserializationFunction = null)
         {
             HttpResponseMessage responseMessage =
                 await this.httpClient.GetAsync(relativeUrl);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<T>(
+                responseMessage, deserializationFunction);
         }
 
         public async ValueTask<T> GetContentAsync<T>(
@@ -53,7 +56,8 @@ namespace RESTFulSense.Clients
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<T>(
+                responseMessage, deserializationFunction);
         }
 
         public async ValueTask<string> GetContentStringAsync(string relativeUrl) =>
@@ -69,7 +73,12 @@ namespace RESTFulSense.Clients
             bool ignoreDefaultValues = false,
             Func<T, ValueTask<string>> serializationFunction = null)
         {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
 
             HttpResponseMessage responseMessage =
                 await this.httpClient.PostAsync(relativeUrl, contentString);
@@ -85,10 +94,18 @@ namespace RESTFulSense.Clients
             bool ignoreDefaultValues = false,
             Func<T, ValueTask<string>> serializationFunction = null)
         {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
 
             HttpResponseMessage responseMessage =
-                await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+                await this.httpClient.PostAsync(
+                    relativeUrl, 
+                    contentString, 
+                    cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
@@ -99,8 +116,16 @@ namespace RESTFulSense.Clients
             string mediaType = "text/json",
             bool ignoreDefaultValues = false,
             Func<T, ValueTask<string>> serializationFunction = null,
-            Func<string, ValueTask<T>> deserializationFunction = null) =>
-            PostContentAsync<T, T>(relativeUrl, content, mediaType, ignoreDefaultValues, serializationFunction, deserializationFunction);
+            Func<string, ValueTask<T>> deserializationFunction = null)
+        {
+            return PostContentAsync<T, T>(
+                relativeUrl,
+                content,
+                mediaType,
+                ignoreDefaultValues,
+                serializationFunction,
+                deserializationFunction);
+        }
 
         public ValueTask<T> PostContentAsync<T>(
             string relativeUrl,
@@ -109,8 +134,17 @@ namespace RESTFulSense.Clients
             string mediaType = "text/json",
             bool ignoreDefaultValues = false,
             Func<T, ValueTask<string>> serializationFunction = null,
-            Func<string, ValueTask<T>> deserializationFunction = null) =>
-            PostContentAsync<T, T>(relativeUrl, content, cancellationToken, mediaType, ignoreDefaultValues, serializationFunction, deserializationFunction);
+            Func<string, ValueTask<T>> deserializationFunction = null)
+        {
+            return PostContentAsync<T, T>(
+                relativeUrl,
+                content,
+                cancellationToken,
+                mediaType,
+                ignoreDefaultValues,
+                serializationFunction,
+                deserializationFunction);
+        }
 
         public async ValueTask<Stream> PostContentWithStreamResponseAsync<T>(
             string relativeUrl,
@@ -120,9 +154,18 @@ namespace RESTFulSense.Clients
             bool ignoreDefaultValues = false,
             Func<T, ValueTask<string>> serializationFunction = null)
         {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
 
-            HttpResponseMessage responseMessage = await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+            HttpResponseMessage responseMessage =
+                await this.httpClient.PostAsync(
+                    relativeUrl, 
+                    contentString, 
+                    cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
@@ -137,14 +180,20 @@ namespace RESTFulSense.Clients
             Func<TContent, ValueTask<string>> serializationFunction = null,
             Func<string, ValueTask<TResult>> deserializationFunction = null)
         {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<TResult>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<TResult>(
+                responseMessage, deserializationFunction);
         }
 
         public async ValueTask<TResult> PostContentAsync<TContent, TResult>(
@@ -156,14 +205,49 @@ namespace RESTFulSense.Clients
             Func<TContent, ValueTask<string>> serializationFunction = null,
             Func<string, ValueTask<TResult>> deserializationFunction = null)
         {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
 
             HttpResponseMessage responseMessage =
-               await this.httpClient.PostAsync(relativeUrl, contentString, cancellationToken);
+               await this.httpClient.PostAsync(
+                   relativeUrl, 
+                   contentString, 
+                   cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<TResult>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<TResult>(
+                responseMessage, 
+                deserializationFunction);
+        }
+
+        public async ValueTask<T> PutContentAsync<T>(
+            string relativeUrl,
+            T content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<T, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<T>> deserializationFunction = null)
+        {
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PutAsync(relativeUrl, contentString);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(
+                responseMessage, 
+                deserializationFunction);
         }
 
         public async ValueTask<TResult> PostFormAsync<TContent, TResult>(
@@ -179,11 +263,16 @@ namespace RESTFulSense.Clients
                     this.formCoordinationService.ConvertToMultipartFormDataContent(content);
 
                 HttpResponseMessage responseMessage =
-                   await this.httpClient.PostAsync(relativeUrl, multipartFormDataContent, cancellationToken);
+                   await this.httpClient.PostAsync(
+                       relativeUrl, 
+                       multipartFormDataContent, 
+                       cancellationToken);
 
                 await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-                return await DeserializeResponseContent<TResult>(responseMessage, deserializationFunction);
+                return await DeserializeResponseContent<TResult>(
+                    responseMessage, 
+                    deserializationFunction);
             }
             catch (FormCoordinationValidationException formCoordinationValidationException)
             {
@@ -205,85 +294,98 @@ namespace RESTFulSense.Clients
         public async ValueTask<T> PutContentAsync<T>(
             string relativeUrl,
             T content,
+            CancellationToken cancellationToken,
             string mediaType = "text/json",
             bool ignoreDefaultValues = false,
             Func<T, ValueTask<string>> serializationFunction = null,
             Func<string, ValueTask<T>> deserializationFunction = null)
         {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PutAsync(
+                   relativeUrl, 
+                   contentString, 
+                   cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(
+                responseMessage, 
+                deserializationFunction);
+        }
+
+        public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
+            string relativeUrl,
+            TContent content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<TContent, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<TResult>> deserializationFunction = null)
+        {
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(relativeUrl, contentString);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<TResult>(
+                responseMessage, 
+                deserializationFunction);
+        }
+
+        public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
+            string relativeUrl,
+            TContent content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<TContent, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<TResult>> deserializationFunction = null)
+        {
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content, 
+                    mediaType, 
+                    ignoreDefaultValues, 
+                    serializationFunction);
+
+            HttpResponseMessage responseMessage =
+               await this.httpClient.PutAsync(
+                   relativeUrl, 
+                   contentString, 
+                   cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<TResult>(
+                responseMessage, 
+                deserializationFunction);
         }
 
         public async ValueTask<T> PutContentAsync<T>(
             string relativeUrl,
-            T content,
-            CancellationToken cancellationToken,
-            string mediaType = "text/json",
-            bool ignoreDefaultValues = false,
-            Func<T, ValueTask<string>> serializationFunction = null,
             Func<string, ValueTask<T>> deserializationFunction = null)
-        {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
-
-            HttpResponseMessage responseMessage =
-               await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
-
-            await ValidationService.ValidateHttpResponseAsync(responseMessage);
-
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
-        }
-
-        public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
-            string relativeUrl,
-            TContent content,
-            string mediaType = "text/json",
-            bool ignoreDefaultValues = false,
-            Func<TContent, ValueTask<string>> serializationFunction = null,
-            Func<string, ValueTask<TResult>> deserializationFunction = null)
-        {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
-
-            HttpResponseMessage responseMessage =
-               await this.httpClient.PutAsync(relativeUrl, contentString);
-
-            await ValidationService.ValidateHttpResponseAsync(responseMessage);
-
-            return await DeserializeResponseContent<TResult>(responseMessage, deserializationFunction);
-        }
-
-        public async ValueTask<TResult> PutContentAsync<TContent, TResult>(
-            string relativeUrl,
-            TContent content,
-            CancellationToken cancellationToken,
-            string mediaType = "text/json",
-            bool ignoreDefaultValues = false,
-            Func<TContent, ValueTask<string>> serializationFunction = null,
-            Func<string, ValueTask<TResult>> deserializationFunction = null)
-        {
-            HttpContent contentString = await ConvertToHttpContent(content, mediaType, ignoreDefaultValues, serializationFunction);
-
-            HttpResponseMessage responseMessage =
-               await this.httpClient.PutAsync(relativeUrl, contentString, cancellationToken);
-
-            await ValidationService.ValidateHttpResponseAsync(responseMessage);
-
-            return await DeserializeResponseContent<TResult>(responseMessage, deserializationFunction);
-        }
-
-        public async ValueTask<T> PutContentAsync<T>(string relativeUrl, Func<string, ValueTask<T>> deserializationFunction = null)
         {
             HttpResponseMessage responseMessage =
                 await this.httpClient.PutAsync(relativeUrl, content: default);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<T>(
+                responseMessage, 
+                deserializationFunction);
         }
 
         public async ValueTask<T> PutContentAsync<T>(
@@ -292,11 +394,17 @@ namespace RESTFulSense.Clients
             Func<string, ValueTask<T>> deserializationFunction = null)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.PutAsync(relativeUrl, content: default, cancellationToken);
+                await this.httpClient.PutAsync(
+                    relativeUrl, 
+                    content: default, 
+                    cancellationToken);
 
-            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(
+                responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<T>(
+                responseMessage, 
+                deserializationFunction);
         }
 
         public async ValueTask DeleteContentAsync(string relativeUrl)
@@ -307,22 +415,31 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
-        public async ValueTask DeleteContentAsync(string relativeUrl, CancellationToken cancellationToken)
+        public async ValueTask DeleteContentAsync(
+            string relativeUrl, 
+            CancellationToken cancellationToken)
         {
             HttpResponseMessage responseMessage =
-                await this.httpClient.DeleteAsync(relativeUrl, cancellationToken);
+                await this.httpClient.DeleteAsync(
+                    relativeUrl, 
+                    cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
         }
 
-        public async ValueTask<T> DeleteContentAsync<T>(string relativeUrl, Func<string, ValueTask<T>> deserializationFunction = null)
+        public async ValueTask<T> DeleteContentAsync<T>(
+            string relativeUrl,
+            Func<string, ValueTask<T>> deserializationFunction = null)
         {
             HttpResponseMessage responseMessage = await
                 this.httpClient.DeleteAsync(relativeUrl);
 
-            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+            await ValidationService.ValidateHttpResponseAsync(
+                responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<T>(
+                responseMessage, 
+                deserializationFunction);
         }
 
         public async ValueTask<T> DeleteContentAsync<T>(
@@ -335,14 +452,17 @@ namespace RESTFulSense.Clients
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
-            return await DeserializeResponseContent<T>(responseMessage, deserializationFunction);
+            return await DeserializeResponseContent<T>(
+                responseMessage, 
+                deserializationFunction);
         }
 
         private static async ValueTask<T> DeserializeResponseContent<T>(
             HttpResponseMessage responseMessage,
             Func<string, ValueTask<T>> deserializationFunction = null)
         {
-            string responseString = await responseMessage.Content.ReadAsStringAsync();
+            string responseString = 
+                await responseMessage.Content.ReadAsStringAsync();
 
             return deserializationFunction == null
                 ? JsonConvert.DeserializeObject<T>(responseString)

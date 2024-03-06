@@ -23,9 +23,14 @@ namespace RESTFulSense.Clients
         {
             return mediaType switch
             {
-                "text/json" => await ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
-                "application/json" => await ConvertToJsonStringContent(content, mediaType, ignoreDefaultValues, serializationFunction),
+                "text/json" => await ConvertToJsonStringContent(
+                    content, mediaType, ignoreDefaultValues, serializationFunction),
+
+                "application/json" => await ConvertToJsonStringContent(
+                    content, mediaType, ignoreDefaultValues, serializationFunction),
+
                 "text/plain" => ConvertToStringContent(content, mediaType),
+                
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
             };
@@ -35,7 +40,7 @@ namespace RESTFulSense.Clients
         {
             return new StringContent(
                 content: content.ToString(),
-                encoding: Encoding.UTF8,
+                encoding: Encoding.UTF8, 
                 mediaType);
         }
 

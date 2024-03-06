@@ -13,13 +13,18 @@ namespace RESTFulSense.Clients
 {
     public interface IRESTFulApiClient
     {
-        ValueTask<T> GetContentAsync<T>(string relativeUrl, Func<string, ValueTask<T>> deserializationFunction = null);
+        ValueTask<T> GetContentAsync<T>(
+            string relativeUrl,
+            Func<string,
+            ValueTask<T>> deserializationFunction = null);
+
         ValueTask<T> GetContentAsync<T>(
             string relativeUrl,
             CancellationToken cancellationToken,
-            Func<string, ValueTask<T>> deserializationFunction = null);
+            Func<string,ValueTask<T>> deserializationFunction = null);
 
         ValueTask<string> GetContentStringAsync(string relativeUrl);
+
         ValueTask<Stream> GetContentStreamAsync(string relativeUrl);
 
         ValueTask PostContentWithNoResponseAsync<T>(
@@ -111,15 +116,24 @@ namespace RESTFulSense.Clients
             Func<TContent, ValueTask<string>> serializationFunction = null,
             Func<string, ValueTask<TResult>> deserializationFunction = null);
 
-        ValueTask<T> PutContentAsync<T>(string relativeUrl, Func<string, ValueTask<T>> deserializationFunction = null);
+        ValueTask<T> PutContentAsync<T>(
+            string relativeUrl,
+            Func<string, ValueTask<T>> deserializationFunction = null);
+
         ValueTask<T> PutContentAsync<T>(
             string relativeUrl,
             CancellationToken cancellationToken,
             Func<string, ValueTask<T>> deserializationFunction = null);
 
         ValueTask DeleteContentAsync(string relativeUrl);
-        ValueTask DeleteContentAsync(string relativeUrl, CancellationToken cancellationToken);
-        ValueTask<T> DeleteContentAsync<T>(string relativeUrl, Func<string, ValueTask<T>> deserializationFunction = null);
+        
+        ValueTask DeleteContentAsync(
+            string relativeUrl,
+            CancellationToken cancellationToken);
+
+        ValueTask<T> DeleteContentAsync<T>(
+            string relativeUrl,
+            Func<string, ValueTask<T>> deserializationFunction = null);
 
         ValueTask<T> DeleteContentAsync<T>(
             string relativeUrl,

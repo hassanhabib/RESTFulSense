@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTFulSense.Tests", "RESTF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F9C31E1-CCFA-496D-8544-087FCDFF27AE}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		readme.md = readme.md
 	EndProjectSection
 EndProject
@@ -17,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTFulSense.WebAssembly", "RESTFulSense.WebAssembly\RESTFulSense.WebAssembly.csproj", "{E04E2D1C-4F98-4D1A-AE74-D17EE52D83A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTFulSense.WebAssembly.Tests", "RESTFulSense.WebAssembly.Tests\RESTFulSense.WebAssembly.Tests.csproj", "{6482315F-2B76-4DFA-8D93-0EB969F6D9DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTFulSense.Tests.Acceptance", "RESTFulSense.Tests.Acceptance\RESTFulSense.Tests.Acceptance.csproj", "{90C7D1B5-7018-4FC4-A587-F546370D4411}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +47,10 @@ Global
 		{6482315F-2B76-4DFA-8D93-0EB969F6D9DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6482315F-2B76-4DFA-8D93-0EB969F6D9DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6482315F-2B76-4DFA-8D93-0EB969F6D9DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90C7D1B5-7018-4FC4-A587-F546370D4411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90C7D1B5-7018-4FC4-A587-F546370D4411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90C7D1B5-7018-4FC4-A587-F546370D4411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90C7D1B5-7018-4FC4-A587-F546370D4411}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
