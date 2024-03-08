@@ -91,6 +91,15 @@ namespace RESTFulSense.WebAssembly.Clients
             Func<T, ValueTask<string>> serializationFunction = null,
             Func<string, ValueTask<T>> deserializationFunction = null);
 
+        ValueTask<T> PutContentAsync<T>(
+            string relativeUrl,
+            T content,
+            CancellationToken cancellationToken,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<T, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<T>> deserializationFunction = null);
+
         ValueTask<TResult> PutContentAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
