@@ -34,7 +34,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             Action actualResponseResult = async () =>
-                await this.restfulApiClient.PostContentWithNoResponseAsync<TEntity>(
+                await this.restfulWebAssemblyApiClient.PostContentWithNoResponseAsync<TEntity>(
                     relativeUrl: relativeUrl,
                     content: inputTEntity,
                     mediaType: mediaType,
@@ -65,7 +65,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             TaskCanceledException actualPostContentCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                    await this.restfulApiClient.PostContentWithNoResponseAsync<TEntity>(
+                    await this.restfulWebAssemblyApiClient.PostContentWithNoResponseAsync<TEntity>(
                         relativeUrl: relativeUrl,
                         content: randomTEntity,
                         cancellationToken: taskCanceledToken,
@@ -98,7 +98,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             TEntity actualTEntity =
-                await this.restfulApiClient.PostContentAsync<TEntity>(
+                await this.restfulWebAssemblyApiClient.PostContentAsync<TEntity>(
                     relativeUrl: relativeUrl,
                     content: returnedTEntity,
                     mediaType: mediaType,
@@ -135,7 +135,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             TaskCanceledException actualCanceledTaskResult =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                    await this.restfulApiClient.PostContentAsync<TEntity>(
+                    await this.restfulWebAssemblyApiClient.PostContentAsync<TEntity>(
                         relativeUrl: relativeUrl,
                         content: randomTEntity,
                         cancellationToken: taskCanceledToken,
@@ -168,7 +168,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             Stream actualContent =
-                await this.restfulApiClient.PostContentWithStreamResponseAsync(
+                await this.restfulWebAssemblyApiClient.PostContentWithStreamResponseAsync(
                     relativeUrl: relativeUrl,
                     content: randomContent,
                     cancellationToken: cancellationToken,
@@ -204,7 +204,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             TEntity actualTEntity =
-                await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
+                await this.restfulWebAssemblyApiClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl: relativeUrl,
                     content: randomTEntity,
                     mediaType: mediaType,
@@ -239,7 +239,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             TEntity actualTEntity =
-                await this.restfulApiClient.PostContentAsync<TEntity, TEntity>(
+                await this.restfulWebAssemblyApiClient.PostContentAsync<TEntity, TEntity>(
                     relativeUrl: relativeUrl,
                     content: randomTEntity,
                     cancellationToken: cancellationToken,

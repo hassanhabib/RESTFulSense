@@ -17,14 +17,14 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
     {
         private readonly WireMockServer wiremockServer;
         private const string relativeUrl = "/tests";
-        private readonly RESTFulApiClient restfulApiClient;
+        private readonly RESTFulApiClient restfulWebAssemblyApiClient;
 
         public RestfulSenseWebAssemblyApiClient()
         {
             this.wiremockServer = WireMockServer.Start();
-            this.restfulApiClient = new RESTFulApiClient();
+            this.restfulWebAssemblyApiClient = new RESTFulApiClient();
 
-            this.restfulApiClient.BaseAddress = new Uri(
+            this.restfulWebAssemblyApiClient.BaseAddress = new Uri(
                 this.wiremockServer.Urls[0]);
         }
 

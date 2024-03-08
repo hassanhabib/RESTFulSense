@@ -31,7 +31,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             TEntity actualTEntityEntity =
-                await this.restfulApiClient.GetContentAsync<TEntity>(
+                await this.restfulWebAssemblyApiClient.GetContentAsync<TEntity>(
                     relativeUrl: relativeUrl,
                     deserializationFunction: DeserializationContentFunction);
 
@@ -56,7 +56,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
             // when
             TaskCanceledException actualCanceledTask =
                 await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                    await this.restfulApiClient.GetContentAsync<TEntity>(
+                    await this.restfulWebAssemblyApiClient.GetContentAsync<TEntity>(
                         relativeUrl: relativeUrl,
                         cancellationToken: taskCancelInvoked,
                         deserializationFunction: DeserializationContentFunction));
@@ -79,7 +79,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             string actualContent =
-                await this.restfulApiClient.GetContentStringAsync(relativeUrl);
+                await this.restfulWebAssemblyApiClient.GetContentStringAsync(relativeUrl);
 
             // then
             actualContent.Should().BeEquivalentTo(someContent);
@@ -99,7 +99,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 
             // when
             Stream expectedContentStream =
-                await this.restfulApiClient.GetContentStreamAsync(
+                await this.restfulWebAssemblyApiClient.GetContentStreamAsync(
                     relativeUrl: relativeUrl);
 
             string actualReadStream =
