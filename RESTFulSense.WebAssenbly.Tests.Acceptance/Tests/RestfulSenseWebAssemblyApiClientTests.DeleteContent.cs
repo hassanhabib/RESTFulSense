@@ -12,7 +12,7 @@ using Xunit;
 
 namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 {
-    public partial class RestfulSenseWebAssemblyApiClient
+    public partial class RestfulSenseWebAssemblyApiClientTests
     {
         [Fact]
         private async Task ShouldDeleteContentAsync()

@@ -13,13 +13,13 @@ using WireMock.Server;
 
 namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 {
-    public partial class RestfulSenseWebAssemblyApiClient
+    public partial class RestfulSenseWebAssemblyApiClientTests
     {
         private readonly WireMockServer wiremockServer;
         private const string relativeUrl = "/tests";
         private readonly RESTFulApiClient restfulWebAssemblyApiClient;
 
-        public RestfulSenseWebAssemblyApiClient()
+        public RestfulSenseWebAssemblyApiClientTests()
         {
             this.wiremockServer = WireMockServer.Start();
             this.restfulWebAssemblyApiClient = new RESTFulApiClient();
