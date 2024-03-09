@@ -14,7 +14,7 @@ using WireMock.Server;
 
 namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 {
-    public partial class RestfulSenseWebAssemblyFactoryApiClientTests
+    public partial class RestfulSenseWebAssemblyFactoryApiClientTests : IDisposable
     {
         private readonly IRESTFulApiFactoryClient webAssemblyApiFactoryClient;
         private readonly HttpClient httpClient;

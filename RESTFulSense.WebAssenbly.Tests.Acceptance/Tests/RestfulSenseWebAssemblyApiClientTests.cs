@@ -13,7 +13,7 @@ using WireMock.Server;
 
 namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
 {
-    public partial class RestfulSenseWebAssemblyApiClientTests
+    public partial class RestfulSenseWebAssemblyApiClientTests : IDisposable
     {
         private readonly WireMockServer wiremockServer;
         private const string relativeUrl = "/tests";
@@ -79,6 +79,5 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
         }
 
         public void Dispose() => this.wiremockServer.Stop();
-
     }
 }
