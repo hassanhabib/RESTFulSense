@@ -442,13 +442,5 @@ namespace RESTFulSense.Clients
                 ? JsonConvert.DeserializeObject<T>(responseString)
                 : await deserializationFunction(responseString);
         }
-
-        private async static ValueTask<byte[]> ValidateAndReturnInvalidResponse(
-            HttpResponseMessage httpResponseMessage)
-        {
-            await ValidationService.ValidateHttpResponseAsync(httpResponseMessage);
-
-            return null;
-        }
     }
 }
