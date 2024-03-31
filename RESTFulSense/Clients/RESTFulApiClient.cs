@@ -67,9 +67,12 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                 await GetAsync(relativeUrl);
 
-            return responseMessage.IsSuccessStatusCode
-                ? await responseMessage.Content.ReadAsByteArrayAsync()
-                : await ValidateAndReturnInvalidResponse(responseMessage);
+            if (responseMessage.IsSuccessStatusCode is false)
+            {
+                await ValidationService.ValidateHttpResponseAsync(responseMessage);
+            }
+
+            return await responseMessage.Content.ReadAsByteArrayAsync();
         }
 
         public async ValueTask PostContentWithNoResponseAsync<T>(

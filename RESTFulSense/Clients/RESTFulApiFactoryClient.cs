@@ -71,9 +71,12 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage =
                 await this.httpClient.GetAsync(relativeUrl);
 
-            return responseMessage.IsSuccessStatusCode
-                ? await responseMessage.Content.ReadAsByteArrayAsync()
-                : await ValidateAndReturnInvalidResponse(responseMessage);
+            if (responseMessage.IsSuccessStatusCode is false)
+            {
+                await ValidationService.ValidateHttpResponseAsync(responseMessage);
+            }
+
+            return await responseMessage.Content.ReadAsByteArrayAsync();
         }
 
         public async ValueTask PostContentWithNoResponseAsync<T>(
@@ -477,14 +480,6 @@ namespace RESTFulSense.Clients
             return deserializationFunction == null
                 ? JsonConvert.DeserializeObject<T>(responseString)
                 : await deserializationFunction(responseString);
-        }
-
-        private async static ValueTask<byte[]> ValidateAndReturnInvalidResponse(
-            HttpResponseMessage httpResponseMessage)
-        {
-            await ValidationService.ValidateHttpResponseAsync(httpResponseMessage);
-
-            return null;
         }
     }
 }
