@@ -66,6 +66,19 @@ namespace RESTFulSense.Clients
         public async ValueTask<Stream> GetContentStreamAsync(string relativeUrl) =>
             await this.httpClient.GetStreamAsync(relativeUrl);
 
+        public async ValueTask<byte[]> GetContentByteArrayAsync(string relativeUrl)
+        {
+            HttpResponseMessage responseMessage =
+                await this.httpClient.GetAsync(relativeUrl);
+
+            if (responseMessage.IsSuccessStatusCode is false)
+            {
+                await ValidationService.ValidateHttpResponseAsync(responseMessage);
+            }
+
+            return await responseMessage.Content.ReadAsByteArrayAsync();
+        }
+
         public async ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
             T content,
