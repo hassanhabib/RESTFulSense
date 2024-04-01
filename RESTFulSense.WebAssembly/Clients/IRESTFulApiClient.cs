@@ -23,8 +23,8 @@ namespace RESTFulSense.WebAssembly.Clients
             Func<string, ValueTask<T>> deserializationFunction = null);
 
         ValueTask<string> GetContentStringAsync(string relativeUrl);
-        
         ValueTask<Stream> GetContentStreamAsync(string relativeUrl);
+        ValueTask<byte[]> GetContentByteArrayAsync(string relativeUrl);
 
         ValueTask PostContentWithNoResponseAsync<T>(
             string relativeUrl,
