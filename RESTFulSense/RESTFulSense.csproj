@@ -3,17 +3,17 @@
 	<PropertyGroup>
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<TargetFramework>netstandard2.1</TargetFramework>
-		<Authors>Hassan Habib | Brian Parker | Christo du Toit</Authors>
-		<Company>Hassan Habib | Brian Parker | Christo du Toit</Company>
+		<Authors>Hassan Habib</Authors>
+		<Company>The Standard Organization</Company>
 		<Description>RESTFul Integration w/ Love &lt;3 </Description>
 		<Copyright>Copyright (c) Hassan Habib</Copyright>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PackageIcon>api.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>2.18</Version>
-		<AssemblyVersion>2.18.0.0</AssemblyVersion>
-		<FileVersion>2.18.0.0</FileVersion>
+		<Version>2.19</Version>
+		<AssemblyVersion>2.19.0.0</AssemblyVersion>
+		<FileVersion>2.19.0.0</FileVersion>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageProjectUrl>https://www.restfulsense.net</PackageProjectUrl>
