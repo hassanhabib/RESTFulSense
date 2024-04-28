@@ -53,7 +53,7 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         }
 
         [Fact]
-        private async Task ShouldPostContentWithNoResponseAndDeserializeContentAsync()
+        private void ShouldPostContentWithNoResponseAndDeserializeContent()
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();

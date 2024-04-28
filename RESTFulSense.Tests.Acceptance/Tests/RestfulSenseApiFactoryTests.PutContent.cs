@@ -5,7 +5,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Newtonsoft.Json;
 using RESTFulSense.Tests.Acceptance.Models;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
