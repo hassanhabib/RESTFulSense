@@ -18,10 +18,10 @@ namespace RESTFulSense.Tests.Services.Properties
             // given
             PropertyInfo[] randomPropertyInfos =
                 CreateRandomProperties();
-            
+
             PropertyInfo[] returnedPropertyInfos =
                 randomPropertyInfos;
-            
+
             PropertyInfo[] expectedPropertyInfos =
                 returnedPropertyInfos;
 

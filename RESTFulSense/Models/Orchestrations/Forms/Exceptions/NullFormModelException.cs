@@ -12,7 +12,7 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
             : base(
                 message: "Form model is null. Please correct the errors and try again.")
         { }
-        
+
         public NullFormModelException(string message)
             : base(message)
         { }

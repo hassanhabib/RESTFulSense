@@ -23,7 +23,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
             // given
             MultipartFormDataContent nullMultipartFormDataContent =
                 CreateNullMultipartFormDataContent();
-            
+
             byte[] nullContent = null;
             string invalidName = invalidInput;
 
@@ -78,7 +78,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
             // given
             MultipartFormDataContent nullMultipartFormDataContent =
                 CreateNullMultipartFormDataContent();
-            
+
             byte[] nullContent = null;
             string invalidName = invalidInput;
             string invalidFileName = invalidInput;

@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
                 message: "Property dependency error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public FailedPropertyDependencyException(string message, Exception innerException)
             : base(message, innerException)
         { }

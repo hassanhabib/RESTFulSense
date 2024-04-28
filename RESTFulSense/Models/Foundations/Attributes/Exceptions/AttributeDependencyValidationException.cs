@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Foundations.Attributes.Exceptions
                 message: "Attribute dependency validation error occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public AttributeDependencyValidationException(string message, Exception innerException)
             : base(message, innerException)
         { }

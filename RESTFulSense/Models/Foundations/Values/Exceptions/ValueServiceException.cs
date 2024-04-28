@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Values.Exceptions
                 message: "Value service error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public ValueServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

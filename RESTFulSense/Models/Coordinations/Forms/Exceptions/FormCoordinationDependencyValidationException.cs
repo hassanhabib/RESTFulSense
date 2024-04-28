@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
                 message: "Form coordination dependency validation error occurred, fix the errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public FormCoordinationDependencyValidationException(string message, Xeption innerException)
          : base(message, innerException)
         { }

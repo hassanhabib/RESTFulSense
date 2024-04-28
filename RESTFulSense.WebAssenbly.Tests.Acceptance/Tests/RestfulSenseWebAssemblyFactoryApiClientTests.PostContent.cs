@@ -18,7 +18,7 @@ namespace RESTFulSense.WebAssenbly.Tests.Acceptance.Tests
     public partial class RestfulSenseWebAssemblyFactoryApiClientTests
     {
         [Fact]
-        private async Task ShouldPostContentWithNoResponseAndDeserializeContentAsync()
+        private void ShouldPostContentWithNoResponseAndDeserializeContent()
         {
             // given
             TEntity randomTEntity = GetRandomTEntity();

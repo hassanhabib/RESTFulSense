@@ -103,7 +103,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Types
                 new FailedTypeServiceException(
                     message: "Failed Type Service Exception occurred, please contact support for assistance.",
                     innerException: someException);
-            
+
             var expectedTypeServiceException =
                 new TypeServiceException(
                     message: "Type service error occurred, contact support.",

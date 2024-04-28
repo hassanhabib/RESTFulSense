@@ -23,7 +23,7 @@ namespace RESTFulSense.Tests.Services.Properties
                 new FailedPropertyServiceException(
                      message: "Failed Property Service Exception occurred, please contact support for assistance.",
                     innerException: someException);
-            
+
             var expectedPropertyServiceException =
                 new PropertyServiceException(
                     message: "Property service error occurred, contact support.",

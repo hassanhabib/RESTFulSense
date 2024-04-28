@@ -30,7 +30,7 @@ namespace RESTFulSense.Clients
                     content, mediaType, ignoreDefaultValues, serializationFunction),
 
                 "text/plain" => ConvertToStringContent(content, mediaType),
-                
+
                 "application/octet-stream" => ConvertToStreamContent(content as Stream, mediaType),
                 _ => ConvertToStringContent(content, mediaType)
             };
@@ -40,7 +40,7 @@ namespace RESTFulSense.Clients
         {
             return new StringContent(
                 content: content.ToString(),
-                encoding: Encoding.UTF8, 
+                encoding: Encoding.UTF8,
                 mediaType);
         }
 

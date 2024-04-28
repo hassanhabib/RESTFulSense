@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
                 message: "Form coordination service error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public FormCoordinationServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace RESTFulSense.WebAssembly.Clients
         ValueTask<T> GetContentAsync<T>(
             string relativeUrl,
             Func<string, ValueTask<T>> deserializationFunction = null);
-        
+
         ValueTask<T> GetContentAsync<T>(
             string relativeUrl,
             CancellationToken cancellationToken,
@@ -127,11 +128,11 @@ namespace RESTFulSense.WebAssembly.Clients
                 ValueTask<T>> deserializationFunction = null);
 
         ValueTask DeleteContentAsync(string relativeUrl);
-        
+
         ValueTask DeleteContentAsync(
             string relativeUrl,
             CancellationToken cancellationToken);
-        
+
         ValueTask<T> DeleteContentAsync<T>(
             string relativeUrl,
             Func<string, ValueTask<T>> deserializationFunction = null);
@@ -140,5 +141,8 @@ namespace RESTFulSense.WebAssembly.Clients
             string relativeUrl,
             CancellationToken cancellationToken,
             Func<string, ValueTask<T>> deserializationFunction = null);
+
+        ValueTask<HttpResponseMessage> ExecuteHttpCallAsync(
+            Task<HttpResponseMessage> function);
     }
 }

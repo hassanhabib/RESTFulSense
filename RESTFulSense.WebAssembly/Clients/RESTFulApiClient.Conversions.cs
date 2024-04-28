@@ -56,7 +56,7 @@ namespace RESTFulSense.WebAssembly.Clients
                     mediaType);
 
             return contentString;
-            }
+        }
 
         private static StreamContent ConvertToStreamContent<T>(T content, string mediaType)
             where T : Stream

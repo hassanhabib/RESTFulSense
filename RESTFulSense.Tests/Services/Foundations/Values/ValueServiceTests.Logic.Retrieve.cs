@@ -18,7 +18,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Values
             object someObject = CreateSomeObject();
             object someValue = CreateSomeObject();
             object expectedValue = someValue;
-            
+
             PropertyInfo somePropertyInfo =
                 CreateSomePropertyInfo();
 

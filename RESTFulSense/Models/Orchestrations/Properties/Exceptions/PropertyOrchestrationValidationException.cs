@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Orchestrations.Properties.Exceptions
                   message: "Property validation error occurred, fix errors and try again.",
                   innerException: innerException)
         { }
-        
+
         public PropertyOrchestrationValidationException(string message, Exception innerException)
             : base(message, innerException)
         { }

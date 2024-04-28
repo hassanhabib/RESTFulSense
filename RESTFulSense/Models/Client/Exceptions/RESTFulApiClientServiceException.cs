@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Client.Exceptions
                 message: "Api Client error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public RESTFulApiClientServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

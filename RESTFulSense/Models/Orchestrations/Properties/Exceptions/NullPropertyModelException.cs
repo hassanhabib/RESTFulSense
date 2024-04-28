@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Orchestrations.Properties.Exceptions
                 message: "PropertyModel is null, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public NullPropertyModelException(string message, Exception innerException)
             : base(message, innerException)
         { }

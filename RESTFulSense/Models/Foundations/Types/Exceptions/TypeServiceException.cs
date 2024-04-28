@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
                 message: "Type service error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public TypeServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

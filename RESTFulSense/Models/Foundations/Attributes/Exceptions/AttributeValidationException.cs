@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Attributes.Exceptions
                 message: "Attribute validation error occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public AttributeValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

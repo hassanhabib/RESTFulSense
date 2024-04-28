@@ -162,7 +162,7 @@ namespace RESTFulSense.WebAssembly.Clients
             bool ignoreDefaultValues = false,
             Func<T, ValueTask<string>> serializationFunction = null)
         {
-            HttpContent contentString = 
+            HttpContent contentString =
                 await ConvertToHttpContent(
                     content,
                     mediaType,
@@ -434,9 +434,9 @@ namespace RESTFulSense.WebAssembly.Clients
                 deserializationFunction);
         }
 
-       private static async ValueTask<T> DeserializeResponseContent<T>(
-            HttpResponseMessage responseMessage,
-            Func<string, ValueTask<T>> deserializationFunction = null)
+        private static async ValueTask<T> DeserializeResponseContent<T>(
+             HttpResponseMessage responseMessage,
+             Func<string, ValueTask<T>> deserializationFunction = null)
         {
             string responseString =
                 await responseMessage.Content.ReadAsStringAsync();
@@ -444,6 +444,17 @@ namespace RESTFulSense.WebAssembly.Clients
             return deserializationFunction == null
                 ? JsonConvert.DeserializeObject<T>(responseString)
                 : await deserializationFunction(responseString);
+        }
+
+        public async ValueTask<HttpResponseMessage> ExecuteHttpCallAsync(
+            Task<HttpResponseMessage> function)
+        {
+            HttpResponseMessage httpResponseMessage =
+                await function;
+
+            await ValidationService.ValidateHttpResponseAsync(httpResponseMessage);
+
+            return httpResponseMessage;
         }
     }
 }

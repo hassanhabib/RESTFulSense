@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Forms.Exceptions
                 message: "Form validation error occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public FormValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

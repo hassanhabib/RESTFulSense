@@ -7,7 +7,7 @@
 using Newtonsoft.Json;
 
 namespace RESTFulSense.WebAssembly.Clients
-	{
+{
     public partial class RESTFulApiClient
     {
         private static JsonSerializerSettings CreateJsonSerializerSettings(bool ignoreDefaultValues)
