@@ -14,9 +14,9 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
                 message: "Failed Attribute Service Exception occurred, please contact support for assistance.",
                 innerException: innerException)
         { }
-        
+
         public FailedAttributeServiceException(string message, Exception innerException)
-        : base(message,innerException)
+        : base(message, innerException)
         { }
     }
 }

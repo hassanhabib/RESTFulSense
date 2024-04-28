@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
                 message: "Property validation errors occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public PropertyValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

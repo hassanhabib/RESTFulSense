@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Attributes.Exceptions
                 message: "Attribute dependency error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public AttributeDependencyException(string message, Xeption innerException) :
             base(message, innerException)
         { }

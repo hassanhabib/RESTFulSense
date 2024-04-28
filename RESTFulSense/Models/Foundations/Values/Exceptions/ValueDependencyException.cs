@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Values.Exceptions
                 message: "Value dependency error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public ValueDependencyException(string message, Xeption innerException)
             : base(message, innerException)
         { }

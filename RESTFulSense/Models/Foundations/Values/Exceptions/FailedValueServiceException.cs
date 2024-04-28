@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Foundations.Values.Exceptions
                 message: "Failed Value Service Exception occurred, please contact support for assistance.",
                 innerException: innerException)
         { }
-        
+
         public FailedValueServiceException(string message, Exception innerException)
             : base(message, innerException)
         { }

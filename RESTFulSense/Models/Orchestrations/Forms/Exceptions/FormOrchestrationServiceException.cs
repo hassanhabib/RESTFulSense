@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
                 message: "Form orchestration service error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public FormOrchestrationServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

@@ -88,9 +88,9 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
@@ -109,15 +109,15 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
                 await this.httpClient.PostAsync(
-                    relativeUrl, 
-                    contentString, 
+                    relativeUrl,
+                    contentString,
                     cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
@@ -169,15 +169,15 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
                 await this.httpClient.PostAsync(
-                    relativeUrl, 
-                    contentString, 
+                    relativeUrl,
+                    contentString,
                     cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
@@ -195,9 +195,9 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
@@ -220,21 +220,21 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PostAsync(
-                   relativeUrl, 
-                   contentString, 
+                   relativeUrl,
+                   contentString,
                    cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<TResult>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -248,9 +248,9 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
@@ -259,7 +259,7 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -277,14 +277,14 @@ namespace RESTFulSense.Clients
 
                 HttpResponseMessage responseMessage =
                    await this.httpClient.PostAsync(
-                       relativeUrl, 
-                       multipartFormDataContent, 
+                       relativeUrl,
+                       multipartFormDataContent,
                        cancellationToken);
 
                 await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
                 return await DeserializeResponseContent<TResult>(
-                    responseMessage, 
+                    responseMessage,
                     deserializationFunction);
             }
             catch (FormCoordinationValidationException formCoordinationValidationException)
@@ -315,21 +315,21 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(
-                   relativeUrl, 
-                   contentString, 
+                   relativeUrl,
+                   contentString,
                    cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -343,9 +343,9 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
@@ -354,7 +354,7 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<TResult>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -369,21 +369,21 @@ namespace RESTFulSense.Clients
         {
             HttpContent contentString =
                 await ConvertToHttpContent(
-                    content, 
-                    mediaType, 
-                    ignoreDefaultValues, 
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
                     serializationFunction);
 
             HttpResponseMessage responseMessage =
                await this.httpClient.PutAsync(
-                   relativeUrl, 
-                   contentString, 
+                   relativeUrl,
+                   contentString,
                    cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<TResult>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -397,7 +397,7 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -408,15 +408,15 @@ namespace RESTFulSense.Clients
         {
             HttpResponseMessage responseMessage =
                 await this.httpClient.PutAsync(
-                    relativeUrl, 
-                    content: default, 
+                    relativeUrl,
+                    content: default,
                     cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(
                 responseMessage);
 
             return await DeserializeResponseContent<T>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -429,12 +429,12 @@ namespace RESTFulSense.Clients
         }
 
         public async ValueTask DeleteContentAsync(
-            string relativeUrl, 
+            string relativeUrl,
             CancellationToken cancellationToken)
         {
             HttpResponseMessage responseMessage =
                 await this.httpClient.DeleteAsync(
-                    relativeUrl, 
+                    relativeUrl,
                     cancellationToken);
 
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
@@ -451,7 +451,7 @@ namespace RESTFulSense.Clients
                 responseMessage);
 
             return await DeserializeResponseContent<T>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -466,7 +466,7 @@ namespace RESTFulSense.Clients
             await ValidationService.ValidateHttpResponseAsync(responseMessage);
 
             return await DeserializeResponseContent<T>(
-                responseMessage, 
+                responseMessage,
                 deserializationFunction);
         }
 
@@ -474,12 +474,23 @@ namespace RESTFulSense.Clients
             HttpResponseMessage responseMessage,
             Func<string, ValueTask<T>> deserializationFunction = null)
         {
-            string responseString = 
+            string responseString =
                 await responseMessage.Content.ReadAsStringAsync();
 
             return deserializationFunction == null
                 ? JsonConvert.DeserializeObject<T>(responseString)
                 : await deserializationFunction(responseString);
+        }
+
+        public async ValueTask<HttpResponseMessage> ExecuteHttpCallAsync(
+            Task<HttpResponseMessage> function)
+        {
+            HttpResponseMessage httpResponseMessage =
+                await function;
+
+            await ValidationService.ValidateHttpResponseAsync(httpResponseMessage);
+
+            return httpResponseMessage;
         }
     }
 }

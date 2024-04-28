@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Foundations.Attributes.Exceptions
                 message: "PropertyInfo is null, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public NullPropertyInfoException(string message, Exception innerException)
             : base(message, innerException)
         { }

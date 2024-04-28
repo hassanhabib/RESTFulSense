@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
                 message: "Failed property dependency validation error occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public FailedPropertyDependencyValidationException(string message, Exception innerException)
             : base(message, innerException)
         { }

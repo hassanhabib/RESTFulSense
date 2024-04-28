@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -131,5 +132,8 @@ namespace RESTFulSense.WebAssembly.Clients
             string relativeUrl,
             CancellationToken cancellationToken,
             Func<string, ValueTask<T>> deserializationFunction = null);
+
+        ValueTask<HttpResponseMessage> ExecuteHttpCallAsync(
+            Task<HttpResponseMessage> function);
     }
 }

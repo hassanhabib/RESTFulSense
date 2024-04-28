@@ -22,7 +22,7 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
             // given
             MultipartFormDataContent nullMultipartFormDataContent =
                 CreateNullMultipartFormDataContent();
-            
+
             string invalidContent = invalidInput;
             string invalidName = invalidInput;
 

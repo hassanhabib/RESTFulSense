@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Values.Exceptions
                 message: "Value dependency validation occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public ValueDependencyValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

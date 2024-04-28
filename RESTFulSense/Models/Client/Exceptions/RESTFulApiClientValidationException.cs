@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Client.Exceptions
                 message: "Api Client validation errors occurred, please try again.",
                 innerException: innerException)
         { }
-        
+
         public RESTFulApiClientValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

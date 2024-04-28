@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace RESTFulSense.Clients
         ValueTask<T> GetContentAsync<T>(
             string relativeUrl,
             Func<string, ValueTask<T>> deserializationFunction = null);
-        
+
         ValueTask<T> GetContentAsync<T>(
             string relativeUrl,
             CancellationToken cancellationToken,
@@ -74,7 +75,7 @@ namespace RESTFulSense.Clients
             bool ignoreDefaultValues = false,
             Func<TContent, ValueTask<string>> serializationFunction = null,
             Func<string, ValueTask<TResult>> deserializationFunction = null);
-        
+
         ValueTask<TResult> PostFormAsync<TContent, TResult>(
             string relativeUrl,
             TContent content,
@@ -126,9 +127,9 @@ namespace RESTFulSense.Clients
             Func<string, ValueTask<T>> deserializationFunction = null);
 
         ValueTask DeleteContentAsync(string relativeUrl);
-        
+
         ValueTask DeleteContentAsync(
-            string relativeUrl, 
+            string relativeUrl,
             CancellationToken cancellationToken);
 
         ValueTask<T> DeleteContentAsync<T>(
@@ -139,5 +140,8 @@ namespace RESTFulSense.Clients
             string relativeUrl,
             CancellationToken cancellationToken,
             Func<string, ValueTask<T>> deserializationFunction = null);
+
+        ValueTask<HttpResponseMessage> ExecuteHttpCallAsync(
+            Task<HttpResponseMessage> function);
     }
 }

@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Attributes.Exceptions
                 message: "Attribute service error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public AttributeServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

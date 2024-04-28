@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Orchestrations.Properties.Exceptions
                 message: "Property orchestration service error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public PropertyOrchestrationServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

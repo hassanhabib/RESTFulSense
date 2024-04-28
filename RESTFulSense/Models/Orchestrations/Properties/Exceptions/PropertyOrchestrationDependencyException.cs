@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Orchestrations.Properties.Exceptions
                 message: "Property orchestration dependency error occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public PropertyOrchestrationDependencyException(string message, Exception innerException)
             : base(message, innerException)
         { }

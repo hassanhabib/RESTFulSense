@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Forms.Exceptions
                 message: "Form service error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public FormServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }

@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
                 message: "Failed form orchestration service occurred, please contact support",
                 innerException: innerException)
         { }
-        
+
         public FailedFormOrchestrationServiceException(string message, Exception innerException)
             : base(message, innerException)
         { }

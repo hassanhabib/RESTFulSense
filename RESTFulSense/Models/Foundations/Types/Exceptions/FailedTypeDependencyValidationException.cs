@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
                 message: "Failed type dependency validation error occurred, fix errors and try again.",
                 innerException: innerException)
         { }
-        
+
         public FailedTypeDependencyValidationException(string message, Exception innerException)
             : base(message, innerException)
         { }

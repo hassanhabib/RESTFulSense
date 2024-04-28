@@ -14,7 +14,7 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
                 message: "Failed Property Service Exception occurred, please contact support for assistance.",
                 innerException: innerException)
         { }
-        
+
         public FailedPropertyServiceException(string message, Exception innerException)
         : base(message, innerException)
         { }

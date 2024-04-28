@@ -13,7 +13,7 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
                 message: "Type dependency error occurred, contact support.",
                 innerException: innerException)
         { }
-        
+
         public TypeDependencyException(string message, Xeption innerException)
             : base(message, innerException)
         { }
