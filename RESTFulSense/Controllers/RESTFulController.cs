@@ -742,7 +742,10 @@ namespace RESTFulSense.Controllers
 
                 problemDetail.Errors.Add(
                     key: errorKey,
-                    value: ((List<string>)error.Value)?.ToArray());
+
+                    value: error.Value.GetType() == typeof(List<string>)
+                        ? ((List<string>)error.Value)?.ToArray()
+                        : (string[]) error.Value);
             }
         }
 
