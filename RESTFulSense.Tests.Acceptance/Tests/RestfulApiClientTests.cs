@@ -65,6 +65,9 @@ namespace RESTFulSense.Tests.Acceptance.Tests
         private static TEntity GetRandomTEntity() =>
             CreateTEntityFiller(GetTestDateTimeOffset()).Create();
 
+        private static string GetRandomHttpMethodName() =>
+            new MnemonicString().GetValue();
+
         private static DateTimeOffset GetTestDateTimeOffset() =>
             new DateTimeOffset(DateTime.Now);
 

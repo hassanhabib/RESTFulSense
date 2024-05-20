@@ -16,8 +16,7 @@ namespace RESTFulSense.Clients
     {
         ValueTask<T> GetContentAsync<T>(
             string relativeUrl,
-            Func<string,
-            ValueTask<T>> deserializationFunction = null);
+            Func<string, ValueTask<T>> deserializationFunction = null);
 
         ValueTask<T> GetContentAsync<T>(
             string relativeUrl,
@@ -145,5 +144,29 @@ namespace RESTFulSense.Clients
 
         ValueTask<HttpResponseMessage> ExecuteHttpCallAsync(
             Task<HttpResponseMessage> function);
+
+        ValueTask<T> SendHttpRequestAsync<T>(
+            string method,
+            string relativeUrl,
+            CancellationToken cancellationToken,
+            Func<string, ValueTask<T>> deserailizationFunction = null);
+
+        ValueTask<T> SendHttpRequestAsync<T>(
+            string method,
+            string relativeUrl,
+            T content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<T, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<T>> deserializationFunction = null);
+
+        ValueTask<TResult> SendHttpRequestAsync<TContent, TResult>(
+            string method,
+            string relativeUrl,
+            TContent content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<TContent, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<TResult>> deserializationFunction = null);
     }
 }

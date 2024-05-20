@@ -425,5 +425,90 @@ namespace RESTFulSense.WebAssembly.Clients
 
             return httpResponseMessage;
         }
+
+        public async ValueTask<T> SendHttpRequestAsync<T>(
+            string method,
+            string relativeUrl,
+            CancellationToken cancellationToken,
+            Func<string, ValueTask<T>> deserializationFunction = null)
+        {
+            var httpMethod = new HttpMethod(method);
+
+            HttpResponseMessage responseMessage =
+                await SendAsync(
+                    request: new HttpRequestMessage(httpMethod, relativeUrl),
+                    cancellationToken: cancellationToken);
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(
+                responseMessage, deserializationFunction);
+        }
+
+        public async ValueTask<T> SendHttpRequestAsync<T>(
+            string method,
+            string relativeUrl,
+            T content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<T, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<T>> deserializationFunction = null)
+        {
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
+                    serializationFunction);
+
+            var httpMethod = new HttpMethod(method);
+
+            HttpResponseMessage responseMessage =
+                await SendAsync(
+                    request: new HttpRequestMessage
+                    {
+                        Method = httpMethod,
+                        RequestUri = new Uri(relativeUrl),
+                        Content = contentString
+                    });
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent<T>(
+                responseMessage,
+                deserializationFunction);
+        }
+
+        public async ValueTask<TResult> SendHttpRequestAsync<TContent, TResult>(
+            string method,
+            string relativeUrl,
+            TContent content,
+            string mediaType = "text/json",
+            bool ignoreDefaultValues = false,
+            Func<TContent, ValueTask<string>> serializationFunction = null,
+            Func<string, ValueTask<TResult>> deserializationFunction = null)
+        {
+            HttpContent contentString =
+                await ConvertToHttpContent(
+                    content,
+                    mediaType,
+                    ignoreDefaultValues,
+                    serializationFunction);
+
+            var httpMethod = new HttpMethod(method);
+
+            HttpResponseMessage responseMessage =
+                await SendAsync(
+                    request: new HttpRequestMessage(httpMethod, relativeUrl)
+                    {
+                        Content = contentString
+                    });
+
+            await ValidationService.ValidateHttpResponseAsync(responseMessage);
+
+            return await DeserializeResponseContent(
+                responseMessage,
+                deserializationFunction);
+        }
     }
 }
