@@ -9,12 +9,6 @@ namespace RESTFulSense.Models.Orchestrations.Forms.Exceptions
 {
     internal class FailedFormOrchestrationServiceException : Xeption
     {
-        public FailedFormOrchestrationServiceException(Exception innerException)
-            : base(
-                message: "Failed form orchestration service occurred, please contact support",
-                innerException: innerException)
-        { }
-
         public FailedFormOrchestrationServiceException(string message, Exception innerException)
             : base(message, innerException)
         { }

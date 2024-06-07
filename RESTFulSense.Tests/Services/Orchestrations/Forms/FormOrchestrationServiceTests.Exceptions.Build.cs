@@ -114,7 +114,7 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
 
             var expectedFormOrchestrationDependencyException =
                 new FormOrchestrationDependencyException(
-                    message: "Form orchestration dependency error occurred, fix errors and try again.",
+                    message: "Form orchestration dependency validation error occurred, fix the errors and try again.",
                 innerException: dependancyException);
 
             this.attributeServiceMock.Setup(service =>

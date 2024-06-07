@@ -8,12 +8,6 @@ namespace RESTFulSense.Models.Foundations.Forms.Exceptions
 {
     public class FormValidationException : Xeption
     {
-        public FormValidationException(Xeption innerException)
-            : base(
-                message: "Form validation error occurred, fix errors and try again.",
-                innerException: innerException)
-        { }
-
         public FormValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

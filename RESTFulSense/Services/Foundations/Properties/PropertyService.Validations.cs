@@ -13,7 +13,8 @@ namespace RESTFulSense.Services.Properties
         {
             if (type is null)
             {
-                throw new NullTypeException();
+                throw new NullTypeException(
+                    message: "Type is null.");
             }
         }
     }

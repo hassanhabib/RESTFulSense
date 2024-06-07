@@ -21,7 +21,9 @@ namespace RESTFulSense.Services.Orchestrations.Properties
             if (propertyModel is null)
             {
                 var argumentNullException = new ArgumentNullException(nameof(propertyModel));
-                var nullPropertyModelException = new NullPropertyModelException(argumentNullException);
+                var nullPropertyModelException = new NullPropertyModelException(
+                    message: "PropertyModel is null, fix errors and try again.",
+                    innerException: argumentNullException);
 
                 throw nullPropertyModelException;
             }
@@ -31,7 +33,9 @@ namespace RESTFulSense.Services.Orchestrations.Properties
             if (propertyModel.Object is null)
             {
                 var argumentNullException = new ArgumentNullException(nameof(propertyModel.Object));
-                var nullObjectException = new NullObjectException(argumentNullException);
+                var nullObjectException = new NullObjectException(
+                    message: "Object is null, fix errors and try again.",
+                    innerException: argumentNullException);
 
                 throw nullObjectException;
             }

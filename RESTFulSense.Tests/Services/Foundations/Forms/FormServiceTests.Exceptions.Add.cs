@@ -78,6 +78,11 @@ namespace RESTFulSense.Tests.Services.Foundations.Forms
                     message: "Failed Form Service Exception occurred, please contact support for assistance.",
                     innerException: someException);
 
+
+            // Type exception: FormServiceException
+            // INNER Exception: FailedFormServiceException
+
+            // Current Inner Exception: SYSTEM.EXCEPTION
             var expectedFormServiceException =
                 new FormServiceException(
                     message: "Form service error occurred, contact support.",

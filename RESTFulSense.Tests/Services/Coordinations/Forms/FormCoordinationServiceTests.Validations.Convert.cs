@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
         {
             // given
             object nullObject = null;
-            var nullObjectException = new NullObjectException();
+            var nullObjectException = new NullObjectException(message:"Object is null.");
 
             var expectedFormCoordinationValidationException =
                 new FormCoordinationValidationException(

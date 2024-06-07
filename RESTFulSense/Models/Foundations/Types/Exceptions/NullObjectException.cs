@@ -8,10 +8,6 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
 {
     public class NullObjectException : Xeption
     {
-        public NullObjectException()
-            : base(message: "Object is null.")
-        { }
-
         public NullObjectException(string message)
             : base(message)
         { }
