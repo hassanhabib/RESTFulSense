@@ -59,9 +59,9 @@ namespace RESTFulSense.Services.Foundations.Types
             Exception exception)
         {
             var failedTypeDependencyValidationException =
-                                new FailedTypeDependencyValidationException(
-                                    message: "Failed type dependency validation error occurred, fix errors and try again.",
-                                    innerException: exception);
+                new FailedTypeDependencyValidationException(
+                    message: "Failed type dependency validation error occurred, fix errors and try again.",
+                    innerException: exception);
 
             var typeDependencyValidationException =
                 new TypeDependencyValidationException(

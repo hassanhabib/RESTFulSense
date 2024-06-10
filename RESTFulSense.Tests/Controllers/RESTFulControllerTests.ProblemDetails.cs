@@ -138,6 +138,44 @@ namespace RESTFulSense.Tests.Controllers
 
         [Theory]
         [MemberData(nameof(SerializationCases))]
+        private void ShouldReturnValidationProblemDetailOnUnathorized(
+            JsonSerializerOptions jsonSerializerOptions)
+        {
+            // given
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var inputException = new Exception();
+
+            var expectedProblemDetail = new ValidationProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Type = "https://tools.ietf.org/html/rfc7235#section-3.1",
+                Title = inputException.Message,
+            };
+
+            var expectedUnauthorizedObjectResult =
+                new UnauthorizedObjectResult(expectedProblemDetail);
+
+            SetupInputAndExpectedCriteria(
+                randomDictionary,
+                inputException,
+                expectedProblemDetail,
+                jsonSerializerOptions);
+
+            var restfulController = new RESTFulController(jsonSerializerOptions);
+
+            // when
+            UnauthorizedObjectResult unauthorizedObjectResult =
+                restfulController.Unauthorized(inputException);
+
+            // then
+            unauthorizedObjectResult.Should()
+                .BeEquivalentTo(expectedUnauthorizedObjectResult);
+        }
+
+        [Theory]
+        [MemberData(nameof(SerializationCases))]
         private void ShouldReturnValidationProblemDetailOnPaymentRequired(
             JsonSerializerOptions jsonSerializerOptions)
         {

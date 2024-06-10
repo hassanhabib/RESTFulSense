@@ -60,7 +60,8 @@ namespace RESTFulSense.Services.Foundations.Forms
             catch (ArgumentException argumentException)
             {
                 var formDependencyValidationException =
-                    new FormDependencyValidationException(message: "Form dependency validation error occurred, fix errors and try again.",
+                    new FormDependencyValidationException(
+                        message: "Form dependency validation error occurred, fix errors and try again.",
                         innerException: argumentException);
 
                 var formValidationException =
@@ -75,7 +76,6 @@ namespace RESTFulSense.Services.Foundations.Forms
                  var formServiceException = new FormServiceException(
                      message: "Form service error occurred, contact support.",
                      
-
                      new FailedFormServiceException(
                          message: "Failed Form Service Exception occurred, please contact support for assistance.", 
                          innerException :exception));
