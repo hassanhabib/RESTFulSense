@@ -8,7 +8,6 @@ namespace RESTFulSense.Models.Client.Exceptions
 {
     public class RESTFulApiClientValidationException : Xeption
     {
-
         public RESTFulApiClientValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

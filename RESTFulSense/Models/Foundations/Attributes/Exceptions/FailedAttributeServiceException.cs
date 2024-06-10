@@ -10,7 +10,7 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
     public class FailedAttributeServiceException : Xeption
     {
         public FailedAttributeServiceException(string message, Exception innerException)
-        : base(message, innerException)
+            : base(message, innerException)
         { }
     }
 }

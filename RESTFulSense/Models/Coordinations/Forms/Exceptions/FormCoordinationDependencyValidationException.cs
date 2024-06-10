@@ -9,7 +9,7 @@ namespace RESTFulSense.Models.Coordinations.Forms.Exceptions
     public class FormCoordinationDependencyValidationException : Xeption
     {
         public FormCoordinationDependencyValidationException(string message, Xeption innerException)
-         : base(message, innerException)
+            : base(message, innerException)
         { }
     }
 }

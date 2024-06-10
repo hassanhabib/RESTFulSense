@@ -23,6 +23,7 @@ namespace RESTFulSense.Services.Foundations.Types
                 var typeValidationException = new TypeValidationException(
                     message: "Type validation errors occurred, fix errors and try again.",
                     innerException: nullObjectException);
+
                 throw typeValidationException;
             }
             catch (ArgumentNullException argumentNullException)

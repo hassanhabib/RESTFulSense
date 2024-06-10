@@ -8,8 +8,8 @@ namespace RESTFulSense.Models.Foundations.Attributes.Exceptions
 {
     public class AttributeDependencyException : Xeption
     {
-        public AttributeDependencyException(string message, Xeption innerException) :
-            base(message, innerException)
+        public AttributeDependencyException(string message, Xeption innerException) 
+            : base(message, innerException)
         { }
     }
 }
