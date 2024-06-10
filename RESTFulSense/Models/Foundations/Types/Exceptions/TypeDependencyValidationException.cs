@@ -8,12 +8,6 @@ namespace RESTFulSense.Models.Foundations.Types.Exceptions
 {
     internal class TypeDependencyValidationException : Xeption
     {
-        public TypeDependencyValidationException(Xeption innerException)
-            : base(
-                message: "Type dependency validation occurred, fix errors and try again.",
-                innerException: innerException)
-        { }
-
         public TypeDependencyValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

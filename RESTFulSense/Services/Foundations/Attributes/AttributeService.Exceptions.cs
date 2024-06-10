@@ -24,50 +24,70 @@ namespace RESTFulSense.Services.Foundations.Attributes
             catch (ArgumentNullException argumentNullException)
             {
                 var nullPropertyInfoException =
-                    new NullPropertyInfoException(argumentNullException);
+                    new NullPropertyInfoException(
+                        message: "PropertyInfo is null, fix errors and try again.",
+                        innerException:argumentNullException);
 
                 var attributeValidationException =
-                    new AttributeValidationException(nullPropertyInfoException);
+                    new AttributeValidationException(
+                        message: "Attribute validation error occurred, fix errors and try again.",
+                        innerException: nullPropertyInfoException);
 
                 throw attributeValidationException;
             }
             catch (NotSupportedException notSupportedException)
             {
                 var failedAttributeServiceException =
-                    new FailedAttributeServiceException(notSupportedException);
+                    new FailedAttributeServiceException(
+                        message: "Failed Attribute Service Exception occurred, please contact support for assistance.",
+                        innerException:notSupportedException);
 
                 var attributeDependencyValidationException =
-                    new AttributeDependencyValidationException(failedAttributeServiceException);
+                    new AttributeDependencyValidationException(
+                        message: "Attribute dependency validation error occurred, fix errors and try again.",
+                        innerException:failedAttributeServiceException);
 
                 throw attributeDependencyValidationException;
             }
             catch (AmbiguousMatchException ambiguousMatchException)
             {
                 var failedAttributeServiceException =
-                    new FailedAttributeServiceException(ambiguousMatchException);
+                    new FailedAttributeServiceException(
+                        message: "Failed Attribute Service Exception occurred, please contact support for assistance.",
+                        innerException: ambiguousMatchException);
 
                 var attributeDependencyValidationException =
-                    new AttributeDependencyValidationException(failedAttributeServiceException);
+                    new AttributeDependencyValidationException(
+                        message: "Attribute dependency validation error occurred, fix errors and try again.",
+                        innerException: failedAttributeServiceException);
 
                 throw attributeDependencyValidationException;
             }
             catch (TypeLoadException typeLoadException)
             {
                 var failedAttributeServiceException =
-                    new FailedAttributeServiceException(typeLoadException);
+                    new FailedAttributeServiceException(
+                        message: "Failed Attribute Service Exception occurred, please contact support for assistance.",
+                        innerException: typeLoadException);
 
                 var attributeDependencyValidationException =
-                    new AttributeDependencyValidationException(failedAttributeServiceException);
+                    new AttributeDependencyValidationException(
+                        message: "Attribute dependency validation error occurred, fix errors and try again.",
+                    innerException: failedAttributeServiceException); 
 
                 throw attributeDependencyValidationException;
             }
             catch (Exception exception)
             {
                 var failedAttributeServiceException =
-                    new FailedAttributeServiceException(exception);
+                    new FailedAttributeServiceException(
+                        message: "Failed Attribute Service Exception occurred, please contact support for assistance.",
+                        innerException: exception);
 
                 var attributeServiceException =
-                    new AttributeServiceException(failedAttributeServiceException);
+                    new AttributeServiceException(
+                        message: "Attribute service error occurred, contact support.",
+                        innerException: failedAttributeServiceException);
 
                 throw attributeServiceException;
             }

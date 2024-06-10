@@ -8,12 +8,6 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
     public class PropertyDependencyValidationException : Xeption
     {
-        public PropertyDependencyValidationException(Xeption innerException)
-            : base(
-                message: "Property dependency validation occurred, fix errors and try again.",
-                innerException: innerException)
-        { }
-
         public PropertyDependencyValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }

@@ -12,7 +12,8 @@ namespace RESTFulSense.Services.Foundations.Types
         {
             if (@object is null)
             {
-                throw new NullObjectException();
+                throw new NullObjectException(
+                    message: "Object is null.");
             }
         }
     }

@@ -21,7 +21,9 @@ namespace RESTFulSense.Services.Properties
             }
             catch (NullTypeException nullTypeException)
             {
-                var propertyValidationException = new PropertyValidationException(nullTypeException);
+                var propertyValidationException = new PropertyValidationException(
+                    message: "Property validation errors occurred, fix errors and try again.",
+                    innerException: nullTypeException);
                 throw propertyValidationException;
             }
             catch (ArgumentNullException argumentNullException)
@@ -62,10 +64,14 @@ namespace RESTFulSense.Services.Properties
             Exception exception)
         {
             var failedPropertyDependencyValidationException =
-                new FailedPropertyDependencyValidationException(exception);
+                new FailedPropertyDependencyValidationException(
+                    message: "Failed property dependency validation error occurred, fix errors and try again.", 
+                    innerException: exception);
 
             var propertyDependencyValidationException =
-                new PropertyDependencyValidationException(failedPropertyDependencyValidationException);
+                new PropertyDependencyValidationException(
+                    message: "Property dependency validation occurred, fix errors and try again.",
+                    innerException: failedPropertyDependencyValidationException);
 
             return propertyDependencyValidationException;
         }
@@ -74,10 +80,14 @@ namespace RESTFulSense.Services.Properties
             Exception exception)
         {
             var failedPropertyDependencyException =
-                new FailedPropertyDependencyException(exception);
+                new FailedPropertyDependencyException(
+                    message: "Property dependency error occurred, contact support.", 
+                    innerException: exception);
 
             var propertyDependencyException =
-                new PropertyDependencyException(failedPropertyDependencyException);
+                new PropertyDependencyException(
+                    message: "Property dependency error occurred, contact support.",
+                    innerException: failedPropertyDependencyException);
 
             return propertyDependencyException;
         }
@@ -85,10 +95,14 @@ namespace RESTFulSense.Services.Properties
         private static PropertyServiceException CreateServiceException(Exception exception)
         {
             var failedPropertyServiceException =
-                new FailedPropertyServiceException(exception);
+                new FailedPropertyServiceException(
+                    message: "Failed Property Service Exception occurred, please contact support for assistance.", 
+                    innerException: exception);
 
             var propertyServiceException =
-                new PropertyServiceException(failedPropertyServiceException);
+                new PropertyServiceException(
+                    message: "Property service error occurred, contact support.",
+                    innerException: failedPropertyServiceException);
             return propertyServiceException;
         }
     }

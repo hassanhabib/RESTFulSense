@@ -20,7 +20,10 @@ namespace RESTFulSense.Services.Foundations.Types
             }
             catch (NullObjectException nullObjectException)
             {
-                var typeValidationException = new TypeValidationException(nullObjectException);
+                var typeValidationException = new TypeValidationException(
+                    message: "Type validation errors occurred, fix errors and try again.",
+                    innerException: nullObjectException);
+
                 throw typeValidationException;
             }
             catch (ArgumentNullException argumentNullException)
@@ -57,10 +60,14 @@ namespace RESTFulSense.Services.Foundations.Types
             Exception exception)
         {
             var failedTypeDependencyValidationException =
-                                new FailedTypeDependencyValidationException(exception);
+                new FailedTypeDependencyValidationException(
+                    message: "Failed type dependency validation error occurred, fix errors and try again.",
+                    innerException: exception);
 
             var typeDependencyValidationException =
-                new TypeDependencyValidationException(failedTypeDependencyValidationException);
+                new TypeDependencyValidationException(
+                    message: "Type dependency validation occurred, fix errors and try again.", 
+                    innerException: failedTypeDependencyValidationException);
 
             return typeDependencyValidationException;
         }
@@ -68,10 +75,14 @@ namespace RESTFulSense.Services.Foundations.Types
         private static TypeDependencyException CreateDependencyException(Exception exception)
         {
             var failedTypeDependencyException =
-                new FailedTypeDependencyException(exception);
+                new FailedTypeDependencyException(
+                    message: "Type dependency error occurred, contact support.",
+                    innerException: exception);
 
             var typeDependencyException =
-                new TypeDependencyException(failedTypeDependencyException);
+                new TypeDependencyException(
+                    message: "Type dependency error occurred, contact support.",
+                    innerException: failedTypeDependencyException);
 
             return typeDependencyException;
         }
@@ -79,10 +90,14 @@ namespace RESTFulSense.Services.Foundations.Types
         private static TypeServiceException CreateServiceException(Exception exception)
         {
             var failedTypeServiceException =
-                new FailedTypeServiceException(exception);
+                new FailedTypeServiceException(
+                    message: "Failed Type Service Exception occurred, please contact support for assistance.",
+                    innerException: exception);
 
             var typeServiceException =
-                new TypeServiceException(failedTypeServiceException);
+                new TypeServiceException(
+                    message: "Type service error occurred, contact support.",
+                    innerException : failedTypeServiceException);
 
             return typeServiceException;
         }
