@@ -4,8 +4,10 @@
 // See License.txt in the project root for license information.
 // ---------------------------------------------------------------
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -1224,11 +1226,21 @@ namespace RESTFulSense.Tests.Services
             return randomValidationProblemDetails;
         }
 
+        private static string[] GetRandomStringArray()
+        {
+            var filler = new Filler<string>();
+            
+            return Enumerable.Range(0, new Random().Next(minValue: 1, maxValue: 10))
+                .Select(selector: _ => filler.Create())
+                .ToArray();
+        }
+
         private static Dictionary<string, string[]> CreateRandomErrorDictionary()
         {
             var filler = new Filler<Dictionary<string, string[]>>();
 
             filler.Setup()
+                .OnType<string[]>().Use(GetRandomStringArray())
                 .DictionaryItemCount(maxCount: 10);
 
             return filler.Create();
