@@ -14,7 +14,8 @@ namespace RESTFulSense.Services.Orchestrations.Forms
         {
             if (formModel is null)
             {
-                throw new NullFormModelException();
+                throw new NullFormModelException(
+                    message: "Form model is null. Please correct the errors and try again.");
             }
         }
 

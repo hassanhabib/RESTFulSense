@@ -85,7 +85,8 @@ namespace RESTFulSense.Services.Foundations.Forms
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
-            var invalidFormArgumentException = new InvalidFormArgumentException();
+            var invalidFormArgumentException = new InvalidFormArgumentException(
+                message: "Invalid form arguments. Please fix the errors and try again.");
 
             foreach ((dynamic rule, string parameter) in validations)
             {

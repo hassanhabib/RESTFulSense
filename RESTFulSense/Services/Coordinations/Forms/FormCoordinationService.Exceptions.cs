@@ -23,74 +23,83 @@ namespace RESTFulSense.Services.Coordinations.Forms
             }
             catch (Models.Coordinations.Forms.Exceptions.NullObjectException nullObjectException)
             {
+                string message = "Form coordination validation errors occurred, please try again.";
                 var formCoordinationValidationException =
-                    new FormCoordinationValidationException(nullObjectException);
+                    new FormCoordinationValidationException(message, nullObjectException);
 
                 throw formCoordinationValidationException;
             }
             catch (FormOrchestrationValidationException formOrchestrationValidationException)
             {
+                string message = "Form coordination dependency validation error occurred, fix the errors and try again.";
                 var formCoordinationDependencyValidationException =
-                    new FormCoordinationDependencyValidationException(formOrchestrationValidationException);
+                    new FormCoordinationDependencyValidationException(message, formOrchestrationValidationException);
 
                 throw formCoordinationDependencyValidationException;
             }
             catch (FormOrchestrationDependencyValidationException formOrchestrationDependencyValidationException)
             {
+                string message = "Form coordination dependency validation error occurred, fix the errors and try again.";
                 var formCoordinationDependencyValidationException =
-                    new FormCoordinationDependencyValidationException(formOrchestrationDependencyValidationException);
+                    new FormCoordinationDependencyValidationException(message, formOrchestrationDependencyValidationException);
 
                 throw formCoordinationDependencyValidationException;
             }
             catch (PropertyOrchestrationValidationException propertyOrchestrationValidationException)
             {
+                string message = "Form coordination dependency validation error occurred, fix the errors and try again.";
                 var formCoordinationDependencyValidationException =
-                    new FormCoordinationDependencyValidationException(propertyOrchestrationValidationException);
+                    new FormCoordinationDependencyValidationException(message, propertyOrchestrationValidationException);
 
                 throw formCoordinationDependencyValidationException;
             }
             catch (PropertyOrchestrationDependencyValidationException propertyOrchestrationDependencyValidationException)
             {
+                string message = "Form coordination dependency validation error occurred, fix the errors and try again.";
                 var formCoordinationDependencyValidationException =
-                    new FormCoordinationDependencyValidationException(propertyOrchestrationDependencyValidationException);
+                    new FormCoordinationDependencyValidationException(message, propertyOrchestrationDependencyValidationException);
 
                 throw formCoordinationDependencyValidationException;
             }
             catch (FormOrchestrationDependencyException formOrchestrationDependencyException)
             {
+                string message = "Form coordination dependency error occurred, fix the errors and try again."; ;
                 var formCoordinationDependencyException =
-                    new FormCoordinationDependencyException(formOrchestrationDependencyException);
+                    new FormCoordinationDependencyException(message,formOrchestrationDependencyException);
 
                 throw formCoordinationDependencyException;
             }
             catch (FormOrchestrationServiceException formOrchestrationServiceException)
             {
+                string message = "Form coordination dependency error occurred, fix the errors and try again."; ;
                 var formCoordinationDependencyException =
-                    new FormCoordinationDependencyException(formOrchestrationServiceException);
+                    new FormCoordinationDependencyException(message, formOrchestrationServiceException);
 
                 throw formCoordinationDependencyException;
             }
             catch (PropertyOrchestrationDependencyException propertyOrchestrationDependencyException)
             {
+                string message = "Form coordination dependency error occurred, fix the errors and try again.";
                 var formCoordinationDependencyException =
-                    new FormCoordinationDependencyException(propertyOrchestrationDependencyException);
+                    new FormCoordinationDependencyException(message, propertyOrchestrationDependencyException);
 
                 throw formCoordinationDependencyException;
             }
             catch (PropertyOrchestrationServiceException propertyOrchestrationServiceException)
             {
+                string message = "Form coordination dependency error occurred, fix the errors and try again.";
                 var formCoordinationDependencyException =
-                    new FormCoordinationDependencyException(propertyOrchestrationServiceException);
+                    new FormCoordinationDependencyException(message, propertyOrchestrationServiceException);
 
                 throw formCoordinationDependencyException;
             }
             catch (Exception exception)
             {
+                string errorMessage = "Form coordination service error occurred, contact support.";
                 var failedFormCoordinationServiceException =
-                    new FailedFormCoordinationServiceException(exception);
-
+                    new FailedFormCoordinationServiceException(errorMessage,exception);
                 var formCoordinationServiceException =
-                    new FormCoordinationServiceException(failedFormCoordinationServiceException);
+                    new FormCoordinationServiceException(errorMessage, failedFormCoordinationServiceException);
 
                 throw formCoordinationServiceException;
             }

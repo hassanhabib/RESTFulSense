@@ -65,10 +65,10 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
 
             return new TheoryData<Xeption>
             {
-                new TypeValidationException(innerException),
-                new TypeDependencyValidationException(innerException),
-                new PropertyValidationException(innerException),
-                new PropertyDependencyValidationException(innerException),
+                new TypeValidationException(randomMessage, innerException),
+                new TypeDependencyValidationException(randomMessage, innerException),
+                new PropertyValidationException(randomMessage,innerException),
+                new PropertyDependencyValidationException(randomMessage, innerException),
             };
         }
 
@@ -80,10 +80,10 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Properties
 
             return new TheoryData<Xeption>
             {
-                new TypeDependencyException(innerException),
-                new TypeServiceException(innerException),
-                new PropertyDependencyException(innerException),
-                new PropertyServiceException(innerException)
+                new TypeDependencyException(randomMessage, innerException),
+                new TypeServiceException(randomMessage, innerException),
+                new PropertyDependencyException(randomMessage, innerException),
+                new PropertyServiceException(randomMessage, innerException)
             };
         }
     }

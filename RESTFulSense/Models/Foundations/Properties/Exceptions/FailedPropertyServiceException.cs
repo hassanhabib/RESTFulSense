@@ -9,14 +9,8 @@ namespace RESTFulSense.Models.Foundations.Properties.Exceptions
 {
     public class FailedPropertyServiceException : Xeption
     {
-        public FailedPropertyServiceException(Exception innerException)
-            : base(
-                message: "Failed Property Service Exception occurred, please contact support for assistance.",
-                innerException: innerException)
-        { }
-
         public FailedPropertyServiceException(string message, Exception innerException)
-        : base(message, innerException)
+            : base(message, innerException)
         { }
     }
 }

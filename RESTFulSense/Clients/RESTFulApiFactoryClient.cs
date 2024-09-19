@@ -290,16 +290,19 @@ namespace RESTFulSense.Clients
             catch (FormCoordinationValidationException formCoordinationValidationException)
             {
                 throw new RESTFulApiClientValidationException(
+                    message: "Api Client validation errors occurred, please try again.",
                     formCoordinationValidationException.InnerException as Xeption);
             }
             catch (FormCoordinationDependencyException formCoordinationDependencyException)
             {
                 throw new RESTFulApiClientDependencyException(
+                    message: "Form coordination dependency error occurred, fix the errors and try again.",
                     formCoordinationDependencyException.InnerException as Xeption);
             }
             catch (FormCoordinationServiceException formCoordinationServiceException)
             {
                 throw new RESTFulApiClientServiceException(
+                    message: "Api Client error occurred, contact support.",
                     formCoordinationServiceException.InnerException as Xeption);
             }
         }
