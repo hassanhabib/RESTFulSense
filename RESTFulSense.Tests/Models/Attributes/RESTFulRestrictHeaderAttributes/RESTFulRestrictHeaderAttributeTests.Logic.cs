@@ -16,7 +16,7 @@ namespace RESTFulSense.Tests.Models.Attributes.RESTFulRestrictHeaderAttributes
         [Fact]
         public void ShouldNotSetResultWhenHeaderMatches()
         {
-            // give
+            // given
             string randomName = GetRandomString();
             string inputName = randomName;
             string randomValue = GetRandomString();
@@ -47,6 +47,44 @@ namespace RESTFulSense.Tests.Models.Attributes.RESTFulRestrictHeaderAttributes
 
             // then
             inputActionExecutingContext.Result.Should().BeNull();
+        }
+
+        [Fact]
+        public void ShouldSetUnauthorizedResultWhenHeaderDoesNotMatch()
+        {
+            // given
+            string randomName = GetRandomString();
+            string inputName = randomName;
+            string randomValue = GetRandomString();
+            string inputValue = randomValue;
+            string mismatchedValue = GetRandomString();
+
+            var expectedRestfulRestrictHeaderAttribute =
+                new RESTFulRestrictHeaderAttribute
+                {
+                    Name = inputName,
+                    Value = inputValue
+                };
+
+            var defaultHttpContext = new DefaultHttpContext();
+
+            defaultHttpContext.Request.Headers[key: inputName] =
+                mismatchedValue;
+
+            ActionContext inputActionContext =
+                CreateRandomActionContext(defaultHttpContext);
+
+            ActionExecutingContext inputActionExecutingContext =
+                CreateRandomActionExecutingContext(
+                    inputActionContext);
+
+            // when
+            expectedRestfulRestrictHeaderAttribute
+                .OnActionExecuting(inputActionExecutingContext);
+
+            // then
+            inputActionExecutingContext.Result.Should()
+                .BeOfType<UnauthorizedResult>();
         }
     }
 }

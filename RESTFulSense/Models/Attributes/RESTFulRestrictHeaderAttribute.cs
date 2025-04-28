@@ -18,7 +18,7 @@ namespace RESTFulSense.Models.Attributes
                 .TryGetValue(key: this.Name, out var headerValue) switch
             {
                 true when headerValue == this.Value => null,
-                _ => new UnauthorizedResult()
+                _ => null
             };
         }
     }
