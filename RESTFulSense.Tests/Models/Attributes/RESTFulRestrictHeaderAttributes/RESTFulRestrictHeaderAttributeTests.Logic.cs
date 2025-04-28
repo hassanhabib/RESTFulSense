@@ -86,5 +86,39 @@ namespace RESTFulSense.Tests.Models.Attributes.RESTFulRestrictHeaderAttributes
             inputActionExecutingContext.Result.Should()
                 .BeOfType<UnauthorizedResult>();
         }
+
+        [Fact]
+        public void ShouldSetUnauthorizedResultWhenHeaderIsMissing()
+        {
+            // given
+            string randomName = GetRandomString();
+            string inputName = randomName;
+            string randomValue = GetRandomString();
+            string inputValue = randomValue;
+
+            var expectedRestfulRestrictHeaderAttribute =
+                new RESTFulRestrictHeaderAttribute
+                {
+                    Name = inputName,
+                    Value = inputValue
+                };
+
+            var defaultHttpContext = new DefaultHttpContext();
+
+            ActionContext inputActionContext =
+                CreateRandomActionContext(defaultHttpContext);
+
+            ActionExecutingContext inputActionExecutingContext =
+                CreateRandomActionExecutingContext(
+                    inputActionContext);
+
+            // when
+            expectedRestfulRestrictHeaderAttribute
+                .OnActionExecuting(inputActionExecutingContext);
+
+            // then
+            inputActionExecutingContext.Result.Should()
+                .BeOfType<UnauthorizedResult>();
+        }
     }
 }
