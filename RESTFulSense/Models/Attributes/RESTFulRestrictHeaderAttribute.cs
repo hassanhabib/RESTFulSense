@@ -14,7 +14,12 @@ namespace RESTFulSense.Models.Attributes
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            
+            context.Result = context.HttpContext.Request.Headers
+                .TryGetValue(key: this.Name, out var headerValue) switch
+            {
+                true when headerValue == this.Value => null,
+                _ => new UnauthorizedResult()
+            };
         }
     }
 }
