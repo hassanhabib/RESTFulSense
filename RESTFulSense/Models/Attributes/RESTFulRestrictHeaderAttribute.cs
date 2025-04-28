@@ -17,7 +17,7 @@ namespace RESTFulSense.Models.Attributes
             context.Result = context.HttpContext.Request.Headers
                 .TryGetValue(key: this.Name, out var headerValue) switch
             {
-                false when headerValue == this.Value => null,
+                true when headerValue == this.Value => null,
                 _ => new UnauthorizedResult()
             };
         }
