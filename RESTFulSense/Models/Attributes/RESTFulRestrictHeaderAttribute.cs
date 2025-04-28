@@ -12,10 +12,12 @@ namespace RESTFulSense.Models.Attributes
         public string Name { get; set; }
         public string Value { get; set; }
 
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuting(ActionExecutingContext actionExecutingContext)
         {
-            context.Result = context.HttpContext.Request.Headers
-                .TryGetValue(key: this.Name, out var headerValue) switch
+            actionExecutingContext.Result = actionExecutingContext.HttpContext.Request.Headers
+                .TryGetValue(
+                    key: this.Name, 
+                    value: out var headerValue) switch
             {
                 true when headerValue == this.Value => null,
                 _ => new UnauthorizedResult()
