@@ -5,6 +5,7 @@
 using System;
 using System.Net.Http;
 using RESTFulSense.Models.Foundations.Forms.Exceptions;
+using Xeptions;
 
 namespace RESTFulSense.Services.Foundations.Forms
 {
@@ -22,44 +23,62 @@ namespace RESTFulSense.Services.Foundations.Forms
             catch (InvalidFormArgumentException invalidFormArgumentException)
             {
                 var formValidationException =
-                    new FormValidationException(invalidFormArgumentException);
+                    new FormValidationException(
+                        message: "Form validation error occurred, fix errors and try again.",
+                        innerException: invalidFormArgumentException);
 
                 throw formValidationException;
             }
             catch (ArgumentOutOfRangeException argumentOutOfRangeException)
             {
                 var formDependencyValidationException =
-                    new FormDependencyValidationException(argumentOutOfRangeException);
+                    new FormDependencyValidationException(
+                        message: "Form dependency validation error occurred, fix errors and try again.",
+                        innerException: argumentOutOfRangeException);
 
                 var formValidationException =
-                    new FormValidationException(formDependencyValidationException);
+                    new FormValidationException(
+                        message: "Form validation error occurred, fix errors and try again.",
+                        innerException: formDependencyValidationException);
 
                 throw formValidationException;
             }
             catch (ArgumentNullException argumentNullException)
             {
                 var formDependencyValidationException =
-                    new FormDependencyValidationException(argumentNullException);
+                    new FormDependencyValidationException(
+                        message: "Form dependency validation error occurred, fix errors and try again.",
+                        innerException: argumentNullException);
 
                 var formValidationException =
-                    new FormValidationException(formDependencyValidationException);
+                    new FormValidationException(
+                        message: "Form validation error occurred, fix errors and try again.",
+                        innerException: formDependencyValidationException);
 
                 throw formValidationException;
             }
             catch (ArgumentException argumentException)
             {
                 var formDependencyValidationException =
-                    new FormDependencyValidationException(argumentException);
+                    new FormDependencyValidationException(
+                        message: "Form dependency validation error occurred, fix errors and try again.",
+                        innerException: argumentException);
 
                 var formValidationException =
-                    new FormValidationException(formDependencyValidationException);
+                    new FormValidationException(
+                        message: "Form validation error occurred, fix errors and try again.",
+                        innerException: formDependencyValidationException);
 
                 throw formValidationException;
             }
             catch (Exception exception)
             {
-                var failedFormServiceException = new FailedFormServiceException(exception);
-                var formServiceException = new FormServiceException(failedFormServiceException);
+                 var formServiceException = new FormServiceException(
+                     message: "Form service error occurred, contact support.",
+                     
+                     new FailedFormServiceException(
+                         message: "Failed Form Service Exception occurred, please contact support for assistance.", 
+                         innerException :exception));
 
                 throw formServiceException;
             }

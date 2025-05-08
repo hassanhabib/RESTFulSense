@@ -83,10 +83,10 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
 
             return new TheoryData<Xeption>
             {
-                new FormOrchestrationValidationException(innerException),
-                new FormOrchestrationDependencyValidationException(innerException),
-                new PropertyOrchestrationValidationException(innerException),
-                new PropertyOrchestrationDependencyValidationException(innerException)
+                new FormOrchestrationValidationException(randomMessage,innerException),
+                new FormOrchestrationDependencyValidationException(randomMessage,innerException),
+                new PropertyOrchestrationValidationException(randomMessage,innerException),
+                new PropertyOrchestrationDependencyValidationException(randomMessage,innerException)
             };
         }
 
@@ -98,10 +98,10 @@ namespace RESTFulSense.Tests.Services.Coordinations.Forms
 
             return new TheoryData<Xeption>
             {
-                new FormOrchestrationDependencyException(innerException),
-                new FormOrchestrationServiceException(innerException),
-                new PropertyOrchestrationDependencyException(innerException),
-                new PropertyOrchestrationServiceException(innerException)
+                new FormOrchestrationDependencyException(randomMessage, innerException),
+                new FormOrchestrationServiceException(randomMessage,innerException),
+                new PropertyOrchestrationDependencyException(randomMessage,innerException),
+                new PropertyOrchestrationServiceException(randomMessage,innerException)
             };
         }
     }

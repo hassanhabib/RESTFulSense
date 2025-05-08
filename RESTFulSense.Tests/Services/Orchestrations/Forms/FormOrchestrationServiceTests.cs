@@ -117,12 +117,12 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
 
             return new TheoryData<Xeption>
             {
-                new AttributeValidationException(innerException),
-                new AttributeDependencyValidationException(innerException),
-                new ValueValidationException(innerException),
-                new ValueDependencyValidationException(innerException),
-                new FormValidationException(innerException),
-                new FormDependencyValidationException(innerException)
+                new AttributeValidationException(randomMessage,innerException),
+                new AttributeDependencyValidationException(randomMessage,innerException),
+                new ValueValidationException(randomMessage, innerException),
+                new ValueDependencyValidationException(randomMessage, innerException),
+                new FormValidationException(randomMessage,innerException),
+                new FormDependencyValidationException(randomMessage, innerException)
             };
         }
 
@@ -134,12 +134,12 @@ namespace RESTFulSense.Tests.Services.Orchestrations.Forms
 
             return new TheoryData<Xeption>
             {
-                new AttributeDependencyException(innerException),
-                new AttributeServiceException(innerException),
-                new ValueDependencyException(innerException),
-                new ValueServiceException(innerException),
-                new FormDependencyException(innerException),
-                new FormServiceException(innerException)
+                new AttributeDependencyException(randomMessage, innerException),
+                new AttributeServiceException(randomMessage,innerException),
+                new ValueDependencyException(randomMessage, innerException),
+                new ValueServiceException(randomMessage, innerException),
+                new FormDependencyException(randomMessage,innerException),
+                new FormServiceException(randomMessage, innerException)
             };
         }
     }

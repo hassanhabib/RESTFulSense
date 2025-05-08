@@ -12,7 +12,8 @@ namespace RESTFulSense.Services.Coordinations.Forms
         {
             if (@object == null)
             {
-                throw new NullObjectException();
+                var errorMessage = "Object is null.";
+                throw new NullObjectException(errorMessage);
             }
         }
     }

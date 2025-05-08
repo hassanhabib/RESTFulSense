@@ -23,80 +23,104 @@ namespace RESTFulSense.Services.Orchestrations.Properties
             catch (NullPropertyModelException nullPropertyModelException)
             {
                 var propertyOrchestrationValidationException =
-                    new PropertyOrchestrationValidationException(nullPropertyModelException);
+                    new PropertyOrchestrationValidationException(
+                        message: "Property validation error occurred, fix errors and try again.",
+                        innerException: nullPropertyModelException);
 
                 throw propertyOrchestrationValidationException;
             }
             catch (Models.Orchestrations.Properties.Exceptions.NullObjectException nullObjectException)
             {
                 var propertyOrchestrationValidationException =
-                    new PropertyOrchestrationValidationException(nullObjectException);
+                    new PropertyOrchestrationValidationException(
+                        message: "Property validation error occurred, fix errors and try again.",
+                        innerException: nullObjectException);
 
                 throw propertyOrchestrationValidationException;
             }
             catch (TypeValidationException typeValidationException)
             {
                 var propertyOrchestrationDependencyValidationException =
-                    new PropertyOrchestrationDependencyValidationException(typeValidationException);
+                    new PropertyOrchestrationDependencyValidationException(
+                        message: "Property orchestration dependency validation error occurred, fix errors and try again.",
+                        innerException: typeValidationException);
 
                 throw propertyOrchestrationDependencyValidationException;
             }
             catch (TypeDependencyValidationException typeDependencyValidationException)
             {
                 var propertyOrchestrationDependencyValidationException =
-                    new PropertyOrchestrationDependencyValidationException(typeDependencyValidationException);
+                    new PropertyOrchestrationDependencyValidationException(
+                        message: "Property orchestration dependency validation error occurred, fix errors and try again.",
+                        innerException: typeDependencyValidationException);
 
                 throw propertyOrchestrationDependencyValidationException;
             }
             catch (PropertyValidationException propertyValidationException)
             {
                 var propertyOrchestrationDependencyValidationException =
-                    new PropertyOrchestrationDependencyValidationException(propertyValidationException);
+                    new PropertyOrchestrationDependencyValidationException(
+                        message: "Property orchestration dependency validation error occurred, fix errors and try again.",
+                        innerException: propertyValidationException);
 
                 throw propertyOrchestrationDependencyValidationException;
             }
             catch (PropertyDependencyValidationException propertyDependencyValidationException)
             {
                 var propertyOrchestrationDependencyValidationException =
-                    new PropertyOrchestrationDependencyValidationException(propertyDependencyValidationException);
+                    new PropertyOrchestrationDependencyValidationException(
+                        message: "Property orchestration dependency validation error occurred, fix errors and try again.",
+                        innerException: propertyDependencyValidationException);
 
                 throw propertyOrchestrationDependencyValidationException;
             }
             catch (TypeDependencyException typeDependencyException)
             {
                 var propertyOrchestrationDependencyException =
-                    new PropertyOrchestrationDependencyException(typeDependencyException);
+                    new PropertyOrchestrationDependencyException(
+                        message: "Property orchestration dependency error occurred, fix errors and try again.",
+                        innerException: typeDependencyException);
 
                 throw propertyOrchestrationDependencyException;
             }
             catch (TypeServiceException typeServiceException)
             {
                 var propertyOrchestrationDependencyException =
-                    new PropertyOrchestrationDependencyException(typeServiceException);
+                    new PropertyOrchestrationDependencyException(
+                        message: "Property orchestration dependency error occurred, fix errors and try again.",
+                        innerException: typeServiceException);
 
                 throw propertyOrchestrationDependencyException;
             }
             catch (PropertyDependencyException propertyDependencyException)
             {
                 var propertyOrchestrationDependencyException =
-                    new PropertyOrchestrationDependencyException(propertyDependencyException);
+                    new PropertyOrchestrationDependencyException(
+                        message: "Property orchestration dependency error occurred, fix errors and try again.",
+                        innerException: propertyDependencyException);
 
                 throw propertyOrchestrationDependencyException;
             }
             catch (PropertyServiceException propertyServiceException)
             {
                 var propertyOrchestrationDependencyException =
-                    new PropertyOrchestrationDependencyException(propertyServiceException);
+                    new PropertyOrchestrationDependencyException(
+                        message: "Property orchestration dependency error occurred, fix errors and try again.",
+                        innerException: propertyServiceException);
 
                 throw propertyOrchestrationDependencyException;
             }
             catch (Exception exception)
             {
                 var failedPropertyOrchestrationException =
-                    new FailedPropertyOrchestrationException(exception);
+                    new FailedPropertyOrchestrationException(
+                        message: "Failed property orchestration service exception occurred, please contact support.",
+                        innerException: exception);
 
                 var propertyPropertyOrchestrationException =
-                    new PropertyOrchestrationServiceException(failedPropertyOrchestrationException);
+                    new PropertyOrchestrationServiceException(
+                        message: "Property orchestration service error occurred, contact support.",
+                        innerException: failedPropertyOrchestrationException);
 
                 throw propertyPropertyOrchestrationException;
             }

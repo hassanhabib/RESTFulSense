@@ -20,10 +20,14 @@ namespace RESTFulSense.Services.Foundations.Values
             catch (Exception exception)
             {
                 var failedValueServiceException =
-                    new FailedValueServiceException(exception);
+                    new FailedValueServiceException(
+                        message: "Failed Value Service Exception occurred, please contact support for assistance.",
+                        innerException: exception);
 
                 var valueServiceException =
-                    new ValueServiceException(failedValueServiceException);
+                    new ValueServiceException(
+                        message: "Value service error occurred, contact support.",
+                        innerException: failedValueServiceException);
 
                 throw valueServiceException;
             }

@@ -9,12 +9,6 @@ namespace RESTFulSense.Models.Orchestrations.Properties.Exceptions
 {
     internal class PropertyOrchestrationDependencyException : Xeption
     {
-        public PropertyOrchestrationDependencyException(Exception innerException)
-            : base(
-                message: "Property orchestration dependency error occurred, fix errors and try again.",
-                innerException: innerException)
-        { }
-
         public PropertyOrchestrationDependencyException(string message, Exception innerException)
             : base(message, innerException)
         { }
